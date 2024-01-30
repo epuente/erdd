@@ -1,0 +1,8 @@
+CREATE DATABASE erdd_test DEFAULT CHARACTER SET latin1
+
+usuario: erdd
+password: erdd
+
+privilegios del esquema: todos
+privilegios administrativos: ninguno
+ 

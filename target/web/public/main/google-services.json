@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "859204290053",
+    "firebase_url": "https://fberdd-57e76.firebaseio.com",
+    "project_id": "fberdd-57e76",
+    "storage_bucket": "fberdd-57e76.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859204290053:android:a2a0a8f51ce0e679",
+        "android_client_info": {
+          "package_name": "ipn.erdd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "859204290053-0q83vfcradde9g16m26rv951bpknm241.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzV4HpIh8Vi_TIflkZt-RPv_93FTLTEcM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

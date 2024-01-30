@@ -1,0 +1,26 @@
+@(r: Recurso) 
+@import scala.collection.JavaConversions._ 
+
+@import helper._
+
+
+@main {
+
+	<div class="jumbotron">
+		<div class="container">
+		  <h1>Recepción correcta.</h1>
+			  <p>Se ha generado con éxito la solicitud de evaluación para el recurso:</p>
+			  <h3>@r.titulo</h3>
+			  <p>con la clave de control:</p>
+			  <h2>@r.numcontrol</h2>
+			  <h5>@r.ncLetras()</h5>
+			  <p>Anote y guarde esta clave confidencial, ya que le será requerida posteriormente para el seguimiento de su solicitud.</p>
+			  
+			  <br>
+			  <p>Se le enviará de manera automática un correo electrónico, si después de 72 horas no lo ha recibido, por favor comuníquese a la extensión 57405.</p>
+		  	  
+		</div>
+	</div>
+
+
+}

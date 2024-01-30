@@ -1,0 +1,21 @@
+[0m[[0mdebug[0m] [0mCopy resource mappings: [0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/application.conf,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/application.conf)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/fberdd-57e76-firebase-adminsdk-4j6o8-5639cfd7aa.json,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/fberdd-57e76-firebase-adminsdk-4j6o8-5639cfd7aa.json)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/messages,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/messages)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/password,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/password)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/routes,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/routes)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/play.plugins,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/play.plugins)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/evolutions,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/evolutions)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/certificados,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/certificados)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/evolutions/default,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/evolutions/default)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/evolutions/default/1.sql,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/evolutions/default/1.sql)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/certificados/evaluardd.upev.ipn.mx,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/certificados/evaluardd.upev.ipn.mx)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/certificados/evaluardd.upev.ipn.mx.zip,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/certificados/evaluardd.upev.ipn.mx.zip)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/certificados/evaluardd.upev.ipn.mx/README,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/certificados/evaluardd.upev.ipn.mx/README)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/certificados/evaluardd.upev.ipn.mx/erdd.jks,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/certificados/evaluardd.upev.ipn.mx/erdd.jks)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/certificados/evaluardd.upev.ipn.mx/privkey.pem,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/certificados/evaluardd.upev.ipn.mx/privkey.pem)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/certificados/evaluardd.upev.ipn.mx/fullchain_and_key.p12,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/certificados/evaluardd.upev.ipn.mx/fullchain_and_key.p12)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/certificados/evaluardd.upev.ipn.mx/generarJKS.sh,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/certificados/evaluardd.upev.ipn.mx/generarJKS.sh)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/certificados/evaluardd.upev.ipn.mx/cert.pem,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/certificados/evaluardd.upev.ipn.mx/cert.pem)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/certificados/evaluardd.upev.ipn.mx/fullchain.pem,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/certificados/evaluardd.upev.ipn.mx/fullchain.pem)[0m
+[0m[[0mdebug[0m] [0m	(/home/epuente/playFramework/erdd2024/conf/certificados/evaluardd.upev.ipn.mx/chain.pem,/home/epuente/playFramework/erdd2024/target/scala-2.11/classes/certificados/evaluardd.upev.ipn.mx/chain.pem)[0m

@@ -1,0 +1,155 @@
+@(id: Long, rForm : Form[Recurso])
+@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.render) } 
+
+ <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/>
+ <script src="@routes.Assets.at("javascripts/utilerias.js")"></script> 
+ <script src="/assets/javascripts/fullcalendar/moment.min.js" ></script>
+@import helper._
+@main{
+
+	<div class="container-fluid" style="background-color: white; padding: 10px;">
+ 
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb">
+				  <li>Recursos</li>
+				  <li><a href="@routes.OficioValoracionController.list()">Recurso con oficio de valoración</a></li>
+				  <li class="active">Asignar</li>
+				</ol>			
+			</div>
+		</div>	
+		<div class="row">				
+			<div class="col-lg-12">
+				<h3>Asignar oficio de valoración al recurso '@rForm.get().titulo'</h3>
+			</div>
+		</div>
+		
+
+		
+		
+		<div class="row">
+			<div class="col-lg-12">		
+			 	@form(CSRF(routes.OficioValoracionController.save(id)), 'role -> "form", 'id -> "frmAsignaOficio", 'enctype -> "multipart/form-data", 'role->"form") {
+			 		<div class="form-group">
+			 			<table class="table table-bordered tablaReporte">
+			 				<tr>
+			 					<td colspan="1">@inputText(rForm("oficiovaloracion.numero"), 'labelAlterna -> "Número de oficio de valoración", '_help -> "", 'size->"10", 'required->"required", 'class->"form-control" )</td>
+			 				</tr>
+			 				<tr>
+			 					<td>@inputText(rForm("oficiovaloracion.fechaoficio"), 'labelAlterna -> "Fecha del oficio", '_help -> "", 'required->"required", 'placeholder->"dd/mm/aaaa", 'class->"form-control" )</td>
+			 				</tr>
+			 				<tr>
+			 					<td colspan="2">			 				
+			 						
+										@inputFile(rForm("oficiovaloracion.contenido"),'size -> 10, 'labelAlterna->"Oficio digitalizado",'required -> "required", 'class->"form-control", 'accept->".pdf")							
+				 					
+				 					@if(rForm.get().oficiovaloracion.id != null){
+				 						<div class="row" id="rowElimina">
+				 							<div class="col-sm-8">
+				 								<a href="@routes.RecursoController.verOficioValoracion(rForm.get().oficiovaloracion.id)" target="blank"> @rForm.get().oficiovaloracion.nombrearchivo</a>
+				 							</div>
+				 							<div class="col-sm-4">
+				 								<button class="btn btn-primary center-block" onclick="elimina()">Eliminar y agregar otro</button>
+				 							</div>
+				 						</div>
+				 					}
+
+			 					</td>			 					
+			 				</tr>			 				
+			 				<tr>
+			 					<td colspan="2">			 							
+			 						<a href="javascript:pre()" class="btn primary btn-primary btn-block center-block" role="button" style="width: 70%">Asignar oficio</a>
+			 					</td>
+			 				</tr>
+			 			</table> 		
+					</div>
+				}
+			</div>
+		</div>
+	</div>	
+}
+
+
+
+<script type="text/javascript">
+	$(function() {
+		$('#frmAsignaOficio').attr("data-toggle","validator");
+		$('#oficio_folio').attr("data-error","Solo números, máximo 6");
+		$('#oficio_fechaoficio, #oficio_fecharecepcion').attr("pattern","([0-9]{2}/[0-9]{2}/[0-9]{4})");
+		$('#oficiovaloracion_fechaoficio').datepicker({
+		    language: "es",
+		    format: "dd/mm/yyyy",
+			autoclose: true,
+			todayBtn: true,
+			todayHighlight: true
+		});		
+//alert( '@rForm("oficiovaloracion.fechaoficio").value'  );
+		//$("#oficiovaloracion_fechaoficio").val( moment('@rForm("oficiovaloracion.fechaoficio").value').format("DD/MM/YYYY") );
+		//$('#oficiovaloracion_fechaoficio').datepicker('update', moment('@rForm("oficiovaloracion.fechaoficio").value').format("DD/MM/YYYY"));
+	
+		//$("input[type='file']").parent().parent().append("<div>@rForm.get().oficiovaloracion.nombrearchivo</div>");
+		
+		
+		
+		
+		@if(rForm.get().oficiovaloracion.id != null){
+			$("input[type='file']").parent().parent().hide();
+			
+		}		
+
+	});
+
+	function pre(){
+		//var fo = moment($('#oficiovaloracion_fechaoficio').val(),"DD/MM/YYYY");
+		var fo = moment( new Date($('#oficiovaloracion_fechaoficio').val())).format("DD/MM/YYYY");
+
+		var fx = moment( new Date($('#oficiovaloracion_fechaoficio').val())).isValid();
+
+
+		var fmom=moment( new Date($('#oficiovaloracion_fechaoficio').val()));
+		alert(fo);
+		alert( fx);
+		alert(fmom);
+
+		if (fo==null || !fx){
+			alert("No se ha especificado la fecha o esta en un formato erróneo");
+			return false;			
+		} else {
+			if ( fmom.isAfter( moment().add('day',1)  )  ){
+				alert("No se puede registrar la fecha del oficio de valoración con fecha superior a la de hoy.");
+				return false;
+			} else {
+				$('#oficio_fechaoficio').parents().parents().removeClass("error");
+				$("#oficiovaloracion_fechaoficio").val(fo);
+				$("#frmAsignaOficio").submit();				
+			}
+		}
+
+		
+	}
+
+	
+	$('#frmAsignaOficio').validator().on('submit', function (e) {
+		  if (e.isDefaultPrevented()) {
+		    // handle the invalid form...
+		  } else {
+				$('#oficiovaloracion_fechaoficio').removeAttr("pattern");
+				$('#oficiovaloracion_fechaoficio').val(    moment($('#oficiovaloracion_fechaoficio').val(),"DD/MM/YYYY").format("YYYY-MM-DD")  );				
+		  }
+		})	
+	
+	
+	function elimina(){
+		$("input[type='file']").parent().parent().show();
+		$("#rowElimina").hide();
+		
+	}
+	
+	
+</script>	
+<script src="@routes.Assets.at("javascripts/validator.min.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("jqueryDateTimePicker/js/bootstrap-datepicker.min.js")"></script>
+<script src="@routes.Assets.at("jqueryDateTimePicker/locales/bootstrap-datepicker.es.min.js")" type="text/javascript"></script>
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("jqueryDateTimePicker/css/bootstrap-datepicker.standalone.min.css")"/>
+
+

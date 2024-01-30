@@ -1,0 +1,52 @@
+@(rs: List[Recurso]) 
+@import scala.collection.JavaConversions._ 
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
+@main { 
+	Solicitudes de evaluación registradas	
+	@if(rs.isEmpty) {
+	<h1>No hay registro de ningún recurso</h1>
+	} else {
+	<h3>Se encontraron @rs.length recursos</h3>
+	@flashes
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>Título</th>
+				<th>Área del conoc.</th>
+				<th>Nivel educativo</th>
+				<th>Duración</th>
+				<th>Unidad acaémica</th>
+				<th>Fecha elaboración</th>
+				<th>Programa académico</th>
+				<th>Modalidad</th>
+				<th>Versión</th>
+				<th>Sinópsis</th>
+				<th>Formato entrega</th>
+				<th>Otro formato entrega</th>
+				<th>Url</th>
+			</tr>
+		</thead>
+	
+		@for(r <- rs) {
+		<tr>
+			<td><a href="@routes.ReporteController.cesoe(r.id)">@r.titulo</td></a>
+			<td>@r.areaconocimiento.descripcion</td>
+			<td>@r.niveleducativo.descripcion</td>
+			<td>@r.duracion</td>
+			<td>@r.unidadacademica.nombre</td>
+			<td>@r.elaboracion</td>
+			<td>@r.programaacad</td>
+			<td>@{ if(r.modalidad!= null) r.modalidad.descripcion}</td>
+			<td>@r.version.descripcion</td>
+			<td>@r.sinopsis</td>
+			<td>@r.formatoentrega.descripcion</td>				
+			<td>@r.formatoentregaotro</td>
+			<td>@r.url</td>
+		</tr>
+	
+		}
+	</table>
+	
+	}
+}

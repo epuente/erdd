@@ -1,0 +1,465 @@
+@(id: Long, recursoForm: Form[Recurso],   recurso: Recurso   )
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) }
+
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/> 
+
+
+ 
+@main {
+	<div class=container-fluid style="background-color: white; padding: 10px">
+	    <h3>Cédula de Solicitud de Evaluación Técnico-Pedagógica de Recurso Didáctico Digital. (CESOE)</h3>
+	    <h4>Edición</h4>	
+		<div id="alertEstado" class="alert alert-default" role="alert">El estado de la solicitud es: '@recurso.estado.descripcion'.</div>    
+	    
+		<section id="masterForm">
+		    @form(CSRF(routes.RecursoWebController.masterupdate(id)), 'role -> "form", 'id -> "este", 'enctype -> "multipart/form-data") {
+		    	
+				@masterForm(recursoForm, id, recurso)
+				
+				<div class="row">
+					<div class="col-md-6">
+		        		@if(recurso.estado.id == 1){	        
+			            	<input type="submit" value="Editar recurso" class="btn btn-success btn-lg center-block btn-block" style="width: 70%">
+		            	}
+		        		@if(recurso.estado.id == 2){
+			            	<input type="submit" value="Enviar correcciones" class="btn btn-success btn-lg center-block btn-block" style="width: 70%">
+		            	}						
+					</div>
+					<div class="col-md-6">
+						<a href="@routes.RecursoController.list()" class="btn btn-primary btn-lg center-block btn-block" style="width: 70%">Cancelar</a>
+					</div>					
+				</div>
+		    }
+		</section>				
+	</div>
+	
+	
+	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title modalTitleError" id="myModalLabel">Alerta</h4>
+	      </div>
+	      <div class="modal-body">
+	
+	      </div>
+	      <div class="modal-footer">
+	      		<div class="modalPie">Los campos marcados con * son obligatorios</div>
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+		
+	
+}
+
+
+
+
+
+
+<script type="text/javascript">
+
+
+$(document).ready(function() {
+	$('#elaboracion').datetimepicker({
+		 locale: 'es',
+		 format: 'L'
+	});		
+		$('#labelModalidad').html("Modalidad");
+		$("label[for='dirigidoa_id']:eq(1)").hide();
+		$("input[type='checkbox']").attr("disabled",true);
+		$("input[type='checkbox']").attr("readonly",true);
+		$('#este').validator();
+		$('#formatoentregaotro').parent().hide();
+		$("[name*='btnObservacion_']").hide();
+		
+		
+		$("input[type='checkbox'][name='dirigidoa.id']").attr("name","dirigidoa.id");
+		$("textarea[name='observacion_dirigidoa.id']").attr("name","observacion_dirigidoa.id");
+		$("button[name='btnObservacion_version.id']").attr("name","btnObservacion_version.id");
+		
+		$("input[type='checkbox'][name='dirigidoa.id[]']").attr("disabled",true);
+		$("input[type='checkbox'][name='dirigidoa.id[]']").attr("readonly",true);
+		
+		leer();
+		quitarBotones();
+
+		$("input[type='text']:required, textarea:required").attr("data-error", "Complete este campo");
+		$("select:required").attr("data-error", "Seleccione una opción de la lista");
+		$("input[type='radio']:required").attr("data-error", "Seleccione una opción");	
+		$("input[type='checkbox']:required").attr("data-error", "Seleccione al menos una opción de las disponibles");
+
+		$(':input').each(function() { 
+		    $(this).data('initialValue', $(this).val()); 
+		}); 		
+		
+		$("#elaboracion").prop("required", true);
+		
+		
+		
+        $("#documento.nombrearchivo1").css("display","inline");     
+        $("#documento.nombrearchivo1").show();
+        
+        $(".form-control").css("height","initial");
+	});
+	
+	
+	function prueba(num){       
+        $("[name='documento.nombrearchivo"+num+"']").css("display","inline");
+        $("[name='documento.nombrearchivo1"+num+"']").show();
+        eliminarAgregarDocumento2(num);
+        $("#na"+num).hide();
+	}
+
+
+
+	
+	 var leer = function(){
+	 	$("input[name='modalidad.id'][value=@recurso.modalidad.id]").prop("checked", true);
+		@if(recurso.estado.id == 1L){
+			$("#alertEstado").removeClass("alert alert-default").addClass("alert alert-info").html( $("#alertEstado").html()+   " Reingrese mas tarde.");;
+		}
+		@if(recurso.estado.id == 2){		
+			$("#alertEstado").removeClass("alert alert-default").addClass("alert alert-warning").html( $("#alertEstado").html()+   " Corrija las observaciones indicadas y envíe.");
+		}
+		@if(recurso.estado.id == 3L){
+			$("#alertEstado").removeClass("alert alert-default").addClass("alert alert-success").html( $("#alertEstado").html()+   " Toda su información esta bien, los evaluadores procederan a revisar el contenido, reingrese mas tarde.");;
+		}
+		@if(recurso.autores.isEmpty){
+			} else 	{
+			i=0;
+			@for(a <- recurso.autores){		
+			  agregarAutor();
+			  $("input[name='autor.nombre"+i+"']").val("@a.nombre");
+			  $("input[name='autor.paterno"+i+"']").val("@a.paterno");
+			  $("input[name='autor.materno"+i+"']").val("@a.materno");
+			  @if(a.correo != null){
+			  	$("input[name='autor.correo"+i+"']").val("@a.correo.email");
+			  	$("input[name='autor.telefono"+i+"']").val("@a.correo.telefono");
+			  }
+			  $("select[name='autor.autorfuncion"+i+"']").val("@a.autorfuncion.id");
+			  i++;
+			} 
+		}	
+			
+		if (formatoentrega_id_3 != null)
+			if (formatoentrega_id_3.checked == false)
+				$('#formatoentregaotro').parent().hide();
+			else
+				$('#formatoentregaotro').parent().show();
+			
+		$("#ligaAgregarOtroAutor, #btnQuitarAutor").hide();	
+		
+
+		// Documentos
+		@if( recurso.documentos.isEmpty){
+		} else {		
+			@for((d,ii) <- recurso.documentos.sortBy( x=>(x.tipodocumento.id, x.tipodocumento.obligatorio)).zipWithIndex){
+			  agregarDocumento2();			  
+			  $("select[name='documento.tipodocumento@(ii)']").val("@d.tipodocumento.id");
+			  @if(recurso.estado.id == 1  || recurso.estado.id == 2 || recurso.estado.id == 105){ 
+			 	document.getElementById("documento.nombrearchivo@(ii)").style.display='inline';				 	
+			 	$("#na@(ii)").html("<a href='/documento/verAn/@d.id' target='_blank'>@d.nombrearchivo</a>").show();
+			 	$("#ta@(ii)").html("@d.tipodocumento.descripcion");			 	
+			 	$("#docId@(ii)").html("@d.id").hide();
+			 	$("#este").append($('<input type="text" name="aux2">').val("doctoAgregado"));			 	
+			  }
+			} 
+			
+			$("input[name^='documento.nombrearchivo']").hide();
+			$("select[name^='documento.tipodocumento']").hide();
+			$("[id^='btnQuitarDocto'], #ligaAgregarDocto").hide();
+	           // El select de tipo de documento no debe de llevar opciones de observación, solo el select de documento
+           // $("button[name^='btnObservacion_documento.tipodocumento']").hide();
+		}
+
+		$("input[name='aux2']").hide();
+		
+			// Si el recurso esta en web
+			@if(recurso.recursosenweb.isEmpty){				
+			} else {
+				@for(tmp <- recurso.recursosenweb){
+					$('#webUsuario').val("@tmp.usuario");
+					$('#webPassword').val("@tmp.password");
+				}
+			}			
+			
+			// Observaciones		
+			@if(recurso.observaciones.size > 0){ 
+				$(".observacion").hide();
+				$(".observacion").attr("readonly",true);
+				$("input[type='radio'], input[type='date'], input[type='text'], input[type='email'], input[type='tel'], input[type='file'], input[type='url'], textarea, select").attr("readonly",true);
+				$("input[type='radio'], input[type='date'], input[type='text'], input[type='email'], input[type='tel'], input[type='file'], input[type='url'], textarea, select").prop('disabled', true);
+
+				// Muestra los campos de observaciones y habilita los correspondientes campos
+				
+				@for( (o,i)<-recurso.observaciones.zipWithIndex){						
+					// Campos
+					$("[name='@o.campo']").attr("readonly",false);
+					$("[name='@o.campo']").prop("disabled",false);
+					
+					//Campos de observacion
+					$("[name='observacion_@o.campo']").text('Observacion realizada: @o.observacion').addClass("alert alert-warning").show();
+					$("[name='observacion_@o.campo']").css('margin-bottom',"0px");
+				
+					$("[name='btnObservacion_@o.campo']").show();
+					
+					$( document ).on( "click", "[name='btnObservacion_@o.campo']", function() {
+						$("[name='@o.campo']").focus();
+					});
+					
+					//Si se trata de un campo de autores, habilitar agregar y quitar autores
+					if ( @o.campo.startsWith("autor.") ){
+						$("#ligaAgregarOtroAutor, #btnQuitarAutor").show();
+					}
+					
+					//Si se trata de un campo de documentos, habilitar agregar y quitar documentos
+					if ( @o.campo.startsWith("documento.") ){
+						var num = "@o.campo".match(/\d/);
+						$("[id='btnQuitarDocto"+"@o.campo".substring("@o.campo".indexOf(num))+"']")
+						    .prop('value','Eliminar y subir otro archivo')
+						    .addClass('btn btn-primary')
+						    .attr("onclick",
+						    	    
+						    	    'javascript:prueba(     "@o.campo".substring("@o.campo".indexOf('+num+'))  )'  )
+						    
+						    .show();
+						
+						$("#documento.nombrearchivo"+"@o.campo".substring("@o.campo".indexOf(num))).css("display","inline");
+						
+						
+						
+					//	$("#documento.nombrearchivo1").show();
+					}	
+				}
+			}
+		
+			// Recurso: actualizado, Version anterior
+			@if(recurso.version.id == 2L){
+				$("#divVersion").show();
+				$("#versionanterior_recursoanterior_id").show();
+				@if(recurso.versionanterior == null){	
+						$("#extra1_N").prop("checked",true);	
+				} else {
+					$("#extra1_S").prop("checked",true);
+					$("#va.numcontrol").val(@recurso.versionanterior.recursoanterior.id);
+				}
+			}
+			
+			
+			// Dirigido a
+			@for(da <- recurso.dirigidoa){
+				$("#dirigidoa_id_@(da.dirigidoa.id)").attr("checked", true);
+			}
+			
+			//Fecha elaboracion
+			var fe ="@recursoForm.field("elaboracion").value()"; 
+			console.log("fe:"+fe)
+			//$('#elaboracion').datepicker('update', moment(fe,"YYYY-MM-DD").format("DD/MM/YYYY")  );
+			
+			$('#elaboracion').val(  moment(fe,"YYYY-MM-DD").format("DD/MM/YYYY")  );
+			
+			$("#alcancecurricularotro, label[for='alcancecurricularotro']").toggle( $("#alcancecurricular_id").val()==99  );
+			
+			
+			
+			$("#documento.nombrearchivo1").css("display","inline");		
+			$("#documento.nombrearchivo1").show();
+			
+			$("#unidadacademica_id option").remove();
+			$("#unidadacademica_id").append($("<option></option>").attr("value", @recurso.unidadacademica.id).text("@recurso.unidadacademica.nombre").attr("selected", true));
+			
+		}
+
+
+	 
+		$( document ).on( "change", "[name*='documento.nombrearchivo']", function() {	
+			var num =  $(this).attr('name').substring("documento.nombrearchivo".length);			
+			$("#na"+num).html($(this).val());
+		});
+		
+		$( document ).on( "change", "[name*='autor.autorfuncion']", function() {
+			var num =  $(this).attr('name').substring("autor.autorfuncion".length);		
+			if ($(this).val() == 9){
+				$("input[name='autor.otroTipoAutoria"+num+"']").show();  
+			} else {
+				$("input[name='autor.otroTipoAutoria"+num+"']").hide();			
+			}
+		});	 
+	 
+		$( document ).on( "click", "[name='version.id']", function() {			
+			if ( $(this).val() == 2  ){
+				$("#divVersion").show();
+				$("input[type='radio'][name='extra1']").attr("disabled",false);
+				$("input[type='radio'][name='extra1']").attr("readonly",false);
+			} else {
+				$("#versionanterior_recursoanterior_id").val("");
+				$("#msgBuscarNc").html("");			
+				$("#divVersion").hide();
+			}
+		});
+		
+		$( document ).on( "click", "[name='extra1']", function() {
+			if (   $(this).val() == "N" ){
+				$("#versionanterior_recursoanterior_id").val("");
+				$("#msgBuscarNc").html("");				
+				$("#divNumControl").hide();			
+			}
+			if (   $(this).val() == "S" ){
+				$("#versionanterior_recursoanterior_id").attr("disabled", false);
+				$("#versionanterior_recursoanterior_id").attr("readonly", false);
+				$("#divNumControl").show();			
+			}		
+		});		
+
+		
+		$(document).on("keydown change blur", "textarea", function(event){				
+			var tam = $(this).val().length;
+			if (tam >= 600 && (event.which != 8  && event.which != 46  )){
+				console.log("tam excedido");
+				event.preventDefault();
+				$(this).parent().find(".help-block").html('<ul class="list-unstyled"><li>Este campo ha excedido los 600 caracteres</li></ul>');
+				$(this).parent().parent().addClass("has-error");
+			} else {
+				$(this).parent().find(".help-block").html('');
+				$(this).parent().parent().removeClass("has-error");			
+			}
+		});		
+		
+		
+		
+	    $( document ).on( "change" ,"#unidadmedida_id", function(e){
+	        var texto = $("#unidadmedida_id option:selected").text();
+	        $("#duracion").prop("placeholder", "Número de "+ texto.toLowerCase());
+	    });		
+		
+
+
+	
+		$("#este").submit(function(event){		
+			console.log(".submit");
+			if(!preValidar()){			
+				return false;
+			} else {
+	            $('#elaboracion').removeAttr("pattern");
+	            $('#elaboracion').val(    moment($('#elaboracion').val(),"DD/MM/YYYY").format("YYYY-MM-DD")  );
+	            $("select[name^='documento.tipodocumento'] option").prop("disabled", false);
+	            $("select[name^='documento.tipodocumento']").removeAttr("disabled");
+	            $("select[name^='documento.tipodocumento']").removeAttr("required");
+	            return true;    				
+			}
+		});
+		
+		$('#este').validator().on('submit', function (e) {
+			console.log(".validator().on  submit");
+			  if (e.isDefaultPrevented()) {
+			  } else {
+				//	$('#elaboracion').removeAttr("pattern");
+				//	$('#elaboracion').val(    moment($('#elaboracion').val(),"DD/MM/YYYY").format("YYYY-MM-DD")  );	
+	                $("select[name^='documento.tipodocumento']:visible option").attr("disabled", false);
+	               // e.preventDefault;
+	                $("select[name^='documento.tipodocumento'] option").prop("disabled", false);
+			  }
+			})			
+			
+			
+			
+			
+    
+       function agregarDocumento2(insertarEn){
+            var nrenglon = ($("#tableDocumentos div.row").length);  
+            var arrString = [];
+            var 
+            renglon ='<div class="row">';
+            renglon+='  <div class="col-md-5">';
+            renglon+='      <div class="form-group clearfix">';
+            renglon+='          <div class="input input-group">';
+            renglon+='             <div id="docId'+nrenglon+'" style="display:none"></div>';
+            renglon+='             <input type="file" accept=".pdf" id="documento.nombrearchivo'+nrenglon+'" name="documento.nombrearchivo'+nrenglon+'" required="required" class="form-control">';
+            renglon+='             <div id="na'+nrenglon+'" style="display:none"></div>';
+            renglon+='             <div class="help-block with-errors"></div>';     
+            renglon+='          </div>';
+            renglon+='          <textarea placeholder="Escriba su observacion..." name="'+"observacion_documento.nombrearchivo"+nrenglon+'" class="observacion"></textarea>';
+            renglon+='          <button type="button" name="btnObservacion_documento.nombrearchivo'+nrenglon+'" class="btn btn-primary btn-xs form-control">Corregir</button>';
+            renglon+='          <div class="errorObservacion" style="color:red"></div>';
+            renglon+='      </div>';
+            renglon+='  </div>';
+            
+            renglon+='  <div class="col-md-5">'
+            renglon+='      <div class="form-group clearfix">';
+            renglon+='          <div class="input input-group">';
+            renglon+='              <select name="'+"documento.tipodocumento"+nrenglon+'" required class="form-control" >'+$('#auxDocto').html()+'</select>';       
+            renglon+='              <div id="ta'+nrenglon+'"></div>';
+            renglon+='              <span class="help-block with-errors"></span>';
+            renglon+='          </div>';
+            renglon+='          <textarea placeholder="Escriba su observacion..." name="'+"observacion_documento.tipodocumento"+nrenglon+'" class="observacion"></textarea>';
+            renglon+='          <button type="button" name="btnObservacion_documento.tipodocumento'+nrenglon+'" class="btn btn-primary btn-xs form-control">Corregir</button>';
+            renglon+='          <div class="errorObservacion" style="color:red"></div>';
+            renglon+='      </div>';
+            renglon+='  </div>';
+        //  renglon+='</div>';
+            
+            
+            renglon+='<div class="col-md-2">';
+            renglon+=   '<input type="button" value="Quitar documento" onclick="eliminarDocumento2('+nrenglon+')" id="btnQuitarDocto'+nrenglon+'">';        
+            renglon+='</div>';
+            
+            if (insertarEn==undefined){
+                $('#tableDocumentos').append(renglon);
+                $("[name*='btnObservacion_documento.nombrearchivo"+((nrenglon)-0)+"']").hide();
+                $("[name*='btnObservacion_documento.tipodocumento"+((nrenglon)-0)+"']").hide();
+                $("select[name*='documento.tipodocumento']").css("font-size","85%");
+            } else {
+                /*
+                $('#documento.nombrearchivo1').css("display","block");
+                $("#documento.nombrearchivo1").show();
+                $('#documento.nombrearchivo1').swap('[name="observacion_documento.nombrearchivo1"]');
+                */
+            }
+            
+            
+            //Cuando hay observaciones en documentos, en los selects visibles habilitar solo las options relacionadas al tipo de documento con observaciones
+            //$("select[name^='documento.tipodocumento'] option").attr("disabled","disabled");
+            //alert("se desactivaron!!!!!!");
+
+                $('#tableDocumentos div.row:even').css("background-color", "#f7f7f7");
+                
+                // Deshabilita o habilita los options del tipo de archivo dependiendo si es obligatorio   
+                @for(tdoc<-models.Tipodocumento.find.all()){
+                    $("select[name^='documento.tipodocumento']:last option[value=@tdoc.id]").prop("disabled", @tdoc.obligatorio==1);
+                }           
+        }   			
+		
+		
+		
+		// Dependientes de la observacion
+		// Cuando se selecciona Unidad acadeḿica, cargar el catalogo 
+		$(document).on("click", "[name='btnObservacion_unidadacademica.id']", function(){
+			console.log("@recurso.unidadacademica.id")
+			filtradoUnidadesAcademicas();		
+			if (@recurso.unidadacademica.id != undefined){
+				$('#unidadacademica_id option[value="@recurso.unidadacademica.id"]').prop("selected", true);
+			}
+		});		
+	
+</script>
+<script src="@routes.Assets.at("javascripts/validator.min.js")" type="text/javascript"></script>
+
+
+<script src="@routes.Assets.at("javascripts/utilerias.js")"></script>
+<script src="@routes.Assets.at("javascripts/fullcalendar/moment.min.js")" ></script>
+
+
+<script src="@routes.Assets.at("javascripts/recursos.js")"></script>
+    
+<script src="@routes.Assets.at("lib/bootstrap/js/transition.js")" type="text/javascript" defer></script>
+<script src="@routes.Assets.at("lib/bootstrap/js/collapse.js")" type="text/javascript" defer></script>
+<script src="@routes.Assets.at("lib/Eonasdan-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js")" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("lib/Eonasdan-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css")">
+<script src="@routes.Assets.at("lib/moment/locale/es.js")" type="text/javascript"></script>    

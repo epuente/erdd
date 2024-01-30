@@ -1,0 +1,462 @@
+@(recurso: Recurso)
+
+  <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/> 	
+
+@main {
+	@if(session.get("idRecurso")   ){
+		<div id="alertEstado" class="alert alert-default" role="alert">El estado de la solicitud es: '@recurso.estado.descripcion'.</div>    
+  	}
+  	
+	<table class="table table-bordered tablaReporte">
+		<tr>
+			<td colspan="5"><div class="etiqueta">Título</div><div class="contenido">@recurso.titulo</div></td>
+			<td colspan="1"><div class="etiqueta">Clave de control</div><div class="contenido">@recurso.numcontrol</div></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<div class="etiqueta">Nivel académico</div><div class="contenido">@recurso.niveleducativo.descripcion</div>
+			</td>
+			<td colspan="4">
+				<div class="etiqueta">Área del conocimiento</div><div class="contenido">@recurso.areaconocimiento.descripcion</div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="6">
+				<div class="etiqueta">Unidad Académica</div><div class="contenido">@recurso.unidadacademica.nombre</div>
+			</td>			
+		</tr>
+		<tr>
+			<td colspan="3>
+				<div class="etiqueta">Programa Académico:</div><div class="contenido">@recurso.programaacad</div>
+			</td>	
+			<td>
+				<div class="etiqueta">Modalidad</div><div class="contenido">@{ if (recurso.modalidad != null)recurso.modalidad.descripcion}</div>
+			</td>
+		
+			
+			<td>
+				<div class="etiqueta">Duración</div><div class="contenido">@(recurso.duracion+" "+recurso.unidadmedida.descripcion) </div>
+			</td>
+			
+			<td>
+				<div class="etiqueta">Alcance Curricular</div>
+				<div class="contenido">@if(recurso.alcancecurricular!=null){
+					 	 @recurso.alcancecurricular.descripcion@if(recurso.alcancecurricular.id ==99){: @recurso.alcancecurricularotro}
+					  }
+				</div>
+			</td>
+		
+		</tr>
+		<tr>
+			<td>
+				<div class="etiqueta">Fecha elaboración</div><div class="contenido">@recurso.elaboracion.format("dd/MM/yyyy")</div>
+			</td>	
+			<td>
+				<div class="etiqueta">Versión</div><div class="contenido">@recurso.version.descripcion</div>
+				@if(recurso.versionanterior != null){
+					<div class="etiqueta">Clave control anterior</div><div class="contenido">@recurso.versionanterior.recursoanterior.numcontrol</div>
+				}
+			</td>		
+			<td colspan="2">
+				<div class="etiqueta">Dirigido a</div>
+				@for(dir <- recurso.dirigidoa){
+					<div claa="contenido" style="float: left; padding-right: 15px">@dir.dirigidoa.descripcion</div>
+				}
+			</td>
+			<td colspan="2">
+				<div class="etiqueta">Formato de entrega</div>
+				<div class="contenido">@recurso.formatoentrega.descripcion@if(recurso.formatoentrega.id == 3){: @recurso.formatoentregaotro}</div>
+			</td>			
+		</tr>
+		@if(recurso.url.length != 0){
+			<tr>
+				<td colspan="2">
+					<div class="etiqueta">Dirección URL</div><div class="contenido">@recurso.url</div>					
+				</td>
+			@for(rw <- recurso.recursosenweb) {
+				<td colspan="2">
+					<div class="etiqueta">Usuario</div><div class="contenido">@rw.usuario</div>		
+				</td>
+				<td colspan="2">
+					<div class="etiqueta">Clave de acceso</div><div class="contenido">@rw.password</div>	
+				</td>			
+			}
+			</tr>
+		}		
+		<tr>
+			<td colspan="6">
+				<div class="etiqueta">Sinópsis</div><div class="contenido">@recurso.sinopsis</div>
+			</td>		
+		</tr>
+		<tr>
+			<td colspan=6>
+				<table class="table table-bordered tablaReporte" id="tablaPalabras">
+					<thead>
+						<tr>
+							<td  colspan=5 class="etiqueta">Palabras clave</td>
+						</tr>	
+					</thead>			
+					<tbody>
+						<tr>
+							@for(pc <- recurso.palabrasclave) {
+								<td>
+									<div class="contenido">@pc.descripcion</div>
+								</td>				
+							}
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=6>
+				<table class="table table-bordered tablaReporte" >
+					<tr>
+						<td  colspan=10 class="etiqueta">AUTORES</td>
+					</tr>
+					<tr>
+						<td class="etiqueta"><div></div>Nombre</td>
+						<td class="etiqueta">Tipo de autoría</td>
+						<td class="etiqueta">Teléfono</td>
+						<td class="etiqueta">Email</td>
+					</tr>				
+					<tr>
+						@for(as <- recurso.autores) {
+							<tr>
+								<td>
+									<div class="contenido">@as.nombre @as.paterno  @as.materno</div>
+								</td>
+								<td>
+									<div class="contenido">@as.autorfuncion.descripcion</div>
+									@if(as.autorfuncion.id == 9){
+										<div class="contenido">@as.otrafuncion</div>
+									}
+								</td>
+								<td>
+									@if(as.correo != null){
+										<div class="contenido">@as.correo.telefono</div>
+									}							
+								</td>
+								<td>
+									@if(as.correo != null){
+								  		<div class="contenido">@as.correo.email</div>
+								  	}
+								</td>
+							</tr>				
+						}
+					</tr>
+				</table>
+			</td>
+		</tr>		
+		<tr>
+			<td colspan="6">
+				<table class="table table-bordered tablaReporte" >
+					<tr>
+						<td  colspan=10 class="etiqueta">Documentos</td>
+					</tr>				
+					<tr>
+						@for(ds <- recurso.documentos) {
+						<tr>
+							<td>
+								@if(session.get("idRecurso")){
+									<div class="contenido"><a href="@routes.RecursoWebController.verAn(ds.id)" target="blank">@ds.nombrearchivo</a></div>
+								}
+								@if(session.get("cvesRoles")){
+									@if(session.get("cvesRoles").contains("1 ")){
+										<div class="contenido"><a href="@routes.RecursoController.ver(ds.id)" target="blank">@ds.nombrearchivo</a></div>
+									}								
+								}
+							<td>	
+								<div class="contenido">@ds.tipodocumento.descripcion</div>
+							</td>
+						</tr>				
+						}
+					</tr>
+				</table>
+			</td>
+		</tr>	
+		<tr>
+			<td colspan="6">
+				<table class="table table-bordered tablaReporte">
+					<tr>
+						<td>
+							<div class="etiqueta">Fecha y hora registro electrónico</div><div class="contenido">@recurso.auditinsert.format("dd/MM/YYYY hh:mm:ss")</div>
+						</td>	
+						<td>
+							<div class="etiqueta">Estado actual:</div><div class="contenido">@recurso.estado.descripcion</div>
+						</td>
+					</tr>		
+				</table>			
+			</td>
+		</tr>
+		
+		@if(recurso.oficio != null){
+		<tr>
+			<td colspan="6">
+				<table class="table table-bordered tablaReporte">
+					<tr>
+						<td><div class="etiqueta">Oficio número</div><div class="contenido">@recurso.oficio.numero</div></td>
+						<td><div class="etiqueta">Folio</div><div class="contenido">@recurso.oficio.folio</div></td>
+						<td><div class="etiqueta">Ver</div><div class="contenido">   <a href="@routes.OficioController.verOficio(recurso.id)" target="blank">Ver oficio</a>  </div></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		}
+
+		@if(recurso.clasificacion != null){
+		<tr>
+			<td colspan="6">
+				<table class="table table-bordered tablaReporte">
+					<tr>
+						<td><div class="etiqueta">Clasificación</div><div class="contenido">@recurso.clasificacion.criterio1.descripcion / @recurso.clasificacion.criterio2.descripcion / @recurso.clasificacion.criterio3.catalogo.descripcion</div></td>
+						@if(recurso.clasificacion.tiporecurso != null){
+							<td><div class="etiqueta">Tipo de recurso</div><div class="contenido">@recurso.clasificacion.tiporecurso.descripcion</div></td>						
+						}						
+					</tr>
+				</table>
+			</td>
+		</tr>				
+		}
+
+		@if(recurso.recursoevaluadores.size != 0){
+			<tr>
+				<td colspan="6">
+					<table class="table table-bordered tablaReporte">
+						<tr>
+							<td><div class="etiqueta">Evaluador</div></td>
+							<td><div class="etiqueta">Aspecto</div></td>
+						</tr>
+						@for(re <- recurso.recursoevaluadores){
+							<tr>											
+								<td><div class="contenido">@re.evaluador.personal.nombreCompleto</div></td>
+								<td><div class="contenido">@re.aspecto.descripcion</div></td>
+							</tr>
+						}
+					</table>
+				</td>
+			</tr>	
+		
+		
+		
+		
+		
+		
+		
+			<tr id="renglonSolProrroga">
+				<td colspan="6">
+					<table class="table table-bordered tablaReporte" id="tablaSolProrroga">
+						<tr>
+							<td colspan="6" div class="etiqueta">SOLICITUDES DE PRÓRROGAS</td>
+						</tr>
+						<tr>
+							<td><div class="etiqueta">Evaluador</div></td>
+							<td><div class="etiqueta">Aspecto</div></td>
+							<td><div class="etiqueta">Fecha solicitud</div></td>
+							<td><div class="etiqueta">No. días</div></td>
+							<td><div class="etiqueta">Aplicado</div></td>
+						</tr>						
+						@for(re <- recurso.recursoevaluadores){
+							@for(sol <- re.prorrogas){
+								<tr>
+									<td>@sol.recursoevaluador.evaluador.personal.nombreCompleto</td>
+									<td>@sol.recursoevaluador.aspecto.descripcion</td>
+									
+									<td>@sol.auditinsert.format("dd/MM/YYYY hh:mm:ss")</td>
+									<td>@sol.ndias</td>
+									<td>@if(sol.autorizado){Si}else{No} </td>
+								</tr>
+							}
+						}
+					</table>
+				</td>
+			</tr>
+					
+		}
+		
+		@if(recurso.oficiovaloracion != null ){
+			<tr>
+				<td colspan="6">
+					<table class="table table-bordered tablaReporte">
+						<tr>
+							<td colspan="2"><div class="etiqueta">Oficio de valoración</div></td>
+						</tr>
+							<tr>											
+								<td><div class="contenido">Número de oficio de valoración @recurso.oficiovaloracion.numero</div></td>
+								<td><div class="contenido"><a href="@routes.RecursoController.verOficioValoracion(recurso.oficiovaloracion.id)" target="blank">Ver Oficio de valoración</a></div></td>
+							</tr>
+					</table>
+				</td>
+			</tr>
+		}		
+		
+		
+		
+		@if(recurso.estado.id == 400 || recurso.estado.id == 402){
+			<tr>
+				<td colspan="6">
+					<table class="table table-bordered tablaReporte">
+						<tr>
+							<td><div class="etiqueta">Solicitud de cancelación</div></td>
+							<td><div class="etiqueta">Solicitante</div></td>
+							<td><div class="etiqueta">Motivo</div></td>
+							<td><div class="etiqueta">Fecha aceptación</div></td>
+							<td><div class="etiqueta">Fecha reactivación</div></td>
+							
+						</tr>
+						@for(sc <- recurso.solicitudescancelacion){
+							<tr>											
+								<td><div class="contenido">@sc.fechaSolicitud.format("dd/MM/YYYY hh:mm:ss")</div></td>
+								<td><div class="contenido">@sc.evaluador.personal.nombreCompleto</div></td>
+								<td><div class="contenido">@sc.motivoCancelacion</div></td>
+								
+									<td><div class="contenido">@if(sc.fechaAceptacion!=null){@sc.fechaAceptacion.format("dd/MM/YYYY hh:mm:ss")}</div></td>
+									<td><div class="contenido">@if(sc.fechaReactivacion!=null){@sc.fechaReactivacion.format("dd/MM/YYYY hh:mm:ss")}</div></td>
+								
+							</tr>
+						}
+					</table>
+				</td>
+			</tr>		
+		}
+
+		@if(recurso.estado.id == 401){
+			<tr>
+				<td colspan="6">
+					<table class="table table-bordered tablaReporte">
+						<tr>
+							<td><div class="etiqueta">Cancelación en clasificación</div></td>
+							<td><div class="etiqueta">Observación</div></td>
+						</tr>
+						<tr>											
+							<td><div class="contenido">@recurso.auditlastupdate.format("dd/MM/YYYY hh:mm:ss")</div></td>
+							    <td><div class="contenido">
+							    @if(recurso.observacioncancelacion != null){
+							       @recurso.observacioncancelacion.observacion
+							    }
+							    </div></td>
+					</table>
+				</td>
+			</tr>		
+		}
+
+			
+			
+			
+			
+			
+		<tr>
+			<td colspan="6">
+				<table class="table table-bordered tablaReporte">
+					<tr>
+						<td  colspan=10 class="etiqueta">Historial de estados</td>
+					</tr>
+					<tr>
+						<td class="etiqueta">Estado</td><td class="etiqueta">Fecha</td>
+					</tr>
+					@for(hs<-recurso.historialestados){
+						<tr>
+							<td>
+								<div class="contenido">@hs.estado.descripcion</div>
+							</td>
+							<td>
+								<div class="contenido">@hs.auditinsert.format("dd/MM/YYYY hh:mm:ss")</div>
+							</td>			
+						</tr>
+					}
+				</table>
+				
+				<table class="table table-bordered tablaReporte">	
+					@if(recurso.historialestadoevaluaciones.size!=0){
+						<tr>
+							<td  colspan=10 class="etiqueta">Detalle evaluaciones</td>
+						</tr>
+						<tr>
+							<td class="etiqueta">Estado</td><td class="etiqueta">Fecha</td><td class="etiqueta">Evaluador</td><td class="etiqueta">Aspecto</td>
+						</tr>					
+						@for(hee<-recurso.historialestadoevaluaciones){
+							<tr>
+								<td>
+									<div class="contenido">@hee.estado.descripcion</div>
+								</td>
+								<td>
+									<div class="contenido">@hee.auditinsert.format("dd/MM/YYYY hh:mm:ss")</div>
+								</td>
+								<td>
+									<div class="contenido">@hee.recursoevaluador.evaluador.personal.nombreCompleto</div>
+								</td>
+								<td>
+									<div class="contenido">@hee.recursoevaluador.aspecto.descripcion</div>
+								</td>								
+							</tr>						
+						}
+					}
+				</table>
+				
+				<table class="table table-bordered tablaReporte">	
+					@if(recurso.historialestadoencuesta.size!=0){
+						<tr>
+							<td  colspan=10 class="etiqueta">Detalle encuestas</td>
+						</tr>
+						<tr>
+							<td class="etiqueta">Estado</td><td class="etiqueta">Fecha</td>
+						</tr>					
+						@for(heen<-recurso.historialestadoencuesta){
+							<tr>
+								<td>
+									<div class="contenido">@heen.estado.descripcion</div>
+								</td>
+								<td>
+									<div class="contenido">@heen.auditinsert.format("dd/MM/YYYY hh:mm:ss")</div>
+								</td>
+							</tr>						
+						}
+					}
+				</table>
+			</td>
+		</tr>
+		
+		
+		
+				
+	</table>
+	
+
+	
+
+}
+<script type="text/javascript">
+	$( document ).ready(function() {	
+		if ( $("#tablaSolProrroga tr").length != 2   ){
+			$("#renglonSolProrroga").show();
+		} else {
+			$("#renglonSolProrroga").hide();
+		}
+	});
+
+
+	$("#tablaPalabras tbody td").each(function (index) {
+	 	if ((index % 5) == 0) { 
+	 		$("#tablaPalabras tbody").append($('<tr>')); 
+	 	} 
+	 	$("#tablaPalabras tbody tr").last().append($(this)); 
+	 });
+	
+	
+	@if(recurso.estado.id == 1L){
+		$("#alertEstado").removeClass("alert alert-default").addClass("alert alert-info").html( $("#alertEstado").html()+   " Reingrese mas tarde.");;
+	}
+	@if(recurso.estado.id == 2){		
+		$("#alertEstado").removeClass("alert alert-default").addClass("alert alert-warning").html( $("#alertEstado").html()+   " Corrija las observaciones indicadas y envíe.");
+	}
+	@if(recurso.estado.id == 3L){
+		$("#alertEstado").removeClass("alert alert-default").addClass("alert alert-success").html( $("#alertEstado").html()+   " Toda su información esta bien, los evaluadores procederan a revisar el contenido, reingrese mas tarde.");
+	}
+	
+	
+
+	
+	
+</script>
+
+

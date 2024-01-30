@@ -1,0 +1,34 @@
+.divBlur {
+	position: relative;
+	z-index: 1;
+	background-color: black; ;
+	opacity: 0.8;
+    filter: alpha(opacity=80);
+    margin-left: auto;
+    margin-left: auto;
+}
+
+
+.tablalogin tr td{
+	padding: 10px;
+	color:black;
+}
+
+
+
+#msgLogin{
+	visibility: visible;
+	height: 36px;
+}
+
+.error {	
+	font-size: 18;
+	color:red;
+}
+
+.centrarLogin{
+    margin-left: auto;
+    margin-right: auto;
+    width: 350px;
+    	
+}

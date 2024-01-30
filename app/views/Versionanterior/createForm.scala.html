@@ -1,0 +1,147 @@
+@(forma: Form[Versionanterior], 
+  recurso:Recurso,  
+  lac:List[Actualizacion]
+)
+  <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/> 
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.render) } 
+
+@main {
+	<div class=container-fluid style="background-color: white; padding: 10px" id="div0" style="display:none">  
+			<div class="row">
+				<div class="col-md-12">
+					<ol class="breadcrumb">
+					  <li>Recursos</li>
+					  <li><a href="/actualizacionesList">Seguimiento a actualizaciones</a></li>
+					  <li class="active">Agregar</li>
+					</ol>			
+				</div>
+			</div>
+	@flashes()
+    @form(CSRF(routes.VersionanteriorController.save(recurso.id)), 'id->"frmCreate") {
+        
+        <fieldset>
+        	<table class="table table-bordered tablaReporte">
+        		<tr class="etiqueta">
+        			<td colspan="6" style="width: 50%" >
+        				<div class="etiqueta" style="text-align: center;">OBRA NUEVA</div>        				
+        			</td>
+        			<td>
+        				<div class="etiqueta" style="text-align: center;">ACTUALIZACIONES</div>
+        			</td>
+        		</tr>
+				<tr>
+					<td colspan="5"><div class="etiqueta">Título</div><div class="contenido">@recurso.titulo</div></td>
+					<td colspan="1"><div class="etiqueta">Clave de control</div><div class="contenido">@recurso.numcontrol</div></td>
+					<td rowspan="14" style="text-align: center; vertical-align: middle; padding: 5%" >
+					@for(r <- lac) {
+						@if(!r.getActualizacion.isEmpty){
+							<table style="width: 100%" class="table table-bordered" id="tablaAct">
+							<tr>
+								<td class="etiqueta">Num. control</td>
+								<td class="etiqueta">Fecha elaboración</td>
+								<td class="etiqueta">Fecha y hora registro electrónico</td>
+								<td class="etiqueta"></td>
+							</tr>
+							@for(i <- r.getActualizacion   ){								
+								<tr>
+									<td style="display: none;">@inputText(forma("aux").copy(value=Some(i.id+"")), '_label->"", 'style -> "display:none")</td>
+									<td>@i.numcontrol</td>
+									<td>@i.elaboracion.format("dd/MM/yyyy")</td>	
+									<td>@i.auditinsert.format("dd/MM/YYYY hh:mm:ss")</td>	
+									<td style="width: 10px; text-align: center; vertical-align: middle;"></td>							
+								</tr>									
+							}
+							</table>
+						}
+					}
+					
+						@inputText(forma("recursoanterior.id"), '_label->"",  'style -> "display: none")
+						Se muestran los recursos que han sido registrados como 'Actualización'.
+			            @select(
+			                forma("recurso.id"), 
+			                options(models.Recurso.optionsSoloActualizaciones()), 
+			                '_label -> "Recurso con versión 'Actualización'", '_default -> "Seleccione el recurso...",
+			                '_showConstraints -> false, 
+			                'required->"required"
+			            )	
+			            
+			            <input type="submit" value="Agregar actualización" class="btn btn-primary">
+			            
+			            				
+					</td>
+				</tr>
+        		<tr>
+        			<td>
+						<div class="etiqueta">Versión</div><div class="contenido">@recurso.version.descripcion</div>
+						@if(recurso.versionanterior != null){
+							<div class="etiqueta">Clave control anterior</div><div class="contenido">@recurso.versionanterior.recursoanterior</div>
+						}        				
+        			</td>
+        			<td colspan="5">
+						<div class="etiqueta">Programa Académico:</div><div class="contenido">@recurso.programaacad</div>        			
+        			</td>
+       			</tr>
+       			<tr>
+        			<td colspan="6">
+        				<div class="etiqueta">Sinópsis</div><div class="contenido">@recurso.sinopsis</div>
+        			</td>
+        		</tr>
+        		<tr>
+        			<td colspan="3">
+        				<div class="etiqueta">Fecha elaboración</div><div class="contenido">@recurso.elaboracion.format("dd/MM/yyyy")</div>
+        			</td>
+        			<td colspan="3">
+						<div class="etiqueta">Fecha y hora registro electrónico</div><div class="contenido">@recurso.auditinsert.format("dd/MM/YYYY hh:mm:ss")</div>        			
+        			</td>
+        		</tr>
+        		<tr>
+        			<td colspan="6"></td>
+        		</tr>
+        	</table>
+        </fieldset>
+    }
+    </div>
+}
+
+<script type="text/javascript">
+$(function() {
+
+	var oid = $("#tablaAct tr:last td:first input").val();
+	$("#tablaAct tr:last td:last").html('<input class="btn btn-primary btn-xs btn-danger" type="button" value="Eliminar actualización" onclick="javascript:eliminaAct('+oid+')">');
+	
+	
+    $('form').submit(function() {  
+    	var anterior = $("#tablaAct tr:last td:first input").val();
+    	if (anterior == undefined)
+    		anterior = @recurso.id; 
+       	$("#recursoanterior_id").val( anterior );       
+        return true; 
+    });
+});	
+
+
+
+function eliminaAct(recId){
+	if (confirm("¿Desea desasociar el recurso?"))
+	$.ajax({
+		  method: "POST",
+		  async: false,
+		  url: "/actualizaciones/"+recId+"/delete"
+		})
+		  .success(function( data ) {
+		  	if ( (data == null) || (data.length == 0) ){
+		  		alert("No es posible eliminar la actualización" );
+		  	} else {
+		  		location.reload();	
+		  	}
+		  })		  
+		  .error(function(data){
+		  	alert('Error ajax en la búsqueda de la clave de control anterior');
+		  	numErrores++;		  	
+		  });
+	}
+
+</script>
+

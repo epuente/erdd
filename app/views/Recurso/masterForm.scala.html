@@ -1,0 +1,393 @@
+
+
+@(recursoForm: Form[Recurso], id: Long, recurso: Recurso )
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) } 
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-ld-12">
+			Los campos marcados con asterisco "*" son obligatorios.
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-8">
+			<div class="panel panel-default">
+           		<div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span>DATOS DE IDENTIDAD</div>
+       			<div class="panel-body">
+     				<input type="hidden" name="elId" id="elId" value='@id' >
+					<div class="row">
+						@if(recurso == null){
+							<div class="col-md-12 reqtitulo" id="reqtitulo">
+								@inputText(recursoForm("titulo"), '_label -> "Título del Recurso Didáctico Digital*", '_help -> "", 'size->"80", 'required->"required", 'class->"form-control validaRegExp", 'maxlength->"150", 'patron->"[a-z0-9àèìòùáéíóúñ_ \"'/*-+.,()ü{}=<>:;-]+")
+							</div>							
+       					} else {
+							<div class="col-md-8 reqtitulo">
+								@inputText(recursoForm("titulo"), '_label -> "Título del Recurso Didáctico Digital*", '_help -> "", 'size->"80", 'required->"required", 'class->"form-control validaRegExp", 'maxlength->"150", 'patron->"[a-z0-9àèìòùáéíóúñ_ \"'/*-+.,()ü{}=<>:;-]+")
+							</div>        					
+      						<div class="col-md-4 center-block">
+      							Clave de control:
+      							<div class="numControlNumero">@recurso.numcontrol</div>
+      						</div>
+       					}
+					</div>
+					<div class="row">
+				        <div id="reqniveleducativo_id" class="col-md-6 requerido">
+		       				@select(
+			                recursoForm("niveleducativo.id"), 
+			                options( models.Niveleducativo.options), 
+			                '_label -> "Nivel educativo*", '_default -> "Seleccione nivel educativo...",
+			                '_showConstraints -> false, 'required->"required", 'class->"form-control" 
+			            	)
+          				</div>
+						<div id="reqareaconocimiento_id" class="col-md-6 requerido">
+				            @select(
+				                recursoForm("areaconocimiento.id"), 
+				                options(models.Areaconocimiento.options), 
+				                '_label -> "Área del conocimiento*", '_default -> "Seleccione área del conocimiento...",
+				                '_showConstraints -> false, 'required->"required", 'class->"form-control"
+				            )             		
+		          		</div>
+					</div>
+					<div class="row">
+						<div id="requnidadacademica_id" class="col-md-12 requerido">
+						@*
+				            @select(
+				                recursoForm("unidadacademica.id"), 
+				                options(models.Unidadacademica.options), 
+				                '_label -> "Unidad académica*", '_default -> "Seleccione la Unidad académica...",
+				                '_showConstraints -> false, 'required->"required", 'class->"form-control"
+				            )
+				            *@ 	        		
+                            @select(
+                                recursoForm("unidadacademica.id"),    
+                                options(),            
+                                '_label -> "Unidad académica*", '_default -> "Seleccione Nivel educativo y Área del conocimiento",
+                                '_showConstraints -> false, 'required->"required", 'class->"form-control"
+                            )				            
+			       		</div>						
+					</div>
+					<div class="row">
+							<div id="reqprogramaacad" class="col-md-8 requerido">
+			       				@inputText(recursoForm("programaacad"), '_label -> "Programa académico*", '_help -> "", 'required->"required", 'class->"form-control validaRegExp", 'size->50, 'maxlength->"80", 'patron->"[a-z0-99àèìòùáéíóúñ_ \"'/*-+.,()ü{}=<>:;-]+")
+				       		</div>	
+				       		
+							<div id="reqmodalidad_id" class="col-md-4 requerido">
+							
+       							
+@*
+					     			@inputRadioGroup(
+					         			recursoForm("modalidad.id"),
+					         			options = options(models.Modalidad.options), 'required->"required"							         
+					      			)		
+					      			
+*@					      			
+
+								<div class="form-group clearfix">
+									<label>Modalidad donde se usará el recurso*</label>
+					      			@for((k,v) <-models.Modalidad.options()){
+					      				<label class="radio-inline">
+					      					<input type="radio" name="modalidad.id" id="modalidad_id_@k" value="@k" required="required"> @v
+				      					</label>
+					      			}
+					      			
+					      			<span class="help-block with-errors">
+					      				
+					      			</span>
+									<div>
+								    	
+						    				<textarea placeholder="Escriba su observacion..." name="observacion_modalidad.id" class="observacion" maxlength="600" style="min-width: 100%"></textarea>
+						   					<button type="button" name="btnObservacion_modalidad.id" class="btn btn-primary btn-xs form-control" style="display:none5">Agregar observación</button>
+								    	
+										<div class="errorObservacion" style="color:red"></div>		    	
+								    </div>					      			
+					      			
+					      			
+				      			</div>
+					      			
+
+           					</div>	        		
+				       							
+					</div>
+					<div class="row">				
+						<div id="reqalcancecurricular_id" class="col-md-4">
+				            @select(
+				                recursoForm("alcancecurricular.id"), 
+				                options(models.AlcanceCurricular.options), 
+				                '_label -> "Alcance curricular", '_default -> "Seleccione el alcance...",
+				                '_showConstraints -> false, 'onchange->"javascript:clickAlcance(this)", 'class->"form-control"
+				            ) 	        		
+			       		</div>	
+			       		<div class="col-md-4">
+			       			@inputText(recursoForm("alcancecurricularotro"), '_label -> "Describa:", '_help -> "", 'pattern->"[A-Za-z áéíóúÁÉÍÓÚñÑ-]*", 'class->"form-control", 'maxlength->"120")
+			       		</div>
+   						<div class="col-md-4">
+                             <div>
+                                @select(
+                                    recursoForm("unidadmedida.id"), 
+                                    options(models.UnidadMedida.options), 
+                                    '_label -> "Unidad de medida", '_default -> "Seleccione la unidad de medida...",
+                                    '_showConstraints -> false, 'class->"form-control"
+                                ) 
+                                @inputText(recursoForm("duracion"), '_label -> "Duración", '_help -> "", 'size->10, 'class->"form-control validaRegExp" , 'patron->"[0-9]", 'maxlength->5, 'placeholder->"Número entero" )
+                            </div>
+                        </div>
+   						
+   						
+					</div>
+					<div class="row">
+			       		<div id="reqelaboracion" class="col-md-4  requerido">
+      							@inputText(recursoForm("elaboracion"), '_label -> "Fecha de elaboración*", '_help -> "", 'required5->"required5",'class->"form-control", 'placeholder->"dd/mm/aaaa" )
+      						</div>
+      						<div id="reqversion_id" class="col-md-4 requerido">	        	
+				     			@inputRadioGroup(
+							         recursoForm("version.id"),
+							         options = options(models.Version.options),
+							         'labelAlterna -> "Versión*", 'required->"required"
+						      	)
+			
+					      		<div id="divVersion" style="display:none;" >
+								      @inputRadioGroup(
+								         recursoForm("extra1"),
+								         options = options("S" -> "Si", "N" -> "No"),
+								         'labelAlterna -> "¿Recuerda la clave de control anterior?")
+						         </div>
+					         
+								<div class="form-group clearfix " id="divNumControl" style="display: none;">
+						         	<table border="0" style="width: 100%;">
+						         		<tr>
+						         			<td colspan="2">
+						         				<label for="va_numcontrol" class="control-label">Clave de control anterior</label>
+						         			</td>
+						         		</tr>
+						         		
+						         		<tr>
+						         			<td>
+												<div class="input input-group">
+												    <input type="text" id="versionanterior_recursoanterior_id" name="versionanterior.recursoanterior_id" value="" size="16" class="form-control" pattern="[A-Za-z0-9]*">
+													<span class="help-block with-errors"></span>
+													<div>
+														<textarea placeholder="Escriba su observacion..." name="observacion_versionanterior.recursoanterior_id" class="observacion"></textarea>
+														<button type="button" name="btnObservacion_versionanterior.recursoanterior_id" class="btn btn-primary btn-xs form-control" style="display: none;">Corregir</button>		    	
+													</div>
+												</div>									         			
+						         			</td>
+						         			<td><a class="btn btn-primary btn-xs" href="javascript:bnca()" role="button">Buscar clave de control</a></td>									         			
+						         		</tr>
+						         		<tr>
+						         			<td colspan="2"><div id="msgBuscarNc"></div></td>
+						         		</tr>
+						         	</table>													
+								</div>							         
+		         		</div>	
+		         		<div class="col-md-4">
+								@inputCheckboxGroup(
+							         recursoForm("dirigidoa.id"),
+							         options = options(models.Dirigidoa.options),'name->"dirigidoa.id",							         
+							         'labelAlterna -> "Dirigido a*"
+						      	)		         			
+		         		</div>	      
+			      </div>	
+			      <div class="row">
+        		  	<div id="reqsinopsis" class="col-md-12 requerido" >
+       						@textarea(recursoForm("sinopsis"), args = 'rows -> 8, 'cols -> 60, 'required->"required", 'class->"form-control validaRegExp", '_label->"Sinopsis*", 'maxlength->"250", 'style->"min-width:100%", 'patron->"[a-z0-99àèìòùáéíóúñ_ \"'/*-+.,()ü{}=<>:;-]+")
+      			  	</div>
+   			  	  </div>
+       				<div class="row">  
+						<div style="display:none">
+							@select(recursoForm("auxiliar"), options(models.Autorfuncion.options), '_label -> "Tipo de autoría", '_default -> "Seleccione tipo de autoría...", '_showConstraints -> false)
+				  			@select(
+				              recursoForm("auxDocto"), 
+				              options( models.Tipodocumento.optionsActivas), 
+				              '_label -> "Tipo de documento", '_default -> "Seleccione el tipo...",
+				              '_showConstraints -> false,
+				              'required->"required"
+				          	) 
+						</div>			
+	
+	
+	
+					</div>	   			  	  
+       		    </div>
+       	    </div>
+			<div class="panel panel-default">
+           		<div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span>AUTORES POR FUNCIÓN</div>
+       			<div class="panel-body">
+                  	<div class="row">
+                  		<div class="col-md-12">
+							Si usted es el único autor del recurso, registre los datos que a continuación se solicitan y automáticamente quedará registrado como responsable para todos los efectos administrativos relacionados con su proceso de solicitud.
+							<br><br> 
+							En caso de haber más autores, utilice la opción correspondiente para agregar a todos los que hayan participado en la producción del recurso, especificando el rol o función que cada uno de ellos asumió durante el proceso.								                  		
+                  		</div>                  							                  	
+                  	</div>
+                  	<div class="row">
+                  		<div class="col-xs-2">Nombre*</div>
+                  		<div class="col-xs-2">Paterno*</div>
+                  		<div class="col-xs-2">Materno*</div>
+                  		<div class="col-xs-2">Tipo autoría*</div>
+                  		<div class="col-xs-2">Correo*</div>
+                  		<div class="col-xs-2">Teléfono*</div>
+                  	</div>
+       			
+                  	<div id="tableAutor">
+					</div>
+					<div>
+						<a href="javascript:agregarAutor()" id="ligaAgregarOtroAutor">Agregar otro autor</a>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+   
+        
+		<div class="col-md-4">
+			<div class="panel panel-default">
+           		<div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span>PALABRAS CLAVE</div>
+       			<div class="panel-body">     
+	       			<div class="col-md-12   clearfix">
+	        			<table id="tablaPalabras" class="tablaPalabras">
+	        				<thead>
+	        					<tr><td>Palabras clave*. Mínimo cinco palabras clave que permitan hacer una identificación del recurso acorde con su temática.<td></tr>
+	        				</thead>
+	        				<tbody>	
+	        				   @if(recurso != null){	
+		        				   @for(   (pc,i)<-recurso.palabrasclave.zipWithIndex   ) {
+		        				   		<tr><td><div class="form-group has-success">
+		        				   		<div class="input input-group" style="min-width:100%">
+
+			        				   		<input type="text" name="palabra.descripcion@i" value="@pc.descripcion" class="form-control validaRegExp" patron="[a-z0-9àèìòùáéíóúñ_ \'/*-+.,()ü#$%&/!¿?¡{}=<>:;-]+" , maxlength="40" style="min-width:100%"/>
+			        				   		
+			        				   		
+			        				   		<div class="help-block with-errors"></div>      </div><textarea placeholder="Escriba su observacion..." name="observacion_palabra.descripcion@i" class="observacion"></textarea>    <button type="button" name="btnObservacion_palabra.descripcion@i" class="btn btn-primary btn-xs form-control">Corregir</button>
+			        				   		<div class="errorObservacion" style="color:red"></div>  
+										</div>		        				   		
+		        				   		   </td><td><input type="button" value="Quitar palabra" onclick="eliminarPalabra(this)"></td></tr>
+		        				   }
+	        				   }
+	        				</tbody>    
+	        				<tfoot>
+	        					<tr>
+	        						<td><a href="javascript:agregarPalabra()" id="ligaAgregarOtraPalabra">Agregar otra palabra</a></td>
+	        					</tr>
+	        				</tfoot>    				
+	        			</table>
+	       			</div>       			
+       			</div>
+   			</div>
+			<div class="panel panel-default">
+           		<div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span>FORMATO DE ENTREGA</div>
+       			<div class="panel-body">
+       				<div class="row">   
+
+	       				<div class="col-md-12">
+							<div id="reqformatoentrega_id" class="requerido" >
+								     @inputRadioGroup(
+								         recursoForm("formatoentrega.id"),
+								         options = options(models.Formatoentrega.options),
+								         'labelAlterna -> "Formato de entrega*", 'onclick->"javascript:clickFormato(this)", 'required->"required"
+								      )		
+								      @inputText(recursoForm("formatoentregaotro"), '_label -> "Describa:", '_help -> "", 'patron->"[a-z àèìòùáéíóúñü.,()-]+", 'class->"form-control validaRegExp")			
+							</div>       				
+	       				</div>
+       				</div>
+   				</div>
+			</div>
+       				
+			<div class="panel panel-default">
+           		<div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span>RECURSO EN LÍNEA</div>
+       			<div class="panel-body">
+       				
+       				<div class="row">
+	       				<div class="col-md-12">
+	       					Si su Recurso Didáctico Digital se encuentra en línea coloque en el siguiente espacio la página.
+	       				</div>
+       				</div>
+       				<div class="row">
+	       				<div class="col-md-12">
+		       				@inputText(recursoForm("url"), '_label -> "Dirección", '_help -> "", 'class->"form-control validaRegExp", 'size->"40" ,'placeholder->"Dirección del tipo http://", 'maxlength->"80", 'patron->"[a-z0-99àèìòùáéíóúñ_ \"'/*-+.,()ü#$%&/!¿?¡{}=<>:;-]")
+	       				</div>
+       				</div>
+       				<div class="row">
+       					<div class="col-md-12">
+       						Si el Recurso Didáctico Digital está en un sitio web o plataforma y requiere autentificación, escriba a continuación el nombre de usuario y contraseña.
+       					</div>
+       				</div>       				
+       				<div class="row">
+	       				<div class="col-md-6">
+	       					@inputText(recursoForm("webUsuario"), '_label -> "Usuario", '_help -> "", 'class->"form-control validaRegExp", 'size->"20em" ,'placeholder->"Nombre de usuario", 'maxlength->"20")
+	       				</div>
+	       				<div class="col-md-6">
+		       				@inputText(recursoForm("webPassword"), '_label -> "Clave de acceso", '_help -> "",  'class->"form-control validaRegExp", 'size->"20em" ,'placeholder->"Clave de acceso", 'maxlength->"50")
+	       				</div>
+       				</div>
+				</div>
+   			</div>
+
+			
+		</div>
+			
+			
+			
+
+	
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+           		<div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span>DOCUMENTOS</div>
+       			<div class="panel-body">
+                  	<div class="row">
+                  		<div class="col-md-12">
+								A continuación deberá anexar los documentos escaneados en formato PDF que apliquen de acuerdo con el tipo de recurso que se va a evaluar.                  		
+                  		</div>                  							                  	
+                  	</div>
+                  	<div class="row tablaIndicacionesDoctos2">
+                  		<div class="col-md-12">
+	                  		<ul>
+								<li>Constancia de validación académica (con sello y firma) emitida por la Academia correspondiente.
+								<li>Formato de estrategia didáctica para el uso del recurso en la modalidad que corresponda.
+								<li>Manual de instalación, instructivo o guía para el usuario del recurso didáctico digital.
+								<li>Carta de cesión de derechos a favor del IPN por cada uno de los autores y perfiles registrados en el apartado AUTORES de esta solicitud.
+								<li>Registro de autoría en Creative Commons a nombre de los docentes registrados como AUTORES en esta solicitud.	                  			
+							</ul>
+                  		</div>
+                  	</div>
+
+                  	<div class="row ">
+                  		<div class="col-md-5">
+                  			Documento*
+                  		</div>
+                  		<div class="col-md-5">
+                  			Tipo de documento*  Es necesario que el formato del archivo sea PDF
+                  		</div>            
+                  		<div class="col-md-2">
+                  		</div>
+                  	</div>
+                  	<div class="row">
+                  		<div class="col-md-12">
+                  			&nbsp;
+                  		</div>
+                  	</div>
+                  	<div class="row">
+                  		<div class="col-lg-12" style="padding:2%">
+                  		    <div style="padding: 2%;  border: 1px solid #e8e8e8;">
+		                  	   <div id="tableDocumentos">  	</div>
+		                  	</div>                  		
+                  		</div>
+                  	</div>
+					<div class="row">
+						<div class="col-lg-12"> <a href="javascript:agregarDocumento2()" id="ligaAgregarDocto">Agregar otro documento</a> </div>						
+					</div>
+
+			    	<input type="text" id="documentosBorrar" name="documentosBorrar" style="display:none"/>
+			    	<input type="text" id="observacionesDocumentosBorrar" name="observacionesDocumentosBorrar" style="display:none"/>
+				
+               	</div>
+           	</div>
+       	</div>	
+	</div>
+
+
+

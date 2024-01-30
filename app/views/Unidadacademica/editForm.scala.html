@@ -1,0 +1,66 @@
+@(id: Long, unidadacademicaForm: Form[Unidadacademica])
+@import helper._
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/> 
+
+@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.render) } 
+
+@main {
+	<div class=container-fluid style="background-color: white; padding: 10px" >
+			<div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+					  <li>Catálogos</li>
+					  <li><a href="/unidadacademica">Unidades académicas</a></li>
+					  <li class="active">Editar</li>
+					</ol>			
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">    
+				    <h3>Editar Unidad Académica</h3>
+					<div style="vertical-align: middle;"> 
+						@form(CSRF(routes.UnidadacademicaController.update(id)), 'class->"form-inline", 'id->"frmEdit"  ) {
+						  <div class="form-group">
+					    		@inputText(unidadacademicaForm("nombre"), 'labelAlterna->"Nombre", '_help -> "", 'size->"80px", 'required->"required")
+						  </div>
+						  <br>
+                            <div class="form-group">
+                              @inputCheckboxGroup(
+                                 unidadacademicaForm("nivel"),
+                                 options = options(models.Niveleducativo.options),                              
+                                 '_label -> null                                                                                 
+                              )
+                           </div>
+                           <br><br>
+                            <div class="form-group">
+                              @inputCheckboxGroup(
+                                 unidadacademicaForm("area"),
+                                 options = options(models.Areaconocimiento.options),                              
+                                 '_label -> null                                                                                 
+                              )
+                           </div>                              
+                           <br><br>						  
+						  <button type="submit" class="btn btn-primary">Actualizar</button>
+						}
+					</div>
+
+				 @form(CSRF(routes.UnidadacademicaController.delete(id)), 'class -> "topRight", 'id->"frmDelete") {
+						<input type="submit" value="Eliminar" class="btn btn-danger">
+						<a href="@routes.UnidadacademicaController.list()" class="btn btn-default">Cancelar</a>
+ 					}
+
+
+    			</div>
+			</div>
+    </div>
+}
+@comunCatalogosJS("Edit", "Unidad académica")
+
+<script type="text/javascript">
+	@for(ea <- unidadacademicaForm.get().niveles){
+	    $('#nivel_@ea.nivel.id').prop('checked',true);
+	}
+    @for(ea <- unidadacademicaForm.get().areas){
+        $('#area_@ea.area.id').prop('checked',true);
+    }
+</script>

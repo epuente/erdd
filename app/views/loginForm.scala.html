@@ -1,0 +1,36 @@
+@(forma: Form[Application.Login])
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) }
+        
+    
+                <div class="panel panel-default">
+                    <div class="panel-heading"><i class="fa fa-key"></i> Iniciar sesión</div>
+                    <div class="center-block">
+                        <table class="tablaLogin" border="0" style="width: 100%">
+                            <tr>
+                                <td colspan="2"></div></td>
+                            </tr>
+                            <tr>                        
+                            <tr>
+                                <td>Usuario:</td>
+                                <td><label for="usuario" class="sr-only">Usuario</label><input type="text" id="usuario" placeholder="Nombre de usuario" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>Contraseña:</td>
+                                <td><label for="password" class="sr-only">Clave de acceso</label><input type="password" id="password" placeholder="Clave de acceso" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><div id="msgLogin"></div></td>
+                            </tr>
+                            <tr>
+                                <td colspan="12" style="margin-left: auto;    margin-right: auto;  width: 100%;">
+                                    <div style="width: 60%" class="center-block">
+                                        <input type="button" class="btn btn-primary btn-block" value="Entrar" id="btnLogin"">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>              
+        
+        

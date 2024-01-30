@@ -1,0 +1,42 @@
+@(rs: List[Recurso], mensaje:String)
+
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) } 
+
+@main {
+	<div class=container-fluid style="background-color: white; padding: 10px" >
+		<div class=container-fluid >    
+			<div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+					  <li>Recursos</li>
+					  <li class="active">Solicitudes por revisar</li>
+					</ol>			
+				</div>
+			</div>
+			<h3>Solicitudes por revisar</h3>
+			@if(rs.isEmpty) {		
+				<h1>No existen registros.</h1>
+			} else {	
+			    @if(flash.containsKey("success")) {
+			        <div class="alert alert-success" role="alert">
+			            @flash.get("success")
+			        </div>
+			    }
+			    @if(flash.containsKey("warning")) {
+			        <div class="alert alert-warning" role="alert">
+			            <strong>@flash.get("warning")</strong>
+			        </div>
+			    }    
+			    @if(flash.containsKey("error")) {
+			        <div class="alert alert-danger" role="alert">
+			            <strong>@flash.get("error")</strong>
+			        </div>
+			    }		
+			
+				@observar(rs, mensaje)
+		
+			}
+		</div>
+	</div>
+}

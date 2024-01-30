@@ -1,0 +1,39 @@
+@(elements: helper.FieldElements)
+
+@***************************************************
+* Generate input according twitter bootstrap rules *
+***************************************************@
+
+<div class="form-group clearfix @if(elements.hasErrors) {error}">
+
+
+
+
+	<label for="@elements.id" class="control-label">@elements.args.get('labelAlterna)</label>
+	@if(elements.toString.contains("<input type=\"radio\"")){
+	} else {
+		@if(elements.label != "" || elements.args.get('label)!="") {
+			@if(elements.label.toString.contains(".id")){
+				<label for="@elements.id" class="control-label">@elements.label.toString.capitalize.dropRight(3)</label>
+			} else {
+			<label for="@elements.id" class="control-label">@elements.label</label>
+			}
+		}
+	}
+    <div class="input input-group" style="min-width:100%">
+		    	@elements.input
+		    <span class="help-block with-errors"></span>
+		    <div>
+		    	@if(elements.name=="dirigidoa.id"){
+		    		<textarea placeholder="Escriba su observacion..." name="observacion_@(elements.name)[]" class="observacion" maxlength="600" style="min-width: 100%"></textarea>
+		    		<button type="button" name="btnObservacion_@(elements.name)[]" class="btn btn-primary btn-xs form-control" style="display:none5" >Corregir</button>
+		    	} else {
+    				<textarea placeholder="Escriba su observacion..." name="observacion_@elements.name" class="observacion" maxlength="600" style="min-width: 100%"></textarea>
+   					<button type="button" name="btnObservacion_@elements.name" class="btn btn-primary btn-xs form-control" style="display:none5">Corregir</button>
+		    	}
+				<div class="errorObservacion" style="color:red"></div>		    	
+		    </div>
+	</div>
+
+</div>
+

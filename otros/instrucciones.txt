@@ -1,0 +1,19 @@
+
+Conectarse remotamente al server
+
+ 
+El el server :
+
+ejecutar el script sql en la DB erdd user erdd.
+
+
+
+nohup bin/erdd -Dhttp.port=8080 >> /home/eduardo/erddProd/salida.log&
+
+
+
+Para eliminar el proceso:
+sudo kill -9 $(sudo fuser 8080/tcp)
+
+
+

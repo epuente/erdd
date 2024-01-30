@@ -1,0 +1,274 @@
+@(fechas:List[Calendario])
+
+@main{
+
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/fullcalendar.css")"/> 
+
+		
+<script src="@routes.Assets.at("javascripts/fullcalendar/moment.min.js")" ></script>
+<script src="@routes.Assets.at("javascripts/fullcalendar/fullcalendar.min.js")" ></script>
+<script src="@routes.Assets.at("javascripts/fullcalendar/es.js")" ></script>
+<div id="fecha" class="hidden"></div> <script src="/assets/lib/jquery/jqueryui.js" type="text/javascript"></script>
+
+<div class="container-fluid" style="background-color: white; padding: 10px;">
+ 
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb">
+				  <li>Catálogos</li>
+				  <li class="active">Calendario días inhábiles</li>
+				</ol>			
+			</div>
+		</div>	
+		<div class="row">
+			<div class="col-lg-12">
+  	          <h3>Calendario días inhábiles</h3>
+	        </div>
+		</div>
+		<div class="row">		
+			<div class="col-lg-3">
+					<div class="panel panel-default">
+	                	<div class="panel-heading"><span class="glyphicon glyphicon-info-sign"></span>Instrucciones</div>
+	               		<div class="panel-body">
+							<div>
+								Para agregar fechas:
+								<ul>									
+									<li>Arrastrar desde la fecha de inicio hasta la fecha del día de término</li>
+									<li>Escribir un título descriptivo, por ejemplo 'Periodo vacacional', 'Fumigación del edificio', etc.</li>
+									<li>Es obligatorio escribír el título descriptivo, en caso contrario no se agregará la fecha al calendario</li>
+								</ul>
+								<br>
+								Para ampliar o reducir la fecha límite:
+								<ul>
+									<li>Situar el cursor sobre el último día de la fecha, al colocarlo en el borde izquierdo el cursor cambia a una flecha hacia la derecha. </li>
+									<li>Arrastrar hasta la nueva fecha final.</li>
+								</ul>
+								Para cambiar bloques completos de rangos de fechas:
+								<ul>
+									<li>Arrastrar la fecha actual hasta la nueva posición.</li>
+								</ul>
+							</div>
+							
+							
+						
+							
+	               		</div>                	
+	               	</div>		
+			</div>
+			<div class="col-lg-9">
+					<div class="panel panel-default">
+	                	<div class="panel-heading"><span class="glyphicon glyphicon-calendar"></span>Calendario  <div id="divMsgCalendario" ></div>  </div>
+	               		<div class="panel-body">
+								<div id='calendar'></div>
+	               		</div>                	
+	               	</div>		
+			</div>		
+	</div>
+	</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Detalle</h4>
+      </div>
+      <div class="modal-body">
+      
+		<div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">    <p id="cTitulo" class="lead"></p>   </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">Desde: <div id="cDesde"></div></div>
+            <div class="col-md-6">Hasta: <div id="cHasta"></div></div>
+          </div>
+          <div class="row">
+          		<div id="cDuracion" class="col-md-12"></div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">      	
+        <button type="button" class="btn btn-danger" >Borrar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+}
+
+
+
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('body').css('background', 'white');
+
+
+	$('#calendar').fullCalendar({
+		editable: true,
+		eventLimit: true, // allow "more" link when too many events
+		allDay: false,
+		allDayDefault: true,
+		selectable: true,
+		selectHelper: true,
+//		aspectRatio: 2,
+        height: "auto",
+		contentHeight: "auto",
+		weekends: false,
+		select: function(start, end) {
+			var title = prompt('Título descriptivo:');
+			var eventData;
+			if (title) {
+				eventData = {
+					title: title,
+					start: start,
+					end: end,
+					tipo: 1
+				};
+			//	$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+						
+				$.ajax({					
+					  type: "POST",
+					  url: '/agregarFechaCalendario?desde='+ $.fullCalendar.moment(eventData.start).format('YYYY-MM-DD HH:mm')+'&hasta='+$.fullCalendar.moment(eventData.end).format('YYYY-MM-DD HH:mm')+'&titulo='+eventData.title+"&id="
+	  
+					})
+				  .success(function( data ) {
+				  		eventData.id = data;
+				  		$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+				  		$('#divMsgCalendario').html("Se agregó fecha inhábil.");		
+				  })					
+				  .error(function(data){
+					  alert("error en ajax " +data);
+				  })				
+			}
+			$('#calendar').fullCalendar('unselect');
+		},
+		@*
+	    eventMouseover: function( event, jsEvent, view ) { 
+	    	alert("id:"+event.id+"\ntitle:"+event.title+"\ntipo:"+event.tipo+"\ncolor:"+event.eventColor+"desde: "+moment(event.start).format('DD/MM/YYYY HH:mm')+"\nhasta:"+moment(event.end).format('DD/MM/YYYY  HH:mm'));
+	    },
+	    *@
+	    eventDrop: function(eventData, delta, revertFunc) {
+	        if (confirm(eventData.title + " se moverá a " + eventData.start.format()+"\n\n¿Continuar?")) {
+				$.ajax({
+					  type: "POST",
+					  url: '/agregarFechaCalendario?desde='+ $.fullCalendar.moment(eventData.start).format('YYYY-MM-DD HH:mm')+'&hasta='+$.fullCalendar.moment(eventData.end-1).format('YYYY-MM-DD HH:mm')+'&titulo='+eventData.title+"&id="+eventData.id
+					})
+				  .success(function( data ) {
+					  $('#divMsgCalendario').html("Se movió fecha inhábil.");					  
+				  })					
+				  .error(function(data){
+					  alert("error en ajax " +data);
+				  })	            
+	        } else {
+	        	revertFunc();
+	        }
+
+	    },
+		eventRender: function(event, element) {
+			if (event.tipo ==1){
+				var color = '#378006';
+			}
+			if (event.tipo ==2){
+				var color = 'red';
+			}
+			if (event.tipo ==3){
+				var color = 'grey';
+			}		
+			if (event.tipo ==4){
+				var color = 'blue';
+			}
+			if (event.tipo ==5){
+				var color = 'cyan';
+			}			
+			$(element).css('background-color', color );			
+		},
+	    eventClick: function(eventData) {	    	
+	    	$("#cTitulo").html("Título: "+eventData.title);
+	    	$("#cDesde").html($.fullCalendar.moment(eventData.start).format('DD/MM/YYYY HH:mm'));
+	    	$("#cHasta").html($.fullCalendar.moment(eventData.end.subtract(1,'days')).format('DD/MM/YYYY HH:mm'));	
+	    	$("#cDuracion").html("<br>Duración total: "+moment.duration(eventData.end.add(1,'days') - eventData.start).humanize()+" naturales.");
+			$("#fecha").html(eventData.id);
+	    	$("#myModal").modal('show');
+
+	    },		
+	    eventResize: function(eventData, delta, revertFunc) {
+
+
+	        
+	        if (!confirm(eventData.title + " ahora termina el " + eventData.end.format()+"\n¿Es correcto?")) {
+	            revertFunc();
+	        } else {	        
+	        
+					$.ajax({				
+						  type: "POST",
+						  url: '/agregarFechaCalendario?desde='+ $.fullCalendar.moment(eventData.start).format('YYYY-MM-DD HH:mm')+'&hasta='+$.fullCalendar.moment(eventData.end).format('YYYY-MM-DD HH:mm')+'&titulo='+eventData.title+"&id="+eventData.id
+		
+						})
+					  .success(function( data ) {
+					  		eventData.id = data;
+					  		$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+					  		$('#divMsgCalendario').html("Se modificó fecha inhábil.");		
+					  })					
+					  .error(function(data){
+						  alert("error en ajax " +data);
+					  })
+	        }
+	    },	    
+		events: [
+				    @for((f,i) <- fechas.zipWithIndex){
+				    	{
+				    		id:    "@f.id",
+				    		title: "@f.descripcion",
+				    		start: "@f.desde",
+				    		end:   "@f.hasta",
+				    		tipo:  1
+				    	} @if( i != fechas.length-1){ , }		    	
+				    }
+		]
+	});
+
+	
+	
+	
+	
+
+
+
+
+});
+
+
+
+$(".btn-danger").on("click", function(){
+	var eventData = $("#calendar").fullCalendar( 'clientEvents', $("#fecha").html()  )[0]; 
+	if ( confirm("¿Desea eliminar la fecha?")  ){    		
+		$.ajax({
+			  type: "POST",
+			  url: "/eliminarFechaCalendario?id="+eventData.id
+		
+			})
+		.success(function( data ) {
+			$('#calendar').fullCalendar('removeEvents', eventData._id);
+			$('#divMsgCalendario').html("Se eliminó fecha inhábil.");
+			$("#myModal").modal('hide');
+		})					
+		.error(function(data){
+			  alert("error en ajax " +data);
+		})	    		
+	}
+});
+</script>
+

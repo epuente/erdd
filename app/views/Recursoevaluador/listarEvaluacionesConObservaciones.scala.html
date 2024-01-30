@@ -1,0 +1,37 @@
+@(re:List[Recursoevaluador], tipo:Int)
+@main{
+
+	<div class="container-fluid" style="background-color: white; padding: 10px;">
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb">
+					@if( request.uri.substring(request.uri.length-1).compareTo("0") == 0  ){	
+				  		<li>Recursos</li>
+				  		<li class="active">Evaluaciones con observaciones</li>
+				  	}
+				  	@if( request.uri.substring(request.uri.length-1).compareTo("1") == 0  ){
+				  		<li>Detalle evaluaciones</li>
+				  		<li class="active">Evaluaciones con observaciones</li>
+				  	}
+				</ol>			
+			</div>
+		</div>	
+		<div class="row">
+			<div class="col-md-12">
+				@if( request.uri.substring(request.uri.length-1).compareTo("0") == 0  ){
+					<h3>Evaluaciones con observaciones</h3>
+				}
+				@if( request.uri.substring(request.uri.length-1).compareTo("1") == 0  ){
+					<h3>Evaluaciones con observaciones</h3>
+				}
+				
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				@comunListarEvaluaciones(re, tipo)
+			</div>
+		</div>
+	</div>
+}

@@ -1,0 +1,196 @@
+@(re:Recursoevaluador, inhabiles:List[Calendario], ndias:Int)
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.render) } 
+
+@main{
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/fullcalendar.css")"/> 
+	<script src="@routes.Assets.at("javascripts/fullcalendar/moment.min.js")" ></script>
+	<script src="@routes.Assets.at("javascripts/fullcalendar/fullcalendar.min.js")" ></script>
+	<script src="@routes.Assets.at("javascripts/fullcalendar/es.js")" ></script>
+	<div id="fecha" class="hidden"></div>
+
+	<div class="container-fluid" style="background-color: white; padding: 10px;">
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb">
+				  <li>Recursos</li>
+				  <li class="active">Prórrogas</li>
+				</ol>			
+			</div>
+		</div>	
+		<div class="row">
+			<div class="col-md-12">
+				<h3>Asignación de prórrogas para el recurso</h3>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-5">
+				<div class="panel panel-default">
+	              	<div class="panel-heading"><span class="glyphicon glyphicon-info-sign"></span>Fechas</div>
+	           		<div class="panel-body">
+	           			<div class="row">
+	           				<div class="col-sm-12">
+	           					
+		           					<table class="table table-bordered table-condensed">
+		           						<tr><td>Título</td><td>@re.recurso.titulo</td></tr>
+		           						<tr><td>Clave control</td><td>@re.recurso.numcontrol</td></tr>
+		           						<tr><td>Fecha registro web</td><td>@re.recurso.auditinsert.format("dd/MM/yyyy   hh:mm")</td></tr>
+		           						<tr><td>Aspecto</td><td>@re.aspecto.descripcion</td></tr>
+		           						<tr><td>Evaluador</td><td>@re.evaluador.personal.nombreCompleto</td></tr>
+		           						<tr><td>Fecha asignacion evaluadores</td><td>@re.auditinsert.format("dd/MM/yyyy   hh:mm")</td></tr>
+		           						<tr><td>Fecha inicio evaluación</td><td>@re.recurso.evaluacionFecha.fechainicio.format("dd/MM/yyyy")</td></tr>
+		           						<tr><td>Número de días otorgados</td><td>@re.recurso.evaluacionFecha.ndias</td></tr>
+		           						<tr><td>Fecha final evaluación</td><td><div id="divDesde">@re.recurso.evaluacionFecha.fechalimite.format("dd/MM/yyyy")</div></td></tr>
+	           						</table>
+
+           						
+	           						@if(re.prorrogas.size != 0){
+	           							<h5>Prórrogas previamente otorgadas</h5>
+			           					
+		           						@for(p <- re.prorrogas){
+			           						<table class="table table-bordered table-condensed">
+				           						<tr><td>Número de días otorgados</td><td>@p.ndias</td></tr>
+                                                <tr><td>Prórroga al</td><td>@p.fecha.format("dd/MM/yyyy")</td></tr>				           						
+			           						</table>
+		           						}
+		           						           							
+	           						}
+	           						
+	           						
+	           						@form(CSRF(routes.ProrrogaController.save(re.id)), 'id->"frmCreate") {
+		           						<table class="table table-bordered table-condensed">
+			           						<tr>
+			           							<td>Número de días</td>
+			           							<td><input type="text" id="ndias" name="ndias" size="5" pattern="[0-9]{1,2}" class="form-control" required="required" data-error="Solo se permite hasta 2 dígitos." @if(ndias!=0){value=@ndias} /><span class="help-block with-errors"></span></td>
+			           						</tr>
+			           						<tr>
+			           							<td>Último día para evaluar</td>
+			           							<td><input type="text" id="fechalimite" name="fechalimite" required="required" placeholder="dd/mm/aaaa" readonly="readonly" class="form-control"></td>
+			           						</tr>
+										</table>
+										<input type="submit" value="Asignar prórroga"  class="btn btn-primary">										
+           							}								
+							</div>
+	           			</div>
+	           		</div>
+           		</div>
+           	</div>
+			<div class="col-lg-7">
+				<div class="panel panel-default">
+	              	<div class="panel-heading"><span class="glyphicon glyphicon-info-sign"></span>Calendario</div>
+	           		<div class="panel-body">
+									<div class="col-lg-12">
+										<div id='calendar'></div>
+									</div>						           		
+	           		</div>
+	           	</div>
+	       </div>	           	
+        </div>
+   </div>
+
+
+
+
+
+
+
+}
+
+
+<script type="text/javascript">
+	$(function() {
+		$('#calendar').fullCalendar({		
+			editable: false,
+			allDaySlot: false,
+			eventLimit: true, // allow "more" link when too many events
+			//aspectRatio: 2,La solicitud del recurso
+			allDayDefault: true,
+			selectable: false,
+			selectHelper: false,	
+			weekends: false,
+			eventRender: function(event, element) {
+				if (event.tipo ==1){
+					var color = '#C0C0C0';
+				}
+				if (event.tipo ==2){
+					var color = 'red';
+				}
+				if (event.tipo ==3){
+					var color = 'grey';Int:ndias
+				}		
+				if (event.tipo ==4){
+					var color = 'blue';
+				}
+				if (event.tipo ==5){
+					var color = 'cyan';
+				}		
+				$(element).css('background-color', color );			
+			},		
+		
+			events: [
+			         
+			    @for((f,i) <- inhabiles.zipWithIndex){
+			    	{
+			    		id:    "@f.id",
+			    		title: "@f.descripcion",
+			    		start: "@f.desde",
+			    		end:   moment("@f.hasta"),  
+			    		tipo:  1,			    		
+			    		rendering: 'background'
+			    	} @if( i != inhabiles.length-1){ , }		    	
+			    }
+			    
+			         
+			],
+		    eventMouseover: function( event, jsEvent, view ) { 
+		    	alert("id:"+event.id+"\ntitle:"+event.title+"\ntipo:"+event.tipo+"\ncolor:"+event.eventColor+"desde: "+moment(event.start).format('DD/MM/YYYY')+"\nhasta:"+moment(event.end).format('DD/MM/YYYY'));
+		    }			
+
+
+
+			
+		});
+		
+		
+		if ( $("#ndias").val().length != 0 ){
+			$("#ndias").trigger("input");
+		}
+		
+		
+		
+	});
+	
+	function calcular(){	
+		var fecha = moment("@re.recurso.evaluacionFecha.fechalimite").format('YYYY-MM-DD');
+		$.ajax({
+			  type: "GET",
+			  url: '/fechaMasDias?nd='+$("#ndias").val()+'&fechainicio='+fecha
+			})
+		  .success(function( data ) {
+			    var fechaFinal = moment(data).format('DD/MM/YYYY');
+		  		$("#fechalimite").val(fechaFinal);
+		  		$('#calendar').fullCalendar('removeEvents', 'actual');	
+		  		var eventObject = {
+		  				id: 'actual',
+		  			    title: "Periodo",
+		  			    start: moment(fecha).add(1,'days'),
+		  			    end: moment(data).add(1,'days'),
+		  			    tipo: 5,
+		  			    rendering: 'background'
+
+		  		};
+
+		  		$('#calendar').fullCalendar('renderEvent', eventObject, true);		  		
+		  		
+		  		
+		  })
+	}
+	
+	$("#ndias").on("input",function(){		
+		calcular();
+	});
+	
+	
+	+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=a.extend({},c.DEFAULTS,d.data(),"object"==typeof b&&b),f=d.data("bs.validator");(f||"destroy"!=b)&&(f||d.data("bs.validator",f=new c(this,e)),"string"==typeof b&&f[b]())})}var c=function(b,c){this.$element=a(b),this.options=c,this.$element.attr("novalidate",!0),this.toggleSubmit(),this.$element.on("input.bs.validator change.bs.validator focusout.bs.validator",a.proxy(this.validateInput,this)),this.$element.on("submit.bs.validator",a.proxy(this.onSubmit,this)),this.$element.find("[data-match]").each(function(){var b=a(this),c=b.data("match");a(c).on("input.bs.validator",function(){b.val()&&b.trigger("input.bs.validator")})})};c.DEFAULTS={delay:500,html:!1,disable:!0,errors:{match:"Does not match",minlength:"Not long enough"}},c.VALIDATORS={"native":function(a){var b=a[0];return b.checkValidity?b.checkValidity():!0},match:function(b){var c=b.data("match");return!b.val()||b.val()===a(c).val()},minlength:function(a){var b=a.data("minlength");return!a.val()||a.val().length>=b}},c.prototype.validateInput=function(b){var c=a(b.target),d=c.data("bs.validator.errors");if(c.is('[type="radio"]')&&(c=this.$element.find('input[name="'+c.attr("name")+'"]')),this.$element.trigger(b=a.Event("validate.bs.validator",{relatedTarget:c[0]})),!b.isDefaultPrevented()){var e=this;this.runValidators(c).done(function(f){c.data("bs.validator.errors",f),f.length?e.showErrors(c):e.clearErrors(c),d&&f.toString()===d.toString()||(b=f.length?a.Event("invalid.bs.validator",{relatedTarget:c[0],detail:f}):a.Event("valid.bs.validator",{relatedTarget:c[0],detail:d}),e.$element.trigger(b)),e.toggleSubmit(),e.$element.trigger(a.Event("validated.bs.validator",{relatedTarget:c[0]}))})}},c.prototype.runValidators=function(b){function d(a){return b.data(a+"-error")||b.data("error")||"native"==a&&b[0].validationMessage||g.errors[a]}var e=[],f=([c.VALIDATORS.native],a.Deferred()),g=this.options;return b.data("bs.validator.deferred")&&b.data("bs.validator.deferred").reject(),b.data("bs.validator.deferred",f),a.each(c.VALIDATORS,a.proxy(function(a,c){if((b.data(a)||"native"==a)&&!c.call(this,b)){var f=d(a);!~e.indexOf(f)&&e.push(f)}},this)),!e.length&&b.val()&&b.data("remote")?this.defer(b,function(){var c={};c[b.attr("name")]=b.val(),a.get(b.data("remote"),c).fail(function(a,b,c){e.push(d("remote")||c)}).always(function(){f.resolve(e)})}):f.resolve(e),f.promise()},c.prototype.validate=function(){var a=this.options.delay;return this.options.delay=0,this.$element.find(':input:not([type="hidden"])').trigger("input.bs.validator"),this.options.delay=a,this},c.prototype.showErrors=function(b){var c=this.options.html?"html":"text";this.defer(b,function(){var d=b.closest(".form-group"),e=d.find(".help-block.with-errors"),f=d.find(".form-control-feedback"),g=b.data("bs.validator.errors");g.length&&(g=a("<ul/>").addClass("list-unstyled").append(a.map(g,function(b){return a("<li/>")[c](b)})),void 0===e.data("bs.validator.originalContent")&&e.data("bs.validator.originalContent",e.html()),e.empty().append(g),d.removeClass("has-success"),d.addClass("has-error"),f.removeClass("glyphicon-ok"),f.addClass("glyphicon-warning-sign"))})},c.prototype.clearErrors=function(a){var b=a.closest(".form-group"),c=b.find(".help-block.with-errors"),d=b.find(".form-control-feedback");c.html(c.data("bs.validator.originalContent")),b.removeClass("has-error"),b.addClass("has-success"),d.removeClass("glyphicon-warning-sign"),d.addClass("glyphicon-ok")},c.prototype.hasErrors=function(){function b(){return!!(a(this).data("bs.validator.errors")||[]).length}return!!this.$element.find(":input:enabled").filter(b).length},c.prototype.isIncomplete=function(){function b(){return"checkbox"===this.type?!this.checked:"radio"===this.type?!a('[name="'+this.name+'"]:checked').length:""===a.trim(this.value)}return!!this.$element.find(":input[required]:enabled").filter(b).length},c.prototype.onSubmit=function(a){this.validate(),(this.isIncomplete()||this.hasErrors())&&a.preventDefault()},c.prototype.toggleSubmit=function(){if(this.options.disable){var a=this.$element.find('input[type="submit"], button[type="submit"]');a.toggleClass("disabled",this.isIncomplete()||this.hasErrors()).css({"pointer-events":"all",cursor:"pointer"})}},c.prototype.defer=function(a,b){return this.options.delay?(window.clearTimeout(a.data("bs.validator.timeout")),void a.data("bs.validator.timeout",window.setTimeout(b,this.options.delay))):b()},c.prototype.destroy=function(){return this.$element.removeAttr("novalidate").removeData("bs.validator").off(".bs.validator"),this.$element.find(":input").off(".bs.validator").removeData(["bs.validator.errors","bs.validator.deferred"]).each(function(){var b=a(this),c=b.data("bs.validator.timeout");window.clearTimeout(c)&&b.removeData("bs.validator.timeout")}),this.$element.find(".help-block.with-errors").each(function(){var b=a(this),c=b.data("bs.validator.originalContent");b.removeData("bs.validator.originalContent").html(c)}),this.$element.find('input[type="submit"], button[type="submit"]').removeClass("disabled"),this.$element.find(".has-error").removeClass("has-error"),this};var d=a.fn.validator;a.fn.validator=b,a.fn.validator.Constructor=c,a.fn.validator.noConflict=function(){return a.fn.validator=d,this},a(window).on("load",function(){a('form[data-toggle="validator"]').each(function(){var c=a(this);b.call(c,c.data())})})}(jQuery);	
+</script>

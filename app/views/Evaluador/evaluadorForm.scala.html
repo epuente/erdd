@@ -1,0 +1,66 @@
+@(personalForm: Form[Personal], r:Personal)
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) } 
+<section id="personalForm">
+
+	        <fieldset>
+		        <table class="table">
+		        	<tr>
+		        		<td colspan=1  class="requerido">
+		        			<div class="form-group">
+		        				@inputText(personalForm("nombre"), '_label -> "Nombre", 'required->"required", 'class->"form-control", 'pattern->"[A-Za-záéíóúñÁÉÍÓÚÑ ]*", 'placeholder->"Nombre" )
+		        			</div>
+	        			</td>
+		        		<td colspan=1  class="requerido">
+		        			@inputText(personalForm("paterno"), '_label -> "Paterno", 'required->"required", 'class->"form-control", 'pattern->"[A-Za-záéíóúñÁÉÍÓÚÑ ]*", 'placeholder->"Paterno")
+	        			</td>
+		        		<td colspan=1  class="requerido">
+		        			@inputText(personalForm("materno"), '_label -> "Materno", 'required->"required", 'class->"form-control", 'pattern->"[A-Za-záéíóúñÁÉÍÓÚÑ ]*", 'placeholder->"Materno")
+	        			</td>
+
+	        			
+		        		<td colspan=1  class="requerido">
+ 		        			@inputText(personalForm("correo"), '_label -> "Correo", 'required->"required", 'class->"form-control",  'placeholder->"email del evaluador", 'type->"email") 
+	        			</td>
+	        			
+					</tr>
+					<tr>
+						<td colspan=1  class="requerido">
+							@inputText(personalForm("usuario.usuario"), '_label -> "Nombre de usuario", 'required->"required", 'class->"form-control", 'pattern->"[A-Za-z0-9]*", 'placeholder->"Nombre de usuario (sin caracteres especiales)" )
+						</td>
+						<td colspan=3  class="requerido">
+							@inputPassword(personalForm("usuario.password"), '_label -> "Clave de acceso", 'required->"required", 'class->"form-control", 'pattern->"[A-Za-z0-9]*", 'placeholder->"Clave de acceso (sin caracteres especiales)")							
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="border-top: 0px solid #ff0000;">
+							<div id="divErrorUserPass" class="text-danger"></div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td colspan="4" class="requerido">
+							@inputRadioGroup(
+								personalForm("activo.id"),
+								options = options(models.EstadoActivo.options), 'required->"required"
+							)								
+						</td>
+					</tr>
+					
+					<tr>
+		        		<td  class="requerido" colspan="7">
+						     @inputCheckboxGroup(
+						         personalForm("aspecto"),
+						         options = options(models.Aspecto.options),						         
+						         '_label -> null						         										         
+						      )
+	            		</td>
+		        	</tr>	        	
+		        </table>
+	        </fieldset>        
+
+
+</section>
+
+
+

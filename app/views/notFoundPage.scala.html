@@ -1,0 +1,27 @@
+@(s:String)
+
+  <style>
+    section {
+        border-radius: 1em;
+        padding: 1em;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%) 
+    }
+  </style>
+
+
+@layoutIndex{
+
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/index.css")"/>
+
+        <div class="container">
+          <section>
+              <h1 class="error-number">Ocurrió un error</h1>
+                  <h2>No existe la acción solicitada.</h2> 
+                  <h2>No se encontró la página @s</h2>
+            </section>
+        </div>
+}

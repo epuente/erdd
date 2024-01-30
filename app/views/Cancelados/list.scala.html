@@ -1,0 +1,55 @@
+@(recurso:List[Recurso])
+
+
+@main{
+	<h3>
+	@if(recurso.isEmpty){
+		No hay registros
+	} else {
+		Se encontraron @recurso.size() recursos cancelados
+	</h3>
+<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>Clave de control</th>
+				<th>Título</th>
+				<th>Área del conoc.</th>
+				<th>Nivel educativo</th>
+				<th>Programa académico</th>
+				<th>Tipo cancelación</th>
+				<th>Observación</th>
+			</tr>
+		</thead>
+	
+		@for(r <- recurso) {
+		<tr>
+			<td><a href="@routes.ReporteController.cesoe(r.id)">@r.numcontrol</a></td>
+			<td>@r.titulo</td>
+			<td>@r.areaconocimiento.descripcion</td>
+			<td>@r.niveleducativo.descripcion</td>
+			<td>@r.programaacad</td>
+			@if(r.estado.id==401){ 			
+				<td>En clasificación</td>
+			}
+			@if(r.estado.id==402){ 			
+				<td>En evaluación</td>
+			}
+			<td>
+				@if(r.observacioncancelacion!=null){
+						@r.observacioncancelacion.observacion
+				}
+				@if(r.solicitudescancelacion.size !=0){
+					@for( sc <- r.solicitudescancelacion ){
+						@sc.observacion<br>
+					}
+				}
+				
+				</td>			
+		</tr>
+	
+		}
+	</table>		
+		
+		
+	}
+}

@@ -1,0 +1,214 @@
+@(currentPage: com.avaje.ebean.Page[Recursoevaluador], currentSortBy: String, currentOrder: String, currentFilter: String, currentCampoFiltro: String, rdioSolicitud:Int)
+@import helper._
+
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage:Int, newSortBy:String,   newCampoFiltro:String) = @{
+    
+    var sortBy = currentSortBy
+    var order = currentOrder
+    var campoFiltro = currentCampoFiltro
+    
+    if(newSortBy != null) {
+        sortBy = newSortBy
+        if(currentSortBy == newSortBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }
+
+
+		
+    // Generate the link
+    routes.ProrrogaController.list(newPage, sortBy, order, currentFilter, currentCampoFiltro, rdioSolicitud)
+    
+}
+
+@**********************************
+* Helper generating table headers *
+***********************************@
+@header(key:String, title:String) = {
+    <th class="@key.replace(".","_") header @if(currentSortBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}"       >
+        <a href="@link(0, key, currentCampoFiltro)">@title</a>
+    </th>
+}
+
+
+@main{
+	<div class=container-fluid style="background-color: white; padding: 10px" > 
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<ol class="breadcrumb">
+					  <li>Recursos</li>
+					  <li class="active">Prórrogas</li>
+					</ol>			
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<h3>Prórrogas</h3>
+									
+					@flashes()
+					
+				    <div id="actions">
+				        <form action="@link(0, "recurso.titulo", "recurso.titulo")" method="GET" id="frmFiltro">       
+				            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filtrar solicitud por ..."/>
+				            <select name ="c" id="c" >
+								<option value="algo">Campos de filtrado</option>
+				            	<option value="recurso.titulo" @if(currentCampoFiltro=="recurso.titulo"){selected}>Título</option>
+				            	<option value="numcontrol" @if(currentCampoFiltro=="numcontrol"){selected}>Clave de control</option>
+				            	<option value="niveleducativo.descripcion" @if(currentCampoFiltro=="niveleducativo.descripcion"){selected}>Nivel de conocimiento</option>
+				            	<option value="areaconocimiento.descripcion" @if(currentCampoFiltro=="areaconocimiento.descripcion"){selected}>Área del conocimiento</option>
+				            	<option value="unidadacademica.nombre" @if(currentCampoFiltro=="unidadacademica.nombre"){selected}>Unidad académica</option>
+				            	<option value="recurso.estado.descripcion" @if(currentCampoFiltro=="recurso.estado.descripcion"){selected}>Estado</option>
+				            	<option value="recursoevaluadores.evaluador.personal.nombre" @if(currentCampoFiltro=="recursoevaluadores.evaluador.personal.nombre"){selected}>Evaluador</option>
+				            </select>
+				            
+				            <input type="radio" name="rdioSolicitud" value=-1  @if(rdioSolicitud.toString=="-1"){checked}>Todos
+				            <input type="radio" name="rdioSolicitud" value=0  @if(rdioSolicitud==0){checked}>Sin solicitud de prórroga 
+				            <input type="radio" name="rdioSolicitud" value=1  @if(rdioSolicitud==1){checked}>Con solicitud de prórroga
+				            
+				            <input type="submit" id="searchsubmit" value="Filtrar" class="btn btn-primary btn-xs">
+				        </form>        
+				    </div>
+
+				@if(currentPage != null){	
+					@if(currentPage.getTotalRowCount == 0) {
+						<div class="well">
+							<em>No existen registros</em>
+						</div>
+						} else {
+					        <div class="table-responsive">
+								<table class="table table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											@header("recurso.titulo", "Título")
+											@header("numcontrol", "Clave de control")                    
+											@header("auditinsert","Fecha registro web")
+											@header("auditinsert","Fecha límite inicial")
+											@header("recurso.estado.descripcion", "Estado")
+											<th>Evaluador</th>
+											<th>Aspecto</th>
+											<th>Prórrogas</th>
+											<th>Sol. pŕorroga</th>
+
+										</tr>
+									</thead>
+									<tbody>
+					
+										@for((re,ire) <- currentPage.getList.zipWithIndex) {
+											<tr>
+												<td><a href="/reporte/cesoe/@re.recurso.id">@re.recurso.titulo</a></td>
+												<td>@re.recurso.numcontrol</td>                        
+												<td>@re.recurso.auditinsert.format("dd/MM/yyyy")</td>
+												<td>@re.recurso.evaluacionFecha.fechalimite.format("dd/MM/yyyy")</td>
+												<td>@re.recurso.estado.descripcion</td>
+												
+												
+												<td>@re.evaluador.personal.nombreCompleto</td>
+												<td>@re.aspecto.descripcion</td>
+												<td>
+												@if(re.prorrogas.isEmpty){
+													<a class="btn btn-primary btn-block" href="javascript:editarProrroga(@re.id, 0)" role="button">Agregar</a>
+												} else {
+												    @if(re.prorrogas.last.autorizado==true){
+														@re.prorrogas.last.fecha.format("dd/MM/YYYY")
+														<a class="btn btn-primary btn-block" href="javascript:editarProrroga(@re.id, 0)" role="button">Editar</a>
+													}
+												}												
+												</td>
+												
+												<td>
+													@if(!re.prorrogas.isEmpty){
+														@for(x <- re.prorrogas){
+															@if(x.autorizado==false){
+																<a class="btn btn-primary btn-warning" href="javascript:editarProrroga(@re.id, @x.ndias)" role="button">Solicitud</a><br>
+															}
+														}
+													}												
+												</td>
+												
+												
+
+											
+											</tr>
+											
+
+											
+											
+										}
+					
+									</tbody>
+								</table>
+							</div>
+					        <div id="pagination" class="pagination">
+					            <ul>
+					                @if(currentPage.hasPrev) {
+					                    <li class="prev">
+					                        <a href="@link(currentPage.getPageIndex - 1, null, currentCampoFiltro)">&larr; Anterior</a>
+					                    </li>
+					                } else {
+					                    <li class="prev disabled">
+					                        <a>&larr; Anterior</a>
+					                    </li>
+					                }
+					                <li class="current">
+					                    <a>Mostrando registros del @currentPage.getDisplayXtoYofZ(" al "," de un total de ")</a>
+					                </li>
+					                @if(currentPage.hasNext) {
+					                    <li class="next">
+					                        <a href="@link(currentPage.getPageIndex + 1, null, currentCampoFiltro)">Siguiente &rarr;</a>
+					                    </li>
+					                } else {
+					                    <li class="next disabled">
+					                        <a>Siguiente &rarr;</a>
+					                    </li>
+					                }
+					            </ul>
+					        </div>
+						
+					 		<form id="frmAux"></form> 	
+						}			
+					}	    
+				</div>
+			</div>
+			
+			
+			
+
+	
+			
+	</div>
+
+}
+
+<script type="text/javascript">
+
+	$("#frmFiltro").on("submit",function(accion){
+		if ($("#c option:selected").val() == "algo" && $("#searchbox").val()!=""){
+			alert("Seleccione de la lista de valores");
+			accion.preventDefault();
+		}		
+	});
+	
+	
+	function agregarProrroga(idRecEv, nd){		
+		$("#frmAux").attr("method","GET");		
+		$("#frmAux").attr("action","/prorrogaCreate/"+idRecEv+"/"+nd);
+		$("#frmAux").submit();
+	}
+	
+	function editarProrroga(idRecEv, nd){	
+		$("#frmAux").attr("method","GET");
+		$("#frmAux").attr("action","/prorrogaEdit/"+idRecEv+"/"+nd);
+		$("#frmAux").submit();
+	}
+	
+	
+</script>

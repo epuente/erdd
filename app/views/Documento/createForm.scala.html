@@ -1,0 +1,39 @@
+@(documentoForm: Form[Documento])
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) } 
+
+@main{
+
+
+	@form(action = routes.DocumentoController.upload, 'enctype -> "multipart/form-data", 'role -> "form") {
+	    
+	    <div class="form-group">
+		     <fieldset>
+			            
+			    @inputText(documentoForm("recurso.id"), '_label -> "Recurso", '_help -> "", 'required->"required", 'class->"form-control")
+			    @inputFile(documentoForm("contenido"), '_label -> "Contenido", '_help -> "", 'required->"required", 'class->"form-control")
+			    
+	  			@select(
+	              documentoForm("tipodocumento.id"), 
+	              options( models.Tipodocumento.optionsActivas), 
+	              '_label -> "Tipo de documento", '_default -> "Seleccione el tipo...",
+	              '_showConstraints -> false,
+	              'required->"required"
+	          	)    
+			
+			    
+			    <p>
+			        <input type="submit">
+			    </p>
+			</fieldset>
+		</div>    
+	}
+ 
+}
+
+
+
+<script type="text/javascript">
+
+
+</script>

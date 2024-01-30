@@ -1,0 +1,40 @@
+MYSQL y archivos gaurdados PDFs  /  error de  Packet Too Large
+
+La siguiente línea en el archivo my.cnf en /etc/mysql configuran el tamaño máximo de documento a guardar en la db y el tam del log
+
+max_allowed_packet=200M
+innodb_log_file_size = 100663296
+
+
+
+CHECAR ESTO
+-XX:MaxMetaspaceSize=512m
+para el error java.lang.OutOfMemoryError: Metaspace
+
+
+-Xms2048m
+-Xmx2048m
+-XX:ReservedCodeCacheSize=256m
+-XX:MaxMetaspaceSize=512m
+
+
+
+GEnerar export solo de los datos:
+mysqldump -uerdd -p --no-create-db --no-create-info erdd_dev > export.sql
+
+
+
+Cuando son demasiados parametros un post
+Cambiar en application.conf  (el valor default es 100k)
+
+parsers.text.maxLength=2048K
+
+
+
+Si al cargar el proyecto marca 
+Warning: node.js detection failed, sbt will use the Rhino based Trireme JavaScript engine instead to run JavaScript assets compilation, which in some cases may be orders of magnitude slower than using node.js.
+ejecutar en consola
+export SBT_OPTS="$SBT_OPTS -Dsbt.jse.engineType=Node"
+
+
+ 

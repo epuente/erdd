@@ -1,0 +1,61 @@
+@(r:List[Recurso])
+
+@main{
+	<div style="background-color: white; padding: 10px; height: 100%">
+			<div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+					  <li>Recursos</li>
+					  <li class="active">Cancelados en evaluación</li>
+					</ol>			
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+	  	          <h3>Cancelados en evaluación</h3>
+		        </div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					@if(!r.isEmpty()){
+						<table class="table table-bordered table-condensed">
+							<thead>
+								<tr>
+									<th>CLAVE DE CONTROL</th>
+									<th>TÍTULO</th>
+									<th>FECHA SOLICITUD / SOLICITANTE</th>
+									<th>FECHA CANCELACIÓN</th>
+								</tr>
+							</thead>
+							@for(r<-r){
+								<tr>
+									<td style="vertical-align: middle;"><a href="/reporte/cesoe/@r.id">@r.numcontrol</a></td>
+									<td style="vertical-align: middle;">@r.titulo</td>									
+									<td style="vertical-align: middle;">
+										<table class="table">
+										@for(x<-r.solicitudescancelacion){
+											<tr>									
+												<td style="vertical-align: middle;">@x.fechaSolicitud.format("dd/MM/YYYY hh:mm:ss")</td>
+												<td style="vertical-align: middle;">@x.evaluador.personal.nombreCompleto</td>
+												<td style="vertical-align: middle;">@x.motivoCancelacion</td>
+											</tr>
+										}
+										</table>
+									</td>
+									<td style="vertical-align: middle;">
+										@for(z <- r.historialestados if z.estado.id == 402){
+												@z.auditinsert.format("dd/MM/YYYY hh:mm:ss")
+											}
+									
+									</td>
+								</tr>
+							}
+						</table>				
+					} else {
+						No hay registros.	
+					}
+				
+				</div>
+			</div>		
+	</div>
+}

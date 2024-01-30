@@ -1,0 +1,1 @@
+ nohup target/universal/stage/bin/erdd -Dapplication.secret=abcdefghijk -Dhttp.port=8080&

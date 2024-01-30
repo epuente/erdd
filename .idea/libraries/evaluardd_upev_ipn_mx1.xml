@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="evaluardd.upev.ipn.mx1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/scala-2.11/classes/certificados/evaluardd.upev.ipn.mx.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

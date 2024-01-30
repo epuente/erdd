@@ -1,0 +1,42 @@
+@(id: Long, afForm: Form[Aspecto])
+
+@import helper._
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/> 
+
+@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.render) } 
+
+@main {
+	<div class=container-fluid style="background-color: white; padding: 10px" >
+			<div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+					  <li>Catálogos</li>
+					  <li><a href="/unidadacademica">Aspectos a evaluar</a></li>
+					  <li class="active">Editar</li>
+					</ol>			
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">    
+				    <h3>Editar aspecto a evaluar</h3>
+					<div style="vertical-align: middle;"> 
+						@form(CSRF(routes.AspectoController.update(id)), 'class->"form-inline", 'id->"frmEdit"  ) {
+						  <div class="form-group">
+					    		@inputText(afForm("descripcion"), 'labelAlterna->"Descripcion", '_help -> "", 'size->"90px", 'required->"required")
+						  </div>
+						  <button type="submit" class="btn btn-primary">Actualizar</button>
+						}
+					</div>
+
+				 @form(CSRF(routes.AspectoController.delete(id)), 'class -> "topRight", 'id->"frmDelete") {
+						<input type="submit" value="Eliminar" class="btn btn-danger">
+						<a href="@routes.AspectoController.list()" class="btn btn-default">Cancelar</a>
+ 					}
+
+
+    			</div>
+			</div>
+    </div>
+}
+@comunCatalogosJS("Edit", "aspecto a evaluar")
+

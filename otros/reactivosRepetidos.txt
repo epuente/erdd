@@ -1,0 +1,65 @@
+El nombre y número de las actividades coincide con la agenda de actividades, contenidos, tabla de evaluación y demás secciones donde aparezcan.
+30  89  128
+
+
+La numeración de las actividades es secuencial, con números arábigos, sin importar el tipo de actividad.
+29  48  88  127
+
+
+Se especifican los productos o evidencias correspondientes a la actividad.
+46  99
+
+
+Los tipos de actividades se distinguen de la siguiente manera: actividad diagnóstica, actividades de aprendizaje, actividades integradoras y actividad de recuperación.
+45  121
+
+
+La ponderación de las actividades integradoras suma un total de 100%.
+51  135
+
+
+El valor de la actividad de recuperación es de 100%.
+52 136
+
+
+Uso correcto de términos equivalentes en español para palabras extranjeras, cuando no se trate de terminología propia de la disciplina.
+60  184  192
+
+
+Aclaración respecto del uso de terminología específica de la disciplina, cuando exista.
+61  185
+
+
+Se encuentra en formato APA Harvard.
+53  187
+
+
+Todas las fuentes citadas en el contenido aparecen en la bibliografía. 
+54  188
+
+
+Las fuentes de consulta aparecen en la bibliografía en orden alfabético.
+55  189
+
+
+Las entradas léxicas del glosario se presentan en masculino; en caso de que la palabra también tenga su forma femenina, se especifica.
+58  190
+
+
+No se pluraliza en las entradas del glosario, a menos que así lo indique la jerga de cada profesión, en cuyo caso debe existir una nota aclaratoria.
+59  191
+
+
+Se evitan definiciones redondas, es decir, las que remiten a otra definición. 
+62  194
+
+
+Las entradas léxicas no se cierran con punto final. 
+63  195
+
+
+Se hace uso correcto de entradas léxicas formadas por palabras compuestas.
+64  196
+
+La entrada léxica aparece en negritas.
+65  197

@@ -1,0 +1,61 @@
+@(logs:List[Log])
+
+
+@for((log,il)<-logs.zipWithIndex){
+
+	 	@if(log.tipo=="e"){
+					<div class="widget widget-stats bg-blue-lighter" >
+					 	<small id="dif@il" class="pull-right ml"></small>
+					 	<small id="dt@il" name="dt">@log.auditinsert.format("dd/MM/yyyy HH:mm:ss")</small>
+			            <div class="stats-icon stats-icon-sm"><i class="fa fa fa-file-text-o fa-fw"></i></div>
+			            <p>@log.recurso.numcontrol</p>
+			             <p class='h6'>@log.recurso.titulo</p>";
+						Estado: @log.estado.descripcion					 							
+		}
+	 	@if(log.tipo=="ev"){
+					<div class="widget widget-stats bg-aqua-lighter">
+					 	<small id="dif@il" class="pull-right ml"></small>
+					 	<small id="dt@il" name="dt">@log.auditinsert.format("dd/MM/yyyy HH:mm:ss")</small>
+			            <div class="stats-icon stats-icon-sm">
+			            	<i class="fa fa-list-alt fa-fw"></i>
+			            </div>
+			            <p>@log.recurso.numcontrol</p>
+			            <p class='h6'>@log.recurso.titulo</p>";
+						Estado evaluación: @log.estadoevaluacion.descripcion			 							
+		}
+ 		@if(log.tipo=="en"){
+					<div class="widget widget-stats bg-purple-lighter">
+						<small id="dif@il" class="pull-right ml"></small>
+	 					<small id="dt@il" name="dt">@log.auditinsert.format("dd/MM/yyyy HH:mm:ss")</small>
+			            <div class="stats-icon stats-icon-sm">
+			            	<i class="fa fa-check-square-o fa-fw"></i>
+			            </div>
+			            <p>@log.recurso.numcontrol</p>
+			            <p class='h6 mt-0 mb-1'>@log.recurso.titulo</p>";
+	 				    Estado encuesta: @log.estadoencuesta.descripcion		
+		}
+			        </div>
+ 
+}
+
+
+
+<script type="text/javascript">
+	$(function() {
+		$("[name='dt']").each(function(){
+			aux = moment($(this).html(),  "DD/MM/YYYY HH:mm:ss"  );
+			diferencia = moment().diff(aux);
+			$("#dif"+$(this).attr("id").substr(2)).html(  moment().diff(  aux,'seconds'  ) +' segundos'  );
+			if (diferencia >= 60000){
+				$("#dif"+$(this).attr("id").substr(2)).html(  moment().diff(  aux , 'minutes' ) +' minutos'  );
+			}
+			if (diferencia >= 3600000){
+				$("#dif"+$(this).attr("id").substr(2)).html(  moment().diff(  aux , 'hours' ) +' horas'  );
+			}
+			if (diferencia >= 86400000){
+				$("#dif"+$(this).attr("id").substr(2)).html(  moment().diff(  aux , 'days' ) +' días'  );
+			}
+		});
+	});
+
+</script>

@@ -1,0 +1,24 @@
+@(elements: helper.FieldElements)
+
+@***************************************************
+* Generate input according twitter bootstrap rules *
+***************************************************@
+
+<div class="form-group clearfix @if(elements.hasErrors) {error}">
+	<label for="@elements.id" class="control-label">@elements.args.get('labelAlterna)</label>
+	@if(elements.toString.contains("<input type=\"radio\"")){
+	} else {
+		@if(elements.args.get('label).nonEmpty  || (elements.args.get('label).isDefined) ) {
+			@if(elements.label.toString.contains(".id")){
+				<label for="@elements.id" class="control-label">@elements.label.toString.capitalize.dropRight(3)</label>
+			} else {
+			<label for="@elements.id" class="control-label">@elements.label</label>
+			}
+		}
+	}
+    <div class="input input-group">		    
+		    	@elements.input		    	
+		    <span class="help-block with-errors"></span>
+	</div>
+</div>
+

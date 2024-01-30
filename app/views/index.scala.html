@@ -1,0 +1,85 @@
+  <style>
+    section {
+        border-radius: 1em;
+        padding: 1em;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%) 
+    }
+  </style>
+
+
+@layoutIndex{
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/index.css")"/>
+		<div class="container">
+		  <section>
+			  <h1>Bienvenido docente</h1>
+			  <big>
+				  <p>Al Sistema de Evaluación de Recursos Didácticos Digitales, mediante el cual podrá registrar los recursos que desea someter a evaluación técnico pedagógica.</p> 
+				  <p>Para iniciar el proceso de registro, oprima el botón Continuar y complete la información que se solicita, anexando los documentos que se indican en el formulario.</p>
+			  	  <p><a class="btn btn-success btn-lg" href="@routes.RecursoWebController.create" role="button">Continuar</a></p>
+			  	  <p></p>	 
+	 		  	  <br>
+			  	  <p>Si usted ya cuenta con una clave de control y desea conocer el estado de su solicitud, escríbalo a continuación y oprima el botón Ingresar.</p>
+		  	  </big>
+					<form class="form-inline">
+						<table id="tablaBuscaNC">
+							<tr>
+								<td >
+									<div class="form-group">
+										<label for="nc" class="sr-only control-label"></label>
+										<input type="text" class="form-control" id="nc" placeholder="Clave de control">						
+									</div>
+									<a class="btn btn-success" href="javascript:bc()" role="button">Ingresar</a>
+																
+								</td>
+								<td style="padding:20px">
+									<div id="msgBuscarNc"></div>
+								</td>
+							</tr>
+						</table>
+					</form>
+			</section>
+		</div>
+<script type="text/javascript">
+	Modernizr.on( 'webp', function( result ) {
+		  if ( result ) {
+		    console.log(result); // true or false;
+		  }
+		});
+
+
+	var bc = function(){
+		$('#msgBuscarNc').html( "");
+		var nc = $('#nc').val();		
+		if(nc.length == 0 ){
+			$('#msgBuscarNc').html( "Debe proporcionar el número de control" ).addClass("error");
+			
+			return false;
+		}
+		$.ajax({
+		  method: "GET",
+		  url: "/buscarNC/"+nc,
+		  dataType:"json"
+
+		})
+		  .success(function( data ) {
+		  	if ( (data.estado == "error"))
+		  		$('#msgBuscarNc').html( "El número de control no existe." ).addClass("error");
+			else {		  
+				$('#msgBuscarNc').html(  "Correcto, ingresando... ").removeClass("error");			
+				//$('form')[0].action = "/recursoweb/"+data;
+				$('form')[0].action = "/recursowebAn";
+				$('form')[0].submit();
+			}
+		  })
+		  
+		  .error(function(data){
+		  	$('#msgBuscarNc').html( "Error" );
+		  });
+	}
+</script>
+}
+

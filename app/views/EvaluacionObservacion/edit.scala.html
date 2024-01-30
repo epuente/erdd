@@ -1,0 +1,206 @@
+@(recurso:Recurso, evt:List[EvaluacionTabla], evr:List[Evaluacion], eo:List[EvaluacionObservacion], evaluador:Long, eog:EvaluacionObservacionGral)
+@import helper._
+
+@System.out.println("renderrrrrrrrrrrrrrrrrrrrrrrrrrr")
+@System.out.println("evt "+evt.size())
+
+
+@main{
+	<div class=container-fluid style="background-color: white; padding: 10px; display:none">
+			<div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+					  <li>Recursos</li>
+					  <li><a href="/mostrarEvaluacionesPorRevisar/1">Para revisar por el administrador</a></li>
+					  <li class="active">Agregar observaciones</li>
+					</ol>			
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+	  	          <h3>Agregar observaciones al recurso "@recurso.titulo", @recurso.numcontrol <small>Aspecto: @evr(0).recursoevaluador.aspecto.descripcion</small></h3>
+	  	          <h5>Clasificación: @recurso.clasificacion.criterio1.descripcion / @recurso.clasificacion.criterio2.descripcion / @recurso.clasificacion.criterio3.catalogo.descripcion</h5>
+		        </div>
+			</div>	   
+			<div class="row">
+				<div class="col-lg-12">
+					@form(CSRF(routes.AdminEvaluacionController.saveObservaciones(recurso.id, evt(0).aspecto.id)), 'role -> "form", 'id -> "frmEvaluacion",'style->"background-color: white;") {
+					    <input type="hidden" name="terminado" value="no">				
+						<table class="table table-bordered table-striped">	
+							@for(r <- evt){
+								<tr>
+									<td>
+										@r.reactivo.id									
+										@r.reactivo.descripcion
+									</td>
+					        		<td name="celdaCalifica" style="width: 15em;">
+					        			<div>
+						        			<input type="radio" name="califica@r.id" value="0" class="activo"> No cumple</br>
+						        			<input type="radio" name="califica@r.id" value="1" class="activo"> Cumple parcialmente</br>
+						        			<input type="radio" name="califica@r.id" value="2" class="activo"> Sí cumple	
+					        			</div>
+					        			<div name="divNA@r.id" style="display: none; text-align: center; vertical-align: middle; ">NO APLICA</div>		        			
+				             		</td>
+				             		<td style="width: 30%">
+				             			<textarea name="observacion@r.id" rows="" cols="30%" style="display:none; min-width: 100%; background-color: #FFFDDD" class="form-control"></textarea>
+				             			<br>
+				             			<input type="button" name="btnObservacion@r.id" value="Agregar observación" class="btn btn-primary btn-block center-block" style="width: 70%">
+				             			<div class="errorObservacion" style="color:red"></div> 
+				             		</td>
+								</tr>
+							}
+
+								<tr>
+									<td colspan="2">
+										<label for="txtObservacionGral">Observación General</label>
+										<textarea id="txtObservacionGral" name="txtObservacionGral" style="min-width:100%" class="form-control" rows="2" disabled="disabled">
+											@if(eog!=null){
+												@eog.observacion
+											}
+										</textarea>
+									</td>
+									<td colspan="2">
+										<textarea name="observacionobservacionGral" rows="" cols="30%" style="display:none; min-width: 100%; background-color: #FFFDDD; class="form-control"></textarea>
+										<br>
+										<input type="button" name="btnObservacionobservacionGral" value="Agregar observación" class="btn btn-primary btn-block center-block" style="width: 70%">
+										<div class="errorObservacion" style="color:red"></div> 
+									</td>									
+								</tr>
+
+						</table>	
+						<div class="center-block" style="width: 50%"> 
+							<input type="submit" value="Correcto, sin observaciones" class="btn primary btn-success btn-block btn-lg"  id="btnObservar">
+						</div>
+					}
+				</div>
+			</div>
+	</div>
+
+}
+
+
+<script type="text/javascript">
+	$(function() {
+		$("[name*='califica']").attr("readonly", true);
+		$("[name*='califica']").prop("disabled", true);
+		leer();		
+		$("textarea[name*='observacion']").keyup();
+		$(".container-fluid").show();
+	});
+	
+	$( document ).on( "click", "input[name*='btnObservacion']", function() {	
+		var id = this.name.substring(14);
+		if ( $("[name='observacion"+id+"']")  .css("display") == "none"  ){
+			$("[name='observacion"+id+"']").show();
+			$("[name='btnObservacion"+id+"']").val("Quitar observación");
+			$("[name='btnObservacion"+id+"']").removeClass("btn-primary").addClass("btn-danger");
+			$(this).parent().find("div.errorObservacion").hide();
+
+		} else {
+			$("[name='observacion"+id+"']").hide();	
+			$("[name='observacion"+id+"']").val("");			
+			$("[name='btnObservacion"+id+"']").val("Agregar observación");
+			$("[name='btnObservacion"+id+"']").addClass("btn-primary").removeClass("btn-danger");
+			$(this).parent().find("div.errorObservacion").hide();
+		}
+		$(this).parent().find("div.errorObservacion").removeClass("error");
+		$("[name='observacion"+id+"']").css("border-color","");			
+		
+		$("textarea[name*='observacion']").keyup();
+	});	
+	
+	function leer(){
+
+		@for(resp <- evr){			
+			// console.log(@resp.respuesta)
+			 console.log(@resp.evaluaciontabla.id)
+			 if (@resp.respuesta == -1){
+				 $("input[name='califica@resp.evaluaciontabla.id']").parent().css("display",'none');
+				 $("[name='divNA@resp.evaluaciontabla.id']").show();
+			 } else {				 
+			 	$("input[name='califica@resp.evaluaciontabla.id'][value='@resp.respuesta']").prop("checked",true);
+			 }
+		}
+		@for(observa <- eo){			
+			$("[name='observacion@observa.respuesta.evaluaciontabla.id']").val("@observa.Observacion");
+			$("[name='observacion@observa.respuesta.evaluaciontabla.id']").show()
+			$("[name='btnObservacion@observa.respuesta.evaluaciontabla.id']").show()
+			$("[name='observacion@observa.respuesta.evaluaciontabla.id']").prop("title","@observa.respuesta.id");
+			$("[name='btnObservacion@observa.respuesta.evaluaciontabla.id']").val("Quitar observación");
+			$("[name='btnObservacion@observa.respuesta.evaluaciontabla.id']").addClass("btn-danger").removeClass("btn-primary")
+		}
+		
+		// Observacion a la observación general  
+		
+		@if(eog != null){
+			//$("[name='txtObservacionGral']").val("@eog.observacion.filter(_ >= ' ')");
+			
+			@if(eog.observacionobservaciongral != null){
+				@if(eog.observacionobservaciongral.observacion != null){
+					$("[name='observacionobservacionGral']").val("@eog.observacionobservaciongral.observacion");
+					$("[name='observacionobservacionGral']").show();
+					$("[name='btnObservacionobservacionGral']").val("Quitar observación");
+					$("[name='btnObservacionobservacionGral']").removeClass("btn-primary").addClass("btn-danger");			
+				}
+			}
+		}
+		
+
+	}
+//	******************************************
+	$("textarea[name*='observacion']").keyup(function() {
+		var conObservaciones = false;
+		$("textarea[name*='observacion']").each(function(){		
+			if ($(this).val().length != 0){
+				conObservaciones = true;
+				return false;
+			}
+		});
+		
+		if (conObservaciones){
+			$("#btnObservar").removeClass("btn-success").addClass("btn-primary");			
+			$("#btnObservar").val("Guardar observaciones");
+			$("input[name='terminado']").val("no");
+			
+		} else {
+			$("#btnObservar").removeClass("btn-primary").addClass("btn-success");
+			$("#btnObservar").val("Correcto, sin observaciones");
+			$("input[name='terminado']").val("si");
+		}
+
+	});
+
+	
+	$("#frmEvaluacion").submit(function(event){
+	
+		var x = $(".error");
+		if (x.length != 0){
+			alert("Algunas observaciones tienen errores, se aceptan hasta 600 caracteres para cada observación");
+			event.preventDefault();
+		} else {
+			$("textarea[name='observacionobservacionGral']").keyup();
+	 		
+	 	}
+	});
+	
+	$(document).on("keydown change blur", "textarea", function(event){
+		var actual = 	$(this);
+		var tam = actual.val().length;
+		if (tam >= 600){
+			console.log("tam excedido");
+			if ( (event.which != 8  && event.which != 46  ))
+				event.preventDefault();
+			actual.css("border-color","#FF0000");			
+			actual.parent().find("div.errorObservacion").html("Este campo de observaciones ha excedido los 600 caracteres").show();
+			actual.parent().find("div.errorObservacion").addClass("error");
+			
+		} else {
+			actual.css("border-color","");			
+			actual.parent().find("div.errorObservacion").hide();	
+			actual.parent().find("div.errorObservacion").removeClass("error");
+		}
+	});	
+	
+	
+	
+</script>

@@ -1,0 +1,12 @@
+@(r: Recurso)
+@main{
+	<div class="jumbotron">
+		<div class="container">
+			<p>El recurso ha sido clasificado como</p>
+			<p></p>
+			<p>@r.clasificacion.criterio1.descripcion / @r.clasificacion.criterio2.descripcion / @r.clasificacion.criterio3.catalogo.descripcion</p>
+			<p>Tipo de recurso: @r.clasificacion.tiporecurso.descripcion</p>
+		</div>
+	</div>
+
+}

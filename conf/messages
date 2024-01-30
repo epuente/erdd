@@ -1,0 +1,12 @@
+# Messages
+
+computers.list.title={0,choice,0#No computers|1#One computer|1<{0,number,integer} computadoras} encontradas.
+unidadacademicas.list.title = Unidades Académicas
+niveleducativos.list.title = Niveles Educativos
+recursos.list.titulo = Todas las solicitudes
+
+Required = Requerido
+validation.required = RRequerido
+validation.url = Se requiere una dirección http
+
+

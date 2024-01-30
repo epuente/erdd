@@ -1,0 +1,210 @@
+@(reactivos:List[EncuestaReactivo], unidadacademica:List[Unidadacademica], nivel:List[Niveleducativo], forma:Form[EncuestaRespuesta])
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) } 
+
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/> 
+@main{
+	<div class=container-fluid style="background-color: white; padding: 10px; display: none;">
+		<div class="row">
+			<div class="col-md-12">
+				<h3>Encuesta de satisfacción del servicio de Evaluación TP-RDD</h3>
+				<p>
+					Estimado docente, queremos conocer su opinión acerca del servicio de Evaluación Técnico Pedagógica, por tanto, solicitamos su valioso apoyo para llenar esta encuesta. A través de este medio obtendremos información que nos permitirá mejorar el servicio que ofrecemos. Los datos que nos proporcione son anónimos y confidenciales.
+					<br><br>
+					<p style="font-weight: bold;">Instrucciones generales:</p><br>
+					Lea cuidadosamente cada uno de los enunciados y responda lo que se le pide y/o marque la respuesta que mejor describa su opinión.
+					<p>Las preguntas marcadas con asterisco (*) son obligatorias.</p> 				
+				</p>
+			
+			
+				@form(CSRF(routes.EncuestaWebController.save()),  'style->"background-color: white;", 'id->"frmCreate") {
+				
+					@encuestaForm(reactivos, unidadacademica, nivel, forma, null)
+
+
+					<div style="display: block;  margin-left: auto;   margin-right: auto;">
+						<input type="submit" class="btn btn-success btn-lg btn-block center-block" value="Enviar encuesta" style="width: 70%">
+					</div>				
+				}
+			</div>
+		</div>
+	
+	
+
+	</div>
+
+
+}
+
+
+<script type="text/javascript">
+	$(function() {
+		
+		$("label[for^='respuesta1']").after("<br>");
+		$("label[for^='respuesta2'],  label[for^='respuesta3'],  label[for^='respuesta4']").after("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+		
+		$("#frmCreate").validator();
+		$("[name*='btnObservacion_']").hide();
+		$(".container-fluid").show();
+		$("input[type='text']:required, textarea:required, input[type='date']:required").attr("data-error", "Complete este campo");
+		$("select:required").attr("data-error", "Seleccione una opción de la lista");
+		$("input[type='radio']:required").attr("data-error", "Seleccione una opción");
+		
+		$("label[for='respuesta1'], label[for='respuesta2'], label[for='respuesta3'],  label[for='respuesta4']").html("");
+	});
+	
+	$("#respuesta1_6").on( "click", function() {
+		if ($(this).prop("checked")){
+			$("#respuesta1Txt").parent().parent().parent().show();
+		}	else {
+			$("#respuesta1Txt").parent().parent().parent().hide();
+			$("#respuesta1Txt").parent().parent().removeClass("has-error");
+		}
+	});
+	
+	$("input[name='respuesta2']").on( "click", function() {
+		if ($(this).val()=="S"){
+			$("#respuesta2Txt").parent().parent().parent().show();
+		}	else {
+			$("#respuesta2Txt").parent().parent().parent().hide();
+			$("#respuesta2Txt").parent().parent().removeClass("has-error");
+		}
+	});
+	
+	$("input[name='respuesta3']").on( "click", function() {
+		if ($(this).val()=="N"){
+			$("#respuesta3Txt").parent().parent().parent().show();
+		}	else {
+			$("#respuesta3Txt").parent().parent().parent().hide();
+			$("#respuesta3Txt").parent().parent().removeClass("has-error");
+		}
+	});
+
+	$("#frmCreate").submit(function(event){
+		$("[name='respuesta1[]']").change();
+		$("[name='respuesta2']").change();
+		$("[name='respuesta3']").change();
+		$("[name='respuesta4']").change();
+		
+		if ($("[name='respuesta1[]'][value=6]:checked").length!=0 && $("#respuesta1Txt").val().length == 0){
+			$("#respuesta1Txt").parent().parent().addClass("has-error");
+		} else {
+			$("#respuesta1Txt").parent().parent().removeClass("has-error");
+		}		
+
+		if ($("input:radio[name='respuesta2']:checked").val() == 'S' && $("#respuesta2Txt").val().length == 0){
+			$("#respuesta2Txt").parent().parent().addClass("has-error");
+		} else {
+			$("#respuesta2Txt").parent().parent().removeClass("has-error");
+		}
+
+		if ($("input:radio[name='respuesta3']:checked").val() == 'N' && $("#respuesta3Txt").val().length == 0){
+			$("#respuesta3Txt").parent().parent().addClass("has-error");
+		} else {
+			$("#respuesta3Txt").parent().parent().removeClass("has-error");
+		}
+
+		if ($("#respuesta4Txt").val().length == 0){
+			$("#respuesta4Txt").parent().parent().addClass("has-error");
+		} else {
+			$("#respuesta4Txt").parent().parent().removeClass("has-error");
+		}		
+		
+		var r1 = [];
+		$.each($("input:checkbox:checked"), function(){ 
+			r1.push($(this).val());
+		});
+
+		if ( r1.length == 0 ){			
+			$("#divMsgResp1").html('<ul class="list-unstyled"><li>Seleccione al menos una de las opciones.</li></ul>');
+			alert("Corrija los campos marcados con rojo");			
+			event.preventDefault();	
+		}
+		if ( $(".has-error").length != 0 ){
+			alert("Corrija los campos marcados con rojo");
+			event.preventDefault();	
+		} 
+
+	});
+
+	$('#form').validator().on('submit', function (e) {
+		  if (e.isDefaultPrevented()) {
+		    // handle the invalid form...
+		  } else {
+		    // everything looks good!
+		  }
+		})
+
+
+	
+
+	$(document).on("keydown change blur", "textarea", function(event){
+		var actual = 	$(this);
+		var tam = actual.val().length;
+		if (tam >= 600){
+			console.log("tam excedido");
+			if ( (event.which != 8  && event.which != 46  ))
+				event.preventDefault();
+			actual.css("border-color","#FF0000");			
+			actual.parent().find("div[name='divErrorTextArea']").html("Este campo ha excedido los 600 caracteres").show();
+			actual.parent().find("div[name='divErrorTextArea']").addClass("error");
+			
+		} else {
+			actual.css("border-color","");			
+			actual.parent().find("div[name='divErrorTextArea']").hide();	
+			actual.parent().find("div[name='divErrorTextArea']").removeClass("error");
+		}
+	});	 
+
+
+	$("[name='respuesta1[]']").change(function(){
+		if ($("[name='respuesta1[]']:checked").length == 0  ){
+			$("#respuesta1").parent().parent().parent().parent().find(".help-block").html("Seleccione al menos un motivo");
+			$("#respuesta1").parent().parent().parent().parent().find(".help-block").show();
+			$("#respuesta1").parent().parent().parent().parent().find(".help-block").addClass("error");
+		}else{
+			$("#respuesta1").parent().parent().parent().parent().find(".help-block").html("");
+			$("#respuesta1").parent().parent().parent().parent().find(".help-block").hide();
+			$("#respuesta1").parent().parent().parent().parent().find(".help-block").removeClass("error");			
+		}		
+	});
+
+	$("[name='respuesta2']").change(function(){
+		if ($("[name='respuesta2']:checked").val() == undefined  ){
+			$("#respuesta2").parent().parent().parent().find(".help-block").html("Responda Si o No");
+			$("#respuesta2").parent().parent().parent().find(".help-block").show();
+			$("#respuesta2").parent().parent().parent().find(".help-block").addClass("error");
+		}else{
+			$("#respuesta2").parent().parent().parent().find(".help-block").html("");
+			$("#respuesta2").parent().parent().parent().find(".help-block").hide();
+			$("#respuesta2").parent().parent().parent().find(".help-block").removeClass("error");			
+		}		
+	});
+
+	$("[name='respuesta3']").change(function(){
+		if ($("[name='respuesta3']:checked").val() == undefined  ){
+			$("#respuesta3").parent().parent().parent().find(".help-block").html("Responda Si o No");
+			$("#respuesta3").parent().parent().parent().find(".help-block").show();
+			$("#respuesta3").parent().parent().parent().find(".help-block").addClass("error");
+		}else{
+			$("#respuesta3").parent().parent().parent().find(".help-block").html("");
+			$("#respuesta3").parent().parent().parent().find(".help-block").hide();
+			$("#respuesta3").parent().parent().parent().find(".help-block").removeClass("error");			
+		}		
+	});
+
+	$("[name='respuesta4']").change(function(){
+		if ($("[name='respuesta4']:checked").val() == undefined  ){
+			$("#respuesta4").parent().parent().parent().find(".help-block").html("Califique con valores del 1 al 5");
+			$("#respuesta4").parent().parent().parent().find(".help-block").show();
+			$("#respuesta4").parent().parent().parent().find(".help-block").addClass("error");
+		}else{
+			$("#respuesta4").parent().parent().parent().find(".help-block").html("");
+			$("#respuesta4").parent().parent().parent().find(".help-block").hide();
+			$("#respuesta4").parent().parent().parent().find(".help-block").removeClass("error");			
+		}		
+	});
+	
+
+</script>
+<script src="@routes.Assets.at("javascripts/validator.min.js")" type="text/javascript"></script>

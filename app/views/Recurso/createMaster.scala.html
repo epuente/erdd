@@ -1,0 +1,318 @@
+@(recursoForm: Form[Recurso], autores: List[RecursoAutor], recurso: Recurso = null)
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) } 
+  
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/>
+
+@main {
+	    <div class=container-fluid style="background-color: white; padding: 10px; display: none;">   
+			<div class="row">
+				<div class="col-md-12">
+	    			<h3>Cédula de Solicitud de Evaluación Técnico-Pedagógica de Recurso Didáctico Digital</h3>			
+				</div>			
+			</div>    
+			<section id="masterForm">
+			    @form(CSRF(routes.RecursoWebController.mastersave()), 'role -> "form", 'id -> "este", 'enctype -> "multipart/form-data", 'class->"form") {	
+					@masterForm(recursoForm, null, recurso)
+					<div class="row">
+						<div class="col-md-12">
+					        <div class="actions">
+					        	<div class="row">
+					        		<div class="col-sm-6">
+						        		<input type="submit" value="Enviar solicitud" class="btn btn-success btn-lg center-block btn-block" style="width: 70%">
+					        		</div>
+					        		<div class="col-sm-6"> 
+				            			<a href="@routes.RecursoWebController.index()" class="btn btn-primary btn-lg center-block btn-block" style="width: 70%">Cancelar</a>				        		
+					        		</div>
+					        	</div>
+					              
+		 
+					        </div>
+				        </div>
+			        </div>			
+			    }
+			</section>			
+		</div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title modalTitleError" id="myModalLabel">Alerta</h4>
+	      </div>
+	      <div class="modal-body">
+	
+	      </div>
+	      <div class="modal-footer">
+	      		<div class="modalPie">Los campos marcados con * son obligatorios</div>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+}
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#este')[0].reset();
+		$("[name*='btnObservacion_']").hide();
+		$('#labelModalidad').html("Modalidad");
+		$("label[for='dirigidoa_id']:eq(1)").hide();
+		$('#este').validator();
+		$('#formatoentregaotro').parent().hide();
+		$("label[for='formatoentregaotro']").hide();
+		$('#alcancecurricularotro,  label[for="alcancecurricularotro"]').hide();
+		agregarAutor();
+		$("select[name='autor.autorfuncion0'] option:eq(1)").attr("selected",true);	
+		for ( i=0;i<=4;i++){
+			agregarPalabra();
+			
+		}
+
+
+		@for(tdoc<-models.Tipodocumento.find.all()){
+			@if(tdoc.obligatorio == 1){ 
+	            agregarDocumento2();
+	            var num =  $("select[name^='documento.tipodocumento']:last").prop("name").substring(23);
+	            $("select[name^='documento.tipodocumento']:last option[value=@tdoc.id]").prop("selected", true);
+	            $("select[name^='documento.tipodocumento']:last").prop("disabled", true);            
+	            $("#btnQuitarDocto"+num).hide();
+			}
+		}
+		
+		
+		$("select[name^='documento.tipodocumento'] option:selected").each(function(){
+			var num = $(this).parent().prop('name').substr("documento.tipodocumento".length);
+			if ("@models.Tipodocumento.find.where().eq("obligatorio",1).findIds()".indexOf($(this).val()) != -1 )
+				$("#btnQuitarDocto"+num).hide();
+		});
+		
+		
+		
+	//	agregarDocumento();
+		
+		
+		$('#titulo').focus();
+		$("select[name*='documento.tipodocumento']").css("font-size","85%");
+		$('.container-fluid').show();
+		$("#titulo").focus();
+		
+		$("input[type='text']:required, textarea:required").attr("data-error", "Complete este campo");
+		$("select:required").attr("data-error", "Seleccione una opción de la lista");
+		$("input[type='radio']:required").attr("data-error", "Seleccione una opción");
+		$("input[type='file']:required").attr("data-error", "Seleccione un archivo.");
+
+		
+		
+/* 		$('#elaboracion').datepicker({
+		    language: "es",
+		    format: "dd/mm/yyyy",
+			autoclose: true,
+			todayBtn: true,
+			todayHighlight: true			
+		});	 */
+		
+		
+		$('#elaboracion').datetimepicker({
+			 locale: 'es',
+			 format: 'L'
+		});		
+		
+		$("#elaboracion").prop("required", true);
+		
+		// Selecciona Horas como la unidad de medida para alcance curricular
+		$("#unidadmedida option:eq(1)").prop("selected", true).change();
+
+		$(".form-control").css("height","initial");
+	});
+	
+	$( document ).on( "change", "[name^='documento.nombrearchivo']", function(event) {	
+		var num =  $(this).attr('name').substring("documento.nombrearchivo".length);
+		var extension = $(this).val().search(".pdf");
+		$("#na"+num).html($(this).val());
+		if (extension==-1){
+			///alert("El archivo no es pdf!!!!!");
+			$(this).val('');
+			$("#na"+num).html('');
+			event.preventDefault();
+		}
+	});
+	
+	$( document ).on( "change", "[name*='autor.autorfuncion']", function() {
+		var num =  $(this).attr('name').substring("autor.autorfuncion".length);		
+		if ($(this).val() == 9){
+			$("input[name='autor.otroTipoAutoria"+num+"']").show();  
+		} else {
+			$("input[name='autor.otroTipoAutoria"+num+"']").hide();			
+		}
+	});
+	
+	$( document ).on( "click", "[name='version.id']", function() {	
+		if ( $(this).val() == 2  ){
+			$("#divVersion").show();
+		} else {
+			$("#va_numcontrol").val("");
+			$("#msgBuscarNc").html("");			
+			$("#divVersion").hide();
+			$("#divNumControl").hide();
+		}
+	});
+	
+	$( document ).on( "click", "[name='extra1']", function() {
+		if (   $(this).val() == "N" ){
+			$("#va_numcontrol").val("");
+			$("#msgBuscarNc").html("");
+			$("#divNumControl").hide();			
+		}
+		if (   $(this).val() == "S" ){
+			$("#divNumControl").show();			
+		}		
+	});		
+	
+
+
+	$(document).on("keydown change blur", "textarea", function(event){				
+		var tam = $(this).val().length;
+		if (tam >= 600 && (event.which != 8  && event.which != 46  )){
+			console.log("tam excedido");
+			event.preventDefault();
+			$(this).parent().find(".help-block").html('<ul class="list-unstyled"><li>Este campo ha excedido los 600 caracteres</li></ul>');
+			$(this).parent().parent().addClass("has-error");
+		} else {
+			$(this).parent().find(".help-block").html('');
+			$(this).parent().parent().removeClass("has-error");			
+		}
+	});
+
+	
+	
+    $( document ).on( "change" ,"#unidadmedida_id", function(e){
+        var texto = $("#unidadmedida_id option:selected").text();
+        $("#duracion").prop("placeholder", "Número de "+ texto.toLowerCase());
+    }); 	
+	
+    
+    $(document).on("change", "#niveleducativo_id", function(e){
+    	filtradoUnidadesAcademicas();
+    });
+    
+	
+	$("#este").submit(function(event){
+		if(!preValidar()){
+			event.preventDefault();
+		} else {
+			$('#elaboracion').removeAttr("pattern");
+			$('#elaboracion').val(    moment($('#elaboracion').val(),"DD/MM/YYYY").format("YYYY-MM-DD")  );
+			$("select[name^='documento.tipodocumento'] option").prop("disabled", false);
+			$("select[name^='documento.tipodocumento']").removeAttr("disabled");
+			$("select[name^='documento.tipodocumento']").removeAttr("required");
+			return true;		
+		} 		
+	});
+	
+	$('#este').validator().on('submit', function (e) {
+		  if (e.isDefaultPrevented()) {
+		  } else {
+		    // everything looks good!
+		  }
+		})	
+	
+
+	
+	
+	   function agregarDocumento2(insertarEn){
+	        var nrenglon = ($("#tableDocumentos div.row").length);  
+	        var arrString = [];
+	        var 
+	        renglon ='<div class="row">';
+	        renglon+='  <div class="col-md-5">';
+	        renglon+='      <div class="form-group clearfix">';
+	        renglon+='          <div class="input input-group">';
+	        renglon+='             <div id="docId'+nrenglon+'" style="display:none"></div>';
+	        renglon+='             <input type="file" accept=".pdf" id="documento.nombrearchivo'+nrenglon+'" name="documento.nombrearchivo'+nrenglon+'" required="required" class="form-control">';
+	        renglon+='             <div id="na'+nrenglon+'" style="display:none"></div>';
+	        renglon+='             <div class="help-block with-errors"></div>';     
+	        renglon+='          </div>';
+	        renglon+='          <textarea placeholder="Escriba su observacion..." name="'+"observacion_documento.nombrearchivo"+nrenglon+'" class="observacion"></textarea>';
+	        renglon+='          <button type="button" name="btnObservacion_documento.nombrearchivo'+nrenglon+'" class="btn btn-primary btn-xs form-control">Corregir</button>';
+	        renglon+='          <div class="errorObservacion" style="color:red"></div>';
+	        renglon+='      </div>';
+	        renglon+='  </div>';
+	        
+	        renglon+='  <div class="col-md-5">'
+	        renglon+='      <div class="form-group clearfix">';
+	        renglon+='          <div class="input input-group">';
+	        renglon+='              <select name="'+"documento.tipodocumento"+nrenglon+'" required="required" class="form-control" >'+$('#auxDocto').html()+'</select>';       
+	        renglon+='              <div id="ta'+nrenglon+'"></div>';
+	        renglon+='              <span class="help-block with-errors"></span>';
+	        renglon+='          </div>';
+	        renglon+='          <textarea placeholder="Escriba su observacion..." name="'+"observacion_documento.tipodocumento"+nrenglon+'" class="observacion"></textarea>';
+	        renglon+='          <button type="button" name="btnObservacion_documento.tipodocumento'+nrenglon+'" class="btn btn-primary btn-xs form-control">Corregir</button>';
+	        renglon+='          <div class="errorObservacion" style="color:red"></div>';
+	        renglon+='      </div>';
+	        renglon+='  </div>';
+	    //  renglon+='</div>';
+	        
+	        
+	        renglon+='<div class="col-md-2">';
+	        renglon+=   '<input type="button" value="Quitar documento" onclick="eliminarDocumento2('+nrenglon+')" id="btnQuitarDocto'+nrenglon+'">';        
+	        renglon+='</div>';
+	        
+	        if (insertarEn==undefined){
+	            $('#tableDocumentos').append(renglon);
+	            $("[name*='btnObservacion_documento.nombrearchivo"+((nrenglon)-0)+"']").hide();
+	            $("[name*='btnObservacion_documento.tipodocumento"+((nrenglon)-0)+"']").hide();
+	            $("select[name*='documento.tipodocumento']").css("font-size","85%");
+	        } else {
+	            /*
+	            $('#documento.nombrearchivo1').css("display","block");
+	            $("#documento.nombrearchivo1").show();
+	            $('#documento.nombrearchivo1').swap('[name="observacion_documento.nombrearchivo1"]');
+	            */
+	        }
+	        
+	        
+	        //Cuando hay observaciones en documentos, en los selects visibles habilitar solo las options relacionadas al tipo de documento con observaciones
+	        //$("select[name^='documento.tipodocumento'] option").attr("disabled","disabled");
+	        //alert("se desactivaron!!!!!!");
+	        /*
+	        $("input[id^='btnQuitarDocto']:visible").each(function(ir, r){          
+	            var num =  $(r).attr('id').substring('btnQuitarDocto'.length);
+	            $("select[name^='documento.tipodocumento'] option").prop("disabled",true);
+	            var texto =  $("div[id=ta"+num+"]").html();
+	            arrString.push(texto);
+	        });     
+	        
+	        alert(arrString);
+	            $.each(arrString, function( index, value ) {
+	                
+	                alert("value "+value);
+	                
+	                if (value.length > 0){
+	                    $("select[name^='documento.tipodocumento'] option:contains('"+value+"')").prop("disabled", false);
+	                }
+	            });
+	            */
+	            $('#tableDocumentos div.row:even').css("background-color", "#f7f7f7");
+	            
+	            // Deshabilita o habilita los options del tipo de archivo dependiendo si es obligatorio   
+	            @for(tdoc<-models.Tipodocumento.find.all()){
+	                $("select[name^='documento.tipodocumento']:last option[value=@tdoc.id]").prop("disabled", @tdoc.obligatorio==1);
+	            }           
+	    }   
+</script>
+<script src="@routes.Assets.at("javascripts/validator.min.js")" type="text/javascript" async"></script>
+
+<script src="@routes.Assets.at("javascripts/recursos.js")" ></script>
+<script src="@routes.Assets.at("javascripts/utilerias.js")"></script>
+<script src="@routes.Assets.at("lib/moment/min/moment.min.js")"></script>
+
+<script src="@routes.Assets.at("lib/bootstrap/js/transition.js")" type="text/javascript" defer></script>
+<script src="@routes.Assets.at("lib/bootstrap/js/collapse.js")" type="text/javascript" defer></script>
+<script src="@routes.Assets.at("lib/Eonasdan-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js")" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("lib/Eonasdan-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css")">
+<script src="@routes.Assets.at("lib/moment/locale/es.js")" type="text/javascript"></script>
+
+
+

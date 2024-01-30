@@ -1,0 +1,54 @@
+@(sc:List[SolicitudCancelacion])
+
+@main{
+	<div style="background-color: white; padding: 10px; height: 100%">
+			<div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+					  <li>Recursos</li>
+					  <li class="active">Solicitudes de cancelación</li>
+					</ol>			
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+	  	          <h3>Solicitudes de cancelación</h3>
+		        </div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+				
+					@flashes()
+			
+					@if(!sc.isEmpty()){
+						<table class="table table-bordered table-condensed">
+							<thead>
+								<tr>
+									<th>CLAVE DE CONTROL</th>
+									<th>TÍTULO</th>
+									<th>DESCRIPCIÓN</th>
+									<th>FECHA SOLICITUD</th>
+									<th>SOLICITANTE</th>
+									<th></th>
+		
+								</tr>
+							</thead>
+							@for(sc<-sc){
+								<tr>
+									<td style="vertical-align: middle;"><a href="/reporte/cesoe/@sc.id">@sc.recurso.numcontrol</a></td>
+									<td style="vertical-align: middle;">@sc.recurso.titulo</td>
+									<td style="vertical-align: middle;">@sc.recurso.areaconocimiento.descripcion</td>
+									<td style="vertical-align: middle;">@sc.fechaSolicitud.format("dd/MM/YYYY hh:mm:ss")</td>
+									<td style="vertical-align: middle;">@sc.evaluador.personal.nombreCompleto</td>
+									<td style="vertical-align: middle;"><a class="btn btn-primary" href="/solicitudCancelado/@sc.recurso.id" role="button">Revisar</a></td>
+								</tr>
+							}
+						</table>				
+					} else {
+						No hay registros.	
+					}
+				
+				</div>
+			</div>		
+	</div>
+}

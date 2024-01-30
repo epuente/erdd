@@ -1,0 +1,172 @@
+@(recurso:Recurso, evt:List[EvaluacionTabla], evr:List[Evaluacion], eo:List[EvaluacionObservacion], eog:EvaluacionObservacionGral)
+@import helper._
+
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/simple-sidebar.css")"/>
+
+@main{
+	<div class=container-fluid style="background-color: white; padding: 10px; display:none">
+			<div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+					  <li>Mis asignaciones</li>
+					  <li class="active">Atender observaciones</li>
+					</ol>			
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+	  	          <h3>Atender observaciones del aspecto @evr(0).recursoevaluador.aspecto.descripcion al recurso "@recurso.titulo"  -@recurso.numcontrol-</h3>
+	  	          Clasificado como: @recurso.clasificacion.criterio1.descripcion / @recurso.clasificacion.criterio2.descripcion / @recurso.clasificacion.criterio3.catalogo.descripcion<br>
+	  	          Tipo de recurso: @recurso.clasificacion.tiporecurso.descripcion 
+		        </div>
+			</div>	   
+			
+			<div class="row">
+				<div class="col-lg-2">
+					<br>
+					<h3 style="display:none">
+					<span class="badge" id="bdg@evr(0).recursoevaluador.aspecto.id"  data-toggle="popover" data-title="Detalle de calificación" data-trigger="hover" title="Calificación" ></span>
+					</h3>
+					<div id="conteoAspecto"></div>				
+				</div>
+				<div class="col-lg-10">
+					<div class="row">
+						<div class="col-lg-12">
+							@form(CSRF(routes.EvaluacionEvaluadorController.saveObservaciones(recurso.id, evt(0).aspecto.id)), 'role -> "form", 'id -> "frmEvaluacion",'style->"background-color: white;") {
+							    <input type="text" name="terminado" value="no" style="display: none;">				
+								<table class="table table-bordered table-striped">	
+									@for(r <- evt){
+										<tr>
+											<td>
+												@r.reactivo.id 
+												@r.reactivo.descripcion
+											</td>
+							        		<td name="celdaCalifica" style="width: 15em;">
+							        			<div>
+							        			    <input type="radio" name="califica@r.id" value="-1" class="activo"> No aplica</br>
+								        			<input type="radio" name="califica@r.id" value="0" class="activo"> No cumple</br>
+								        			<input type="radio" name="califica@r.id" value="1" class="activo"> Cumple parcialmente</br>
+								        			<input type="radio" name="califica@r.id" value="2" class="activo"> Sí cumple	
+							        			</div>
+							        			<div name="divNA@r.id" style="display: none; text-align: center; vertical-align: middle; ">NO APLICA</div>		        			
+						             		</td>
+						             		<td style="width: 30%"> 
+						             			<textarea name="observacion@r.id" rows="" cols="30%" style="display: none; min-width: 100%; background-color: #FFFDDD" disabled="disabled" readonly="readonly" class="form-control"  ></textarea>
+						             			<br>
+						             			<input type="button" name="btnObservacion@r.id" value="Atender observación" style="display: none; width: 70%"  class="btn btn-primary btn-block center-block">
+						             		</td>
+										</tr>
+									}
+									<tr>
+										<td colspan="2">
+											<textarea rows="" cols="" class="form-control" style="min-width: 100%" readonly="readonly" name="observacionGral">@if(eog!=null){@eog.observacion}</textarea>
+										</td>	
+					             		<td style="width: 30%"> 
+					             			<textarea name="observacionobservacionGral" rows="" cols="30%" style="display: none; min-width: 100%;  background-color: #FFFDDD" disabled="disabled" readonly="readonly" class="form-control"   >@if(eog!=null){@if(eog.observacionobservaciongral!=null){@eog.observacionobservaciongral.observacion}}</textarea>
+					             			<br>
+					             			<input type="button" name="btnObservacionGral" value="Atender observación" style="display: none; width: 70%"  class="btn btn-primary btn-block center-block">
+					             		</td>
+									</tr>
+								</table>	
+								<div class="center-block" style="width: 50%"> 
+									<input type="submit" value="Enviar correciones" class="btn primary btn-primary btn-block"  id="btnObservar">
+								</div>
+							}
+						</div>
+					</div>
+				</div>
+	</div>
+</div>
+
+}
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("[name*='califica']").attr("readonly", true);
+		$("[name*='califica']").prop("disabled", true);
+		leer();		
+		$(".container-fluid").show();
+		recuento();		
+	});
+	
+	$( document ).on( "click", "input[name^='btnObservacion']", function() {	
+		var id = this.name.substring(14);
+		$("[name='califica"+id+"']").prop("disabled",false);
+		$("[name='califica"+id+"']").prop("readonly",false);
+		$("[name='califica"+id+"']").parent().show();
+		
+		// Observación general
+		if ( $(this).attr("name")=="btnObservacionGral"  ){
+			$("[name='observacionGral']").prop("disabled",false);
+			$("[name='observacionGral']").prop("readonly",false);
+			$("[name='observacionGral']").parent().show();		
+			$("[name='observacionGral']").focus();
+		}
+	});
+	
+
+	
+	function leer(){
+		@for(resp <- evr){
+			console.log("respuesta  @resp.evaluaciontabla.id")
+		 	$("input[name='califica@resp.evaluaciontabla.id'][value='@resp.respuesta']").prop("checked",true);
+		}
+		@for(observa <- eo){
+			$("[name='observacion@observa.respuesta.evaluaciontabla.id']").val('@observa.Observacion.filter(_ >= ' ') ');
+			$("[name='observacion@observa.respuesta.evaluaciontabla.id']").show()
+			$("[name='btnObservacion@observa.respuesta.evaluaciontabla.id']").show()
+			$("[name='observacion@observa.respuesta.evaluaciontabla.id']").prop("title","@observa.respuesta.id")
+		}
+		
+		@if(eog!=null ){		
+			@if(eog.observacionobservaciongral!= null){
+			/////	$("[name='observacionobservacionGral']").val("@eog.observacionobservaciongral.observacion.filter(_ >= ' ')");
+				$("[name='observacionobservacionGral']").show();
+				$("[name='btnObservacionGral']").show();
+			}
+		}
+	}
+	
+	
+	function recuento(){
+		ac = null;
+		noAplica = 0; 
+		cal = null;
+		ac = parseInt("0");
+		$("input[type='radio'][name^='califica']:checked").each(function(){
+			if ( $(this).val() != -1  ){
+				ac+= parseInt($(this).val());
+			} else {
+				noAplica++;
+			}
+		});
+		cal = Math.round((ac*25)/(   ($("input[type='radio'][name^='califica']:checked").length-noAplica)*2));			
+	
+
+		(cal!=null)?$("#bdg@evr(0).recursoevaluador.aspecto.id").html(cal):"";
+		
+		if (cal != null){
+			$("#bdg@evr(0).recursoevaluador.aspecto.id").html(cal);
+			var activos = $("input[type='radio'][name*='califica']:checked").length - noAplica;
+			var inactivos =          noAplica;
+			var noCumple =           $("input[type='radio'][name*='califica'][value='0'].activo:checked").length;
+			var parcialmenteCumple = $("input[type='radio'][name*='califica'][value='1'].activo:checked").length;
+			var siCumple =           $("input[type='radio'][name*='califica'][value='2'].activo:checked ").length;
+			
+			$('[data-toggle="popover"]').attr("data-content","Total de reactivos: "+(activos+noAplica)+"<hr>"+
+															 "No aplican: "+inactivos+"</br>"+
+															 "No cumple: "+noCumple+"</br>"+
+															 "Cumple parcialmente: "+parcialmenteCumple+"</br>"+
+															 "Sí cumple: "+siCumple+"<hr>"+
+															 "Calificación obtenida aspecto @evr(0).recursoevaluador.aspecto.descripcion: "+cal);				
+		}
+		$("#bdg@evr(0).recursoevaluador.aspecto.id").toggle( cal != null );
+		$("#conteoAspecto").html( $("#bdg@evr(0).recursoevaluador.aspecto.id").attr('data-content')  );
+	}	
+	
+	$( document ).on( "click", "input[name^='califica']", function() {
+		recuento();
+	});	
+	
+</script>

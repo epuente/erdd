@@ -1,0 +1,9 @@
+2024-01-30 12:37:54,697 - [INFO] - from play in pool-127-thread-2 
+Listening for HTTP on /0:0:0:0:0:0:0:0:8085
+
+2024-01-30 12:37:58,553 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd
+
+2024-01-30 12:37:59,012 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+

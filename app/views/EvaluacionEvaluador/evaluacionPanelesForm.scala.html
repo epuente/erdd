@@ -1,0 +1,169 @@
+@(re: Recursoevaluador, cr :List[EvaluacionTabla])
+@import helper._
+
+<input type="text" id="terminado" name="terminado" style="display:none"/>
+<input type="text" name="id" value=@re.id style="display:none" />
+
+
+<div id="content">
+
+	<div class="row">
+		@if(Array(1,2).contains(re.estadoevaluacion.id)){
+			<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+				<br>
+				<div id="conteoAspecto">
+				
+                    Total de reactivos: <div id='todos' style='display:inline-block'></div><hr>
+        
+                    <ul class='list-group'>
+                        <li class='list-group-item'>                        
+                            Sin contestar: <div id='sinContestar' style='display:inline-block'></div>
+                            <a  data-toggle='collapse' href='#acordionSinContestar' aria-expanded='false' aria-controls='acordionSinContestar' class="pull-right"> <div class="fa fa-chevron-down" aria-hidden="true" name="flechaDetalle"></div></a><br>
+                            <div class='collapse' id='acordionSinContestar'>
+                                <div class='panel-body'><div id='divCadenaSinContestar'></div></div>
+                            </div>                     
+                        </li>
+                        <li class='list-group-item'>
+                            No aplican:<div id='noAplican' style='display:inline-block'></div>                        
+                            <a  data-toggle='collapse' href='#acordionNoAplican' aria-expanded='false' aria-controls='acordionNoAplican' class="pull-right"> <div class="fa fa-chevron-down" aria-hidden="true" name="flechaDetalle"></div>  </a><br>
+                            <div class='collapse' id='acordionNoAplican'>
+                                <div class='panel-body'>  <div id='divCadenaNoAplican'></div>  </div>
+                            </div>                     
+                        </li>
+                        <li class='list-group-item'>
+                            No cumplen: <div id='noCumple' style='display:inline-block'></div>
+                            <a  data-toggle='collapse' href='#acordionNoCumple' aria-expanded='false' aria-controls='acordionNoCumple' class="pull-right"> <div class="fa fa-chevron-down" aria-hidden="true" name="flechaDetalle"></div></a><br>
+                            <div class='collapse' id='acordionNoCumple'>
+                                <div class='panel-body'><div id='divCadenaNoCumple'></div></div>
+                            </div>                      
+                        </li>                    
+                        <li class='list-group-item'>
+                            Cumplen parcialmente: <div id='parcialmenteCumple' style='display:inline-block'></div>
+                            <a  data-toggle='collapse' href='#acordionParcialmenteCumple' aria-expanded='false' aria-controls='acordionParcialmenteCumple' class="pull-right"> <div class="fa fa-chevron-down" aria-hidden="true" name="flechaDetalle"></div></a><br>
+                            <div class='collapse' id='acordionParcialmenteCumple'>
+                                <div class='panel-body'>  <div id='divCadenaParcialmenteCumple'></div></div>
+                            </div>
+                        </li>
+                        <li class='list-group-item'>
+                            Si cumplen:   <div id='siCumple' style='display:inline-block'></div>
+                            <a  data-toggle='collapse' href='#acordionSiCumple' aria-expanded='false' aria-controls='acordionSiCumple' class="pull-right"> <div class="fa fa-chevron-down" aria-hidden="true" name="flechaDetalle"></div></a><br>
+                            <div class='collapse' id='acordionSiCumple'>
+                                <div class='panel-body'>  <div id='divCadenaSiCumple'></div>  </div>
+                            </div>                     
+                        </li>                    
+                    </ul> 				
+				</div>
+			</div>
+		}
+		@if(Array(1,2).contains(re.estadoevaluacion.id)){
+		<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+			<div class="row">
+		}
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div id="carouselId@re.aspecto.id" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false">
+						<!-- Indicators -->
+						
+						<!-- Wrapper for slides -->
+						<div class="carousel-inner" role="listbox">
+							<div class="item active">
+								<div class="row">			
+									@for((c,i) <- cr.zipWithIndex){
+										<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<div class="panel-title"><small>Id reactivo: @c.reactivo.id</small></div>
+												</div>
+												<div class="panel-body">
+													<div class="row">
+														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+															@c.reactivo.descripcion
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><br></div>
+													</div>
+													<div class="row">
+														<div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+															<input type="radio" name="califica@c.id" value="-1" style="display: none;">
+															<input type="radio" name="califica@c.id" value="0" class="activo"> No cumple</br>
+															<input type="radio" name="califica@c.id" value="1" class="activo"> Cumple parcialmente</br>
+															<input type="radio" name="califica@c.id" value="2" class="activo"> Sí cumple
+															<input type="text" name="respuesta@c.id" id="respuesta@c.id" style="display: none;">						  		
+														</div>
+														<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+															<div>
+																<input type="button" value="No aplica" class="btn btn-primary btn-block btn-xs" id="btnNA_@c.id">
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>				
+										</div>
+										@if(i != 0){
+											@if( (  (i+1) % (4) )==0   ) {
+												</div>
+												@if(   (i+1)%(4*2)==0   ){
+													</div>
+													<div class="item">
+												}							
+												<div class="row">
+											}
+										}
+				
+									}
+								</div>
+						</div>
+						
+						
+						
+						
+						<div class="row" name="divRowObservacionGral">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<textarea class="form-control" style="min-width: 100%" placeholder="Escriba una observación general (opcional)" name="observacionGral-@re.recurso.id-@re.aspecto.id" ></textarea>
+							</div>
+						</div>
+							 
+							 
+						<div class="row">
+							<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+							<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+								<table class="table" id="tablaNavegaCarousel@re.aspecto.id">	
+								</table>
+							</div>				
+							<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+						</div>				 
+					 
+					</div>
+				</div>
+			@if(Array(1,2).contains(re.estadoevaluacion.id)){
+			</div>
+			}	
+				
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					<input type="submit" value="Guardar la evaluación y continuar más tarde" class="btn btn-primary btn-block btn-md center-block"  id="btnEvaluar" style="width:90%">		
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					<input type="button" value="Solicitar la cancelación de este recurso" class="btn btn-danger btn-block btn-md center-block"  id="btnCancelar" style="width:90%">		
+				</div>
+				
+			</div>	
+			@if(Array(1,2).contains(re.estadoevaluacion.id)){
+		</div>	
+		}
+	</div>	
+
+
+
+	
+
+
+</div>
+
+
+
+</div>
+
+
+
+

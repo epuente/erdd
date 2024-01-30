@@ -1,0 +1,7 @@
+Usuarios y Roles
+
+
+
+e1	Administrador del sistema.  Administración de catalogos del sistema y admon catalogo de evaluadores.
+e2	Coordinador del proceso de ERDD. Administración de usuarios y cuentas del sistema. Asignacion recursos a los evaluadores. revisión de solicitudes, aprobación , etc.
+jj	Evaluador. Evaluador del aspecto: Diseño gráfico

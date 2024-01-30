@@ -1,0 +1,139 @@
+@(rs:Int, rs1: Int, rs2:Int, rs3:Int, rs4:Int, rs5:Int, c400:Int)
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
+
+
+@main {
+	<script src="@routes.Assets.at("javascripts/highcharts/highcharts.js")" ></script>		
+	<script src="@routes.Assets.at("javascripts/highcharts/highcharts-3d.js")" ></script>
+	
+	
+<div style="background-color: white; padding: 10px;">
+	<div id=wrapper >
+		<div class="row">
+			<div class="col-lg-12">
+  	          <h1 class="page-header">Inicio</h1>
+			  @flashes()
+	        </div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+	               	<div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span>Estado de asignaciones</div>
+              		<div class="panel-body">
+              			<div class="row"> 
+	              			<div class="col-lg-4">
+									<table class="table table-striped table-bordered table-responsive" id="tablaResumen">
+										<tr>
+											<td><a href="/evList">Todas las asignaciones</a></td><td><div class="center-block"> @rs</div> </td>
+										</tr>
+										<tr>
+											<td><a href="/porEvaluar">Mis asignaciones por atender</a></td><td> @rs1</td>
+										</tr>									
+										<tr>
+											<td><a href="/enProceso">Evaluaciones en proceso</a></td><td> @rs2   </td>
+										</tr>
+										<tr>
+											<td><a href="/evPorAtenderAdmin">Para revisar por el administrador</a></td><td> @rs3   </td>
+										</tr>							
+										 <tr>
+											<td><a href="/evPorObservar">Evaluaciones con observaciones</a></td><td> @rs4  </td>
+										</tr>
+										 <tr>
+											<td><a href="/evConcluidas">Evaluaciones concluidas</a></td><td> @rs5</td>
+										</tr>
+										<tr>
+											<td><a href="/evSolicitudesCancelacion">Solicitudes de cancelación</a></td><td> @c400</td>
+										</tr>
+
+									</table>			
+	              			</div>
+              				<div class="col-lg-8">
+	              				<div id="container"></div>
+	              			</div>	              			
+	              		</div>
+              		</div>
+           		</div>
+       		</div>
+   		</div>	              		
+	</div>			
+</div>
+
+
+
+                    
+                    
+	                
+
+}
+
+
+<script type="text/javascript">
+$(function () {
+    $('#container').highcharts({
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45
+            }
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: ''
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            pie: {
+                innerSize: 100,
+                depth: 45,
+                shadow: true,
+                center: ['50%', '50%']
+            }              
+
+        },
+        series: [{
+            name: 'serieDatos',
+            data: [   
+                ['Por atender', @rs1],
+                ['Evaluaciones en proceso', @rs2],
+                ['A revisar por el admin', @rs3],
+                ['Evaluaciones con observaciones', @rs4],
+                ['Evaluaciones concluidas', @rs5],                
+                ['Cancelaciones',@c400]
+
+            ]
+        }],
+        tooltip: {
+            shared: true,
+            useHTML: false,
+            formatter: function() {
+            	return this.key+" : "+this.y;
+            }
+            
+        },
+        credits: {
+            position: {
+                align: 'left',
+                verticalAlign: 'bottom',
+                x: -1000,
+                y: -1000
+            }    
+        }
+        
+        
+    });	
+    
+    
+
+    
+    
+    
+    
+});	
+</script>
+

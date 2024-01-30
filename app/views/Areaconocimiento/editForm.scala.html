@@ -1,0 +1,38 @@
+@(id: Long, areaconocimientoForm: Form[Areaconocimiento])
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.render) } 
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/> 
+
+@main {
+	<div class=container-fluid style="background-color: white; padding: 10px" >
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb">
+				  <li>Catálogos</li>
+				   <li><a href="/areaconocimientos">Áreas del Conocimiento</a></li>
+				  <li class="active">Editar</li>
+				</ol>			
+			</div>
+		</div>    
+		<div class="row">
+			<div class="col-lg-12">    
+   				<h3>Editar área del conocimiento</h3>
+   				<div style="vertical-align: middle;">    
+				    @form(CSRF(routes.AreaconocimientoController.update(id)), 'class->"form-inline", 'id->"frmEdit") {        
+						<div class="form-group">        
+				            @inputText(areaconocimientoForm("descripcion"), '_label -> "Descripción", '_help -> "", 'size->"70em", 'required->"required")
+				            <input type="submit" value="Actualizar el área del conocimiento" class="btn btn-primary">
+				        </div>
+				    }
+   				</div>
+			    @form(CSRF(routes.AreaconocimientoController.delete(id)), 'class -> "topRight", 'id->"frmDelete") {
+			        <input type="submit" value="Eliminar el área del conocimiento" class="btn btn-danger">
+			        <a href="@routes.AreaconocimientoController.list()" class="btn btn-default">Cancelar</a> 
+			    }
+		    </div>
+	    </div>
+ 	</div>   
+}
+@comunCatalogosJS("edit", "Área del conocimiento")

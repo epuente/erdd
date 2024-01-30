@@ -1,0 +1,155 @@
+@(currentPage: com.avaje.ebean.Page[EvaluacionTablaReactivo], currentSortBy: String, currentOrder: String, currentFilter: String,
+versiones:List[EvaluacionTablaVersion]
+)
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.render) } 
+
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage:Int, newSortBy:String) = @{
+    
+    var sortBy = currentSortBy
+    var order = currentOrder
+    
+    if(newSortBy != null) {
+        sortBy = newSortBy
+        if(currentSortBy == newSortBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }
+    
+    // Generate the link
+    routes.AdminEvaluacionTablaController.listarReactivos(newPage, sortBy, order, currentFilter)
+    
+}
+
+@**********************************
+* Helper generating table headers *
+***********************************@
+@header(key:String, title:String) = {
+    <th class="@key.replace(".","_") header @if(currentSortBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}">
+        <a href="@link(0, key)">@title</a>
+    </th>
+}
+
+
+
+@main{
+	<div class=container-fluid style="background-color: white; padding: 10px" >
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb">
+				  <li>Catálogos</li>
+				  <li class="active">Reactivos</li>
+				</ol>			
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+  	          <h3>Reactivos</h3>
+  	          <form id="frmAux">@CSRF.formField</form>  	           
+ 		      <div id="actions">		        
+			        <form action="@link(0, "descripcion")" method="GET">
+			            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Buscar por descripcion...">
+			            <input type="submit" id="searchsubmit" value="Filtrar por descripción" class="btn btn-primary">
+			        </form>
+ 					<a class="btn btn-success" id="btnAgregar" href="@routes.AdminEvaluacionTablaController.createReactivo()">Agregar reactivo</a>			        
+			  </div>
+  	          
+			    @if(flash.containsKey("success")) {
+			        <div class="alert alert-success" role="alert">
+			            @flash.get("success")
+			        </div>
+			    }   	          
+			    @if(flash.containsKey("error")) {
+			        <div class="alert alert-danger" role="alert">
+			            @flash.get("error")
+			        </div>
+			    }   	          
+	        </div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+		    @if(currentPage.getTotalRowCount == 0) {
+		        <div class="well">
+		            <em>No hay reactivos que cumplan con los criterios.</em>
+		        </div>
+		    } else {
+		        <div class="table-responsive">
+			        <table class="table table-striped table-bordered table-hover table-condensed"">
+			            <thead>
+			                <tr>
+			                    @header("id", "id")
+			                    @header("descripcion", "Descripción")
+			                    @header("", "Editar")
+			                    @header("", "Eliminar")
+			                </tr>
+			            </thead>
+			            <tbody>
+
+				                @for(etr <- currentPage.getList) {
+				                    <tr>
+				                    	<td>@etr.id</td>
+				                        <td><a href="@routes.AdminEvaluacionTablaController.editReactivo(etr.id)">@etr.descripcion</a></td>
+				                        <td><a href="@routes.AdminEvaluacionTablaController.editReactivo(etr.id)" role="button" class="btn btn-primary" id="btnEditar">Editar</a>  </td>
+				                        <td>
+				                        	@form(CSRF(routes.AdminEvaluacionTablaController.deleteReactivo(etr.id))) {		
+				                        		<input type="submit" value="Eliminar" class="btn btn-danger">
+				                        	}
+				                        </td>
+				                    </tr>
+				                }
+
+			            </tbody>
+			        </table>
+				</div>
+		        <div id="pagination" class="pagination">
+		            <ul>
+		                @if(currentPage.hasPrev) {
+		                    <li class="prev">
+		                        <a href="@link(currentPage.getPageIndex - 1, null)">&larr; Anterior</a>
+		                    </li>
+		                } else {
+		                    <li class="prev disabled">
+		                        <a>&larr; Anterior</a>
+		                    </li>
+		                }
+		                <li class="current">
+		                    <a>Mostrando registros del @currentPage.getDisplayXtoYofZ(" al "," de un total de ")</a>
+		                </li>
+		                @if(currentPage.hasNext) {
+		                    <li class="next">
+		                        <a href="@link(currentPage.getPageIndex + 1, null)">Siguiente &rarr;</a>
+		                    </li>
+		                } else {
+		                    <li class="next disabled">
+		                        <a>Siguiente &rarr;</a>
+		                    </li>
+		                }
+		            </ul>
+		        </div>
+		        
+		    }
+
+		
+			
+			
+			</div>
+		</div>
+	</div>
+
+
+}
+
+
+<script type="text/javascript">
+
+
+</script>

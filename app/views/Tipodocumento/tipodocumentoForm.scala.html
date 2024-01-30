@@ -1,0 +1,27 @@
+@(tdForm: Form[Tipodocumento])
+@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.render) }
+@import helper._
+
+	  <div class="form-group">
+	  	<div class="row">
+	  		<div class="col-md-12">
+	  			@inputText(tdForm("descripcion"), 'labelAlterna -> "Descripción", '_help -> "", 'required->"required", 'size->"90em")
+	  		</div>
+	  	</div>
+	  	<div class="row">
+	  		<div class="col-sm-6">
+	   			@inputRadioGroup(
+					         tdForm("obligatorio"),
+					         options = options("0"->"No","1"->"Si"),
+					         'labelAlterna -> "Obligatorio", 'required->"required"
+				) 	  		
+	  		</div>
+	  		<div class="col-sm-6">            
+	    		@inputRadioGroup(
+							tdForm("estado.id"),
+							options = options(models.EstadoActivo.options), 'required->"required", 'labelAlterna->"Estado"
+						)	  		
+	  		</div>
+	  	</div>
+       </div>
+

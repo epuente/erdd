@@ -1,0 +1,12 @@
+clean
+reload
+compile
+run
+run 8085
+run
+run 8085
+clean
+reload
+compile
+run 8085
+exit

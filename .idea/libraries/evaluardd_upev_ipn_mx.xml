@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="evaluardd.upev.ipn.mx">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/conf/certificados/evaluardd.upev.ipn.mx.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

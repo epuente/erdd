@@ -1,0 +1,166 @@
+@(id: Long, rForm : Form[Recurso])
+@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.render) } 
+
+ <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/>
+ <script src="@routes.Assets.at("javascripts/utilerias.js")"></script> 
+ <script src="/assets/javascripts/fullcalendar/moment.min.js" ></script>
+@import helper._
+@main{
+
+	<div class="container-fluid" style="background-color: white; padding: 10px;">
+ 
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb">
+				  <li>Recursos</li>
+				  <li><a href="/oficios">Solicitudes con oficio</a></li>
+				  <li class="active">Asignar</li>
+				</ol>			
+			</div>
+		</div>	
+		<div class="row">				
+			<div class="col-lg-12">
+				<h3>Asignar oficio al recurso '@rForm.get().titulo'</h3>
+				<blockquote>
+				  <p>Se refiere al oficio que la Escuela envía a la UPEV para solcitar el registro del Recurso Didáctico Digital.</p>
+				</blockquote>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">		
+			 	@form(CSRF(routes.OficioController.save(id)), 'role -> "form", 'id -> "frmAsignaOficio", 'enctype -> "multipart/form-data", 'role->"form") {
+			 		<div class="form-group">
+			 			<table class="table table-bordered tablaReporte">
+			 				<tr>
+			 					<td colspan="1">@inputText(rForm("oficio.numero"), 'labelAlterna -> "Número de oficio", '_help -> "", 'size->"10", 'required->"required", 'class->"form-control" )</td>
+								<td colspan="1">@inputText(rForm("oficio.folio"), 'labelAlterna -> "Número de folio", '_help -> "", 'size->"10", 'required->"required", 'class->"form-control",'pattern->"[0-9]{1,6}" )</td> 					
+			 				</tr>
+			 				<tr>
+			 					<td>@inputText(rForm("oficio.fechaoficio"), 'labelAlterna -> "Fecha del oficio", '_help -> "", 'required->"required", 'placeholder->"dd/mm/aaaa", 'class->"form-control" )</td>
+			 					<td>@inputText(rForm("oficio.fecharecepcion"), 'labelAlterna -> "Fecha de recepcion en el DII", '_help -> "", 'required->"required", 'placeholder->"dd/mm/aaaa", 'class->"form-control")</td>
+			 				</tr>
+			 				<tr>
+			 					<td colspan="2">
+									@inputFile(rForm("oficio.contenido"),'size -> 10, 'labelAlterna->"Oficio digitalizado",'required -> "required", 'class->"form-control", 'accept->".pdf")								
+			 					</td>
+			 				</tr>			 				
+			 				<tr>
+			 					<td colspan="2">			 							
+			 						<a href="javascript:pre()" class="btn primary btn-primary btn-block center-block" role="button" style="width: 70%">Asignar oficio</a>
+			 					</td>
+			 				</tr>
+			 			</table> 		
+					</div>
+				}
+			</div>
+		</div>
+	</div>	
+}
+
+
+
+<script type="text/javascript">
+	$(function() {
+
+		$('#oficio_fechaoficio, #oficio_fecharecepcion').datepicker({
+		    language: "es",
+		    format: "dd/mm/yyyy",
+			autoclose: true,
+			todayBtn: true,
+			todayHighlight: true,
+
+			closeText: 'Cerrar',
+			prevText: '<Ant',
+			nextText: 'Sig>',
+			currentText: 'Hoy',
+			monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+			monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+			dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+			dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+			dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+			weekHeader: 'Sm',
+			dateFormat: 'dd/mm/yy',
+			firstDay: 1,
+			isRTL: false,
+			showMonthAfterYear: false,
+        	yearSuffix: ''
+		});	
+		
+		$('#frmAsignaOficio').attr("data-toggle","validator");
+		$('#oficio_folio').attr("data-error","Solo números, máximo 6");
+		$('#oficio_fechaoficio, #oficio_fecharecepcion').attr("pattern","([0-9]{2}/[0-9]{2}/[0-9]{4})");
+	});
+
+		  
+	function pre(){
+
+		console.log("* " + $('#oficio_fechaoficio').val() )
+		console.log("* " + $('#oficio_fecharecepcion').val() )
+
+		var fo = moment($('#oficio_fechaoficio').val(),"DD/MM/YYYY");
+		var fr = moment($('#oficio_fecharecepcion').val(),"DD/MM/YYYY");
+
+		console.log("fo * " + fo.format())
+		console.log("fr * " + fr.format())
+
+		console.log("fo "+$('#oficio_fechaoficio').val() +" - "+moment($('#oficio_fechaoficio').val(),"DD/MM/YYYY"))
+		console.log("fr "+$('#oficio_fecharecepcion').val()+" - "+moment($('#oficio_fecharecepcion').val(),"DD/MM/YYYY"))
+		var aux = true; 
+		if (   (fo== null || !fo.isValid())      ){
+			aux = false;
+			$('#oficio_fechaoficio').parents().parents().addClass("error");
+			console.log("fecha oficio con error")
+		}
+		console.log("fr null "+fr==null)
+		console.log("fr isValid "+fr.isValid())
+		console.log("fr isValid : "+fr.format("DD/MM/YYYY"))
+
+		console.log("fr : "+(fr== null || !fr  .isValid()))
+
+		if (   (fr== null || !fr.isValid())      ){
+			aux = false;
+			$('#oficio_fecharecepcion').parents().parents().addClass("error");
+			console.log("fecha recepcion con error...")
+		}		
+		console.log("aux "+aux)
+		if (aux){
+			if ( fo.isAfter( moment().add(1,'day')  )  ){
+				alert("No se puede registrar la fecha del oficio con fecha superior a la de hoy.");
+				return false;				
+			}
+			if ( fr.isAfter( moment().add(1,'day')  )){
+				alert("No se puede registrar la recepción en el DII con una fecha superior a la de hoy.");
+				return false;				
+			}			
+			if ( fo.isAfter(fr,'day') ){
+				  $('#oficio_fechaoficio').parents().parents().addClass("error");
+				  $('#oficio_fecharecepcion').parents().parents().addClass("error");
+				  alert("La fecha de oficio no puede ser posterior a la fecha de recepción en el DII");			  
+				  return false;
+		    }		
+			
+
+			$("#frmAsignaOficio").submit();	
+		} else {
+			return false;
+		}
+	}
+	
+	
+	$('#frmAsignaOficio').validator().on('submit', function (e) {
+		  if (e.isDefaultPrevented()) {
+		  } else {
+				$('#oficio_fechaoficio, #oficio_fecharecepcion').removeAttr("pattern");
+
+				$('#oficio_fechaoficio').val(    moment($('#oficio_fechaoficio').val(),"DD/MM/YYYY").format("YYYY-MM-DD")  );			
+				$('#oficio_fecharecepcion').val( moment($('#oficio_fecharecepcion').val(),"DD/MM/YYYY").format("YYYY-MM-DD")  );
+
+		  }
+		})	
+	
+</script>	
+<script src="@routes.Assets.at("javascripts/validator.min.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("jqueryDateTimePicker/js/bootstrap-datepicker.js")"></script>
+<!--script src="@routes.Assets.at("jqueryDateTimePicker/locales/bootstrap-datepicker.es.min.js")" type="text/javascript"></script-->
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("jqueryDateTimePicker/css/bootstrap-datepicker.standalone.min.css")"/>
+

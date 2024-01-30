@@ -1,0 +1,50 @@
+.tablaPalabras {
+	border-collapse: collapse;
+
+	}
+
+.tablaPalabras td{
+	padding: 0px;
+	spacing: 0px;
+	vertical-align:middle;
+	height:7px;
+}
+
+
+.tablaReporte  td{
+	padding: 0px;
+	background-color: #FFFFFF;
+	
+}
+
+.tablaReporte .etiqueta{
+	font-size: medium;
+	font-weight: bolder;
+	background-color: #EFEFEF;
+}
+
+.tablaReporte .etiquetaSimple{
+	font-size: 10px;
+	font-weight: bolder;
+	float: left;
+}
+
+#tablaReporte .contenido{
+	font-size: large;
+}
+
+
+.observacion {
+	display: none;
+	width: 100%;
+}
+
+.tablaIndicacionesDoctos td{
+	padding: 10px;
+	font-size: small;
+}
+
+.tablaIndicacionesDoctos2 {
+	padding: 10px;
+	font-size: small;
+}

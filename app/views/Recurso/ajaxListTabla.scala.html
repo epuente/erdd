@@ -1,0 +1,665 @@
+@(currentPage: com.avaje.ebean.Page[Recurso], currentSortBy: String, currentOrder: String, currentFilter: String, currentCampoFiltro: String)			    
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) } 
+
+
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage:Int, newSortBy:String,   newCampoFiltro:String) = @{
+    
+    var sortBy = currentSortBy
+    var order = currentOrder
+    var campoFiltro = currentCampoFiltro
+    
+    if(newSortBy != null) {
+        sortBy = newSortBy
+        if(currentSortBy == newSortBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }
+
+
+		
+    // Generate the link
+    routes.RecursoController.list(newPage, sortBy, order, currentFilter, currentCampoFiltro)
+    
+}
+
+@**********************************
+* Helper generating table headers *
+***********************************@
+@header(key:String, title:String) = {
+    <th class="@key.replace(".","_") header @if(currentSortBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}"       >
+        <a href="@link(0, key, currentCampoFiltro)">@title</a>
+    </th>
+}
+		    
+		    
+		    
+<style>
+
+.btn-color1 {
+    color: #f8f8f8;
+    background-color: #F34235;
+    border-color: #c3352b;
+}
+.btn-color1:hover {
+    color: #fff;
+    background-color: #c3352b;
+    border-color: #c3352b;
+}
+.btn-lcolor1 {
+    color: #F34235;
+    background-color: transparent;
+    border-color: #F34235;
+}
+.btn-lcolor1:hover {
+    color: #fff;
+    background-color: #F34235;
+    border-color: #F34235;
+}
+
+
+.btn-color2 {
+    color: #f8f8f8;
+    background-color: #E81D62;
+    border-color: #c51954;
+}
+.btn-color2:hover {
+    color: #fff;
+    background-color: #c51954;
+    border-color: #c51954;
+}
+.btn-lcolor2 {
+    color: #E81D62;
+    background-color: transparent;
+    border-color: #c51954;
+}
+.btn-lcolor2:hover {
+    color: #fff;
+    background-color: #E81D62;
+    border-color: #E81D62;
+}
+
+
+.btn-color3 {
+    color: #f8f8f8;
+    background-color: #9B26AF;
+    border-color: #89219b;
+}
+.btn-color3:hover {
+    color: #fff;
+    background-color: #89219b;
+    border-color: #89219b;
+}
+.btn-lcolor3 {
+    color: #9B26AF;
+    background-color: transparent;
+    border-color: #9B26AF;
+}
+.btn-lcolor3:hover {
+    color: #fff;
+    background-color: #9B26AF;
+    border-color: #9B26AF;
+}
+
+
+.btn-color4 {
+    color: #f8f8f8;
+    background-color: #6639B6;
+    border-color: #5e35a8;
+}
+.btn-color4:hover {
+    color: #fff;
+    background-color: #5e35a8;
+    border-color: #5e35a8;
+}
+.btn-lcolor4 {
+    color: #6639B6;
+    background-color: transparent;
+    border-color: #6639B6;
+}
+.btn-lcolor4:hover {
+    color: #fff;
+    background-color: #6639B6;
+    border-color: #6639B6;
+}
+
+
+.btn-color5 {
+    color: #f8f8f8;
+    background-color: #3E50B4;
+    border-color: #3949a2;
+}
+.btn-color5:hover {
+    color: #fff;
+    background-color: #3949a2;
+    border-color: #3949a2;
+}
+.btn-lcolor5 {
+    color: #3E50B4;
+    background-color: transparent;
+    border-color: #3E50B4;
+}
+.btn-lcolor5:hover {
+    color: #fff;
+    background-color: #3E50B4;
+    border-color: #3E50B4;
+}
+
+
+.btn-color6 {
+    color: #f8f8f8;
+    background-color: #2095F2;
+    border-color: #1a80d1;
+}
+.btn-color6:hover {
+    color: #fff;
+    background-color: #1a80d1;
+    border-color: #1a80d1;
+}
+.btn-lcolor6 {
+    color: #2095F2;
+    background-color: transparent;
+    border-color: #2095F2;
+}
+.btn-lcolor6:hover {
+    color: #fff;
+    background-color: #2095F2;
+    border-color: #2095F2;
+}
+
+
+.btn-color7 {
+    color: #f8f8f8;
+    background-color: #02A8F3;
+    border-color: #0396d8;
+}
+.btn-color7:hover {
+    color: #fff;
+    background-color: #0396d8;
+    border-color: #0396d8;
+}
+.btn-color7 {
+    color: #02A8F3;
+    background-color: transparent;
+    border-color: #02A8F3;
+}
+.btn-color7:hover {
+    color: #fff;
+    background-color: #02A8F3;
+    border-color: #02A8F3;
+}
+
+
+.btn-color8 {
+    color: #f8f8f8;
+    background-color: #00BBD3;
+    border-color: #009fb3;
+}
+.btn-color8:hover {
+    color: #fff;
+    background-color: #009fb3;
+    border-color: #009fb3;
+}
+.btn-lcolor8 {
+    color: #00BBD3;
+    background-color: transparent;
+    border-color: #00BBD3;
+}
+.btn-lcolor8:hover {
+    color: #fff;
+    background-color: #00BBD3;
+    border-color: #00BBD3;
+}
+
+
+.btn-color9 {
+    color: #f8f8f8;
+    background-color: #009587;
+    border-color: #018175;
+}
+.btn-color9:hover {
+    color: #fff;
+    background-color: #018175;
+    border-color: #018175;
+}
+.btn-lteal {
+    color: #009587;
+    background-color: transparent;
+    border-color: #009587;
+}
+.btn-lcolor9:hover {
+    color: #fff;
+    background-color: #009587;
+    border-color: #009587;
+}
+
+
+.btn-color10 {
+    color: #f8f8f8;
+    background-color: #4BAE4F;
+    border-color: #449d47;
+}
+.btn-color10:hover {
+    color: #fff;
+    background-color: #449d47;
+    border-color: #449d47;
+}
+.btn-lcolor10 {
+    color: #4BAE4F;
+    background-color: transparent;
+    border-color: #4BAE4F;
+}
+.btn-lcolor10:hover {
+    color: #fff;
+    background-color: #4BAE4F;
+    border-color: #4BAE4F;
+}
+
+
+
+.btn-color11 {
+    color: #f8f8f8;
+    background-color: #8AC249;
+    border-color: #78a83f;
+}
+.btn-color11:hover {
+    color: #fff;
+    background-color: #78a83f;
+    border-color: #78a83f;
+}
+.btn-lcolor1 {
+    color: #8AC249;
+    background-color: transparent;
+    border-color: #8AC249;
+}
+.btn-lcolor11:hover {
+    color: #fff;
+    background-color: #8AC249;
+    border-color: #8AC249;
+}
+
+
+.btn-color12 {
+    color: #f8f8f8;
+    background-color: #a4b221;
+    border-color: #bbc933;
+}
+.btn-color12:hover {
+    color: #fff;
+    background-color: #8c991b;
+    border-color: #bbc933;
+}
+.btn-lcolor12 {
+    color: #CCDB38;
+    background-color: transparent;
+    border-color: #;
+}
+.btn-lcolor12:hover {
+    color: #fff;
+    background-color: #CCDB38;
+    border-color: #CCDB38;
+}
+
+
+.btn-color100 {
+    color: #f8f8f8;
+    background-color: #FEEA3A;
+    border-color: #e4d235;
+}
+.btn-color100:hover {
+    color: #fff;
+    background-color: #e4d235;
+    border-color: #e4d235;
+}
+.btn-lcolor100 {
+    color: #FEEA3A;
+    background-color: transparent;
+    border-color: #FEEA3A;
+}
+.btn-lcolor100:hover {
+    color: #fff;
+    background-color: #FEEA3A;
+    border-color: #FEEA3A;
+}
+
+
+.btn-color105 {
+    color: #f8f8f8;
+    background-color: #c69709;
+    border-color: #e1aa05;
+}
+.btn-color105:hover {
+    color: #fff;
+    background-color: #ad8406;
+    border-color: #e1aa05;
+}
+.btn-lcolor105 {
+    color: #FEC006;
+    background-color: transparent;
+    border-color: #FEC006;
+}
+.btn-lcolor105:hover {
+    color: #fff;
+    background-color: #FEC006;
+    border-color: #FEC006;
+}
+
+
+.btn-color110 {
+    color: #f8f8f8;
+    background-color: #FE9700;
+    border-color: #e78a01;
+}
+.btn-color110:hover {
+    color: #fff;
+    background-color: #e78a01;
+    border-color: #e78a01;
+}
+.btn-lcolor110 {
+    color: #FE9700;
+    background-color: transparent;
+    border-color: #FE9700;
+}
+.btn-lcolor110:hover {
+    color: #fff;
+    background-color: #FE9700;
+    border-color: #FE9700;
+}
+
+
+.btn-color400 {
+    color: #f8f8f8;
+    background-color: #FE5621;
+    border-color: #d4481c;
+}
+.btn-color400:hover {
+    color: #fff;
+    background-color: #d4481c;
+    border-color: #d4481c;
+}
+.btn-lcolor400 {
+    color: #FE5621;
+    background-color: transparent;
+    border-color: #FE5621;
+}
+.btn-lcolor400:hover {
+    color: #fff;
+    background-color: #FE5621;
+    border-color: #FE5621;
+}
+
+
+.btn-color17 {
+    color: #f8f8f8;
+    background-color: #785447;
+    border-color: #65463b;
+}
+.btn-color17:hover {
+    color: #fff;
+    background-color: #65463b;
+    border-color: #65463b;
+}
+.btn-lcolor17 {
+    color: #785447;
+    background-color: transparent;
+    border-color: #785447;
+}
+.btn-color17:hover {
+    color: #fff;
+    background-color: #785447;
+    border-color: #785447;
+}
+
+
+.btn-color401 {
+    color: #f8f8f8;
+    background-color: #9D9D9D;
+    border-color: #888888;
+}
+.btn-color401:hover {
+    color: #ffffff;
+    background-color: #888888;
+    border-color: #888888;
+}
+.btn-lcolor18 {
+    color: #9D9D9D;
+    background-color: transparent;
+    border-color: #9D9D9D;
+}
+.btn-lcolor401:hover {
+    color: #fff;
+    background-color: #9D9D9D;
+    border-color: #9D9D9D;
+}
+
+
+.btn-color402 {
+    color: #f8f8f8;
+    background-color: #5F7C8A;
+    border-color: #516a76;
+}
+.btn-color402:hover {
+    color: #fff;
+    background-color: #516a76;
+    border-color: #516a76;
+}
+.btn-lcolor402 {
+    color: #5F7C8A;
+    background-color: transparent;
+    border-color: #5F7C8A;
+}
+.btn-lcolor402:hover {
+    color: #fff;
+    background-color: #5F7C8A;
+    border-color: #5F7C8A;
+}
+
+
+.btn-black {
+    color: #f8f8f8;
+    background-color: #2d2d2d;
+    border-color: #000000;
+}
+.btn-black:hover {
+    color: #fff;
+    background-color: #000000;
+    border-color: #000000;
+}
+.btn-lblack {
+    color: #2d2d2d;
+    background-color: transparent;
+    border-color: #2d2d2d;
+}
+.btn-lblack:hover {
+    color: #fff;
+    background-color: #2d2d2d;
+    border-color: #2d2d2d;
+}
+
+
+.btn-white {
+    color: #000000;
+    background-color: #ffffff;
+    border-color: #d3d3d3;
+}
+.btn-white:hover {
+    color: #222222;
+    background-color: #f7f7f7;
+    border-color: #d3d3d3;
+}
+
+
+</style>		    
+		    
+			    @if(currentPage.getTotalRowCount == 0) {
+			        <div class="well">
+			            <em>No existen registros.</em>
+			        </div>
+			        
+			    } else {
+			        <div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover table-condensed">
+							<thead>
+								<tr>
+									@header("titulo", "Título")
+									@header("numcontrol", "Clave de control")                    
+									@header("areaconocimiento.descripcion","Área del conocimiento")
+									@header("niveleducativo.descripcion","Nivel de conocimiento")
+									@header("auditinsert","Fecha registro web")
+									@header("estado.descripcion", "Estado")
+									@header("", "")
+									@header("", "")
+								</tr>
+							</thead>
+							<tbody>
+			
+								@for(recurso <- currentPage.getList) {
+									<tr>
+										<td style="display: table-cell; vertical-align: middle"><a href="/reporte/cesoe/@recurso.id">@recurso.titulo</a></td>
+										<td style="display: table-cell; vertical-align: middle">@recurso.numcontrol</td>                        
+										<td style="display: table-cell; vertical-align: middle">@recurso.areaconocimiento.descripcion</td>
+										<td style="display: table-cell; vertical-align: middle">@recurso.niveleducativo.descripcion</td>
+										<td style="display: table-cell; vertical-align: middle">@recurso.auditinsert.format("dd/MM/yyyy")</td>
+										<td style="display: table-cell; vertical-align: middle">@recurso.estado.descripcion</td>
+										<td style="display: table-cell; vertical-align: middle">
+											@if(recurso.estado.id ==1){
+												<a class="btn btn-color@recurso.estado.id btn-block" role="button"
+												href="@routes.RecursoController.edit(recurso.id)" >Agregar observaciones
+												</a>
+											}
+											@if(recurso.estado.id ==2){
+												<a class="btn btn-color@recurso.estado.id btn-block" role="button"
+												href="@routes.RecursoController.edit(recurso.id)">Revisar observaciones
+												</a>
+											}
+
+											@if(recurso.estado.id ==3){
+												<a class="btn btn-color@recurso.estado.id btn-block" role="button"
+												href="@routes.OficioController.create(recurso.id)">Asignar oficio
+												</a>
+											}
+											@if(recurso.estado.id ==4){
+												<a class="btn btn-color@recurso.estado.id btn-block" role="button"
+												href="@routes.ClasificacionController.create(recurso.id)">Clasificar
+												</a>
+											}								
+											@if(recurso.estado.id==5){
+												<a class="btn btn-color@recurso.estado.id btn-block" role="button"
+												href="@routes.RecursoevaluadorController.asignarEvaluadoresCreate(recurso.id)">Asignar evaluadores
+												</a>
+											}
+											@if( recurso.estado.id==6 ){
+												<a class="btn btn-color@recurso.estado.id btn-block" role="button"
+												Evaluadores asignados 
+												href="@routes.RecursoevaluadorController.mostrarEvaluadores(recurso.id)">Ver evaluadores
+												</a>
+											}
+
+											@if( recurso.estado.id==7  ){
+												<a class="btn btn-color@recurso.estado.id btn-block" role="button"
+												href="@routes.ReporteController.cesoe(recurso.id)">Evaluación en proceso
+												</a>
+											}
+											@if( recurso.estado.id==8  ){
+												<a class="btn btn-color@recurso.estado.id btn-block" role="button"
+												href="@routes.ReporteController.cesoe(recurso.id)">Evaluaciones a ser revisadas por el admininstrador
+												</a>
+											}	
+											@if( recurso.estado.id==9  ){
+												<a class="btn btn-color@recurso.estado.id btn-block" role="button"
+												href="@routes.ReporteController.cesoe(recurso.id)">Evaluaciones con observaciones
+												</a>
+											}
+											@if( scala.List(10, 11, 12, 110).exists ( x => x == recurso.estado.id ) ){
+												<a href='@routes.RecursoevaluadorController.evaluada(recurso.id,"0")' role="button" class="btn btn-color@recurso.estado.id btn-block center-block">Evaluación</a>
+												
+												
+												<a class="btn btn-color@recurso.estado.id btn-block" role="button"
+												href="@routes.RecursoevaluadorController.reporteEvaluacion(recurso.id)" target="blank">Reporte de evaluación
+												</a>
+											}				
+@println(recurso.titulo+" "+recurso.estado.id)
+											@if( recurso.estado.id==11  ){
+												<a class="btn btn-color@recurso.estado.id btn-block" role="button"
+												href="@routes.EncuestaController.encuestaPorRevisar(recurso.id)">Revisar encuesta
+												</a>
+											}				
+											@if( recurso.estado.id == 100  ){
+												<a class="btn btn-color@recurso.estado.id btn-block" role="button"
+												Administrar evaluadores
+												href="@routes.RecursoevaluadorController.asignarEvaluadoresCreate(recurso.id)">Administrar evaluadores
+												</a>
+											}											
+											@if(recurso.estado.id ==105){
+												<a class="btn btn-color@recurso.estado.id btn-block" role="button"
+												href="@routes.RecursoController.edit(recurso.id)">Correcciones a observaciones
+												</a>
+											}											
+											
+											@if( recurso.estado.id==110  ){
+												<a class="btn btn-color@recurso.estado.id btn-block" role="button"
+												href="@routes.RecursoController.verOficioValoracion(recurso.oficiovaloracion.id)" target="blank">Ver oficio de valoración
+												</a>
+											}											
+											@if(recurso.estado.id == 400 ){
+												<a class="btn btn-color@recurso.estado.id btn-block" role="button"
+												href="@routes.RecursoController.solicitudCancelado(recurso.id)">Revisar
+												</a>
+											}
+											@if(recurso.estado.id == 401){
+												<a class="btn btn-color@recurso.estado.id btn-block" role="button"
+												href="@routes.ReporteController.cesoe(recurso.id)">Cancelado en clasificación
+												</a>
+											}
+											@if(recurso.estado.id == 402){
+												<a class="btn btn-color@recurso.estado.id btn-block" role="button"
+												href="@routes.ReporteController.cesoe(recurso.id)">Cancelado en evaluación
+												</a>
+											}
+											
+			
+						
+										</td>
+										<td style="display: table-cell; vertical-align: middle"><button type="button" class="btn btn-danger btn-block" name="btnEliminar@recurso.id.toString">Eliminar</button></td>
+									</tr>
+								}
+			
+							</tbody>
+						</table>
+					</div>
+			
+			        <div id="pagination" class="pagination">
+			            <ul>
+			                @if(currentPage.hasPrev) {
+			                    <li class="prev">
+			                        <a href="@link(currentPage.getPageIndex - 1, null, currentCampoFiltro)">&larr; Anterior</a>
+			                    </li>
+			                } else {
+			                    <li class="prev disabled">
+			                        <a>&larr; Anterior</a>
+			                    </li>
+			                }
+			                <li class="current">
+			                    <a>Mostrando registros del @currentPage.getDisplayXtoYofZ(" al "," de un total de ")</a>
+			                </li>
+			                @if(currentPage.hasNext) {
+			                    <li class="next">
+			                        <a href="@link(currentPage.getPageIndex + 1, null, currentCampoFiltro)">Siguiente &rarr;</a>
+			                    </li>
+			                } else {
+			                    <li class="next disabled">
+			                        <a>Siguiente &rarr;</a>
+			                    </li>
+			                }
+			            </ul>
+			        </div>
+			    }

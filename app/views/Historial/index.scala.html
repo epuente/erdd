@@ -1,0 +1,253 @@
+@(recurso:Recurso)
+
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/timeline.css")"/>
+@import helper._
+@main{
+
+
+<style>
+.glyphicon{
+	top: 16px;
+	left: 15px;
+}
+
+.btn-glyphicon {
+    padding:8px;
+    background:#ffffff;
+    margin-right:4px;
+	top: 0px;
+	left: 0px;    
+}
+.icon-btn {
+    padding: 1px 15px 3px 2px;
+    border-radius:50px;
+}
+</style>
+
+
+<div class=container-fluid style="background-color: white; padding: 10px;">
+
+    <div class="page-header">
+        <h1 id="timeline">Seguimiento</h1>
+    </div>    
+    @flashes()
+
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+				<ul class="timeline">     
+				    @for((estado,i)<-recurso.historialestados.zipWithIndex){			        
+				          @if( (i % 2) != 0){
+				          	<li class="timeline-inverted">
+				          } else {
+				          	<li>
+				          }
+				          
+							@estado.estado.id.toInt match {
+							  case 2 =>{							  					
+										<div class="timeline-badge info"><i class="glyphicon glyphicon-eye-open"></i>
+						  				}							
+							  case 12 =>{							  					
+										<div class="timeline-badge info"><i class="glyphicon glyphicon-certificate"></i>
+						  				}
+							  case 400  => {
+							  					<div class="timeline-badge warning"><i class="glyphicon glyphicon-warning-sign"></i>
+							  				}
+							  case 401  => {<div class="timeline-badge danger"><i class="glyphicon glyphicon-remove"></i>}
+							  case 402  => {<div class="timeline-badge danger"><i class="glyphicon glyphicon-remove"></i>}
+							  case whoa  => {<div class="timeline-badge success"><i class="glyphicon glyphicon-ok"></i>}
+							}          
+				          </div>
+				          <div class="timeline-panel">
+				            <div class="timeline-heading">
+				              <h4 class="timeline-title">@estado.estado.descripcion</h4>
+				              <p><small class="text-muted"><i class="fa fa-calendar"></i> @estado.auditinsert.format("dd/MM/yyyy HH:mm:ss")</small></p>
+				            </div>
+				            <div class="timeline-body">
+				            	@if(estado.estado.id == 1 ){
+				            		<hr>
+				            		<p style="font-size: small;">
+				            		Título: @estado.recurso.titulo<br>
+				            		Clave de control: @estado.recurso.numcontrol<br>
+				            		Autor responsable: @estado.recurso.getResponsable.nombreCompleto
+				            		</p>
+				            		@if(estado.recurso.estado.id == 1){
+				            			@form(   routes.RecursoWebController.verDatosEnviados(), 'role -> "form") {
+				            				<input class="btn btn-primary center-block btn-block" type="submit" value="Ver datos enviados">
+				            			}
+				            		}
+				            	}
+				            	@*if(estado.estado.id == 2 && estado.estado.id != recurso.estado.id){*@
+				            	@if(estado.estado.id == 2){
+				            		<hr>
+				            		@if(estado.recurso.estado.id == 2){
+					            		@form(   routes.RecursoWebController.conObservacionesAn(), 'role -> "form") {	
+					            			<input class="btn btn-danger center-block btn-block" type="submit" value="Corrija las observaciones y envíe">
+					            		}
+				            		}
+				            	}				            	
+				            	@if(estado.estado.id >= 3 && estado.estado.id != 105){
+					            	@if(estado.recurso.estado.id >= 3){
+					            		<div name="divImpSol">
+						            		<hr>					            		
+						            		@form(  routes.RecursoWebController.imprimirSolicitudAceptada, 'role -> "form" ) {	
+						            			<input class="btn btn-success center-block btn-block"  type="submit" value="Ver e imprimir formato">
+						            		}
+				            			</div>
+					            	}
+				            	}
+				            	@if(estado.estado.id == 4 ){
+				            		<hr>
+				            		<p style="font-size: small;">
+					            		Número de oficio: @estado.recurso.oficio.numero<br>
+					            		Número de folio: @estado.recurso.oficio.folio
+				            		</p>
+				            	}
+				            	@if(estado.estado.id == 5 ){
+				            		<hr>
+				            		<p style="font-size: small;">
+					            		Clasificación: @estado.recurso.clasificacion.nombreCompletoClasificacion<br>
+					            		@if(estado.recurso.clasificacion.tiporecurso != null){
+					            			Tipo de recurso: @estado.recurso.clasificacion.tiporecurso.descripcion
+					            		}
+				            		</p> 
+				            	}				            	
+				             	@if(estado.estado.id == 6  ||  estado.estado.id == 100){
+				             		<hr>
+				             		<div class=row>
+				             			@for(recev<-estado.recurso.recursoevaluadores){
+				             			<div class="col-md-6" style="font-size: small;">
+				             				@recev.aspecto.descripcion - @recev.evaluador.personal.nombreCompleto	
+				             			</div>
+				             			}
+				             		</div>
+				             	
+				             	
+				             		
+				             		@if(!estado.recurso.historialestadoevaluaciones.isEmpty){
+				             			<hr>
+				             			<div name="divDetalleEvaluaciones">
+						             			<div style="display: block;  margin-left: auto;  margin-right: auto;">Detalle de evaluaciones</div> 
+						             			<ul class="timeline"> 
+												@for((hev,iev) <- estado.recurso.historialestadoevaluaciones.zipWithIndex){
+										          @if( (iev % 2) != 0){
+										          	<li class="timeline-inverted">
+										          } else {
+										          	<li>
+										          }	
+										          @hev.estado.id.toInt match {
+													  case 400  => {
+													  					<div class="timeline-badge warning"><i class="glyphicon glyphicon-warning-sign"></i>
+													  				}
+													  case whoa  => {
+													  					@if(hev.estado.descripcion.contains("observa")){
+													  						<div class="timeline-badge info"><i class="glyphicon glyphicon-eye-open"></i>
+													  					
+													  					} else {
+													  						<div class="timeline-badge success"><i class="glyphicon glyphicon-ok"></i>
+													  					}
+													  				}
+												  }
+												  </div>
+										          <div class="timeline-panel">
+										            <div class="timeline-heading">
+										              <h4 class="timeline-title">@hev.estado.descripcion</h4>
+										              <p><small class="text-muted"><i class="fa fa-calendar"></i> @hev.auditinsert.format("dd/MM/yyyy HH:mm:ss")</small></p>
+										            </div>
+										            <div class="timeline-body">
+										            	<hr>
+										            	<p style="font-size: small;">
+										            	Evaluador: @hev.recursoevaluador.evaluador.personal.nombreCompleto
+										            	</p>
+										            	<p style="font-size: small;">
+										            	Aspecto: @hev.recursoevaluador.aspecto.descripcion
+										            	</p>	
+										            	
+		
+										            	
+										            </div>
+										          </div>										  
+												}
+												</ul>
+										</div>
+									}				             		
+				             	}
+				             	
+				             	
+				             	@if( estado.estado.id==10){
+				             		<div name="divReporteEval">
+			            				@form(   routes.RecursoWebController.reporteEvaluacion(), 'role -> "form") {
+			            					<input class="btn btn-success center-block btn-block" type="submit" value="Reporte de Evaluación Técnico Pedagógica">
+			            				}
+				             		</div>
+				             	}
+
+								@if( estado.estado.id==10 || estado.recurso.id == 110){
+
+				             			@if(estado.recurso.encuesta == null){
+				             				<hr>
+				             				<p style="font-size: small;">
+												Su opinión sobre el proceso de evaluación que la UPEV ha realizado en torno a su solicitud, es muy importante para nosotros. A continuación encontrará el botón de acceso a una breve encuesta de satisfacción que esperamos pueda responder para conocer su experiencia y mejorar nuestro servicio.<br><br>
+												Agradecemos de antemano su tiempo y le informamos que si su encuesta es enviada y aprobada por el sistema, usted recibirá en un máximo de 48 horas hábiles una notificación por correo electrónico que le permitirá descargar en formato digital el oficio de valoración e informe de evaluación técnico pedagógica correspondientes a su solicitud, con sello y firmas de esta Unidad.<br><br>
+											</p>				             				
+				             				
+				            				@form(   routes.EncuestaWebController.create(), 'role -> "form") {
+				            					<input class="btn btn-success center-block btn-block" type="submit" value="Responder encuesta">
+				            				}	
+				             			} else {
+				             				<hr>
+				             				<div style="display: block;  margin-left: auto;  margin-right: auto;">Detalle de encuesta</div>
+					             			<ul class="timeline"> 
+												@for((hen,ien) <- estado.recurso.historialestadoencuesta.zipWithIndex){
+											          @if( (ien % 2) != 0){
+											          	<li class="timeline-inverted">
+											          } else {
+											          	<li>
+											          }	
+											          @if(hen.estado.id == 2L){
+											          	<div class="timeline-badge warning"><i class="glyphicon glyphicon-eye-open"></i></div>
+											          } else {
+											          	<div class="timeline-badge success"><i class="glyphicon glyphicon-ok"></i></div>
+											          }
+											          
+											          
+											          <i class=""></i>
+											          <div class="timeline-panel">
+											            <div class="timeline-heading">
+											              <h4 class="timeline-title">@hen.estado.descripcion</h4>
+											              <p><small class="text-muted"><i class="fa fa-calendar"></i> @hen.auditinsert.format("dd/MM/yyyy HH:mm:ss")</small></p>
+											            </div>
+											            <div class="timeline-body">
+											            	@if(estado.recurso.encuesta.estado.descripcion.contains("observa") && hen.estado.id == 2L){
+											            		<hr>
+										            			@form(   routes.EncuestaWebController.atiendeObservaciones(), 'role -> "form") {
+										            				<input class="btn btn-danger center-block btn-block" type="submit" value="Corrija las observaciones y envíe">
+										            			}									            		
+											            	}								            	
+											            </div>
+											          </div>										  
+												}
+											</ul>
+				             			}
+
+								}
+				            </div>
+				          </div>
+				        </li>
+				    }
+			    </ul>
+</div>
+<div class="col-md-1"></div>
+</div>
+
+</div>
+}
+
+<script type="text/javascript">
+	$(function(){
+		$("[name='divImpSol']:gt(0)").hide();
+		$("[name='divDetalleEvaluaciones']:not(:last)").hide();
+		$("[name='divReporteEval']:not(:last)").hide();
+		
+	});
+</script>

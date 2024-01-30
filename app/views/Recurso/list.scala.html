@@ -1,0 +1,139 @@
+@(currentPage: com.avaje.ebean.Page[Recurso], currentSortBy: String, currentOrder: String, currentFilter: String, currentCampoFiltro: String)
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) } 
+
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage:Int, newSortBy:String,   newCampoFiltro:String) = @{
+    
+    var sortBy = currentSortBy
+    var order = currentOrder
+    var campoFiltro = currentCampoFiltro
+    
+    if(newSortBy != null) {
+        sortBy = newSortBy
+        if(currentSortBy == newSortBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }
+
+
+
+
+    // Generate the link
+    routes.RecursoController.list(newPage, sortBy, order, currentFilter, currentCampoFiltro)
+    
+}
+
+@**********************************
+* Helper generating table headers *
+***********************************@
+@header(key:String, title:String) = {
+    <th class="@key.replace(".","_") header @if(currentSortBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}"       >
+        <a href="@link(0, key, currentCampoFiltro)">@title</a>
+    </th>
+}
+
+@main {
+	<div class="container-fluid" style="background-color: white; padding: 10px">    
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb">
+				  <li>Recursos</li>
+				  <li class="active">Todas las solicitudes</li>
+				</ol>			
+			</div>
+		</div>
+   
+    	<div class="row">
+			<div class="col-lg-12">
+    			<h3 id="homeTitle">@Messages("recursos.list.titulo", currentPage.getTotalRowCount)</h3>
+    			<div id="divFlash">
+					@flashes()
+				</div>
+			    <div id="actions">
+			        <form action="@link(0, "titulo", "titulo")" method="GET">       
+			            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filtrar solicitud por ..."/>
+			            <select name ="c" >
+							<option value="">Campos de filtrado</option>
+			            	<option value="titulo">Título</option>
+			            	<option value="numcontrol">Clave de control</option>
+			            	<option value="niveleducativo.descripcion">Nivel de conocimiento</option>
+			            	<option value="areaconocimiento.descripcion">Área del conocimiento</option>
+			            	<option value="unidadacademica.nombre">Unidad académica</option>
+			            	<option value="estado.descripcion">Estado</option>
+			            </select>
+			            <input type="submit" id="searchsubmit" value="Filtrar" class="btn btn-primary btn-xs">
+			        </form>        
+			    </div>
+
+				<div id="retornoAjax">				
+					@ajaxListTabla(currentPage, currentSortBy, currentOrder, currentFilter, currentCampoFiltro)
+				</div>
+
+
+			    
+
+		    </div>
+	    </div>
+    </div>        
+}
+
+<script type="text/javascript">
+
+	$(function () {	
+	  if (@currentCampoFiltro.isEmpty){  	
+	  	$('select[name="c"]:eq(0)').prop('selected', true);
+	  } else {	
+	  	$('select[name="c"] option[value="@currentCampoFiltro"]').prop('selected', true);
+		}	  
+	});
+	
+	
+	$( document ).on( "click", "[name*='btnEliminar']", function() {
+		 var num = $(this).attr('name').substring(11);
+		  if (confirm("¿Desea eliminar completamente la solicitud del recurso?")){
+			  $.ajax({
+				  async: false,
+				  method: "POST",
+				  url: "/recursos/"+num+"/ajaxDelete"
+				})
+				.success(function(data){					
+					$("#divFlash").html('<div class="alert alert-success" role="alert">Se eliminó el recurso.</div>');
+					$("#retornoAjax").html(data);
+				  })				
+				  .error(function(data){
+				  	alert("error ajax: "+data);
+				  })
+				
+		  }		  
+	});
+	
+	
+	$( document ).on( "click", "[name*='btnVer']", function() {
+		 var num = $(this).attr('name').substring(6);	 
+		 $("#aux").attr("action","/reporte/cesoe/"+num);	 
+		 $("#aux").submit();	 
+	});
+
+
+	$("form").submit(function(event){
+		if ( $("select[name='c']").val()==""  ){
+			event.preventDefault();
+		} else
+			return true;
+	});
+
+
+</script>
+
+            
+
+            

@@ -1,0 +1,29 @@
+@(id: Long, forma: Form[Oficio] )
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) } 
+
+ 		<div class="form-group">
+ 			<table class="table table-bordered tablaReporte">
+ 				<tr>
+ 					<td colspan="1">@inputText(forma("oficio.numero"), '_label -> "Número de oficio", '_help -> "", 'size->"10", 'required->"required", 'class->"form-control" )</td>
+ 					<td colspan="1">@inputText(forma("oficio.folio"), '_label -> "Número de folio", '_help -> "", 'size->"10", 'required->"required", 'class->"form-control" )</td>
+ 				</tr>
+ 				<tr>
+ 					<td>@inputDate(forma("oficio.fechaoficio"), '_label -> "Fecha del oficio", '_help -> "", 'required->"required", 'placeholder->"dd/mm/aaaa", 'class->"form-control")</td>
+ 					<td>@inputDate(forma("oficio.fecharecepcion"), '_label -> "Fecha de recepcion en UPEV", '_help -> "", 'required->"required", 'placeholder->"dd/mm/aaaa", 'class->"form-control")</td>
+ 				</tr>
+ 				<tr>
+ 					<td colspan="2">
+						<div class="input input-group clearfix">
+							<label for="oficio.contenido" class="control-label">Oficio digitalizado</label>
+							<input type="file" accept=".pdf" id="oficio.contenido" name="oficio.contenido" required="required" class="form-control" multiple=false >
+						</div> 					
+ 					</td>
+ 				</tr>
+ 				<tr>
+ 					<td colspan="2">
+ 						<input type="submit" value="Asignar folio" class="btn primary btn-primary">	
+ 					</td>
+ 				</tr>
+ 			</table> 		
+		</div>

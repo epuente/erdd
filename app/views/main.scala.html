@@ -1,0 +1,80 @@
+@(content: Html)
+
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>ERDD</title>
+        <script src="@routes.Assets.at("lib/jquery/jquery.min.js")" type="text/javascript"></script>
+        <!-- <script src="@routes.Assets.at("jquery/jquery-2.2.4.min.js")" type="text/javascript"></script> -->
+        <script src="@routes.Assets.at("lib/bootstrap/js/bootstrap.min.js")" type="text/javascript" defer></script>
+        <script src="@routes.Assets.at("lib/jquery-ui/jquery-ui.min.js")" type="text/javascript"  defer></script>
+         
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("lib/bootstrap/css/bootstrap.min.css")">
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("lib/bootstrap/css/bootstrap-theme.css")">   
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/main.css")"/>
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/megamenu.css")"/>
+        
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("lib/jquery-ui/jquery-ui.css")">
+
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">        
+	    
+	    <!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
+	    <!--[if lt IE 9]>
+	      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	    <![endif]-->   
+	    <link rel="icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+	    
+		<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("font-awesome-4.4.0/css/font-awesome.min.css")">	    
+
+	    
+		<script type="text/javascript" src='@routes.Application.javascriptRoutes()'></script>
+
+	    
+    </head>
+    
+<style>
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: auto;
+  background-color: #f5f5f5;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+body > .container {
+  padding: 0px 0px 0;
+  margin: 0px;
+}		
+
+</style>    
+    <body>
+    	<div id="wrapper">
+			<div class="header">
+				<img src="@routes.Assets.at("images/escudoSEP-IPN.png")" class="img-responsive center-block" alt="Escudos" width="1920px" height="58px">
+				<img src="@routes.Assets.at("images/indexEncabezado2.png")" class="img-responsive center-block" alt="Escudos" >
+			</div>
+			<div id="content">
+				<div class="menu">@megamenu()</div>
+				<div class="contenido">
+		            @content
+		        </div> 
+			</div>
+ 			
+			<div id="footer">
+    			<div style="background-color: #6c1645; text-align: center;">
+    				<img src="@routes.Assets.at("images/pie.png")"  class="img-responsive center-block" alt="Datos de la UPEV">
+    			</div>			
+			</div>
+        </div> 
+    </body>
+</html>
+

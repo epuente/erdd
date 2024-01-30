@@ -1,0 +1,150 @@
+@(re: List[Recursoevaluador], titulo:String)
+ <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/> 
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) } 
+@main{
+<div style="background-color: white; padding: 10px;">
+		<h3>@titulo</h3>	
+		@flashes()	
+		@if(re.isEmpty){
+			<div class="well well-lg">
+				No se encontraron registros.
+			</div>
+		} else {
+			<form id="auc" style="background-color: white;">
+				<table class="table table-bordered table-stripped" id="tabla">
+					<thead>
+						<tr>
+							<th>Título</th>
+							<th>Clave control</th>
+							<th>Tipo recurso</th>
+							<th>Aspecto</th>
+							@if(  Array(2, 3, 4, 5) contains re(0).estadoevaluacion.id ){
+								<th>Inicio evaluación</th>
+							}
+							@if(Array(3,4,5) contains re(0).estadoevaluacion.id){								
+								<th>Última evaluación</th>
+							}
+							@if(Array(400) contains re(0).estadoevaluacion.id){								
+								<th>Fecha solicitud cancelación</th>
+								<th>Evaluador solicitante</th>
+							}
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						@for(r <- re ){
+							<tr>
+								<td> <a href="@routes.EvaluacionEvaluadorController.verDetalle(r.recurso.id)" > @r.recurso.titulo </a>  </td>
+								<td>@r.recurso.numcontrol</td>
+								@if(r.recurso.clasificacion.tiporecurso != null){
+									<td>@r.recurso.clasificacion.tiporecurso.descripcion</td>
+								} else {
+									<td></td>
+								}
+								<td>@r.aspecto.descripcion</td>
+								
+								@if(Array(2, 3, 4, 5) contains re(0).estadoevaluacion.id){
+									<td>@r.auditinsert.format("dd/MM/yyyy  HH:mm")</td>
+								}
+								@if(Array(3, 4, 5) contains re(0).estadoevaluacion.id){
+									@if(r.auditlastupdate == null){
+										<td></td>
+									} else {
+										<td>@r.auditlastupdate.format("dd/MM/yyyy  HH:mm")  </td>
+									}										
+								}								
+								@if(re(0).estadoevaluacion.id == 400){
+									<td>
+										<table>
+											@for(sc <- r.recurso.solicitudescancelacion ){
+											<tr>
+												<td>@sc.fechaSolicitud</td>
+												<td>@sc.evaluador.personal.nombreCompleto</td>										
+											</tr>
+											}
+										</table>
+									</td>
+								}
+								
+								
+								<td>
+									@if(r.estadoevaluacion.id == 1){
+										<a class="btn btn-primary btn-block center-block" href="/evCreate?id=@r.recurso.id&idAspecto=@r.aspecto.id" role="button">Iniciar evaluación</a>								
+									}
+									@if(r.estadoevaluacion.id == 2){									
+										<a class="btn btn-primary btn-block center-block" href="/evEdit?id=@r.recurso.id&idAspecto=@r.aspecto.id" role="button">Continuar evaluación</a>
+									}
+									@if(r.estadoevaluacion.id == 4){
+										<a class="btn btn-primary btn-block center-block" href="/evAtenderObservaciones/@r.recurso.id/@r.aspecto.id" role="button">Atender observaciones</a>								
+									}
+									
+								</td>
+
+							</tr>
+						}
+					</tbody>
+				</table>
+			</form>
+		}
+</div>
+}
+
+
+
+<script type="text/javascript">
+	$(function() {
+		@if(!re.isEmpty){
+			var numCols = $('#tabla tbody tr:first td').length;
+			if (@re(0).estadoevaluacion.id == 5){
+				$("#tabla tbody tr td:eq("+(numCols-1)+")").hide();
+				$("#tabla thead tr th:eq("+(numCols-1)+")").hide();
+			}
+			if (@re(0).recurso.estado.id == 400){
+				$("#tabla tbody tr td:eq("+(numCols-1)+")").hide();
+				$("#tabla thead tr th:eq("+(numCols-1)+")").hide();
+				
+				$('#tabla thead tr').append("<th>Solicitante</th>");
+				$('#tabla thead tr').append("<th>Fecha de solicitud</th>");    
+
+				
+				@for( (re, ind)<-re(0).recurso.solicitudescancelacion.zipWithIndex){
+					$('#tabla tr:eq(@(ind+1))').each(function(){
+					       $(this).append('<td>@re.evaluador.personal.nombreCompleto</td>');
+					       $(this).append('<td>@re.fechaSolicitud.format("dd/MM/yyyy hh:mm:ss")</td>');
+					 });				
+				}
+			}
+			
+			if (@re(0).recurso.estado.id == 402){
+				$("#tabla tbody tr td:nth-child("+(numCols)+")").hide();
+				$("#tabla thead tr th:eq("+(numCols-1)+")").hide();
+				
+				$('#tabla thead tr').append("<th></th>");
+				$("#tabla tbody tr").append("<td></td>");
+				@for((e,ie)<-re.zipWithIndex){
+					var texto = '<div style="display: table; width: 100%" class="table">';
+					texto+='<div style="display: table-row;">';
+					texto+='<div style="display:table-cell; border: 1px solid #999999; padding:5px;">Fecha cancelación</div>'					
+					texto+='<div style="display:table-cell; border: 1px solid #999999; padding:5px;">Solicitante</div>'
+					texto+='<div style="display:table-cell; border: 1px solid #999999; padding:5px;">Fecha solicitud</div>'
+					texto+='<div style="display:table-cell; border: 1px solid #999999; padding:5px;">Fecha reactivación</div>'
+					texto+='<div style="display:table-cell; border: 1px solid #999999; padding:5px;">Motivo cancelación</div>'
+					texto+='</div>'
+					@for( f<-e.recurso.solicitudescancelacion){
+						texto+='<div style="display: table-row;">';
+						texto+='<div style="display:table-cell; border: 1px solid #999999; padding:5px;">@if(f.fechaAceptacion != null){@f.fechaAceptacion.format("dd/MM/yyyy hh:mm:ss")} </div>'
+						texto+='<div style="display:table-cell; border: 1px solid #999999; padding:5px;">@f.evaluador.personal.nombreCompleto</div>'						
+						texto+='<div style="display:table-cell; border: 1px solid #999999; padding:5px;">@f.fechaSolicitud.format("dd/MM/yyyy hh:mm:ss")</div>';
+						texto+='<div style="display:table-cell; border: 1px solid #999999; padding:5px;">@if(f.fechaReactivacion!=null) {@f.fechaReactivacion.format("dd/MM/yyyy hh:mm:ss")}</div>';
+						texto+='<div style="display:table-cell; border: 1px solid #999999; padding:5px;">@f.motivoCancelacion</div>';
+						texto+="</div>";						
+					}
+					texto+="</div>";
+					$("#tabla tbody tr:eq(@ie) td:eq(5)").append(texto);
+				}
+				
+			}
+		}
+	});
+</script>

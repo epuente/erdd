@@ -1,0 +1,288 @@
+@(forma: Form[Recursoevaluador],  id : Long, inhabiles:List[Calendario], datos:List[Recursoevaluador] )
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.render) }
+
+@main{
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/fullcalendar.css")"/> 
+	<script src="@routes.Assets.at("javascripts/fullcalendar/moment.min.js")" ></script>
+	<script src="@routes.Assets.at("javascripts/fullcalendar/fullcalendar.min.js")" ></script>
+	<script src="@routes.Assets.at("javascripts/fullcalendar/es.js")" ></script>
+	<div id="fecha" class="hidden"></div>
+
+	<div class="container-fluid" style="background-color: white; padding: 10px;">
+		<div class="row">
+			<div class="col-md-12">
+				<ol class="breadcrumb">
+				  <li>Recursos</li>
+				  <li><a href="/asignarEvaluadores">Evaluadores asignados</a></li>
+				  <li class="active">Asignar</li>
+				</ol>			
+			</div>
+		</div>	
+		<div class="row">
+			<div class="col-md-12">
+				<h3>Asignación de evaluadores para el recurso</h3>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-5">
+				<div class="panel panel-default">
+	              	<div class="panel-heading"><span class="glyphicon glyphicon-info-sign"></span>Evaluadores y fecha</div>
+	           		<div class="panel-body">
+          				@form(CSRF(routes.RecursoevaluadorController.asignarEvaluadoresSave(id,"reasignar")), 'id->"frmCreate") {
+							<div style="display: none;">	
+										@inputText(forma("aspecto1").copy(value=Some("1")), '_label->"",  'style -> "display: none")
+										@inputText(forma("aspecto2").copy(value=Some("2")), '_label->"",  'style -> "display: none")
+										@inputText(forma("aspecto3").copy(value=Some("3")), '_label->"",  'style -> "display: none")
+										@inputText(forma("aspecto4").copy(value=Some("4")), '_label->"",  'style -> "display: none")
+										@inputText(forma("sinCambio"), '_label->"",  'style -> "display: none")
+							</div>
+		           			<div class="row">
+		           				<div class="col-md-12">
+		           					<div class="row">
+		           						<div class="col-md-6">
+										    @select(
+										        forma("evaluador1"), 
+										        options(models.EvaluadorAspecto.optionsAspectoActivo(1)), 
+										        'labelAlterna -> "Evaluadores para el aspecto Pedagógico", '_default -> "Seleccione el evaluador...",
+										        '_showConstraints -> false
+										   	)           						
+		           						</div>
+		           						<div class="col-md-6">
+										    @select(
+										        forma("evaluador2"), 
+										        options(models.EvaluadorAspecto.optionsAspectoActivo(2)), 
+										        'labelAlterna -> "Evaluadores para el aspecto Editorial", '_default -> "Seleccione el evaluador...",
+										        '_showConstraints -> false
+										   	)            						
+		           						</div>
+		           					</div>
+		           					<div class="row">
+		           						<div class="col-md-6">
+										    @select(
+										        forma("evaluador3"), 
+										        options(models.EvaluadorAspecto.optionsAspectoActivo(3)), 
+										        'labelAlterna -> "Evaluadores para el aspecto Técnico", '_default -> "Seleccione el evaluador...",
+										        '_showConstraints -> false
+										   	)           						
+		           						</div>
+		           						<div class="col-md-6">
+										    @select(
+										        forma("evaluador4"), 
+										        options(models.EvaluadorAspecto.optionsAspectoActivo(4)), 
+										        'labelAlterna -> "Evaluadores para el aspecto Diseño gráfico", '_default -> "Seleccione el evaluador...",
+										        '_showConstraints -> false
+										   	)            						
+		           						</div>           						
+		           					</div>
+									<div class="row" id="divFechas">
+										<div class="col-md-6">
+											@inputText(forma("ndias"), 'labelAlterna -> "Número de días para evaluar", '_help -> "", 'id->"este",'class->"form-control",'pattern->"[0-9]{1,2}" ,'required->"required", 'size->5, 'oninput->"calcular()", 'onkeyup->"calcular()")
+										</div>
+										<div class="col-md-6">											
+											@inputDate(forma("fechalimite"), 'labelAlterna -> "Último día para evaluar", '_help -> "", 'required->"required",'class->"form-control", 'placeholder->"dd/mm/aaaa", 'readonly->"readonly")										 
+										</div>
+									</div>
+									@if(datos.size!=0){
+										<div class="row" id="divFechasLectura">
+											<div class="col-md-6">
+												Número de días para evaluar: @datos(0).recurso.evaluacionFecha.ndias
+											</div>
+											<div class="col-md-6">											
+												Último día para evaluar: @datos(0).recurso.evaluacionFecha.fechalimite.format("dd/MM/yyyy")										 
+											</div>
+										</div>	
+									}								
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group clearfix  has-error">
+												<div id="msgError" class="has-error control-label"></div>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<!-- input type="submit" value="Asignar evaluadores"  class="btn btn-primary btn-block center-block" style="width: 70%"-->
+											<input type="button" value="Asignar evaluadores"  class="btn btn-primary btn-block center-block" style="width:70%;" onclick="preValidar()">										
+
+										</div>
+									</div>		           					
+		           				</div>
+		           			</div>		  
+		           		}
+		           		
+		           		
+		           		
+		           		         			
+	           		</div>
+           		</div>
+           	</div>
+			<div class="col-md-7">
+				<div class="panel panel-default">
+	              	<div class="panel-heading"><span class="glyphicon glyphicon-info-sign"></span>Calendario</div>
+	           		<div class="panel-body">
+									<div class="col-md-12">
+										<div id='calendar'></div>
+									</div>						           		
+	           		</div>
+	           	</div>
+	       </div>	           	
+        </div>
+    </div>
+    
+    
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title modalTitleError" id="myModalLabel">Advertencia</h4>
+	      </div>
+	      <div class="modal-body">
+				Si esta intentando reemplazar un evaluador de un aspecto, al realizar esta operación se perderán las evaluaciones del aspecto realizadas por el evaluador anterior.<br><br>
+				 
+	      </div>
+	      <div class="modal-footer">	      		
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+	        <button type="button" class="btn btn-primary" id="btnContinuar">Continuar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>    
+
+    
+}
+
+<script type="text/javascript">
+	var valAnteriores = null;
+	$(function() {
+		$('#frmCreate').attr("data-toggle","validator");	
+		$("#este").attr("data-error","Solo se permite hasta 2 dígitos.");
+		leer();
+		$('#calendar').fullCalendar({		
+			editable: false,
+			allDaySlot: false,
+			eventLimit: true, // allow "more" link when too many events
+			//aspectRatio: 2,
+			allDayDefault: true,
+			selectable: false,
+			selectHelper: false,	
+			weekends: false,
+			eventRender: function(event, element) {
+				if (event.tipo ==1){
+					var color = '#C0C0C0';
+				}
+				if (event.tipo ==2){
+					var color = 'red';
+				}
+				if (event.tipo ==3){
+					var color = 'grey';
+				}		
+				if (event.tipo ==4){
+					var color = 'blue';
+				}
+				if (event.tipo ==5){
+					var color = 'cyan';
+				}		
+				$(element).css('background-color', color );			
+			},		
+		
+			events: [
+			         
+			    @for((f,i) <- inhabiles.zipWithIndex){
+			    	{
+			    		id:    "@f.id",
+			    		title: "@f.descripcion",
+			    		start: "@f.desde",
+			    	@*	end:   moment("@f.hasta").add(1,"days"),  *@
+			    		end:   moment("@f.hasta"),  
+			    		tipo:  1,			    		
+			    		rendering: 'background'
+			    	} @if( i != inhabiles.length-1){ , }		    	
+			    }
+			    
+			         
+			],
+		    eventMouseover: function( event, jsEvent, view ) { 
+		    	//alert("id:"+event.id+"\ntitle:"+event.title+"\ntipo:"+event.tipo+"\ncolor:"+event.eventColor+"desde: "+moment(event.start).format('DD/MM/YYYY')+"\nhasta:"+moment(event.end).format('DD/MM/YYYY'));
+		    }			
+		});
+		
+		
+		valAnteriores = [ $("#evaluador1").val(), $("#evaluador2").val(), $("#evaluador3").val(), $("#evaluador4").val()   ];
+		
+	});
+	
+	function calcular(){		
+		$.ajax({
+			  type: "GET",
+			  url: '/hoyMasDias?nd='+$("#este").val()
+			})
+		  .success(function( data ) {
+		  		$("#fechalimite").val(data);
+		  		$('#calendar').fullCalendar('removeEvents', 'actual');	
+		  		var eventObject = {
+		  				id: 'actual',
+		  			    title: "Periodo",
+		  			    start: moment().add(1,'days'),
+		  			    end: moment(data).add(1,'days'),
+		  			    tipo: 5,
+		  			    rendering: 'background'
+
+		  		};
+
+		  		$('#calendar').fullCalendar('renderEvent', eventObject, true);		  		
+		  		
+		  		
+		  })
+	}
+	
+	
+			
+	function preValidar(){		
+		if ( $("#evaluador1").val() =="" &&  $("#evaluador2").val() =="" &&  $("#evaluador3").val() =="" && $("#evaluador4").val() ==""  ){
+			$("#msgError").show();
+			$("#msgError").html("No ha seleccionado ningún evaluador");
+			event.preventDefault();
+		} else {
+			$("#msgError").hide();
+		}
+		
+		var valActuales = [ $("#evaluador1").val(), $("#evaluador2").val(), $("#evaluador3").val(), $("#evaluador4").val()   ];		
+
+		var sinModificar = valAnteriores.length == valActuales.length && valAnteriores.every(function(element, index) {
+		        return element === valActuales[index]; 
+		    });		    
+
+		$("#sinCambio").val(sinModificar);	
+		if (!sinModificar) {	
+			if ("@datos.isEmpty" == "false"){				
+				$('#myModal').modal('show');
+			} else {				
+				$("#frmCreate").submit();
+			}
+		} else {
+			alert("No ha modificado ninguna asignación");
+		}
+	}
+	
+	function leer(){
+		if (@datos.size!=0){
+			$("#divFechas").hide();
+		}
+		@for(d<-datos){
+@println(d.evaluador.id)			
+			$("#evaluador@d.aspecto.id").val("@d.evaluador.id").prop('selected', true);			
+		}
+	}
+
+	$("#btnContinuar").on("click",function(){
+		$("#frmCreate").submit();
+	});
+	
+	
+	
+
+	
+</script>
+<script src="@routes.Assets.at("javascripts/validator.min.js")" type="text/javascript"></script>

@@ -1,0 +1,59 @@
+@(unidadacademicaForm: Form[Unidadacademica])
+
+@import helper._
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/> 
+
+@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.render) } 
+
+@main {
+	<div class=container-fluid style="background-color: white; padding: 10px" >
+			<div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+					  <li>Catálogos</li>
+					  <li><a href="/unidadacademica">Unidades académicas</a></li>
+					  <li class="active">Agregar</li>
+					</ol>			
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+	  	          <h3>Agregar Unidad Académica</h3>
+		        </div>
+			</div>
+			<div class="row">    
+    			<div class="col-lg-12">
+				    @form(CSRF(routes.UnidadacademicaController.save()), 'class->"form-inline", 'id->"frmCreate") {
+					  <div class="form-group">
+				            @inputText(unidadacademicaForm("nombre"), 'labelAlterna -> "Nombre", '_help -> "", 'required->"required", 'size->"80em")
+				            <br>
+                            <div class="form-group">
+                              @inputCheckboxGroup(
+                                 unidadacademicaForm("nivel"),
+                                 options = options(models.Niveleducativo.options),                              
+                                 '_label -> null                                                                                 
+                              )
+				           </div>
+				           <br><br>
+                            <div class="form-group">
+                              @inputCheckboxGroup(
+                                 unidadacademicaForm("area"),
+                                 options = options(models.Areaconocimiento.options),                              
+                                 '_label -> null                                                                                 
+                              )
+                           </div>				           
+				           <br><br> 
+    						<input type="submit" value="Agregar" class="btn btn-primary">				            
+				       </div>
+				     
+			        }
+			        <div class="actions">			            
+			            <a href="@routes.UnidadacademicaController.list()" class="btn btn-default">Cancelar</a> 
+			        </div>			        
+				 </div>
+		 </div>       
+    </div>
+    
+    
+}
+

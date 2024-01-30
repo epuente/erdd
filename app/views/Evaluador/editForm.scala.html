@@ -1,0 +1,54 @@
+@(id: Long, pForm: Form[Personal], p:Personal)
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
+
+@main {
+	<div class=container-fluid style="background-color: white; padding: 10px;">	
+	    <h1>Editar evaluador</h1>
+	    @form(CSRF(routes.EvaluadorController.update2(id)), 'id->"frmEvaluador") {
+	        <fieldset>
+	           	@evaluadorForm(pForm, p)
+	        </fieldset>
+	    }
+	    <div class="actions">
+	        <input type="submit" value="Actualizar" class="btn primary btn-primary" onclick="javascript:preValidar()">  
+	        <a href="@routes.EvaluadorController.list()" class="btn btn-default">Cancelar</a> 
+	    </div>
+    </div>    
+}
+
+<script type="text/javascript">
+	$(function() {
+		$('#frmEvaluador').attr("data-toggle","validator");
+		$('#nombre').focus();
+		
+		$(".observacion").hide();
+		$("[name*='btnObservacion_']").hide();
+		$("[name='aspecto[]']").attr("data-error","Seleccione el o los aspectos");
+		$("#usuario_usuario, #usuario_password").attr("data-error","Sólo letras y números, sin acéntos, espacios ni caracteres especiales.");
+				
+		leer();
+	});
+
+	function leer(){
+		if ("@p.correo".length !=0){
+			$('[name="correo"]').val("@p.correo");
+		}
+		if ("@p.usuario.password".length !=0){
+			$('[name="usuario.password"]').val("@p.usuario.password");
+		}
+		$('[name="activo.id"][value="@p.activo.id"]').prop('checked',true);
+		
+		@for(ea <- p.evaluador.evaluadoraspectos){
+			$('#aspecto_@ea.aspecto.id').prop('checked',true);
+		}
+
+	}
+	
+	function preValidar(){
+		$("#frmEvaluador").submit();
+	}
+	
+	
+	
+</script>

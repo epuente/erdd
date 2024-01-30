@@ -1,0 +1,9 @@
+DELIMITER ;;
+CREATE FUNCTION `VersionActualTerminada`() RETURNS bigint(20)
+BEGIN
+    DECLARE reslutval BIGINT;
+    SET reslutval := 0;
+		select max(version) into reslutval from evaluacion_tabla_version where terminado = 'S';
+    RETURN reslutval;
+END ;;
+DELIMITER ;

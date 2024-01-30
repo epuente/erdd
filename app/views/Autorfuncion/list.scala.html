@@ -1,0 +1,118 @@
+@(af: List[Autorfuncion])
+@import helper._
+@main{
+<style>
+.filtrado, mark  {
+    background-color:#ffffcc !important;  
+}
+</style>
+
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("lib/datatables/css/dataTables.bootstrap.min.css")"/>
+
+	<div class=container-fluid style="background-color: white; padding: 10px" >
+			<div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+					  <li>Catálogos</li>
+					  <li class="active">Tipos de autorias</li>
+					</ol>			
+				</div>
+			</div>
+            <div class="row">
+                <div class="col-md-12"><h3>Tipos de autorías <a href="@routes.AutorfuncionController.create()" title="Agregar Área del Conocimiento"><i class="fa fa-plus-circle text-success fa-lg" aria-hidden="true"></i></a></h3></td>
+
+                    </div>
+                </div>			
+	
+		    @if(flash.containsKey("success")) {
+		        <div class="alert alert-success" role="alert">
+		            <strong>¡Correcto!</strong> El tipo de autoría @flash.get("success")
+		        </div>
+		    }
+		    @if(flash.containsKey("warning")) {
+		        <div class="alert alert-warning" role="alert">
+		            <strong>¡Precaución!</strong> El tipo de autoría @flash.get("warning")
+		        </div>
+		    }    @if(flash.containsKey("error")) {
+		        <div class="alert alert-danger" role="alert">
+		            <strong>¡Error!</strong> El tipo de autoría @flash.get("error")
+		        </div>
+		    } 
+		
+			@if(af.isEmpty){
+				<h1>No hay tipos de autorías registradas</h1>
+			} else {
+
+				
+				<table class="table table-striped table-bordered table-hover " id="tablaCatalogoAutorias">
+					<thead>
+						<tr>
+							<th>Descripcion</th>
+							<th></th>
+						</tr>
+					</thead>
+				
+					<tbody>
+						@for(e <- af) {
+							<tr>
+								<td><a href="@routes.AutorfuncionController.edit(e.id)">   @e.descripcion  </a> </td>
+								<td style="text-align: center;">
+		
+									@form(CSRF(routes.AutorfuncionController.delete(e.id)), 'class -> "topRight") {						
+										<button type="button" class="btn btn-primary btn-danger btn-sm" name="btn@e.id.toString">Eliminar</button>
+										}
+									</form>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			}
+	</div>
+}
+
+<script type="text/javascript">
+	$(function(){
+	    laTablaDTSS = $('#tablaCatalogoAutorias').DataTable( {
+	        pageLength: 10,
+	        lengthMenu: [  [1,3, 5, 10, 25, 50, -1], [1,3, 5, 10, 25, 50, "Todos"]   ],    
+	        language: {
+	            url: "@routes.Assets.at("Spanish.json")" 
+	        },
+	        mark: true,
+	        stateSave: true,
+	        fixedColumns: true,
+	        columnDefs: [
+	            { sortable: false, targets: [ 1 ] },
+	            { width: "20%", targets: 1 }
+	          ],
+	        "initComplete": function(){
+	            $("#tablaCatalogoAutorias_wrapper div.row div").removeClass("col-sm-6");
+	            $("#tablaCatalogoAutorias_wrapper div.row div:eq(0)").addClass("col-sm-4");
+	            $("#tablaCatalogoAutorias_wrapper div.row div:eq(2)").addClass("col-sm-8");
+	            $(".dataTables_filter").css("width","auto");  
+	            $("input[type='search'].form-control.input-sm").keyup(function(){
+	                if( $(this).val().length >0 ){
+	                    $(this).addClass("filtrado");
+	                } else {
+	                    $(this).removeClass("filtrado");
+	                }
+	            });   
+	        }
+	    } );        
+	});
+
+	$( document ).on( "click", "[name*='btn']", function() {
+		 var num = $(this).attr('name').substring(3); 
+		 if (confirm("¿Desea eliminar el tipo de autoría?")){
+			 
+			 $(this).parent().submit();
+		 }		 
+	});
+</script>
+<script src="@routes.Assets.at("lib/datatables/js/jquery.dataTables.min.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("lib/datatables/js/dataTables.bootstrap.min.js")" type="text/javascript"></script>
+
+<script src="@routes.Assets.at("mark.js/datatables.mark.min.js")"></script>
+<script src="@routes.Assets.at("mark.js/jquery.mark.min.js")"></script>
+

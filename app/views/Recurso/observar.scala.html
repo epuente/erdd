@@ -1,0 +1,33 @@
+@(rs: List[Recurso], mensaje:String)
+
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>Clave de control</th>
+				<th>Título</th>
+				<th>Área del conoc.</th>
+				<th>Nivel educativo</th>
+
+				<th>Programa académico</th>
+				<th>Modalidad</th>
+				<td></td>
+			</tr>
+		</thead>
+	
+		@for(r <- rs) {
+		<tr>
+			<td><a href="@routes.ReporteController.cesoe(r.id)">@r.numcontrol</td></a>
+			<td>@r.titulo</td>
+			<td>@r.areaconocimiento.descripcion</td>
+			<td>@r.niveleducativo.descripcion</td>
+			<td>@r.programaacad</td>
+			<td>@{ if(r.modalidad!= null) r.modalidad.descripcion}</td>
+			@if(r.estado.id == 1){
+				<td><a class="btn btn-primary btn-xs btn-block" href="@routes.RecursoController.observar(r.id)" role="button">Agregar observaciones</a></td>
+			}else{
+				<td><a class="btn btn-primary btn-xs btn-block" href="@routes.RecursoController.observar(r.id)" role="button">Revisar observaciones</a></td>			
+			}
+		</tr>
+	
+		}
+	</table>

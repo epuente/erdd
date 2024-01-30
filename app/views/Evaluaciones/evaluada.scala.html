@@ -1,0 +1,318 @@
+@(re:List[Recursoevaluador], idAspecto:String)
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/lineasColoresPaneles.css")"/>
+
+
+@main{
+	<div class=container-fluid style="background-color: white; padding: 10px" id="div0" style="display:none">  
+			<div class="row">
+				<div class="col-md-12">
+					<ol class="breadcrumb">
+					  <li>Evaluaciones</li>
+					  <li class="active">Evaluación</li>
+					</ol>			
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-2">
+					<div class="panel panel-default">
+					  <div class="panel-heading">
+					    <div class="panel-title"><small>Detalle de evaluación</small></div>
+				      </div>
+					  <div class="panel-body">
+							<div class="row">
+					  			<div class="col-md-12">
+									<div style="font-size: large;" class="text-center">
+										@re.get(0).recurso.numcontrol
+									</div>
+								</div>
+							</div>					  
+					  	@if(idAspecto == "0"){
+							<div class="row">
+					  			<div class="col-md-12">
+									<div style="font-size: large;" class="text-center">
+										Calificación general<div></div>@re.get(0).recurso.calificacionPorcentajeGral
+										<br>
+					  					@re.get(0).recurso.calificacionLetraGral
+				  					</div>
+					  			</div>
+				  			</div>		
+			  			}
+  						<div class="row">
+				  			<div class="col-md-12">
+				  			<br>
+				  			</div>
+			  			</div>
+					  	<div class="row">
+					  		<div class="col-sm-12">
+					  			@for(r<-re){
+					  				<div class="row">
+					  					<div class="col-sm-12">
+					  						<strong>Detalle aspecto @r.aspecto.descripcion</strong>
+					  					</div>
+					  				</div>
+				  					<div class="row">
+				  						<div class="col-sm-9" >
+				  							<div class="small">Calificación aspecto</div>
+				  						</div>
+				  						<div class="col-sm-3">
+				  							<div id="calAspecto@r.aspecto.id" class="small pull-right"></div>
+				  						</div>
+			  						</div>	
+				  					<div class="row">
+				  						<div class="col-sm-12" style="height: 0.8em">
+				  						
+				  						</div>
+				  					</div>			  										  				
+					  				<div class="row">					  				
+					  					<div class="col-sm-9 small">
+					  						Total reactivos
+					  					</div>
+					  					<div class="col-sm-3">
+					  						<div id="totalReactivos@r.aspecto.id" class="small pull-right"></div>
+					  					</div>
+				  					</div>
+				  					<div class="row">
+				  						<div class="col-sm-12" style="height: 0.8em"></div>
+				  					</div>					  					
+				  					<div class="row">
+				  						<div class="col-sm-9">
+											<div style="display:inline-block" class='refLineaColor2 small'></div>
+				  							<div style="display:inline-block" class="small">Sí cumple</div>
+				  						</div>
+				  						<div class="col-sm-3">
+								  			<div id="totalSi@r.aspecto.id" class="small pull-right"></div>
+				  						</div>
+				  					</div>
+				  					<div class="row">
+				  						<div class="col-sm-9">
+											<div style="display:inline-block" class='refLineaColor0 small'></div>
+				  							<div style="display:inline-block" class="small">No cumple</div>
+				  						</div>
+				  						<div class="col-sm-3">
+				  							<div id="totalNo@r.aspecto.id" class="small pull-right"></div>					  						
+				  						</div>
+				  					</div>
+				  					<div class="row">
+				  						<div class="col-sm-9">
+											<div style="display:inline-block" class='refLineaColor1 small'></div>
+				  							<div style="display:inline-block"class="small">Parcialmente</div>
+				  						</div>
+				  						<div class="col-sm-3">
+				  							<div id="totalParcial@r.aspecto.id" class="small pull-right"></div>					  						
+				  						</div>
+				  					</div>
+				  					<div class="row">
+				  						<div class="col-sm-9">
+											<div style="display:inline-block" class='refLineaColorNA small'></div>
+				  							<div style="display:inline-block"class="small">No aplica</div>
+				  						</div>
+				  						<div class="col-sm-3">
+				  							<div id="totalNA@r.aspecto.id"class="small pull-right"></div>					  						
+				  						</div>
+				  					</div>
+				  					<div class="row">
+				  						<div class="col-sm-12 small"><hr></div>
+			  						</div>
+					  			}
+							</div>					  		
+					  		
+					  		
+					  		
+					  		
+
+
+
+
+				  		</div>
+			  		  </div>
+				    </div>		
+
+
+					
+				</div>
+
+				
+				
+				<div class="col-md-10">		  
+  				    <ul id="tabs" class="nav nav-tabs nav-justified" data-tabs="tabs">
+						@for((r,ir) <- re.zipWithIndex){
+							<li @if(ir==0){class="active"}><a href="#divAspecto@r.aspecto.id" data-toggle="tab">Aspecto: @r.aspecto.descripcion</a></li>
+						}        
+				    </ul>
+				    <div style="padding: 10px; border-left: 1px solid #ddd; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd">
+			    
+					    <div>
+						    <div id="my-tab-content" class="tab-content" > 
+						        @for((r,ir) <- re.zipWithIndex){
+									<div id="divAspecto@r.aspecto.id" class="tab-pane fade @if(ir==0){ in active}">
+										@views.html.EvaluacionEvaluador.evaluacionPanelesForm(r, models.EvaluacionTabla.searchByAspecto(r.id) )
+									</div>
+								}
+						    </div>
+					    </div>
+				    </div>
+				</div>
+			</div>
+	</div>
+
+
+
+}
+
+
+<script type="text/javascript">
+	$(function() {
+    	$("#div0").hide();
+        $('#tabs').tab();
+        $('[data-toggle="popover"]').popover({html: true});        
+        navegacionPaneles();
+    	leer();
+    	$("#btnEvaluar, #btnCancelar, input:button[id^='btnNA']").hide();
+    	$("input:radio[name^='califica'], textarea").prop("disabled",true);
+
+    	$("textarea").prop("readonly",true);
+    	
+    	$("div[id^='divAspecto']").each(function(i,e){
+    			$(this).find("[name='cpPagina']:first").click();
+    	});
+    	$("#div0").show();    	
+    });
+    
+
+
+
+    function navegacionPaneles(){
+        @for(r <- re){
+			var aux = 1;
+			var cadena ="";
+			//Determina cuantas y cuales serán los saltos de paginación 
+			for(l=1; l <= $("div.panel-title").length;l++ ){
+				if(l%8==0){
+					cadena+="<td style='border-top:none'><div class='center-block'><a href='' data-target='#carouselId@r.aspecto.id' data-slide-to='"+(aux-1)+"' name='cpPagina'>"+aux+"</a></div></td>";
+					aux++;
+				}
+			}
+			if($("div.panel-title").length % 8 != 0){
+				    cadena+="<td style='border-top:none'><a href='' class='center-block' data-target='#carouselId@r.aspecto.id' data-slide-to='"+(aux-1)+"' name='cpPagina'>"+aux+"</a></td>";
+			}
+		//	$("#tablaNavegaCarousel@r.aspecto.id").html("<tr><td style='border-top:none'><div class='pull-right'><!--a href='#carouselId@r.aspecto.id' role='button' data-slide='prev'>Anterior</a--></div></td>"+cadena+"<td class='pull-left' style='border-top:none'><!--a href='#carouselId@r.aspecto.id' role='button' data-slide='next'>Siguiente</a--></td></tr>");
+			$("#tablaNavegaCarousel@r.aspecto.id").html("<tr><td style='border-top:none'><div class='pull-right'><a href='' id='carousel@(r.aspecto.id)Anterior'>Anterior</a></div></td>"+cadena+"<td class='pull-left' style='border-top:none'><a href='#carouselId@r.aspecto.id' id='carousel@(r.aspecto.id)Siguiente'>Siguiente</a></td></tr>");
+        } 
+        
+        /// Cuando estan terminadas las 4 evaluaciones
+		@for(r <- re){
+			var aux = 1;
+			var cadena ="";
+			//Determina cuantos y cuales serán los saltos de paginación 
+			for(l=1; l <= $("#divAspecto@r.aspecto.id div.panel-title").length;l++ ){
+				if(l%8==0){
+					cadena+="<td style='border-top:none'><div class='center-block'><a href='' data-target='#carouselId@r.aspecto.id' data-slide-to='"+(aux-1)+"' name='cpPagina'>"+aux+"</a></div></td>";
+					aux++;
+				}
+			}
+			if($("#divAspecto@r.aspecto.id div.panel-title").length % 8 != 0){
+				    cadena+="<td style='border-top:none'><a href='' class='center-block' data-target='#carouselId@r.aspecto.id' data-slide-to='"+(aux-1)+"' name='cpPagina'>"+aux+"</a></td>";
+			}
+			$("#tablaNavegaCarousel@r.aspecto.id").html("<tr><td style='border-top:none'><div class='pull-right'><a href=''  id='carousel@(r.aspecto.id)Anterior'>Anterior</a></div></td>"+cadena+"<td class='pull-left' style='border-top:none'><a href='#carouselId@r.aspecto.id' id='carousel@(r.aspecto.id)Siguiente'>Siguiente</a></td></tr>");
+		}         
+    }
+    
+    
+	$(document).on("click", "[name='cpPagina']",function(){
+		var ind = parseInt($(this).attr("data-slide-to"));
+		
+		// Obtener el máximo número de pags
+		var maxPag = -1;
+		$(this).closest("[id^='divAspecto'").find("[name='cpPagina']").each(function(i,e){
+			if (  parseInt($(e).attr('data-slide-to')) > maxPag  ){
+				maxPag = $(e).attr('data-slide-to');
+			}
+		});
+		
+		$(this).closest("[id^='divAspecto'").find("[name='divRowObservacionGral']").toggle(maxPag == ind );		
+		
+		$(this).closest("[id^='divAspecto'").find("[name='cpPagina']").each(function(i,e){
+			if(ind == i){
+				$(e).html("<span class='badge'>"+(ind+1)+"</span>");		
+			} else {
+				$(e).html( parseInt($(e).attr("data-slide-to"))+1 );
+			}
+		});
+		
+		var idAspecto = $(this).attr("data-target").substr(-1);
+		$("#carousel"+idAspecto+"Anterior").toggle(parseInt(ind) >= 1 );
+		$("#carousel"+idAspecto+"Siguiente").toggle(parseInt(maxPag) > parseInt(ind));	
+				
+	});    
+	
+	function leer(){		
+        @for(r <- re){		
+			if (@r.estadoevaluacion.id !=1){
+				@for(e <- r.evaluaciones){
+					if ( @e.respuesta == -1 ){
+						$("#divAspecto@r.aspecto.id input[name='califica@e.evaluaciontabla.id']").prop("disabled",true);
+						$("#divAspecto@r.aspecto.id input[name='califica@e.evaluaciontabla.id']").removeClass("activo").addClass("inactivo");	
+						$("#divAspecto@r.aspecto.id  #btnNA_@e.evaluaciontabla.id").attr("value","Volver a habilitar");
+						$("#divAspecto@r.aspecto.id input[name='califica@e.evaluaciontabla.id'][value='@e.respuesta']").prop("checked",true);
+					} else {
+						$("#divAspecto@r.aspecto.id input[name='califica@e.evaluaciontabla.id'][value='@e.respuesta']").prop("checked",true);
+					}
+					@if(e.recursoevaluador.observacionEvaluacion != null){
+						$("#divAspecto@r.aspecto.id textarea[name='observacionGral-@e.recursoevaluador.recurso.id-@e.evaluaciontabla.aspecto.id']").val("@e.recursoevaluador.observacionEvaluacion.observacion" );
+					}
+				}
+			}
+			
+			
+			// Muestra detalles de evaluación
+	    	$("#totalReactivos@r.aspecto.id").html(($("#divAspecto@r.aspecto.id div.panel-title").length)  );
+	    	$("#totalSi@r.aspecto.id").html(($("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='2']:checked").length)  );
+	    	//$("#totalNo@r.aspecto.id").html(($("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='1']:checked").length)  );
+	    	$("#totalNo@r.aspecto.id").html(($("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='0']:checked").length) );
+	    	$("#totalParcial@r.aspecto.id").html( ($("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='1']:checked").length)  );
+	    	$("#totalNA@r.aspecto.id").html(($("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='-1']:checked").length)  );
+	    	$("#calAspecto@r.aspecto.id").html(@r.calificacionPorcentajeAspecto());
+			
+			// Pone lineas de color
+			$("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='-1']:checked").closest(".panel-body").before("<div class='lineaColorNA'></div>")
+	    	$("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='2']:checked").closest(".panel-body").before("<div class='lineaColor2'></div>")
+	    	$("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='1']:checked").closest(".panel-body").before("<div class='lineaColor1'></div>")
+			$("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='0']:checked").closest(".panel-body").before("<div class='lineaColor0'></div>")
+			
+			// Homologa altura de paneles x aspecto
+			var max=0;
+			$("#divAspecto@r.aspecto.id .panel-body").each(function(i){
+				if($(this).height() > max){
+					max = $(this).height();	
+				}
+			});
+        }
+	}	
+	
+
+	$( document ).on( "click", "[id^='carousel'][id$='Anterior']", function(event) {
+		event.preventDefault();
+		var idAspecto = $(this).prop("id").substr(8,1);
+		var maxPag = $("#tablaNavegaCarousel"+idAspecto+" [name='cpPagina']").length;
+		var pag = $("#tablaNavegaCarousel"+idAspecto+" [name='cpPagina'] span.badge").eq(0).parent().attr("data-slide-to");
+		$("#tablaNavegaCarousel"+idAspecto+" [name='cpPagina']").eq( parseInt(pag)-1 ).click();
+		$(this).toggle(parseInt(pag) > 1 );
+		$("#carousel"+idAspecto+"Siguiente").toggle(parseInt(maxPag) != parseInt(pag));
+	});
+
+	$( document ).on( "click", "[id^='carousel'][id$='Siguiente']", function(event) {
+		event.preventDefault();
+		var idAspecto = $(this).prop("id").substr(8,1);
+		var maxPag = $("#tablaNavegaCarousel"+idAspecto+" [name='cpPagina']").length;
+		var pag = $("#tablaNavegaCarousel"+idAspecto+" [name='cpPagina'] span.badge").eq(0).parent().attr("data-slide-to"); 
+		$("#tablaNavegaCarousel"+idAspecto+" [name='cpPagina']").eq( parseInt(pag)+1 ).click();		
+		$(this).toggle(  (parseInt(maxPag)-2) != parseInt(pag));
+		$("#carousel"+idAspecto+"Anterior").toggle(parseInt(pag) >= 0 );
+		window.scrollTo(0, 0);
+	});	
+</script>
+
+<script src="@routes.Assets.at("javascripts/utilerias.js")"></script>
+
+  

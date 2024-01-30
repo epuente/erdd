@@ -1,0 +1,19 @@
+@(r: Recurso)
+@main{
+	<div class="jumbotron">
+		<div class="container">
+			<p>Se han asignado los siguientes evaluadores</p>
+			<p></p>
+			
+			<table>
+				@for(re<-r.recursoevaluadores){
+					<tr>
+						<td>@re.evaluador.personal.nombreCompleto()</td><td>@re.aspecto.descripcion</td>
+					</tr>	
+				}
+			</table>
+			
+		</div>
+	</div>
+
+}

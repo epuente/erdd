@@ -1,0 +1,116 @@
+@(e: Form[Personal], r:Personal)
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) } 
+
+@main{
+	<div class=container-fluid style="background-color: white; padding: 10px;">
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb">
+				  <li>Evaluadores</li>
+				  <li class="active">Crear</li>
+				</ol>			
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<h3>Agregar evaluador</h3>				
+			    @form( CSRF(routes.EvaluadorController.save()), 'role -> "form", 'id -> "frmEvaluador", 'role->"form") {
+					@evaluadorForm(e,null)
+				    <div class="form-group">
+				        <input type="submit" value="Agregar" class="btn btn-primary" >  
+				        <a href="@routes.EvaluadorController.list()" class="btn btn-default">Cancelar</a> 
+				    </div>
+				}
+			</div>
+		</div>
+	</div>	
+}
+
+
+
+<script type="text/javascript">
+	$(function() {
+		$('#frmEvaluador').validator();
+		$("[name='aspecto[]']").attr("data-error","Seleccione el o los aspectos");
+		$("input[type='email']").attr("data-error","No es la estructura de un email.");
+		
+		
+		$("[name='correo']").attr("data-remote","/validarExistenciaEmail");
+		$("[name='correo']").attr("data-remote-error","Ya esta registrado este email.");
+		
+		
+		$("#usuario_usuario, #usuario_password").attr("data-error","Sólo letras y números, sin acéntos, espacios ni caracteres especiales.");
+		$('#nombre').focus();
+		$(".observacion").hide();
+		$("[name*='btnObservacion_']").hide();
+	});
+	
+	
+	$("#frmEvaluador").submit(function(event){		
+		var numErrores=0;
+		var forma = $(this);
+		if (  $("input[name='aspecto[]']:checked").length == 0  ){
+			alert("Debe seleccionar al menos un aspecto");
+			numErrores++;
+		} 		
+		
+		if ( $("#usuario_usuario").val().length ==0 || $("#usuario_password").val().length ==0  ){
+			alert("Es obligatorio definir el nombre de usuario y su clave de acceso");
+			numErrores++;
+		} else {
+			var aux = "/validarExistenciaUserPass/"+$("#usuario_usuario").val()+"/"+$("#usuario_password").val();			
+			$.ajax({
+				  url: aux,
+				  async: false
+				}).done(function(data) {			
+					if (data!="0"){					
+						$("#usuario_usuario").parent().parent().addClass("has-error");
+				  		$("#divErrorUserPass").html('Ya existe el usuario con el password que intenta agregar.');
+				  		$("#divErrorUserPass").show();
+				  		numErrores++;
+					}
+				})
+				.fail(function(){
+					alert("error en AJAX");
+				});				
+		}
+
+		if (numErrores == 0){
+					
+			$("#usuario_usuario, #usuario_password").parent().parent().removeClass("has-error");
+	  		$("#divErrorUserPass").html('');
+	  		$("#divErrorUserPass").hide();	
+		} else {
+			event.preventDefault();		
+		} 
+	});
+	
+@*
+	
+	$("input[name='correo']").on("blur", function(){
+		var email = $(this).val();
+		if (email.length>0){
+			var aux = "/validarExistenciaEmail/"+email;		
+			$.ajax({
+				  url: aux,
+				  async: false
+				}).done(function(data) {		
+					if (data!="0"){				
+						$("input[name='correo']").parent().parent().addClass("has-error");
+				  		$("input[name='correo']").parent().find("span.help-block").html('<ul class="list-unstyled"><li>El email ya esta registrado</li></ul>');
+				  		$("#frmEvaluador input[type='submit']").addClass("disabled");
+					} else {
+						$("input[name='correo']").parent().parent().removeClass("has-error");
+						$("input[name='correo']").parent().find("span.help-block").html('');
+						$("#frmEvaluador input[type='submit']").removeClass("disabled");
+					}
+				})
+				.fail(function(){
+				alert("error en AJAX");
+			});
+		}
+	});
+*@
+</script>
+<script src="@routes.Assets.at("javascripts/validator.min.js")" type="text/javascript"></script>

@@ -1,0 +1,28 @@
+@(tipo:String,  descripcion:String)
+
+
+
+<script type="text/javascript">
+	@if(tipo.toLowerCase()=="create"){
+		$(function() {
+			$('#frmCreate').attr("data-toggle","validator");
+			$("input[type='text']:required").attr("data-error","Complete este campo.");
+		});		
+	}
+
+	@if(tipo.toLowerCase()=="edit"){	
+		$(function() {
+			$('#frmEdit').attr("data-toggle","validator");
+			$("input[type='text']:required").attr("data-error","Complete este campo.");
+		});
+		
+		
+		$('#frmDelete').on('submit', function(e){
+		    e.preventDefault();    
+		    if ( confirm("¿Desea eliminar @descripcion ?")  )
+		    	this.submit();    
+		});
+	}
+
+</script>
+<script src="@routes.Assets.at("javascripts/validator090.min.js")" type="text/javascript"></script>

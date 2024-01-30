@@ -1,0 +1,52 @@
+@(encres: List[EncuestaRespuesta])
+@import helper._
+	@if(encres.isEmpty()){
+		<div class="well">No se localizaron registros</div>
+	} else {
+
+		<table class="table table-striped table-bordered" id="tabla">
+			<thead>
+				<tr>
+					<th>Clave de control</th>
+					<th>Título</th>
+					<th>Fecha inicio de encuesta</th>
+					<th>Oficio de valoración</th>
+					<th></th>	
+				</tr>
+			</thead>
+			@for((r,ii) <- encres.zipWithIndex) {				
+				<tr>
+					<td rowspan="1"><a href="/reporte/cesoe/@r.recurso.id">@r.recurso.numcontrol  </a> </td>
+					<td rowspan="1">@r.recurso.titulo</td>					
+					<td rowspan="1">@r.auditinsert.format("dd/MM/yyyy HH:mm:ss")</td>
+					@if(r.recurso.oficiovaloracion==null){
+						<td rowspan="1">
+							<a href="@routes.OficioValoracionController.create(r.recurso.id)" target="blank">Agregar oficio</a>
+						</td>
+					} else {
+						<td rowspan="1"
+							><a href="@routes.RecursoController.verOficioValoracion(r.recurso.oficiovaloracion.id)" target="_blank">ver oficio @r.recurso.oficiovaloracion.numero</a>
+						</td>
+					}
+
+					@if(r.estado.id==1L){
+						<td rowspan="1">
+							<a href="@routes.EncuestaController.encuestaPorRevisar(r.id)" role="button" class="btn btn-primary btn-block center-block" style="width: 70%">Revisar</a>
+						</td>
+					}
+					@if(r.estado.id==2L){
+						<td rowspan="1">
+							<a href="@routes.EncuestaController.conObservaciones(r.id)" role="button" class="btn btn-primary btn-block center-block" style="width: 70%">Observaciones</a>
+						</td>
+					}	
+					
+					
+					@if(r.recurso.oficiovaloracion==null){
+					}
+					
+				</tr>
+			}
+
+			
+		</table>
+		}

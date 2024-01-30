@@ -1,0 +1,364 @@
+@(re: Recursoevaluador, cr:List[EvaluacionTabla],  mensajes:String )
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) } 
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/>
+@re.observacionEvaluacion
+@main{
+	<div style="background-color: white; padding: 10px" >  
+		<div style="display: none;" id="divGral">
+			<h3>Evaluación del aspecto  @re.aspecto.descripcion  del recurso: @re.recurso.titulo &nbsp;<span class="badge" id="bdg@re.aspecto.id" data-toggle="popover" data-title="Detalle de calificación" data-trigger="hover" title="Calificación" style="display: none" ></span></h3>
+			Clasificación:   @re.recurso.clasificacion.criterio1.descripcion / @re.recurso.clasificacion.criterio2.descripcion / @re.recurso.clasificacion.criterio3.catalogo.descripcion
+			<br>
+			Tipo de recurso: @re.recurso.clasificacion.tiporecurso.descripcion
+
+
+			<!-- Modal -->
+			@form(routes.CancelacionController.solicitudCancelacion(re.recurso.id), 'role -> "form", 'style->"background-color: white;", 'id->"frmModal") {
+				@CSRF.formField
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalTitle"></h4>
+				      </div>
+				      <div class="modal-body" id="modalBody">						
+				      </div>
+				      <div class="modal-footer">
+				      	<div class="modalPie"> </div>
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				        <button type="submit" class="btn btn-danger" id="btnModalSolCancelacion">Solicitar la cancelación del recurso.</button>
+				        <button type="button" class="btn btn-primary" id="btnModalSolProrroga">Solicitar prórroga.</button>				        
+				      </div>
+				    </div>
+				  </div>
+				</div>	
+			}
+
+			@if(!mensajes.isEmpty){
+				<div class="alert alert-danger fade in" role="alert">
+	        			@form(CSRF(routes.EvaluacionEvaluadorController.save(re.recurso.id, re.aspecto.id)), 'role -> "form", 'id -> "frmEvaluacion") {
+							@mensajes
+							<p>  		        			
+					        <button type="button" class="btn btn-default" id="btnSolProrroga">Solicitar prórroga</button>
+				        }			        
+			        </p>					        
+				</div>
+			} else {
+				@form(CSRF(routes.EvaluacionEvaluadorController.save(re.recurso.id, re.aspecto.id)), 'role -> "form", 'id -> "frmEvaluacion",'style->"background-color: white;") {
+					@evaluacionPanelesForm(re:Recursoevaluador, cr:List[EvaluacionTabla])
+				}
+			}
+			<!-- 
+			<a href='javascript: marcarTodos()'>marcar todos (prueba)</a>
+			 -->        
+		</div>
+		
+	</div>
+}
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var aux = 1;
+		var cadena ="";
+		//Determina cuantas y cuales serán los saltos de paginación 
+		for(l=1; l <= $("div.panel-title").length;l++ ){
+			if(l%8==0){
+				cadena+="<td style='border-top:none'><div class='center-block'><a href='' data-target='#carouselId@re.aspecto.id' data-slide-to='"+(aux-1)+"' name='cpPagina'>"+aux+"</a></div></td>";
+				aux++;
+			}
+		}
+		if($("div.panel-title").length % 8 != 0){
+			    cadena+="<td style='border-top:none'><a href='' class='center-block' data-target='#carouselId@re.aspecto.id' data-slide-to='"+(aux-1)+"' name='cpPagina'>"+aux+"</a></td>";
+		}
+		
+		$("#tablaNavegaCarousel@re.aspecto.id").html("<tr><td style='border-top:none'><div class='pull-right'><a href='' role='button5' data-slide='prev5' id='carousel@(re.aspecto.id)Anterior'>Anterior</a></div></td>"+cadena+"<td class='pull-left' style='border-top:none'><a href='#carouselId@re.aspecto.id' id='carousel@(re.aspecto.id)Siguiente'>Siguiente</a></td></tr>");
+		
+		
+		
+		
+		//$("#tablaNavegaCarousel@re.aspecto.id").html("<tr><td>HOLA</td></tr>");
+		$('[data-toggle="popover"]').popover({html: true});
+		
+		$("[name='cpPagina']:first").click();
+		
+		$(".panel-default").removeClass("panel-default").addClass("panel-warning");
+		leer();
+		
+		
+		
+
+				
+		
+       
+		
+		recuento();
+	//	$(".badge").hide();
+		$("#divGral").show();		
+	});
+
+
+
+	
+	$( document ).on( "click", "#carousel@(re.aspecto.id)Anterior", function(event) {
+		event.preventDefault();
+		var maxPag = $("#tablaNavegaCarousel@re.aspecto.id [name='cpPagina']").length;
+		var pag = $("#tablaNavegaCarousel@re.aspecto.id [name='cpPagina'] span.badge").eq(0).parent().attr("data-slide-to");
+		$("a[name='cpPagina']").eq( parseInt(pag)-1 ).click();
+		
+		$(this).toggle(parseInt(pag) > 1 );
+		$("#carousel@(re.aspecto.id)Siguiente").toggle(parseInt(maxPag) != parseInt(pag));
+		
+	});
+
+	$( document ).on( "click", "#carousel@(re.aspecto.id)Siguiente", function(event) {
+		event.preventDefault();
+		var pag = $("#tablaNavegaCarousel@re.aspecto.id [name='cpPagina'] span.badge").eq(0).parent().attr("data-slide-to"); 
+		$("a[name='cpPagina']").eq( parseInt(pag)+1 ).click();
+	    window.scrollTo(0, 0);
+		
+	});	
+	
+	$( document ).on( "click", "input[name^='califica']", function() {	
+		total = $("input[name^='califica']").length/4 ;
+		totalValor = $("input[name^='califica']:checked").length;
+		if (  total == totalValor){
+			$("#btnEvaluar").attr("value","Enviar evaluación del recurso");
+			$("#btnEvaluar").removeClass("btn-primary").addClass("btn-success");	
+			$("#terminado").val("SI");
+		} else {
+			$("#btnEvaluar").attr("value","Guardar la evaluación y continuar más tarde");
+			$("#btnEvaluar").addClass("btn-primary").removeClass("btn-success");
+			$("#terminado").val("NO");
+		}
+		toggleColorPanel( $(this).closest( ".panel-warning" )  );
+		recuento();
+	});
+	
+	
+	function toggleColorPanel(elPanel){
+		if ( $(elPanel).hasClass('panel-warning')  ){
+			$(elPanel).removeClass("panel-warning").addClass("panel-success");	
+		} else {
+			$(elPanel).removeClass("panel-success").addClass("panel-warning");
+		}
+	}
+	
+	$( document ).on( "click", "[id^='btnNA_']", function() {
+		num = $(this).attr("id").substring("btnNA_".length);		
+		if ($(this).attr("value") == "No aplica"){		
+			$("input[name='califica"+num+"'][value='-1']").prop("checked",true);
+			$("input[name='califica"+num+"']").prop("disabled",true);
+			$("input[name='califica"+num+"']").removeClass("activo").addClass("inactivo");
+			$(this).attr("value","Volver a habilitar");
+			//toggleColorPanel( $(this).closest( ".panel-warning" )  );
+		} else {
+			$("input[name='califica"+num+"'][value='-1']").prop("checked",false);
+			$("input[name='califica"+num+"']").prop("disabled",false);
+			$("input[name='califica"+num+"']").addClass("activo").removeClass("inactivo");
+			$(this).attr("value","No aplica");			
+			//toggleColorPanel( $(this).closest( ".panel-success" )  );
+			
+		}
+		toggleColorPanel( $(this).closest( ".panel-warning" )  );
+        
+        total = $("input[name^='califica']").length/4 ;
+        totalValor = $("input[name^='califica']:checked").length;
+        if (  total == totalValor){
+            $("#btnEvaluar").attr("value","Enviar evaluación del recurso");
+            $("#btnEvaluar").removeClass("btn-primary").addClass("btn-success");    
+            $("#terminado").val("SI");
+        } else {
+            $("#btnEvaluar").attr("value","Guardar la evaluación y continuar más tarde");
+            $("#btnEvaluar").addClass("btn-primary").removeClass("btn-success");
+            $("#terminado").val("NO");
+        }		
+		recuento();
+	});
+	
+	$( document ).on( "click", "[id='btnCancelar']", function() {
+		$("#myModalTitle").html("Solicitud de cancelación");
+		$("#modalBody").html("¿Desea solicitar sea cancelado este recurso?<br><br>En caso de que administrador revise y acepte la solicitud, el recurso pasará al estado 'Evaluación cancelada'.<br><br><table class='table'><tr><td>Motivo de cancelación</td><td><textarea name='motivo'></textarea></td></tr></table>");
+		$("#btnModalSolProrroga").hide();
+		$("#btnModalSolCancelacion").show();
+		$("#myModal").modal('show');
+		
+	});	
+	
+	$( document ).on( "click", "[id='btnSolProrroga']", function() {
+		$("#myModalTitle").html("Solicitud de prórroga");
+		$("#modalBody").html("<table class='table'><tr><td>Número de días adicionales</td><td><input type='text' name='ndias' id='ndias' size='3' class='form-control' required></td></tr></table>");
+		$("#btnModalSolCancelacion").hide();
+		$("#btnModalSolProrroga").show();
+		$("#myModal").modal('show');
+		
+	});	
+	
+	
+	$(document).on("click", "#btnModalSolProrroga", function(){
+		var aux= $("#ndias").val();
+		var x = jsRoutes.controllers.EvaluacionEvaluadorController.solicitarProrroga();
+		var ruta = x.url.substr(0, x.url.substr(1).indexOf("/")+1); 
+		$("#frmModal").attr("action", ruta+"/@re.recurso.id/@re.aspecto.id/"+aux);
+		$("#frmModal").attr("method","POST");
+		$("#frmModal").submit();
+	});
+	
+	function recuento(){
+		texto = "";
+		ac = null; 
+		cal = null;
+			ac = parseInt("0");
+			$("input[type='radio'][name^='califica'].activo:checked").each(function(){
+				ac+= parseInt($(this).val());
+			});
+			cal = Math.round((ac*25)/( $("input[type='radio'][name^='califica'].activo:checked").length*2));			
+		(cal!=null)?$("#bdg@re.aspecto.id").html(cal):"";
+		
+		if (cal != null){
+			$("#bdg@re.aspecto.id").html(cal);
+			var todos = 				$("input[type='radio'][name^='califica']").length/4;	
+
+			var noAplican = 			$("input[type='radio'][name^='califica'][value='-1'].inactivo:checked").length;
+			var noCumple = 				$("input[type='radio'][name^='califica'][value='0'].activo:checked").length;
+			var parcialmenteCumple = 	$("input[type='radio'][name^='califica'][value='1'].activo:checked").length;
+			var siCumple = 				$("input[type='radio'][name^='califica'][value='2'].activo:checked ").length;
+			var sinContestar=			todos - noAplican - noCumple - parcialmenteCumple - siCumple;
+
+			var num= "cero";
+		    var cadenaSinContestar="";
+		    var cadenaNoAplican="";
+		    var cadenaNoCumple="";
+		    var cadenaParcialmenteCumple="";
+		    var cadenaSiCumple="";
+		    
+		    
+            $(".panel").each(function(i){
+                num =   $(this).find(".panel-title").html().substring(20, $(this).find(".panel-title").html().length-8 );
+                if ($(this).find("input[name^='califica']:checked").val()==undefined){
+                    cadenaSinContestar+=num+"  ";
+                }  
+                
+                if ($(this).find("input[name^='califica']:checked").val()==-1){
+                    cadenaNoAplican+=num+"  ";
+                }                  
+                
+                // No cumple (0)
+                if ($(this).find("input[name^='califica']:checked").val()==0){
+                    cadenaNoCumple+=num+"  ";
+                }                
+
+                // Parcialmente cumple (1)
+                if ($(this).find("input[name^='califica']:checked").val()==1){
+                    cadenaParcialmenteCumple+=num+"  ";
+                }
+                
+                // Si cumple (2)
+                if ($(this).find("input[name^='califica']:checked").val()==2){
+                    cadenaSiCumple+=num+"  ";
+                }                  
+                
+              });			
+			
+            
+			// Actualiza los valores en conteoAspecto
+			$("#todos").html(todos);
+			
+			$("#sinContestar").html(sinContestar);
+			$("#divCadenaSinContestar").html(cadenaSinContestar);
+			
+			$("#noAplican").html(noAplican);
+			$("#divCadenaNoAplican").html(cadenaNoAplican);
+			
+            $("#noCumple").html(noCumple);
+            $("#divCadenaNoCumple").html(cadenaNoCumple);
+						
+            $("#parcialmenteCumple").html(parcialmenteCumple);
+            $("#divCadenaParcialmenteCumple").html(cadenaParcialmenteCumple);
+            
+            $("#siCumple").html(siCumple);
+            $("#divCadenaSiCumple").html(cadenaSiCumple);
+		}
+	}
+	
+	$( document ).on( "submit", "#frmEvaluacion", function(event) {
+		recuento();
+		if (  $("[name^='califica']:checked").length == 0   && ($("input[type='radio'][name^='califica'].inactivo").length/4) == 0   ){
+			event.preventDefault();
+			alert("Aún no ha evaluado.");			
+		}
+		else {
+			//event.preventDefault();
+			$("input[type='radio'][name^='califica']:checked").each(function(i,e){
+				$(this).attr('disabled', false);
+				var num = $(this).attr('name').substr(8);	
+				var respuesta = $(this).val(); 
+				$(this).attr('name', "evaluaciones["+ i+"].evaluaciontabla.id");
+				$(this).val(num);
+				$("input[type='text'][name='respuesta"+num+"']").attr('name', "evaluaciones["+i+"].respuesta").val(respuesta);	
+			});
+			$("[name^='observacionGral-']").attr("name", "observacionEvaluacion.observacion");
+			return;
+		}
+	})
+	
+	
+	function marcarTodos(){
+		$("input[name^='califica'][value=2]").prop("checked",true);	
+		$("#terminado").val("SI");
+		recuento();
+	}
+	
+	$(document).on("click", "[name='cpPagina']",function(){
+		var ind = parseInt($(this).attr("data-slide-to"));
+		
+		// Obtener el máximo número de pags
+		var maxPag = -1;
+		$("[name='cpPagina']").each(function(i,e){
+			if (  parseInt($(e).attr('data-slide-to')) > maxPag  ){
+				maxPag = $(e).attr('data-slide-to');
+			}
+		});
+		$("[name='divRowObservacionGral']").toggle(parseInt(maxPag) == parseInt(ind) );
+		$("[name='cpPagina']").each(function(i,e){
+			if(ind == i){
+				$(e).html("<span class='badge'>"+(ind+1)+"</span>");		
+			} else {
+				$(e).html( parseInt($(e).attr("data-slide-to"))+1 );
+			}
+		});
+		$("#carousel@(re.aspecto.id)Anterior").toggle(parseInt(ind) >= 1 );
+		$("#carousel@(re.aspecto.id)Siguiente").toggle(parseInt(maxPag) > parseInt(ind));
+		window.scrollTo(0, 0);
+	});
+	
+	
+	function leer(){		
+		if (@re.estadoevaluacion.id !=1){
+			@for(e <- re.evaluaciones){
+				if ( @e.respuesta == -1 ){
+					$("input[name='califica@e.evaluaciontabla.id'][value=-1]").prop("checked",true);
+					$("input[name='califica@e.evaluaciontabla.id']").prop("disabled",true);
+					$("input[name='califica@e.evaluaciontabla.id']").removeClass("activo").addClass("inactivo");	
+					$("#btnNA_@e.evaluaciontabla.id").attr("value","Volver a habilitar");
+				} else {
+					$("input[name='califica@e.evaluaciontabla.id'][value='@e.respuesta']").prop("checked",true);
+				}		
+				toggleColorPanel( $("input[name='califica@e.evaluaciontabla.id'][value='@e.respuesta']").closest( ".panel-warning" )  );
+			}
+			@if(re.observacionEvaluacion != null){
+				$("textarea[name^='observacionGral-']").val("@re.observacionEvaluacion.observacion.filter(_ >= ' ')");
+			}
+			
+			recuento();
+		}
+	}	
+	
+	
+	$("div[name='flechaDetalle']").click(function(){
+		$(this).hasClass('fa-chevron-down')?  $(this).removeClass('fa-chevron-down').addClass('fa-chevron-up') : $(this).removeClass('fa-chevron-up').addClass('fa-chevron-down') ;
+	});
+	
+	
+</script>

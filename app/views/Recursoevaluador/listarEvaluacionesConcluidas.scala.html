@@ -1,0 +1,53 @@
+@(re:List[Recursoevaluador], tipo:Int)
+@main{
+
+	<div class="container-fluid" style="background-color: white; padding: 10px; display: none;">
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb">
+					@if( request.uri contains "/0"){				
+					  <li>Recursos</li>
+					  <li class="active">Evaluaciones concluidas</a></li>
+				    }
+					@if( request.uri contains "/1"){				
+					  <li>Detalle evaluaciones</li>
+					  <li class="active">Evaluaciones concluidas</a></li>
+				    }				    
+				</ol>			
+			</div>
+		</div>	
+		<div class="row">
+			<div class="col-md-12">
+				<h3>Evaluaciones concluidas</h3>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				@comunListarEvaluaciones(re, tipo)
+			</div>
+		</div>
+	</div>
+}
+<div id="log"></div>
+
+<script type="text/javascript">
+
+$(function() {	
+
+	
+	$(".btn:contains('Evaluación')").hide();
+	if (@tipo == 0)
+		combinarCeldas( $('#tabla') );
+	
+	$(".container-fluid").show();
+	
+	
+});
+
+$( window ).resize(function() {
+	  $( "#log" ).append( "<div>Handler for .resize() called.</div>" );
+	});
+
+
+</script>

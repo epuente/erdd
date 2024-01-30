@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: org.webjars:datatables:1.10.16:jar" external-system-id="SBT">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.webjars/datatables/jars/datatables-1.10.16.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.webjars/datatables/srcs/datatables-1.10.16-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

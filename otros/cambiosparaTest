@@ -1,0 +1,23 @@
+Checar que se tiene la DB de test en el archivo conf/application.conf :   erdd_test
+Checar en la DB que se tenga el correo de salida correcto: evaluardd@ipn.mx
+
+Checar en el código que sale tenga al administrador como :  evaluardd@ipn.mx
+
+
+
+en build.sbt
+play.PlayImport.PlayKeys.playDefaultPort := 8080
+
+
+Hacer export sin info de la creación de tablas, sin recrear tablas.
+
+mysqldump -p -uerdd --no-create-info --routines --triggers  --set-charset  --ignore-table=erdd_dev.play_evolutions   erdd_dev > ~/soloCatalogos.sql
+
+
+
+Ejecutar desde un browser localhost:8085/    iniciar tarea de evolution y crear la base de datos
+correr el script soloCatalogos.sql
+
+
+
+

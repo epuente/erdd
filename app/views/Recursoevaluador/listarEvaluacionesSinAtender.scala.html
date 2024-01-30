@@ -1,0 +1,83 @@
+@(re:List[Recursoevaluador], tipo:Int)
+
+
+
+@main{
+	<div class="container-fluid" style="background-color: white; padding: 10px; display: none" >
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb">
+					@if( request.uri.substring(request.uri.length-1).compareTo("0") == 0  ){					
+					  <li>Recursos</li>
+					  <li class="active">Evaluaciones sin atender</li>
+					}
+					@if( request.uri.substring(request.uri.length-1).compareTo("1") == 0  ){
+						<li>Detalle evaluaciones</li>
+						<li class="active">Evaluaciones sin atender</li>	
+					}					
+				</ol>			
+			</div>
+		</div>	
+		<div class="row">
+			<div class="col-md-12">
+				@if( request.uri.substring(request.uri.length-1).compareTo("1") == 0  ){
+					<h3>Evaluaciones sin atender</h3>
+				}
+				@if( request.uri.substring(request.uri.length-1).compareTo("0") == 0  ){
+					<h3>Evaluaciones sin atender</h3>
+				}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				@comunListarEvaluaciones(re, tipo)
+			</div>
+		</div>
+	</div>
+}
+
+
+<script type="text/javascript">
+
+$(function() {
+	if (@tipo == 0){				
+		 //$('#tabla td:nth-child(2), #tabla thead > tr > th:nth-child(3)').hide();	
+		// $('#tabla td:nth-child(3), #tabla thead > tr > th:nth-child(3)').hide();
+		$('#tabla td:nth-child(6), #tabla td:nth-child(5), #tabla td:nth-child(4), #tabla td:nth-child(3)').hide();
+		$('#tabla thead > tr > th:nth-child(6), #tabla thead > tr > th:nth-child(5), #tabla thead > tr > th:nth-child(4), #tabla thead > tr > th:nth-child(3)').hide();
+		 
+	}
+	if (@tipo == 1){	
+		@if(!re.isEmpty()){
+			if(@re.head.recurso.estado.id == 6){
+				$('#tabla td:nth-child(5)').show();
+				 $('#tabla thead > tr > th:nth-child(5)').show();		
+			}
+		}
+	}
+	combinarCeldas();
+	$(".container-fluid").show();
+
+});
+
+	// Agrupa celdas comunes
+    function combinarCeldas(){
+	    origen = $('#tabla');
+	
+	    for (r=$("#tabla tr").length-1; r>0 ;r--){
+	      for (c=$("#tabla tr:nth-child("+r+") td").length-1; c>=0 ;c--){
+	              // Corte; se hace corte por la primer columna, forza a que se haga un corte cuando la primer columna es diferente, es decir, si las columnas 4 y 5  son iguales en todos los registros pero la columna 0 difiere; no se agrupan puesto que sus columnas primeras son diferentes.
+	            var corte=0;
+			//	alert(r+"   "+c);
+			//	alert($("#tabla tr:nth-child("+r+") td:nth-child("+c+")").text());
+	            if ($("#tabla tr:nth-child("+r+") td:nth-child("+c+")").text() == $("#tabla tr:nth-child("+(r-1)+") td:nth-child("+c+")").text()){
+	            	var altura = parseInt($("#tabla tr:nth-child("+(r-1)+") td:nth-child("+c+")").attr('rowspan')) + parseInt($("#tabla tr:nth-child("+r+") td:nth-child("+c+")").attr('rowspan'));
+	            	$("#tabla tr:nth-child("+(r-1)+") td:nth-child("+c+")").attr('rowspan',altura);
+	            	$("#tabla tr:nth-child("+r+") td:nth-child("+c+")").remove();
+				
+	          }
+	        }    
+	    }
+    }
+</script>

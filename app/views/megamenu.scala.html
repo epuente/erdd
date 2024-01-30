@@ -1,0 +1,463 @@
+<style>
+	.navbar{color:"#FF0000"}
+</style>
+
+@if(  session.get("cvesRoles") != null   ) {
+
+	<div class="navbar navbar-default yamm">
+          <div class="navbar-header">
+	          <button type="button" data-toggle="collapse" data-target="#navbar-collapse-grid" class="navbar-toggle">
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	          <span class="icon-bar"></span>
+	          </button>
+	          @if(session.get("cvesRoles").contains("1 ")){
+	              <a class="navbar-brand" href="/admin" style="font-size: 18px">Inicio <i class="fa fa-home"></i></a>
+	          }
+   	       	  @if(session.get("cvesRoles").contains("2 ")){
+	      	      <a class="navbar-brand" href="/evResumen" style="font-size: 18px">Inicio <i class="fa fa-home"></i></a>
+			  }
+	          @if(session.get("cvesRoles").contains("3 ")){
+	              <a class="navbar-brand" href="/coord" style="font-size: 18px">Inicio <i class="fa fa-home"></i></a>
+	          }			  
+          </div>
+          <div id="navbar-collapse-grid" class="navbar-collapse collapse">
+          	  @if(session.get("cvesRoles").contains("1 ")){
+	              <ul class="nav navbar-nav">
+
+				        <li class="dropdown">
+				          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="font-size: 18px">Catálogos <span class="caret"></span></a>
+				          <ul class="dropdown-menu" role="menu">
+				            <li><a href="/unidadacademica">Unidades académicas</a></li>
+				            
+				            <li><a href="/nivelList">Niveles educativos</a></li>
+				            <li><a href="/areaconocimientos">Áreas del conocimiento</a></li>
+				            <li class="divider"></li>
+				            <li><a href="/autorfuncion">Tipos de autorías</a></li>	
+		
+				            <li><a href="/formatosentrega">Formatos de entrega</a></li>
+				            <li><a href="/tiposdocumentos">Tipos de documentos</a></li>
+				            <li><a href="/dirigidoa">Dirigido a</a></li>
+
+				          </ul>
+				        </li>
+				        <li class="dropdown">
+				          <a href="/evaluadores" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="font-size: 18px">Evaluadores <span class="caret"></span></a>
+				          <ul class="dropdown-menu" role="menu">
+				            <li><a href="/evaluadores">Listar</a></li>
+				            <li><a href="/evaluador/new">Crear</a></li>            
+				          </ul>
+				        </li>
+				        
+				        <li class="dropdown">
+				          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="font-size: 18px">Cuentas especiales <span class="caret"></span></a>
+				          <ul class="dropdown-menu" role="menu">
+				            <li><a href="/ctaAdminEdit">Administrador del sistema</a></li>
+							<li><a href="/ctaCoordEdit">Coordinador de ERDD</a></li>
+							<li class="divider"></li>
+							<li class=""><a href="/ctaCorreo">Correo electrónico <span class="sr-only">(current)</span></a></li>            
+				          </ul>
+				        </li>				        
+				        
+				        
+						
+	              </ul>	 
+              }
+			  @if(session.get("cvesRoles").contains("2 ")){
+			      <ul class="nav navbar-nav" style="font-size: 18px">
+			        <li class=dropdown">
+			        	<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mis asignaciones <span class="caret"></span></a>
+			        	<ul class="dropdown-menu" role="menu">
+			        		<li><a href="/evList">Todas</a></li>
+			        		<li><a href="/porEvaluar">Por atender</a></li>
+			        		<li><a href="/enProceso">En proceso</a></li>
+			        		<li><a href="/evPorAtenderAdmin">Para revisar por el administrador</a>		        		
+			        		<li><a href="/evPorObservar">Con observaciones</a>
+			        		<li><a href="/evConcluidas">Concluidas</a>		        		
+			        		<li><a href="/evSolicitudesCancelacion">Con solicitudes de cancelación</a>
+		        		</ul>
+			        </li>		  
+		          </ul>
+			  }
+		  
+
+          	  @if(session.get("cvesRoles").contains("3 ")){
+	              <ul class="nav navbar-nav">
+						<li class="dropdown yamm-fw"><a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="false" style="font-size: 18px">En curso<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li>
+									<div class="row">
+										<div id="equalheight">
+											<div class="col-sm-1 visible-lg visible-md visible-sm  demo">
+												<div class="lineaVertical5">&nbsp;</div>											
+											</div>										
+											<div class="col-sm-2 demo">	
+													<h3>Solicitudes</h3>
+													<a href="/recursos" class="ligaMegaMenu">Todas las solicitudes</a><br>
+		        									<a href="/recursos/observarList" class="ligaMegaMenu">Solicitudes por revisar</a><br>
+		        									<a href="/recursos/reObservarList" class="ligaMegaMenu">Solicitudes con observaciones</a><br>
+		        									<a href="/recursos/completoList" class="ligaMegaMenu">Solicitudes aceptadas</a><br>
+													<h3>Recursos</h3>
+													<a href="/oficios" class="ligaMegaMenu">Recursos con oficio</a><br>
+									        		<a href="/clasificacionList" class="ligaMegaMenu">Recursos clasificados</a><br>
+									        		<a href="/asignarEvaluadores" class="ligaMegaMenu">Evaluadores asignados</a><br>											
+
+											</div>
+											<div class="col-sm-1 visible-lg visible-md visible-sm  demo">
+												<div class="lineaVertical">&nbsp;</div>											
+											</div>
+											<div class="col-sm-2 demo" >
+												<h3>Detalle de evaluaciones</h3>
+												<a href="/mostrarEvaluacionesSinAtender/1" class="ligaMegaMenu">Evaluaciones por atender</a><br>
+												<a href="/mostrarEvaluacionesEnProceso/1" class="ligaMegaMenu">Evaluaciones en proceso</a><br>
+								        		<a href="/mostrarEvaluacionesPorRevisar/1" class="ligaMegaMenu">Evaluaciones para revisar por el administrador</a><br>
+								        		<a href="/mostrarEvaluacionesConObservaciones/1" class="ligaMegaMenu">Evaluaciones con observaciones</a><br>
+								        		<a href="/mostrarEvaluacionesConcluidas/1/lg" class="ligaMegaMenu">Evaluaciones concluidas (por cada uno de los aspectos) </a><br>
+								        		<a href="/mostrarEvaluacionesConcluidas/0/lg" class="ligaMegaMenu">Evaluaciones concluidas (los 4 aspectos)</a><br>												
+											</div>
+											<div class="col-sm-1 visible-lg visible-md visible-sm  demo">
+												<div class="lineaVertical">&nbsp;</div>											
+											</div>										
+											<div class="col-sm-2 demo">
+												<h3>Cancelaciones</h3>
+												<a href="/solicitudCanceladoList" class="ligaMegaMenu">Solicitudes de cancelación</a><br>
+												<a href="/canceladoList" class="ligaMegaMenu">Canceladas</a><br>
+												<h3>Detalle de encuestas</h3>
+								        		<a href="/encuestasPorRevisarAdmin" class="ligaMegaMenu">Encuestas para revisión</a><br>
+								        		<a href="/conObservacionesList" class="ligaMegaMenu">Encuestas con observaciones</a><br>
+								        		<a href="/terminadasList" class="ligaMegaMenu">Encuestas concluidas</a><br>
+											</div>
+											<div class="col-sm-1 visible-lg visible-md visible-sm  demo">
+												<div class="lineaVertical">&nbsp;</div>											
+											</div>										
+											<div class="col-sm-2 demo">
+												<h3>Otros</h3>
+		        								<a href="/actualizacionesList" class="ligaMegaMenu">Seguimiento a actualizaciones</a><br>												
+		        								<a href="/prorrogaList" class="ligaMegaMenu">Prórrogas</a><br>													
+											</div>
+										</div>
+									</div>								
+								</li>								
+							</ul>
+						
+						</li>
+
+
+				        <li class="dropdown">
+				          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="font-size: 18px">Catálogos <span class="caret"></span></a>
+				          <ul class="dropdown-menu" role="menu">
+
+
+		   	 				<li><a href="/evaluacionReactivosList">Reactivos</a></li>
+		   	 				<li><a href="/evaluacionTablaEvaluacionList">Instrumento de evaluación</a></li>
+			 				<li class="divider"></li>
+				            <li><a href="/calendario">Calendario días inhábiles</a></li>		   	 				
+
+</ul>
+</li>
+
+
+
+
+						<li class=""><a href="/autores" style="font-size: 18px">Autores<span class="sr-only" ></span></a></li>						
+	              </ul>	 
+              }			  
+
+
+		  <ul class="nav navbar-nav" style="font-size: 18px">
+		  	<li><a href="@routes.Application.Acerca()">Acerca de</a></li>
+		  </ul>              
+              
+   	      <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+          <a href="#" style="font-size: 18px" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mi cuenta <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li>
+            	<table class="table">
+            		<tr>
+            			<td>Nombre real:</td>
+            			<td>
+							@session.get("nombre")
+            			</td>
+            		</tr>            		
+            		<tr>
+            			<td>Nombre usuario:</td>
+            			<td>
+            				@if(session.get("cvesRoles").contains("1 ")){@Usuario.find.byId(session.get("idAdmin")).usuario}
+							@if(session.get("cvesRoles").contains("2 ")){@models.Evaluador.getUsuario( Long.parseLong(session.get("idEvaluador"))  ).usuario}
+							@if(session.get("cvesRoles").contains("3 ")){@Usuario.find.byId(session.get("idAdminProceso")).usuario}            			
+            			</td>            			
+            		</tr>
+            		<tr>            			
+            			<td colspan="2">
+            				<a class="btn btn-primary btn-block" role="button" id="btnCambiarPassword" data-toggle="modal" data-target="#modalMenu">Cambiar clave de acceso</a>
+            			</td>
+            		</tr>            		
+            		<tr>
+            			<td>Email:</td>
+            			<td>            				
+            				@if(session.get("cvesRoles").contains("1 ")){
+            					@Usuario.find.byId(session.get("idAdmin")).personal.correo
+            					
+            				}
+            				@if(session.get("cvesRoles").contains("2 ")){
+            					@models.Evaluador.getUsuario( Long.parseLong(session.get("idEvaluador"))  ).personal.correo
+							}
+            				@if(session.get("cvesRoles").contains("3 ")){
+            					@Usuario.find.byId(session.get("idAdminProceso")).personal.correo
+            				}							
+            				<a class="btn btn-primary btn-block btn-xs" role="button" id="btnCambiarEmail" data-toggle="modal" data-target="#modalMenuCambiarEmail">Cambiar email</a>            			
+            			</td>
+            		</tr>
+        		    <tr>
+            			<td>Rol:</td>
+            			<td>
+            				@session.get("roles")      
+           				</td>
+
+           				@if(session.get("cvesRoles").contains("2 ")){
+           			<tr>           				
+           				<td>	
+            				Aspectos:
+            			</td>
+            			<td>
+           					<div style="display: table;">
+   								@for(a <- models.Evaluador.find.byId(Long.parseLong(session.get("idEvaluador"))).evaluadoraspectos  ){
+   								<div style="display: table-row;">
+   									<div style="display: table-cell;">
+   										@a.aspecto.descripcion
+   									</div>
+   								</div>
+   								}
+           					</div>            				
+            			</td>
+            		           			
+            		</tr>
+
+            		} 
+            	</table>
+            </li>
+          </ul>
+        </li>	        
+	        
+	        
+	        <li><a href="/logout" style="font-size: 18px">Salir <i class="fa fa-sign-out"></i> </a></li>  	        
+	      </ul>              
+              
+
+          </div>
+        </div>
+
+
+}
+
+
+
+	
+
+	
+	<!-- Modal Cambiar password -->
+	<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="modalMenu">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Cambiar clave de acceso</h4>
+	      </div>
+	      <div class="modal-body">
+
+			<form data-toggle="validator" role="form">
+				<div class="row">
+					<div class="col-sm-6">
+						<label for="passActual" class="control-label">Clave de acceso actual</label>					
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<input type="password" name="passActual" id= "passActual" class="form-control" placeholder="Clave de acceso actual" required data-error="Este campo es obligatorio.">
+							<span class="help-block with-errors"></span>
+						</div>
+					</div>		
+				</div>
+				<div class="row">
+				
+					<div class="col-sm-6">
+						<label for="claveAcceso" class="control-label">Nueva clave de acceso</label>		
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<input type="password" name="claveAcceso" id="claveAcceso" pattern="[A-Za-z0-9]*" class="form-control"  placeholder="Clave de acceso" data-error="Este campo es obligatorio. Solo acepta numeros y letras, sin espacios ni caracteres especiales."  required>
+							<div class="help-block with-errors"></div>
+						</div>		
+					</div>
+				
+				</div>
+				<div class="row">
+					<div class="col-sm-6">
+						<label for="inputPasswordConfirm" class="control-label">Confirmar nueva clave de acceso</label>				
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<input type="password" pattern="[A-Za-z0-9]*" class="form-control" id="inputPasswordConfirm" data-match="#claveAcceso" data-error="Este campo es obligatorio." data-match-error="No coinciden la claves nuevas" placeholder="Volver a escribir clave de acceso" required>
+							<div class="help-block with-errors"></div>
+						</div>				
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div id="msgValidacion"></div>
+					</div>
+				</div>
+			</form>	  
+			
+	        
+	      </div>
+	      <div class="modal-footer">
+	      	<div class="form-group">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+	        	<button type="button" class="btn btn-primary"  id="btnAplicarCambiarPassword"  >Aplicar cambios</button>
+        	</div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+
+
+
+
+
+	<!-- Modal Cambiar email -->
+	<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="modalMenuCambiarEmail">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="">Cambiar email</h4>
+	      </div>
+	      <div class="modal-body">
+
+			<form data-toggle="validator" role="form">
+				<div class="row">
+					<div class="col-sm-12">
+						Por razones de seguridad, se le solicita ingrese su password
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">						<div class="help-block with-errors"></div>
+						<label for="pass" class="control-label">Clave de acceso</label>					
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="form-group">
+							<input type="password" name="pass" id= "pass" class="form-control" placeholder="Clave de acceso" required data-error="Este campo es obligatorio.">
+							<span class="help-block with-errors"></span>
+						</div>
+					</div>
+				</div>				
+				<div class="row">
+					<div class="col-sm-12">
+						<label for="inputEmail" class="control-label">Correo electrónico</label>					
+					</div>
+				</div>				
+				<div class="row">				
+					<div class="col-sm-12">
+						<div class="form-group">
+						@if(session.get("cvesRoles")){
+							@if(session.get("cvesRoles").contains("1 ")){						
+								<input type="email" class="form-control" id="inputEmail" data-pattern-error="No tiene la estructura de un correo electrónico" data-required-error="Este campo es obligatorio" placeholder="Correo electrónico" required value=@Usuario.find.byId(session.get("idAdmin")).personal.correo>            					
+	            			}
+	            			@if(session.get("cvesRoles").contains("2 ")){
+	           					<input type="email" class="form-control" id="inputEmail" data-pattern-error="No tiene la estructura de un correo electrónico" data-required-error="Este campo es obligatorio" placeholder="Correo electrónico" required value=@models.Evaluador.getUsuario( Long.parseLong(session.get("idEvaluador"))  ).personal.correo>
+							   }
+							@if(session.get("cvesRoles").contains("3 ")){						
+								<input type="email" class="form-control" id="inputEmail" data-pattern-error="No tiene la estructura de un correo electrónico" data-required-error="Este campo es obligatorio" placeholder="Correo electrónico" required value=@Usuario.find.byId(session.get("idAdminProceso")).personal.correo>            					
+	            			}							   
+           				}
+
+						</div>				
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-12">
+						<div id="msg"></div>
+					</div>
+				</div>
+			</form>	  
+	        
+	      </div>
+	      <div class="modal-footer">
+	      	<div class="form-group">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+	        	<button type="button" class="btn btn-primary"  id="btnAplicarCambiarEmail"  >Aplicar cambios</button>
+        	</div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+
+
+
+
+<script type="text/javascript">
+
+	$(document).on('click', '.yamm .dropdown-menu', function(e) {
+	  e.stopPropagation()
+	})
+
+	$(".navbar").css("margin-bottom","0px");
+	
+	$("#btnAplicarCambiarPassword").on("click",function(){
+		 $("#msgValidacion").html("");
+		
+		$.ajax({
+			  url: "@routes.Application.cambiarPassword",
+			  method: "post",
+			  data: {
+		        	'passActual': $("#passActual").val(), 
+		        	'claveAcceso': $("#claveAcceso").val()
+		    	  }			  
+			}).done(function(data) {
+			  if (data.substring(0,6)  == "error:"){
+				  $("#msgValidacion").addClass("text-danger").removeClass("text-success");
+				  $("#msgValidacion").html( data.substr(6) );
+			  } else {
+				  $("#msgValidacion").removeClass("text-danger").addClass("text-success");
+				  $("#msgValidacion").html( data );
+				  setTimeout(function(){ $("#modalMenu").modal("hide"); }, 2000);
+			  }
+			  
+			});
+	});
+	
+	
+
+	$("#btnAplicarCambiarEmail").on("click",function(){
+		 $("#msg").html("");
+		$.ajax({
+			  url: "@routes.Application.cambiarEmail",
+			  method: "post",
+			  data: { 
+		        	'pass': $("#pass").val(), 
+		        	'email': $("#inputEmail").val()
+		    	  }			  
+			}).done(function(data) {
+			  if (data.substring(0,6)  == "error:"){
+				  $("#msg").addClass("text-danger").removeClass("text-success");
+				  $("#msg").html( data.substr(6) );
+			  } else {
+				  $("#msg").removeClass("text-danger").addClass("text-success");
+				  $("#msg").html( data );
+				  setTimeout(function(){ $("#modalMenuCambiarEmail").modal("hide"); }, 2000);
+			  }
+			  
+			});
+	});	
+	
+	
+</script>
+<script src="@routes.Assets.at("javascripts/validator.min.js")" type="text/javascript"></script>

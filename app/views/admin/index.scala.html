@@ -1,0 +1,16 @@
+@main {
+
+	<table style="height: 200px; width: 80%;">
+		<tr>
+			<td style="padding: 50px">Bienvenido(a)<br><br>						
+				@if( session.get("cvesRoles").contains("1 ")){
+					@session.get("nombre") al m&oacute;dulo de administraci&oacute;n
+				}
+				@if( session.get("cvesRoles").contains("2 ")){
+					@session.get("nombre") al m&oacute;dulo de evaluación
+				}				
+			</td>
+		</tr>
+	</table>
+
+}

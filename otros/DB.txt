@@ -1,0 +1,7 @@
+sudo mysql -u root
+
+
+CREATE DATABASE erdd DEFAULT CHARACTER SET latin1;
+CREATE USER 'erdd'@'localhost' IDENTIFIED BY 'dberdd2024';
+GRANT ALL PRIVILEGES ON *.* TO 'erdd'@'localhost';
+FLUSH PRIVILEGES;

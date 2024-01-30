@@ -1,0 +1,39 @@
+@(id:Long, niveleducativoForm: Form[Niveleducativo])
+@import helper._
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/> 
+@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.render) } 
+
+@main {
+	<div class=container-fluid style="background-color: white; padding: 10px" >
+			<div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+					  <li>Catálogos</li>
+					  <li><a href="/nivelList">Nivel Educativo</a></li>
+					  <li class="active">Editar</li>
+					</ol>			
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">    
+    				<h3>Editar Nivel Educativo</h3>    				
+				    @form(CSRF(routes.NiveleducativoController.update(id)), 'class->"form-inline", 'id->"frmEdit") {				        
+				        <div class="form-group">				        
+				            @inputText(niveleducativoForm("descripcion"), 'labelAlterna -> "Descripción", '_help -> "", 'size->"40em", 'required->"required")
+				        </div>
+				        <input type="submit" value="Actualizar nivel" class="btn btn-primary">  
+				    }				    
+					 @form(CSRF(routes.NiveleducativoController.delete(id)), 'class -> "topRight", 'id->"frmDelete") {
+							<input type="submit" value="Eliminar" class="btn btn-danger">
+							<a href="@routes.NiveleducativoController.listDT()" class="btn btn-default">Cancelar</a>
+	 				}				    
+			    </div>
+		    </div>
+    </div>
+    
+}
+
+@comunCatalogosJS("Edit","Nivel Educativo")
+
+
+

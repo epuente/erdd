@@ -1,0 +1,88 @@
+@(actualizaciones : List[Actualizacion])
+
+@main{
+  <div class=container-fluid style="background-color: white; padding: 10px" style="display:none">
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb">
+				  <li>Recursos</li>
+				  <li class="active">Seguimiento a actualizaciones</li>
+				</ol>			
+			</div>
+		</div>
+	
+	@flashes()
+
+
+	@if(actualizaciones.isEmpty){
+		No hay registros
+	} else {
+		Hay @actualizaciones.size registros de recursos con tipo de versión 'Obra nueva'
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th colspan="2">Obras nuevas</th>
+					<th rowspan="2">Claves de control anteriores</th>
+					<th rowspan="2" style="width: 160px;"></th>
+				</tr>
+				<tr>
+					<th colspan="1">Título</th>		
+					<th colspan="1">Clave de control</th>					
+				</tr>
+			</thead>
+			<tbody>
+			@for(r <- actualizaciones) {
+				<tr>
+					<td>@r.getRecurso.titulo</td>
+					<td>@r.getRecurso.numcontrol</td>
+					<td>
+						@if(!r.getActualizacion.isEmpty){
+							<table style="width: 100%" name="tablaAct">
+							@for(i <- r.getActualizacion   ){
+								<tr>
+									<td>@i.numcontrol</td>
+									<td style="width: 10px; text-align: center; vertical-align: middle;"></td>									
+								</tr>									
+							}
+							</table>
+						}
+					</td>
+					<td style="text-align: center; vertical-align: middle;">						
+						<a href="@routes.VersionanteriorController.create(r.getRecurso.id)" class="btn btn-primary" role="button">Relacionar actualizaciones</a>					
+					</td>
+				</tr>			
+			}
+			</tbody>
+		</table>
+		<form id="frmAux"></form>		
+	}
+	</div>
+}
+
+
+<script type="text/javascript">
+	function eliminaAct(recId){
+		if (confirm("¿Desea desasociar el recurso?"))
+		$.ajax({
+			  method: "POST",
+			  async: false,
+			  url: "/actualizaciones/"+recId+"/delete"
+	
+			})
+			  .success(function( data ) { 		  
+			  	if ( (data == null) || (data.length == 0) ){
+			  		alert("No es posible eliminar la actualización" );
+			  	} else {
+			  		$("#frmAux").action="actualizacionesList";
+			  		$("#frmAux").submit();
+			  		$(".alert").html("Se eliminó la actualización");
+			  		$(".alert").show();
+			  	}
+			  })		  
+			  .error(function(data){
+			  	alert('Error ajax en la búsqueda de la clave de control anterior');
+			  	numErrores++;
+			  });
+		}
+</script>
+

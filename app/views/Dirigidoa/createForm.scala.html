@@ -1,0 +1,44 @@
+@(daForm: Form[Dirigidoa])
+
+@import helper._
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/> 
+
+@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.render) } 
+
+@main {
+	<div class=container-fluid style="background-color: white; padding: 10px" >
+			<div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+					  <li>Catálogos</li>
+					  <li><a href="/dirigidoa">Dirigido a</a></li>
+					  <li class="active">Agregar</li>
+					</ol>			
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+	  	          <h3>Agregar Dirigido a</h3>
+		        </div>
+			</div>
+			<div class="row">    
+    			<div class="col-lg-12">
+				    @form(CSRF(routes.DirigidoaController.save()), 'class->"form-inline", 'id->"frmCreate") {
+					  <div class="form-group">
+				            @inputText(daForm("descripcion"), 'labelAlterna -> "Descripción", '_help -> "", 'required->"required", 'size->"90em")
+    						<input type="submit" value="Agregar" class="btn btn-primary">				            
+				       </div>
+				     
+			        }
+			        <div class="actions">			            
+			            <a href="@routes.DirigidoaController.list()" class="btn btn-default">Cancelar</a> 
+			        </div>			        
+				 </div>
+		 </div>       
+    </div>
+    
+    
+}
+
+@comunCatalogosJS("Create", "Dirigido a")
+
