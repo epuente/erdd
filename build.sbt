@@ -76,6 +76,9 @@ libraryDependencies += "com.google.firebase" % "firebase-admin" % "6.3.0"
 
 libraryDependencies += "org.webjars" % "Eonasdan-bootstrap-datetimepicker" % "4.17.47"
 
+
+
 // https://mvnrepository.com/artifact/org.webjars.npm/moment
 libraryDependencies += "org.webjars.npm" % "moment" % "2.22.2"
 
+javacOptions ++= Seq("-source", "1.8", "-target", "1.8")

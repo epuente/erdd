@@ -616,7 +616,7 @@ doc.add(tabla13);
 	
 	
 	public void generarSolicitudEvaluacion() throws DocumentException, MalformedURLException, IOException{
-System.out.println("Generando PDF   (solicitud de evaluación)...");		
+		System.out.println("Generando PDF   (solicitud de evaluación)...");
     	Recurso r = Recurso.find.byId(this.id);
 
         
@@ -848,8 +848,8 @@ System.out.println("Generando PDF   (solicitud de evaluación)...");
 	        
 	        
 	        
-tablaAut.getDefaultCell().setBorderColor(BaseColor.LIGHT_GRAY);
-tablaAut.completeRow();
+			tablaAut.getDefaultCell().setBorderColor(BaseColor.LIGHT_GRAY);
+			tablaAut.completeRow();
 	        
 	        
 	        

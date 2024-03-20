@@ -12,6 +12,7 @@ import javax.persistence.PersistenceException;
 import com.avaje.ebean.Ebean;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.db.ebean.Model;
 import play.mvc.*;
 import views.html.Recurso.*;
 import models.RecursoAutor;
@@ -113,66 +114,44 @@ System.out.println("************* Seliminó el recurso '"+t+"'");
 
 			System.out.println(" CorreoSalida ");
 			CorreoSalida.find.fetch("para").where().eq("recurso.id",id).findList().forEach(d->{
-				d.para.forEach(dd->dd.delete());
+				d.para.forEach(Model::delete);
 				d.delete();
 			});
 			
 			
 			System.out.println(" Historiales ");
-			HistorialestadoEncuesta.find.where().eq("recurso.id", id).findList().forEach(d->{
-				d.delete();					
-			});
+			HistorialestadoEncuesta.find.where().eq("recurso.id", id).findList().forEach(Model::delete);
 				
-			HistorialestadoEvaluacion.find.where().eq("recurso.id", id).findList().forEach(d->{
-				d.delete();					
-			});
+			HistorialestadoEvaluacion.find.where().eq("recurso.id", id).findList().forEach(Model::delete);
 			
-			Historialestado.find.where().eq("recurso.id", id).findList().forEach(d->{
-				d.delete();					
-			});			
+			Historialestado.find.where().eq("recurso.id", id).findList().forEach(Model::delete);
 				//d.historialestadoevaluaciones.forEach(heeva->{HistorialestadoEvaluacion.find.byId(heeva.id).delete();});
 				//d.historialestados.forEach(hedos->{Historialestado.find.byId(hedos.id).delete();});
 			
 			
 			System.out.println(" REcursoEvaluador ");
-			Recursoevaluador.find.where().eq("recurso.id",id).findList().forEach(d->{	
-				d.delete();
-			});
+			Recursoevaluador.find.where().eq("recurso.id",id).findList().forEach(Model::delete);
 			
 			System.out.println(" Clasificacion ");
-			Clasificacion.find.where().eq("recurso.id",id).findList().forEach(d->{	
-				d.delete();
-			});
+			Clasificacion.find.where().eq("recurso.id",id).findList().forEach(Model::delete);
 			
 			System.out.println(" Oficio ");
-			Oficio.find.where().eq("recurso.id",id).findList().forEach(d->{	
-				d.delete();
-			});
+			Oficio.find.where().eq("recurso.id",id).findList().forEach(Model::delete);
 
 			System.out.println(" Oficiovaloracion ");
-			OficioValoracion.find.where().eq("recurso.id",id).findList().forEach(d->{	
-				d.delete();
-			});			
+			OficioValoracion.find.where().eq("recurso.id",id).findList().forEach(Model::delete);
 
 			System.out.println(" Observacioncancelacion ");
-			ObservacionCancelacion.find.where().eq("recurso.id",id).findList().forEach(d->{	
-				d.delete();
-			});				
+			ObservacionCancelacion.find.where().eq("recurso.id",id).findList().forEach(Model::delete);
 			
 			System.out.println(" EvaluacionFecha ");
-			EvaluacionFecha.find.where().eq("recurso.id",id).findList().forEach(d->{	
-				d.delete();
-			});			
+			EvaluacionFecha.find.where().eq("recurso.id",id).findList().forEach(Model::delete);
 
 			System.out.println(" EncuestaRespuesta ");
-			EncuestaRespuesta.find.where().eq("recurso.id",id).findList().forEach(d->{	
-				d.delete();
-			});			
+			EncuestaRespuesta.find.where().eq("recurso.id",id).findList().forEach(Model::delete);
 			
 			System.out.println(" Versionanterior ");
-			Versionanterior.find.where().eq("recurso.id",id).findList().forEach(d->{	
-				d.delete();
-			});	
+			Versionanterior.find.where().eq("recurso.id",id).findList().forEach(Model::delete);
 
 			Recurso r = Recurso.find.byId(id);
 			//Recurso r = Ebean.find(Recurso.class, id);
@@ -267,7 +246,7 @@ System.out.println("************* Seliminó el recurso ");
 		// Se filtra el mapa
 		Map<String, String> otro =  mapa.entrySet()
 					.stream().filter(map -> !map.getValue().isEmpty() &&  map.getKey().startsWith("observacion_")    )
-					.collect(Collectors.toMap(p -> p.getKey(), p -> p.getValue()));
+					.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
 
 
@@ -542,7 +521,7 @@ System.out.println("Desde cancelarRecursoEvaluacion");
 	}
 	
 	public static Result reactivarRecursoEvaluacion(Long id){
-System.out.println("Desde reactivarRecursoEvaluacion");	
+		System.out.println("Desde reactivarRecursoEvaluacion");	
 		
 		//Recurso r = Recurso.find.fetch("solicitudcancelacion").where().eq("id",id).eq("estado.id", 400L).eq("solicitudcancelacion.aceptada", null).findUnique();
 		SolicitudCancelacion sc = SolicitudCancelacion.find.byId(id);

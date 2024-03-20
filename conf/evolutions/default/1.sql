@@ -45,6 +45,16 @@ create table calendario (
   constraint pk_calendario primary key (id))
 ;
 
+create table carrusel (
+  id                        bigint auto_increment not null,
+  nombre_archivo            varchar(150),
+  liga                      varchar(255),
+  posicion                  integer,
+  caducidad                 datetime,
+  contenido                 longblob,
+  constraint pk_carrusel primary key (id))
+;
+
 create table clasificacion (
   id                        bigint auto_increment not null,
   recurso_id                bigint,
@@ -911,6 +921,8 @@ drop table aspecto;
 drop table autorfuncion;
 
 drop table calendario;
+
+drop table carrusel;
 
 drop table clasificacion;
 

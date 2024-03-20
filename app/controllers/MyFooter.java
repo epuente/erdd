@@ -43,26 +43,18 @@ public class MyFooter implements PdfPageEvent {
 	@Override
 	public void onEndPage(PdfWriter writer, Document document) {
         PdfContentByte cb = writer.getDirectContent();
-        
+
         Image imgUPEV = null;
 		try {
 			imgUPEV = Image.getInstance("public/images/logoUPEV.png");
-		//	String ruta = routes.Assets.at("public/images/logoUPEV.png");
-//System.out.println("***************************************    "+ruta);			
-//			imgUPEV = Image.getInstance(  "web/public/images/logoUPEV.png"   );
-			
-			
-			
-		//	imgUPEV =  Image.getInstance(  (play.Play.isProd())?    "web/public/images/logoUPEV.png" :  "public/images/logoUPEV.png"   ); 
-					
-					
 		} catch (BadElementException | IOException  e) {
 			e.printStackTrace();
 		}
-	    
+
         Image escudoPoli = null;
 		try {
-			escudoPoli = Image.getInstance("public/images/escudoPoli.png");
+			escudoPoli = Image.getInstance(    "public/images/escudoPoli.png");
+			//escudoPoli = Image.getInstance(    routes.Assets.at("/public/images/escudoPoli.png").toString());
 		} catch (BadElementException e1) {
 			e1.printStackTrace();
 		} catch (MalformedURLException e1) {
@@ -70,9 +62,10 @@ public class MyFooter implements PdfPageEvent {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-        
+
 		try {
 			escudoPoli = Image.getInstance("public/images/ipn-escudo.jpg");
+			//escudoPoli = Image.getInstance(routes.Assets.at("public/images/ipn-escudo.jpg").toString());
 		} catch (BadElementException e) {
 			e.printStackTrace();
 		} catch (MalformedURLException e) {

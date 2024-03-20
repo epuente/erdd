@@ -46,7 +46,6 @@ public class OficioValoracion extends Model {
     public static Finder<Long,OficioValoracion> find = new Finder<Long,OficioValoracion>(Long.class, OficioValoracion.class);
     
     public static OficioValoracion searchByRecurso(Long recurso){
-    	
         return find.where().eq("recurso_id", recurso).findUnique();
     }      
 }

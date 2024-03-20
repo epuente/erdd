@@ -197,7 +197,7 @@
 					<tr>
 						<td><div class="etiqueta">Oficio número</div><div class="contenido">@recurso.oficio.numero</div></td>
 						<td><div class="etiqueta">Folio</div><div class="contenido">@recurso.oficio.folio</div></td>
-						<td><div class="etiqueta">Ver</div><div class="contenido">   <a href="@routes.OficioController.verOficio(recurso.id)" target="blank">Ver oficio</a>  </div></td>
+						<td><div class="etiqueta">Ver</div><div class="contenido">   <a href="@routes.EvaluacionEvaluadorController.verOficioE(recurso.id)" target="blank">Ver oficio</a>  </div></td>
 					</tr>
 				</table>
 			</td>
@@ -283,7 +283,7 @@
 						</tr>
 							<tr>											
 								<td><div class="contenido">Número de oficio de valoración @recurso.oficiovaloracion.numero</div></td>
-								<td><div class="contenido"><a href="@routes.RecursoController.verOficioValoracion(recurso.oficiovaloracion.id)" target="blank">Ver Oficio de valoración</a></div></td>
+								<td><div class="contenido"><a href="@routes.EvaluacionEvaluadorController.verOficioValoracionE(recurso.oficiovaloracion.id)" target="blank">Ver Oficio de valoración</a></div></td>
 							</tr>
 					</table>
 				</td>

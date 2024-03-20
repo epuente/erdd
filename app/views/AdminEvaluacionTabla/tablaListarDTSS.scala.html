@@ -8,27 +8,27 @@ tiposrecursos:List[ClasificadorEjemplo]
 @import play.api.libs.json.Json
 
 @encabezadosTabla()={
-                                 <thead>
-                                     <tr>
-                                         <th rowspan="3" style="vertical-align:middle">Id</th>
-                                         <th rowspan="3" style="vertical-align:middle">Reactivo</th>
-                                         <th rowspan="3" style="vertical-align:middle">Aspecto</th>
-                                     </tr>
-                                     <tr>
-                                         @for(tc1<-c1){
-                                             <th style="text-align:center" colspan="@c2.filter(_.criterio1.id == tc1.id).length">@tc1.descripcion</th>
-                                         }
-                                         <td></td>
-                                     </tr> 
-                                     <tr>
-                                        @for(tc1<-c1){
-                                             @for(tc2<-c2.filter(_.criterio1.id == tc1.id)){
-                                                 <th style="text-align:center; vertical-align: middle;">@tc2.descripcion</th>
-                                             }
-                                         }
-                                      <td></td>
-                                     </tr>                                     
-                                </thead>
+		 <thead>
+			 <tr>
+				 <th rowspan="3" style="vertical-align:middle">Id</th>
+				 <th rowspan="3" style="vertical-align:middle">Reactivo</th>
+				 <th rowspan="3" style="vertical-align:middle">Aspecto</th>
+			 </tr>
+			 <tr>
+				 @for(tc1<-c1){
+					 <th style="text-align:center" colspan="@c2.filter(_.criterio1.id == tc1.id).length">@tc1.descripcion</th>
+				 }
+				 <td></td>
+			 </tr>
+			 <tr>
+				@for(tc1<-c1){
+					 @for(tc2<-c2.filter(_.criterio1.id == tc1.id)){
+						 <th style="text-align:center; vertical-align: middle;">@tc2.descripcion</th>
+					 }
+				 }
+			  <td></td>
+			 </tr>
+		</thead>
 }
 
 
@@ -45,13 +45,10 @@ tiposrecursos:List[ClasificadorEjemplo]
 	<link rel="stylesheet" media="screen" href="@routes.Assets.at("jQuery-Selectric/public/selectric.css")"/>
 	
 	<link rel="stylesheet" media="screen" href="@routes.Assets.at("lib/datatables-buttons/css/buttons.dataTables.min.css")"/>
-    
-    
-    
 	<div class=container-fluid style="background-color: white; padding: 10px; heigth: 100%;" >
 			<div class="row" style="padding-bottom: 2px">
 				<div class="col-lg-12">
-					<ol class="breadcrumb">registros
+					<ol class="breadcrumb">
 					  <li>Catálogos</li>
 					  <li class="active">Instrumento de evaluación</li>
 					</ol>			
@@ -219,19 +216,23 @@ tiposrecursos:List[ClasificadorEjemplo]
 				        		<div class="col-sm-12">
 						        	<div class="row">
 						        		<div class="col-sm-4">
-						        			<input type="button" onclick="agregarReactivo()" class="btn btn-default btn-block" id="btnAgregarReactivo" value="Agregar reactivo">
-						        		<!-- 	
+
+											<!--
 						        			<input type="button" onclick="botonTempo1()" class="btn btn-default btn-block" value="Marcar criterios">
 						        			<input type="button" onclick="botonTempo2()" class="btn btn-default btn-block" value="Marcar tr">
-						        			-->
-						        			
+											<input type="button" onclick="botonTempo3()" class="btn btn-default btn-block" value="Marcar todo">
+											-->
 				        				</div>
-
-
 			        				</div>
 					        	</div>
 				        	</div>
-					            
+
+						<div class="row">
+							<div class="center-block" style="width:30rem;background-color:#ccc;">
+								<input type="button" onclick="agregarReactivo()" class="btn btn-primary btn-block" id="btnAgregarReactivo" value="Agregar reactivo">
+							</div>
+						</div>
+
 
 						}
 					</div>
@@ -483,7 +484,17 @@ tiposrecursos:List[ClasificadorEjemplo]
 
 		
 	}
-	
+
+
+	function botonTempo3(){
+		console.log("marcando todos los ejemplos")
+		botonTempo1();
+		nreactivo = laTablaDTSS.data()[0].reactivoId;
+		$("[name^='tiporecurso_"+nreactivo+"_']:enabled:not(:checked)").each(function(){
+			$(this).click();
+		});
+	}
+
 
 	function botonTempo2(){
 		$("[name^='tiporecurso_']:not(:checked)").each(function(){
@@ -493,14 +504,46 @@ tiposrecursos:List[ClasificadorEjemplo]
 	}
 		
 	
-	
+
+	function enPantallaNvo(renglon){
+
+		console.log( "renglones " +$("#tablaAgregarReactivo tr").length  )
+		console.log( "columnas " +$("#tablaAgregarReactivo td").length  )
+		var col=-1;
+		renglon.forEach(function(r) {
+			if (r.c1==1 && r.c2==1)				col=1;
+			if (r.c1==1 && r.c2==2)				col=2;
+			if (r.c1==1 && r.c2==3)				col=3;
+			if (r.c1==2 && r.c2==4)				col=4;
+			if (r.c1==2 && r.c2==5)				col=5;
+			if (r.c1==2 && r.c2==6)				col=6;
+
+			console.log("col "+col)
+			var componente = '<div class="checkbox" style="padding-bottom: 1.5rem;">'+
+								'<label><input type="checkbox" id="criterio_0_'+r.c1+'_'+r.c2+'_1"  name="criterio_0[]"   value="'+r.c1+'_'+r.c2+'_'+r.c3+'" ><strong> '+r.c3d+'</strong></label><br>';
+			var ejemplos='<div class="form-group">';
+			// ciclo para agregar ejemplos
+			r.ejemplos.forEach(function(e){
+				ejemplos+='<div class="checkbox">'+
+								'<div class="small" style="padding-left: 3rem">'+
+									'<input type="checkbox" name="tiporecurso_0_'+r.c1+'_'+r.c2+'_'+r.c3+'[]" value="'+e.tiporecursoid+'" disabled>'+e.tiporecurso+
+								'</div>'+
+							'</div>';
+			});
+			ejemplos+="</div>";
+			componente+=ejemplos+"</div>";
+
+
+			$("#tablaAgregarReactivo tr:eq(3) td:eq("+col+")").append(componente);
+		});
+	}
+
+
+
 	// Genera el código de las columnas para las tablas
     function enPantalla(row, c1,c2,c3, esReactivoNuevo=false){
         data="";
         row.todosLosCriterios.forEach(function(cs){
-        	console.log(">>>")
-        	console.dir(cs)
-        	console.log("<<<")
             if ((cs.c1==c1) && (cs.c2==c2) && (cs.c3==c3)){
                 data+='<div class="checkbox">';   
                 data+='<label>';
@@ -570,10 +613,16 @@ tiposrecursos:List[ClasificadorEjemplo]
     	nombre = $(this).prop("name");
         numeroReactivo =  nombre.substring( nombre.indexOf("_")+1,  nombre.indexOf("[]") );   
         criterios = $(this).val();
-        console.log(numeroReactivo)
-        console.log(criterios)
+        console.log("numeroReactivo "+numeroReactivo)
+        console.log("criterios "+criterios)
         console.log("[name='tiporecurso_"+numeroReactivo+"_"+criterios+"[]']"+"  *   "+!$(this).prop("checked"))
+
+
+
     	$("[name='tiporecurso_"+numeroReactivo+"_"+criterios+"[]']").prop("disabled" ,  !$(this).prop("checked") );
+
+
+
     	if (!$(this).prop("checked")){
     		$("[name='tiporecurso_"+numeroReactivo+"_"+criterios+"[]']").prop("checked" ,  false );
     	}
@@ -588,29 +637,9 @@ tiposrecursos:List[ClasificadorEjemplo]
 		if (o.reactivo.id!=0)
         	LlamadaAjaxGrabaInstrumentoCriterio(o);
     });
-    
-    // Cuando se seleccionan los checkboxes de tipos de recursos se graba o borra
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
+
+    // Eliminar reactivo del instrumento
 	$( document ).on( "click", "[name^='btnEliminarReactivo']", function() {
 		var num = $(this).attr("name").substring(19);		
 		console.log("asdfsdfgsdfg")
@@ -634,22 +663,38 @@ tiposrecursos:List[ClasificadorEjemplo]
 		      o.version = {id: "@version.id"};
 			  o.reactivo = {"id": num };
 			  pagActual =  laTablaDTSS.page.info().page;
-			  $eliminar = LlamadaAjaxEliminaReactivo(o);
-	          $.when($eliminar).done(
-	        		  function(d){
-	        	            swal(
-	        	                    'Eliminado!',
-	        	                    'Se eliminó el reacivo del instrumento en esta versión.',
-	        	                    'success'
-	        	                  );
-							laTablaDTSS.ajax.reload(null, true);
-							laTablaDTSS.page(pagActual-1).draw('page');
-	        		  }
-       		  );
-			  
-			  
-			  
+			 // $eliminar = LlamadaAjaxEliminaReactivo(o);
+			 // $eliminar = LlamadaAjax("/ajaxEliminaReactivoTablaEvaluacion", "POST", JSON.stringify( {o}));
 
+
+ 			$.ajax({
+				url: '/ajaxEliminaReactivoTablaEvaluacion',
+				method: 'POST',
+				data: JSON.stringify( {o}),
+				contentType: "application/json; charset=utf-8",
+				dataType: "json"
+			}).success(function(data){
+				console.dir(data)
+				if (data.eliminado==true){
+					console.log("ELIMINADO")
+					laTablaDTSS.ajax.reload(null, true);
+					//laTablaDTSS.page(pagActual-1).draw('page');
+					$.notify({
+						title: "Eliminado:",
+						message: "Se eliminó el reactivo "+num+" del instrumento"
+					}, {type: 'success'});
+
+
+
+
+				} else {
+					alert("error ajax en LlamadaAjaxEliminaReactivo ");
+				}
+
+			}).error(function(xhr, status, error) {
+				  alert("error rn ajax -  "+ error );
+
+				});
 		  } else if (
 		    // Read more about handling dismissals
 		    result.dismiss === swal.DismissReason.cancel
@@ -722,7 +767,7 @@ tiposrecursos:List[ClasificadorEjemplo]
 			return true;
 		}
 		*/
-		console.clear();
+		//console.clear();
 		console.log($("#reactivo option:selected").val())
 		console.log
 		if (  $("#reactivo option:selected").val()==0  &&     $("textarea[name='nuevoReactivo']").val().length==0  ){
@@ -860,7 +905,13 @@ tiposrecursos:List[ClasificadorEjemplo]
 		@*
 		$("#campos").html( '<table class="table table-bordered table-striped table-hover">'+renglonEncabezados1+`@campos(0,true)`+'</table>' );
 		*@
+
+
+		console.log("numReactivo "+numReactivo)
+		console.dir("tam laTablaDTSS.data() "+ laTablaDTSS.data().length )
+		console.dir(laTablaDTSS.data()[0])
 		let linea = laTablaDTSS.data()[0];
+		console.log("linea "+ linea)
         var cad = "";
         cad+="<tr>";
         cad+="     <td>";
@@ -871,9 +922,78 @@ tiposrecursos:List[ClasificadorEjemplo]
         cad+="     </td>";
 
 		var boolNuevo =   (numReactivo ==0);
+		console.log("boolNuevo "+boolNuevo)
+
+
+		////////////////////////////////////////////////////
+		/*
+		Se usan los datos que tiene la tabla tblaDTSS, pero si el instrumento es totalmente nuevo,
+		no tiene registros y por tanto no hay renglones en el datatables.
+
+		Usar el siguiente query en un método:
+		select cc1.id c1, cc2.id c2, cc3.id,
+		cc1.descripcion, cc2.descripcion, ccc.descripcion, ct.descripcion, ct.id
+		from clasificador_criterio3 cc3
+		inner join clasificador_criterio2 cc2 on cc3.criterio2_id = cc2.id
+		inner join clasificador_criterio1 cc1  on cc2.criterio1_id = cc1.id
+		inner join clasificador_catalogo_criterio3 ccc on cc3.catalogo_id = ccc.id
+		inner join clasificador_criterio3ejemplo cce on cc3.id = cce.criterio3_id
+		, clasificador_tiporecurso ct
+		where cce.tiporecurso_id = ct.id
+		*/
+		////////////////////////////////////////////////////
+
+
+		var $x=LlamadaAjax("/baseInstrumento","POST", JSON.stringify({}));
+		$.when($x).done(function(data){
+			console.dir(data)
+			@for(loopC1 <- 1 to 6){
+				cad+="<td></td>";
+			}
+
+			cad+="</tr>";
+
+			$("#tablaAgregarReactivo tbody tr").remove();
+			$("#tablaAgregarReactivo tbody").append(cad);
+
+
+							enPantallaNvo(data);
+
+
+			console.log("cad "+cad);
+
+
+
+
+
+
+
+
+			@*
+			if ( !$.fn.dataTable.isDataTable( '#tablaAgregarReactivo' ) ) {
+				$("#tablaAgregarReactivo").DataTable(
+					{
+					"paging":   false,
+					"ordering": false,
+					"info":     false,
+					"searching": false
+					}
+				);
+			}
+			*@
+
+
+		});
+
+
+		@*
 		@for(loopC1 <- 1 to 6){
             cad+="<td>";
 			@if(loopC1 == 1){
+				console.log("Aquii 10")
+				console.log(linea)
+				console.log("enPantalla linea,1,1,1, boolNuevo regresa: "+enPantalla(linea,1,1,1, boolNuevo))
+				console.log("enPantalla linea,1,1,2, boolNuevo regresa: "+enPantalla(linea,1,1,2, boolNuevo))
 				cad+="    "+enPantalla(linea,1,1,1, boolNuevo) + enPantalla(linea,1,1,2, boolNuevo);
 			}				
 			@if(loopC1 == 2){
@@ -894,23 +1014,9 @@ tiposrecursos:List[ClasificadorEjemplo]
 			
 			cad+="</td>";
 		}		
+		*@
 
 
-        cad+="</tr>";
-        $("#tablaAgregarReactivo tbody tr").remove();
-		$("#tablaAgregarReactivo tbody").append(cad);
-		
-
-		if ( !$.fn.dataTable.isDataTable( '#tablaAgregarReactivo' ) ) {
-			$("#tablaAgregarReactivo").DataTable(
-				{
-				"paging":   false,
-				"ordering": false,
-				"info":     false,
-				"searching": false			
-				}
-			);
-		}
 		
 	});
 	
@@ -1037,8 +1143,8 @@ alert("error hjk6");
             }
             d.resolve(data);
         }).error(function(xhr, status, error) {
-              d.reject;
               alert("error rn ajax -  "+ error );
+              d.reject;
             }); 
         return d.promise();
     }    
@@ -1093,5 +1199,6 @@ alert("error hjk6");
 <script src="@routes.Assets.at("sweetalert2/sweetalert2.all.js")" type="text/javascript"></script>
 
 <script src="@routes.Assets.at("lib/bootstrap-notify/bootstrap-notify.min.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("javascripts/async.js")" type="text/javascript"></script>
 
 

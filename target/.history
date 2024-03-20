@@ -10,3 +10,50 @@ reload
 compile
 run 8085
 exit
+run 8085
+clean
+dist
+clean
+reload
+compile
+run 8090
+run 9090
+compile
+run
+run 9090
+clean
+run 80
+run
+reload
+compile
+clean
+reload
+compile
+exit
+run
+exit
+clean
+reload
+compile
+exit
+clean
+reload
+compile
+run 9090
+run
+run 9090
+clean
+reload
+compile
+run 9090
+clean
+exit
+clean
+reload
+compile
+run 9090
+clean
+reload
+compile
+run 9090
+exit

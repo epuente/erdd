@@ -204,10 +204,6 @@ GET         /mostrarEvaluacionesConObservaciones/:tipo  controllers.Recursoevalu
 GET         /mostrarEvaluacionesConcluidas/:tipo/:device  controllers.RecursoevaluadorController.mostrarEvaluacionesConcluidas(tipo:Int, device:String)
 
 
-
-
-
-
 GET 		/clasificacionList				controllers.ClasificacionController.list()
 GET 		/clasificacionCreate			controllers.ClasificacionController.create(id:Long)
 POST 		/clasificacionSave				controllers.ClasificacionController.save()
@@ -260,6 +256,10 @@ GET			/evaluacionTablaEvaluacionList		controllers.AdminEvaluacionTablaController
 GET         /evaluacionTablaEvaluacionListDTSS    controllers.AdminEvaluacionTablaController.listarTablaDTSS()
 
 GET         /listarReactivosInstrumento         controllers.AdminEvaluacionTablaController.listarReactivosInstrumento()
+
+
+POST        /baseInstrumento                    controllers.AdminEvaluacionTablaController.baseInstrumento()
+
 
 POST		/tablaEvaluacionEdit				controllers.AdminEvaluacionTablaController.editTablaEvaluacion(idVersion:Long)
 GET			/listaReactivos/:version			controllers.AdminEvaluacionTablaController.listaReactivos(version:Long)
@@ -370,4 +370,6 @@ GET     /pingWs                     controllers.RecursoWebController.pingWs()
 
 GET     /socket                     controllers.RecursoWebController.socket()
 GET     /enviarSocket                     controllers.RecursoWebController.enviarSocket()
-									
+
+GET     /verOficioE/:id					controllers.EvaluacionEvaluadorController.verOficioE(id:Long)
+GET     /verOficioValoracionE/:id		controllers.EvaluacionEvaluadorController.verOficioValoracionE(id:Long)

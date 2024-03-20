@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+
+import com.avaje.ebean.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,15 +28,12 @@ import models.EvaluacionTablaReactivo;
 import models.EvaluacionTablaTipoRecurso;
 import models.EvaluacionTablaVersion;
 
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Result;
 import views.html.AdminEvaluacionTabla.*;
 
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.Expr;
-import com.avaje.ebean.ExpressionList;
-import com.avaje.ebean.Page;
 import com.avaje.ebean.annotation.Transactional;
 import com.avaje.ebean.text.json.JsonContext;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -263,7 +262,7 @@ System.out.println("tam et; "+et.size());
     
     
     public static Result listarTablaDTSS(){
-System.out.println("Llegando a AdminEvaluacionTablaController.listarTablaDTSS");
+		System.out.println("Llegando a AdminEvaluacionTablaController.listarTablaDTSS");
 		JSONObject json2 = new JSONObject();		
 		int filtrados = 0;
 		int sinFiltro = 0;
@@ -272,38 +271,32 @@ System.out.println("Llegando a AdminEvaluacionTablaController.listarTablaDTSS");
 		columnasOrdenables.put(1, 19);
 		columnasOrdenables.put(2, 9);
 		//Page<Folio> otro = null;
-System.out.println( "parametros 0:"+ request() );
+		System.out.println( "parametros 0:"+ request() );
 
 
 		//request().getQueryString("columns[2][search][value]");
-	String filtroAspecto = request().getQueryString("filtroAspecto");
+		String filtroAspecto = request().getQueryString("filtroAspecto");
 	
-System.out.println( "\ncolumns 2:" + filtroAspecto   );
-System.out.println( "\nfiltroAspecto:" + request().getQueryString("filtroAspecto")   );
-		
-
-
-
-
+		System.out.println( "\ncolumns 2:" + filtroAspecto   );
+		System.out.println( "\nfiltroAspecto:" + request().getQueryString("filtroAspecto")   );
 
 		String filtro = request().getQueryString("search[value]");
-		
-		
+
 		Long version =   Long.parseLong( request().getQueryString("version"));
 		Integer colOrden =   Integer.parseInt( request().getQueryString("order[0][column]")   );
 		String tipoOrden = request().getQueryString("order[0][dir]");
-System.out.println( "parametro start:"+ Integer.parseInt(request().getQueryString("start")));
-System.out.println( "parametro length:"+ Integer.parseInt(request().getQueryString("length")));
-System.out.println( "parametros order[0][column]:"+ colOrden);
-System.out.println( "parametros order[0][dir]:"+ tipoOrden);		
-System.out.println( "filtrando :"+ filtro);
+		System.out.println( "parametro start:"+ Integer.parseInt(request().getQueryString("start")));
+		System.out.println( "parametro length:"+ Integer.parseInt(request().getQueryString("length")));
+		System.out.println( "parametros order[0][column]:"+ colOrden);
+		System.out.println( "parametros order[0][dir]:"+ tipoOrden);
+		System.out.println( "filtrando :"+ filtro);
 		int numPag = 0;
 		if (Integer.parseInt(request().getQueryString("start")) != 0)
 			numPag = Integer.parseInt(request().getQueryString("start")) /   Integer.parseInt(request().getQueryString("length"));		
 		int numRegistros = Integer.parseInt(request().getQueryString("length"));
 		
-System.out.println( "numRegistros :"+ numRegistros);
-System.out.println( "numPag :"+ numPag);
+		System.out.println( "numRegistros :"+ numRegistros);
+		System.out.println( "numPag :"+ numPag);
 
 
 		// Se hace la búsqueda en  Evaluacion tabla, incluyendo los filtros especificados en la vista
@@ -321,29 +314,37 @@ System.out.println( "numPag :"+ numPag);
 			.setParameter("cadena", "%"+filtro+"%")		
 			.findList();			
 
-System.out.println("Registros en EvaluacionTabla: "+evts.size());
+		System.out.println("Registros en EvaluacionTabla: "+evts.size());
 		TreeSet<Long>  idsReactivos = new TreeSet<Long>();
 		TreeSet<Long>  idsEvaluacionTabla = new TreeSet<Long>();
-		
+
+		System.out.println("40");
+
 		// Se toman los ids de los reactivos y de la tabla EvaluacionTabla
 		evts.forEach(evt->{ 
-//System.out.print(evt.id+"->"+evt.reactivo.id+"          ");			
+			System.out.print(evt.id+"->"+evt.reactivo.id+"          ");
 			idsReactivos.add(evt.reactivo.id);
 			idsEvaluacionTabla.add(evt.id);
 		});
-		
+
+		idsReactivos.forEach(i->System.out.println("s---> "+i));
+
+		System.out.println("idsReactivos:"+idsReactivos);
+
+		System.out.println("50");
+
 		Page<EvaluacionTablaReactivo> evtR = EvaluacionTablaReactivo.find
 				.where().in("id",idsReactivos)
 			 	//.orderBy( "c"+    (colOrden==0?columnasOrdenables.get(0)  :  columnasOrdenables.get(colOrden)-1)  +" "+tipoOrden )
 				.orderBy("id")
 				.findPagingList(numRegistros)
 				.setFetchAhead(false)
-				.getPage(numPag);				
+				.getPage(numPag);
+
+		System.out.println("60");
 		
-		
-		
-System.out.println("");		
-System.out.println("Núm reactivos en el instrumento: "+idsReactivos.size());		
+		System.out.println("");
+		System.out.println("Núm reactivos en el instrumento: "+idsReactivos.size());
 		sinFiltro = idsReactivos.size();
 		filtrados = idsReactivos.size();
 		JSONArray losDatos = new JSONArray();
@@ -429,7 +430,7 @@ System.out.println("Núm reactivos en el instrumento: "+idsReactivos.size());
 
 	    	System.out.println("tam paginaEVT: "+evtR.getList().size());		
 	
-System.out.println("-->>LOSDATOS\n"+losDatos);    	
+			System.out.println("-->>LOSDATOS\n"+losDatos);
 	    	
 	    	
 				if ( evtR.getList().size()>0 ){
@@ -961,6 +962,64 @@ System.out.println("despues del mapper");
 		 return ok( "{\"agregado\":"+ retorno +"}" );
     	
     }
+
+
+	public static Result baseInstrumento(){
+		JSONObject joRetorno = new JSONObject();
+
+		Logger.debug("Desde AdminEvaluacionTablaController.baseInstrumento");
+		String q=	"select cc1.id c1, cc2.id c2, cc3.id, "+
+					"cc1.descripcion c1d, cc2.descripcion c2d, ccc.descripcion c3d, "+
+					"concat(cc1.id, \"_\",cc2.id,\"_\",ccc.id) compuesto "+
+					//"ct.descripcion trd, ct.id trid "+
+					"from clasificador_criterio3 cc3 "+
+					"inner join clasificador_criterio2 cc2 on cc3.criterio2_id = cc2.id "+
+					"inner join clasificador_criterio1 cc1  on cc2.criterio1_id = cc1.id "+
+					"inner join clasificador_catalogo_criterio3 ccc on cc3.catalogo_id = ccc.id "+
+					"where concat(cc1.id,\"_\",cc2.id,\"_\",ccc.id) !='1_1_4'" +
+					"and concat(cc1.id,\"_\",cc2.id,\"_\",ccc.id) !='1_1_3'" +
+					"and concat(cc1.id,\"_\",cc2.id,\"_\",ccc.id) !='1_2_4'";
+				/*
+					"inner join clasificador_criterio3ejemplo cce on cc3.id = cce.criterio3_id "+
+					", clasificador_tiporecurso ct "+
+
+				 */
+				//	"where cce.tiporecurso_id = ct.id";
+
+
+		List<SqlRow> rows = Ebean.createSqlQuery(q).findList();
+		JSONArray jaArreglo = new JSONArray();
+		try {
+			for (SqlRow r : rows) {
+				JSONObject jo = new JSONObject();
+				Logger.debug(r.getLong("c1") + " - " + r.getLong("c2") + " - " + r.getLong("id") + " - " + r.getString("c1d") + "  " + r.getString("c2d") + "  " + r.getString("c3d") + "  " + r.getString("trd") + " - " + r.getLong("trid"));
+				jo.put("c1", r.getLong("c1"));
+				jo.put("c2", r.getLong("c2"));
+				jo.put("c3", r.getLong("id"));
+
+				jo.put("c1d", r.getString("c1d"));
+				jo.put("c2d", r.getString("c2d"));
+				jo.put("c3d", r.getString("c3d"));
+
+				List<ClasificadorCriterio3Ejemplo> ejemplos = ClasificadorCriterio3Ejemplo.find.where().eq("criterio3.id", r.getLong("id")).findList();
+				JSONArray jaEjemplos = new JSONArray();
+				for (ClasificadorCriterio3Ejemplo ejemplo : ejemplos) {
+					JSONObject joEjemplo = new JSONObject();
+					joEjemplo.put("id", ejemplo.id );
+					joEjemplo.put("tiporecursoid", ejemplo.tiporecurso.id);
+					joEjemplo.put("tiporecurso", ejemplo.tiporecurso.descripcion);
+					jaEjemplos.put(joEjemplo);
+				}
+				jo.put("ejemplos", jaEjemplos);
+				jaArreglo.put(jo);
+			}
+		} catch (JSONException je){
+			System.out.println("ERROR DE CONVERSION JSON "+je	);
+		}
+		System.out.println(jaArreglo.toString());
+		return ok(  jaArreglo.toString() );
+
+	}
 
 
     
