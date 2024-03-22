@@ -1,9 +1,1197 @@
-2024-03-20 17:12:45,174 - [INFO] - from play in pool-4-thread-4 
+2024-03-22 12:05:10,014 - [INFO] - from play in pool-11-thread-7 
 Listening for HTTP on /0:0:0:0:0:0:0:0:9090
 
-2024-03-20 17:12:53,832 - [INFO] - from play in play-internal-execution-context-1 
+2024-03-22 12:05:17,395 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
 
-2024-03-20 17:12:54,620 - [INFO] - from play in play-internal-execution-context-1 
+2024-03-22 12:05:17,852 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
+
+2024-03-22 12:08:52,237 - [INFO] - from application in play-akka.actor.default-dispatcher-15 
+Desde CarruselController.create
+
+2024-03-22 12:09:19,621 - [INFO] - from application in play-akka.actor.default-dispatcher-14 
+Desde CarruselController.save
+
+2024-03-22 12:09:28,062 - [INFO] - from application in play-akka.actor.default-dispatcher-22 
+Desde CarruselController.list
+
+2024-03-22 12:09:28,401 - [DEBUG] - from application in play-akka.actor.default-dispatcher-19 
+c2 asc
+
+2024-03-22 12:09:28,405 - [DEBUG] - from application in play-akka.actor.default-dispatcher-19 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:09:55,019 - [INFO] - from application in play-akka.actor.default-dispatcher-14 
+Desde CarruselController.create
+
+2024-03-22 12:10:31,751 - [INFO] - from application in play-akka.actor.default-dispatcher-31 
+Desde CarruselController.save
+
+2024-03-22 12:33:15,469 - [ERROR] - from application in New I/O worker #9 
+
+
+! @85140m010 - Internal server error, for (GET) [/poliMedia/carrusel/create] ->
+
+play.PlayExceptions$CompilationException: Compilation error[error: cannot find symbol]
+	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
+	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
+	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
+	at play.PlayReloader$$anon$1$$anonfun$play$PlayReloader$$anon$$taskFailureHandler$1.apply(PlayReloader.scala:235) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$play$PlayReloader$$anon$$taskFailureHandler$1.apply(PlayReloader.scala:230) ~[na:na]
+	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
+	at play.PlayReloader$$anon$1.play$PlayReloader$$anon$$taskFailureHandler(PlayReloader.scala:230) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:90) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:90) ~[na:na]
+	at scala.util.Either$LeftProjection.map(Either.scala:377) ~[scala-library-2.11.4.jar:na]
+	at play.PlayReloader$$anon$1.reload(PlayReloader.scala:90) ~[na:na]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:122) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:120) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1361) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
+
+2024-03-22 12:33:45,257 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 12:33:45,425 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2024-03-22 12:33:45,452 - [INFO] - from application in play-akka.actor.default-dispatcher-20 
+Desde CarruselController.create
+
+2024-03-22 12:33:50,932 - [INFO] - from application in play-akka.actor.default-dispatcher-20 
+Desde CarruselController.list
+
+2024-03-22 12:33:51,062 - [DEBUG] - from application in play-akka.actor.default-dispatcher-39 
+c2 asc
+
+2024-03-22 12:33:51,106 - [DEBUG] - from application in play-akka.actor.default-dispatcher-39 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:33:53,199 - [INFO] - from application in play-akka.actor.default-dispatcher-39 
+Desde CarruselController.create
+
+2024-03-22 12:34:16,302 - [INFO] - from application in play-akka.actor.default-dispatcher-45 
+Desde CarruselController.save
+
+2024-03-22 12:34:16,353 - [INFO] - from application in play-akka.actor.default-dispatcher-39 
+Desde CarruselController.list
+
+2024-03-22 12:34:16,504 - [DEBUG] - from application in play-akka.actor.default-dispatcher-39 
+c2 asc
+
+2024-03-22 12:34:16,512 - [DEBUG] - from application in play-akka.actor.default-dispatcher-39 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:42:12,919 - [INFO] - from play in play-internal-execution-context-11 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 12:42:13,062 - [INFO] - from play in play-internal-execution-context-11 
+Application started (Dev)
+
+2024-03-22 12:42:13,085 - [INFO] - from application in play-akka.actor.default-dispatcher-47 
+Desde CarruselController.create
+
+2024-03-22 12:42:58,103 - [INFO] - from application in play-akka.actor.default-dispatcher-50 
+Desde CarruselController.save
+
+2024-03-22 12:42:58,140 - [INFO] - from application in play-akka.actor.default-dispatcher-53 
+Desde CarruselController.list
+
+2024-03-22 12:42:58,300 - [DEBUG] - from application in play-akka.actor.default-dispatcher-58 
+c2 asc
+
+2024-03-22 12:42:58,308 - [DEBUG] - from application in play-akka.actor.default-dispatcher-58 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:43:42,674 - [DEBUG] - from application in play-akka.actor.default-dispatcher-62 
+c2 asc
+
+2024-03-22 12:43:42,683 - [DEBUG] - from application in play-akka.actor.default-dispatcher-62 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:44:00,562 - [DEBUG] - from application in play-akka.actor.default-dispatcher-61 
+c2 asc
+
+2024-03-22 12:44:00,568 - [DEBUG] - from application in play-akka.actor.default-dispatcher-61 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:44:11,442 - [DEBUG] - from application in play-akka.actor.default-dispatcher-66 
+c2 asc
+
+2024-03-22 12:44:11,450 - [DEBUG] - from application in play-akka.actor.default-dispatcher-66 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:44:17,053 - [DEBUG] - from application in play-akka.actor.default-dispatcher-66 
+c2 asc
+
+2024-03-22 12:44:17,059 - [DEBUG] - from application in play-akka.actor.default-dispatcher-66 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:44:27,265 - [DEBUG] - from application in play-akka.actor.default-dispatcher-68 
+c2 asc
+
+2024-03-22 12:44:27,269 - [DEBUG] - from application in play-akka.actor.default-dispatcher-68 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:44:30,934 - [DEBUG] - from application in play-akka.actor.default-dispatcher-68 
+c2 asc
+
+2024-03-22 12:44:30,938 - [DEBUG] - from application in play-akka.actor.default-dispatcher-68 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:44:34,610 - [DEBUG] - from application in play-akka.actor.default-dispatcher-72 
+c2 asc
+
+2024-03-22 12:44:34,614 - [DEBUG] - from application in play-akka.actor.default-dispatcher-72 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:44:35,070 - [DEBUG] - from application in play-akka.actor.default-dispatcher-68 
+c2 asc
+
+2024-03-22 12:44:35,074 - [DEBUG] - from application in play-akka.actor.default-dispatcher-68 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:44:42,111 - [ERROR] - from play in play-akka.actor.default-dispatcher-68 
+Cannot invoke the action, eventually got an error: java.lang.NullPointerException
+
+2024-03-22 12:44:42,134 - [ERROR] - from application in play-akka.actor.default-dispatcher-68 
+
+
+! @8514291l8 - Internal server error, for (GET) [/poliMedia/carrusel/carruselDTSS?draw=1711133075075&columns%5B0%5D%5Bdata%5D=posicion&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=inicio&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=fin&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=titulo&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=nombreArchivo&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=true&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B5%5D%5Bdata%5D=liga&columns%5B5%5D%5Bname%5D=&columns%5B5%5D%5Bsearchable%5D=true&columns%5B5%5D%5Borderable%5D=true&columns%5B5%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B5%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B6%5D%5Bdata%5D=null&columns%5B6%5D%5Bname%5D=&columns%5B6%5D%5Bsearchable%5D=true&columns%5B6%5D%5Borderable%5D=true&columns%5B6%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B6%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=5&order%5B0%5D%5Bdir%5D=asc&start=0&length=-1&search%5Bvalue%5D=fol&search%5Bregex%5D=false&_=1711133057007] ->
+
+play.api.Application$$anon$1: Execution exception[[NullPointerException: null]]
+	at play.api.Application$class.handleError(Application.scala:296) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.DefaultApplication.handleError(Application.scala:402) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:316) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:344) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:343) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [scala-library-2.11.4.jar:na]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:40) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:248) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Promise$class.complete(Promise.scala:55) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:153) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:23) [scala-library-2.11.4.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41) [akka-actor_2.11-2.3.4.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393) [akka-actor_2.11-2.3.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.4.jar:na]
+Caused by: java.lang.NullPointerException: null
+	at controllers.CarruselController.carruselDTSS(CarruselController.java:95) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$234$$anonfun$apply$234.apply(routes_routing.scala:3576) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$234$$anonfun$apply$234.apply(routes_routing.scala:3576) ~[classes/:na]
+	at play.core.Router$HandlerInvokerFactory$$anon$4.resultCall(Router.scala:264) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.invocation(Router.scala:255) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:55) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.GlobalSettings$1.call(GlobalSettings.java:67) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$.apply(Future.scala:31) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$.apply(Future.scala:492) ~[scala-library-2.11.4.jar:na]
+	at play.core.j.JavaAction$class.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.apply(Router.scala:252) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:129) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:121) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	... 6 common frames omitted
+
+2024-03-22 12:44:51,878 - [DEBUG] - from application in play-akka.actor.default-dispatcher-67 
+c1 asc
+
+2024-03-22 12:44:51,882 - [DEBUG] - from application in play-akka.actor.default-dispatcher-67 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:44:53,111 - [DEBUG] - from application in play-akka.actor.default-dispatcher-63 
+c1 desc
+
+2024-03-22 12:44:53,114 - [DEBUG] - from application in play-akka.actor.default-dispatcher-63 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:44:55,081 - [DEBUG] - from application in play-akka.actor.default-dispatcher-67 
+c1 desc
+
+2024-03-22 12:44:55,085 - [DEBUG] - from application in play-akka.actor.default-dispatcher-67 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:44:58,069 - [DEBUG] - from application in play-akka.actor.default-dispatcher-67 
+c5 asc
+
+2024-03-22 12:44:58,072 - [DEBUG] - from application in play-akka.actor.default-dispatcher-67 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:44:59,446 - [DEBUG] - from application in play-akka.actor.default-dispatcher-67 
+c1 asc
+
+2024-03-22 12:44:59,450 - [DEBUG] - from application in play-akka.actor.default-dispatcher-67 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:45:01,118 - [ERROR] - from play in play-akka.actor.default-dispatcher-63 
+Cannot invoke the action, eventually got an error: java.lang.NullPointerException
+
+2024-03-22 12:45:01,120 - [ERROR] - from application in play-akka.actor.default-dispatcher-63 
+
+
+! @85142a3ne - Internal server error, for (GET) [/poliMedia/carrusel/carruselDTSS?draw=1711133099451&columns%5B0%5D%5Bdata%5D=posicion&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=inicio&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=fin&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=titulo&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=nombreArchivo&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=true&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B5%5D%5Bdata%5D=liga&columns%5B5%5D%5Bname%5D=&columns%5B5%5D%5Bsearchable%5D=true&columns%5B5%5D%5Borderable%5D=true&columns%5B5%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B5%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B6%5D%5Bdata%5D=null&columns%5B6%5D%5Bname%5D=&columns%5B6%5D%5Bsearchable%5D=true&columns%5B6%5D%5Borderable%5D=true&columns%5B6%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B6%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=5&order%5B0%5D%5Bdir%5D=asc&start=0&length=-1&search%5Bvalue%5D=&search%5Bregex%5D=false&_=1711133057013] ->
+
+play.api.Application$$anon$1: Execution exception[[NullPointerException: null]]
+	at play.api.Application$class.handleError(Application.scala:296) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.DefaultApplication.handleError(Application.scala:402) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:316) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:344) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:343) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [scala-library-2.11.4.jar:na]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:40) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:248) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Promise$class.complete(Promise.scala:55) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:153) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:23) [scala-library-2.11.4.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41) [akka-actor_2.11-2.3.4.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393) [akka-actor_2.11-2.3.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.4.jar:na]
+Caused by: java.lang.NullPointerException: null
+	at controllers.CarruselController.carruselDTSS(CarruselController.java:95) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$234$$anonfun$apply$234.apply(routes_routing.scala:3576) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$234$$anonfun$apply$234.apply(routes_routing.scala:3576) ~[classes/:na]
+	at play.core.Router$HandlerInvokerFactory$$anon$4.resultCall(Router.scala:264) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.invocation(Router.scala:255) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:55) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.GlobalSettings$1.call(GlobalSettings.java:67) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$.apply(Future.scala:31) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$.apply(Future.scala:492) ~[scala-library-2.11.4.jar:na]
+	at play.core.j.JavaAction$class.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.apply(Router.scala:252) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:129) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:121) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	... 6 common frames omitted
+
+2024-03-22 12:48:27,432 - [INFO] - from play in play-internal-execution-context-11 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 12:48:27,577 - [INFO] - from play in play-internal-execution-context-11 
+Application started (Dev)
+
+2024-03-22 12:48:27,608 - [INFO] - from application in play-akka.actor.default-dispatcher-71 
+Desde CarruselController.list
+
+2024-03-22 12:48:27,743 - [DEBUG] - from application in play-akka.actor.default-dispatcher-71 
+c0 asc
+
+2024-03-22 12:48:27,755 - [DEBUG] - from application in play-akka.actor.default-dispatcher-71 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:48:29,184 - [DEBUG] - from application in play-akka.actor.default-dispatcher-79 
+c2 asc
+
+2024-03-22 12:48:29,189 - [DEBUG] - from application in play-akka.actor.default-dispatcher-79 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:48:30,383 - [DEBUG] - from application in play-akka.actor.default-dispatcher-71 
+c3 asc
+
+2024-03-22 12:48:30,387 - [DEBUG] - from application in play-akka.actor.default-dispatcher-71 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:48:35,880 - [DEBUG] - from application in play-akka.actor.default-dispatcher-71 
+c2 asc
+
+2024-03-22 12:48:35,884 - [DEBUG] - from application in play-akka.actor.default-dispatcher-71 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:48:37,191 - [DEBUG] - from application in play-akka.actor.default-dispatcher-71 
+c3 asc
+
+2024-03-22 12:48:37,194 - [DEBUG] - from application in play-akka.actor.default-dispatcher-71 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:48:38,103 - [DEBUG] - from application in play-akka.actor.default-dispatcher-77 
+c4 asc
+
+2024-03-22 12:48:38,106 - [DEBUG] - from application in play-akka.actor.default-dispatcher-77 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:48:38,647 - [DEBUG] - from application in play-akka.actor.default-dispatcher-77 
+c5 asc
+
+2024-03-22 12:48:38,650 - [DEBUG] - from application in play-akka.actor.default-dispatcher-77 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:48:39,463 - [DEBUG] - from application in play-akka.actor.default-dispatcher-77 
+c0 asc
+
+2024-03-22 12:48:39,466 - [DEBUG] - from application in play-akka.actor.default-dispatcher-77 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:48:40,526 - [DEBUG] - from application in play-akka.actor.default-dispatcher-75 
+c1 asc
+
+2024-03-22 12:48:40,530 - [DEBUG] - from application in play-akka.actor.default-dispatcher-75 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:48:42,615 - [ERROR] - from play in play-akka.actor.default-dispatcher-71 
+Cannot invoke the action, eventually got an error: java.lang.NullPointerException
+
+2024-03-22 12:48:42,616 - [ERROR] - from application in play-akka.actor.default-dispatcher-71 
+
+
+! @85142mjeh - Internal server error, for (GET) [/poliMedia/carrusel/carruselDTSS?draw=1711133320531&columns%5B0%5D%5Bdata%5D=posicion&columns%5B0%5D%5Bname%5D=&columns%5B0%5D%5Bsearchable%5D=true&columns%5B0%5D%5Borderable%5D=true&columns%5B0%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B0%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B1%5D%5Bdata%5D=inicio&columns%5B1%5D%5Bname%5D=&columns%5B1%5D%5Bsearchable%5D=true&columns%5B1%5D%5Borderable%5D=true&columns%5B1%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B1%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B2%5D%5Bdata%5D=fin&columns%5B2%5D%5Bname%5D=&columns%5B2%5D%5Bsearchable%5D=true&columns%5B2%5D%5Borderable%5D=true&columns%5B2%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B2%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B3%5D%5Bdata%5D=titulo&columns%5B3%5D%5Bname%5D=&columns%5B3%5D%5Bsearchable%5D=true&columns%5B3%5D%5Borderable%5D=true&columns%5B3%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B3%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B4%5D%5Bdata%5D=nombreArchivo&columns%5B4%5D%5Bname%5D=&columns%5B4%5D%5Bsearchable%5D=true&columns%5B4%5D%5Borderable%5D=true&columns%5B4%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B4%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B5%5D%5Bdata%5D=liga&columns%5B5%5D%5Bname%5D=&columns%5B5%5D%5Bsearchable%5D=true&columns%5B5%5D%5Borderable%5D=true&columns%5B5%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B5%5D%5Bsearch%5D%5Bregex%5D=false&columns%5B6%5D%5Bdata%5D=null&columns%5B6%5D%5Bname%5D=&columns%5B6%5D%5Bsearchable%5D=true&columns%5B6%5D%5Borderable%5D=true&columns%5B6%5D%5Bsearch%5D%5Bvalue%5D=&columns%5B6%5D%5Bsearch%5D%5Bregex%5D=false&order%5B0%5D%5Bcolumn%5D=6&order%5B0%5D%5Bdir%5D=asc&start=0&length=-1&search%5Bvalue%5D=&search%5Bregex%5D=false&_=1711133307654] ->
+
+play.api.Application$$anon$1: Execution exception[[NullPointerException: null]]
+	at play.api.Application$class.handleError(Application.scala:296) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.DefaultApplication.handleError(Application.scala:402) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:316) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:344) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:343) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [scala-library-2.11.4.jar:na]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:40) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:248) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Promise$class.complete(Promise.scala:55) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:153) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:23) [scala-library-2.11.4.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41) [akka-actor_2.11-2.3.4.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393) [akka-actor_2.11-2.3.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.4.jar:na]
+Caused by: java.lang.NullPointerException: null
+	at controllers.CarruselController.carruselDTSS(CarruselController.java:96) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$234$$anonfun$apply$234.apply(routes_routing.scala:3576) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$234$$anonfun$apply$234.apply(routes_routing.scala:3576) ~[classes/:na]
+	at play.core.Router$HandlerInvokerFactory$$anon$4.resultCall(Router.scala:264) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.invocation(Router.scala:255) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:55) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.GlobalSettings$1.call(GlobalSettings.java:67) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$.apply(Future.scala:31) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$.apply(Future.scala:492) ~[scala-library-2.11.4.jar:na]
+	at play.core.j.JavaAction$class.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.apply(Router.scala:252) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:129) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:121) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	... 6 common frames omitted
+
+2024-03-22 12:49:21,947 - [INFO] - from play in play-internal-execution-context-11 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 12:49:22,071 - [INFO] - from play in play-internal-execution-context-11 
+Application started (Dev)
+
+2024-03-22 12:49:22,098 - [INFO] - from application in play-akka.actor.default-dispatcher-73 
+Desde CarruselController.list
+
+2024-03-22 12:49:41,252 - [INFO] - from play in play-internal-execution-context-11 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 12:49:41,386 - [INFO] - from play in play-internal-execution-context-11 
+Application started (Dev)
+
+2024-03-22 12:49:41,409 - [INFO] - from application in play-akka.actor.default-dispatcher-85 
+Desde CarruselController.list
+
+2024-03-22 12:49:41,606 - [DEBUG] - from application in play-akka.actor.default-dispatcher-81 
+c1 asc
+
+2024-03-22 12:49:41,615 - [DEBUG] - from application in play-akka.actor.default-dispatcher-81 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:49:46,784 - [DEBUG] - from application in play-akka.actor.default-dispatcher-81 
+c1 desc
+
+2024-03-22 12:49:46,787 - [DEBUG] - from application in play-akka.actor.default-dispatcher-81 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:49:47,415 - [DEBUG] - from application in play-akka.actor.default-dispatcher-88 
+c1 asc
+
+2024-03-22 12:49:47,420 - [DEBUG] - from application in play-akka.actor.default-dispatcher-88 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:49:48,048 - [DEBUG] - from application in play-akka.actor.default-dispatcher-88 
+c1 desc
+
+2024-03-22 12:49:48,052 - [DEBUG] - from application in play-akka.actor.default-dispatcher-88 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:49:48,495 - [DEBUG] - from application in play-akka.actor.default-dispatcher-85 
+c1 asc
+
+2024-03-22 12:49:48,499 - [DEBUG] - from application in play-akka.actor.default-dispatcher-85 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:49:49,095 - [DEBUG] - from application in play-akka.actor.default-dispatcher-81 
+c1 desc
+
+2024-03-22 12:49:49,098 - [DEBUG] - from application in play-akka.actor.default-dispatcher-81 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:49:49,807 - [DEBUG] - from application in play-akka.actor.default-dispatcher-85 
+c1 asc
+
+2024-03-22 12:49:49,811 - [DEBUG] - from application in play-akka.actor.default-dispatcher-85 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:50:06,094 - [DEBUG] - from application in play-akka.actor.default-dispatcher-91 
+c1 asc
+
+2024-03-22 12:50:06,102 - [DEBUG] - from application in play-akka.actor.default-dispatcher-91 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 12:54:38,939 - [INFO] - from play in play-internal-execution-context-11 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 12:54:39,100 - [INFO] - from play in play-internal-execution-context-11 
+Application started (Dev)
+
+2024-03-22 13:01:13,318 - [INFO] - from play in play-internal-execution-context-11 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:01:13,444 - [INFO] - from play in play-internal-execution-context-11 
+Application started (Dev)
+
+2024-03-22 13:01:13,454 - [INFO] - from application in play-akka.actor.default-dispatcher-94 
+cargando carrusel...
+
+2024-03-22 13:01:23,512 - [INFO] - from application in play-akka.actor.default-dispatcher-100 
+cargando carrusel...
+
+2024-03-22 13:01:33,815 - [INFO] - from application in play-akka.actor.default-dispatcher-102 
+Desde CarruselController.create
+
+2024-03-22 13:01:34,571 - [INFO] - from application in play-akka.actor.default-dispatcher-101 
+cargando carrusel...
+
+2024-03-22 13:01:45,570 - [INFO] - from application in play-akka.actor.default-dispatcher-103 
+cargando carrusel...
+
+2024-03-22 13:01:54,018 - [INFO] - from application in play-akka.actor.default-dispatcher-111 
+Desde CarruselController.save
+
+2024-03-22 13:01:54,040 - [INFO] - from application in play-akka.actor.default-dispatcher-111 
+Desde CarruselController.list
+
+2024-03-22 13:01:54,305 - [DEBUG] - from application in play-akka.actor.default-dispatcher-99 
+c1 asc
+
+2024-03-22 13:01:54,309 - [DEBUG] - from application in play-akka.actor.default-dispatcher-99 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 13:01:56,569 - [INFO] - from application in play-akka.actor.default-dispatcher-109 
+cargando carrusel...
+
+2024-03-22 13:02:06,630 - [INFO] - from application in play-akka.actor.default-dispatcher-112 
+cargando carrusel...
+
+2024-03-22 13:02:16,681 - [INFO] - from application in play-akka.actor.default-dispatcher-116 
+cargando carrusel...
+
+2024-03-22 13:02:26,733 - [INFO] - from application in play-akka.actor.default-dispatcher-115 
+cargando carrusel...
+
+2024-03-22 13:02:36,789 - [INFO] - from application in play-akka.actor.default-dispatcher-114 
+cargando carrusel...
+
+2024-03-22 13:02:46,835 - [INFO] - from application in play-akka.actor.default-dispatcher-120 
+cargando carrusel...
+
+2024-03-22 13:02:57,570 - [INFO] - from application in play-akka.actor.default-dispatcher-119 
+cargando carrusel...
+
+2024-03-22 13:03:08,570 - [INFO] - from application in play-akka.actor.default-dispatcher-107 
+cargando carrusel...
+
+2024-03-22 13:03:19,570 - [INFO] - from application in play-akka.actor.default-dispatcher-125 
+cargando carrusel...
+
+2024-03-22 13:03:30,570 - [INFO] - from application in play-akka.actor.default-dispatcher-127 
+cargando carrusel...
+
+2024-03-22 13:03:41,570 - [INFO] - from application in play-akka.actor.default-dispatcher-123 
+cargando carrusel...
+
+2024-03-22 13:03:52,569 - [INFO] - from application in play-akka.actor.default-dispatcher-131 
+cargando carrusel...
+
+2024-03-22 13:04:03,570 - [INFO] - from application in play-akka.actor.default-dispatcher-125 
+cargando carrusel...
+
+2024-03-22 13:04:14,569 - [INFO] - from application in play-akka.actor.default-dispatcher-125 
+cargando carrusel...
+
+2024-03-22 13:04:25,572 - [INFO] - from application in play-akka.actor.default-dispatcher-134 
+cargando carrusel...
+
+2024-03-22 13:04:36,571 - [INFO] - from application in play-akka.actor.default-dispatcher-140 
+cargando carrusel...
+
+2024-03-22 13:04:47,571 - [INFO] - from application in play-akka.actor.default-dispatcher-140 
+cargando carrusel...
+
+2024-03-22 13:04:58,570 - [INFO] - from application in play-akka.actor.default-dispatcher-135 
+cargando carrusel...
+
+2024-03-22 13:05:09,569 - [INFO] - from application in play-akka.actor.default-dispatcher-135 
+cargando carrusel...
+
+2024-03-22 13:05:20,574 - [INFO] - from application in play-akka.actor.default-dispatcher-148 
+cargando carrusel...
+
+2024-03-22 13:05:31,570 - [INFO] - from application in play-akka.actor.default-dispatcher-150 
+cargando carrusel...
+
+2024-03-22 13:05:42,570 - [INFO] - from application in play-akka.actor.default-dispatcher-152 
+cargando carrusel...
+
+2024-03-22 13:05:53,573 - [INFO] - from application in play-akka.actor.default-dispatcher-148 
+cargando carrusel...
+
+2024-03-22 13:06:04,570 - [INFO] - from application in play-akka.actor.default-dispatcher-149 
+cargando carrusel...
+
+2024-03-22 13:06:15,570 - [INFO] - from application in play-akka.actor.default-dispatcher-155 
+cargando carrusel...
+
+2024-03-22 13:06:26,570 - [INFO] - from application in play-akka.actor.default-dispatcher-157 
+cargando carrusel...
+
+2024-03-22 13:06:37,570 - [INFO] - from application in play-akka.actor.default-dispatcher-155 
+cargando carrusel...
+
+2024-03-22 13:06:48,570 - [INFO] - from application in play-akka.actor.default-dispatcher-155 
+cargando carrusel...
+
+2024-03-22 13:06:59,569 - [INFO] - from application in play-akka.actor.default-dispatcher-155 
+cargando carrusel...
+
+2024-03-22 13:07:10,570 - [INFO] - from application in play-akka.actor.default-dispatcher-163 
+cargando carrusel...
+
+2024-03-22 13:07:21,570 - [INFO] - from application in play-akka.actor.default-dispatcher-170 
+cargando carrusel...
+
+2024-03-22 13:07:32,570 - [INFO] - from application in play-akka.actor.default-dispatcher-135 
+cargando carrusel...
+
+2024-03-22 13:07:43,569 - [INFO] - from application in play-akka.actor.default-dispatcher-168 
+cargando carrusel...
+
+2024-03-22 13:07:54,570 - [INFO] - from application in play-akka.actor.default-dispatcher-175 
+cargando carrusel...
+
+2024-03-22 13:08:05,570 - [INFO] - from application in play-akka.actor.default-dispatcher-160 
+cargando carrusel...
+
+2024-03-22 13:08:16,569 - [INFO] - from application in play-akka.actor.default-dispatcher-175 
+cargando carrusel...
+
+2024-03-22 13:08:27,569 - [INFO] - from application in play-akka.actor.default-dispatcher-180 
+cargando carrusel...
+
+2024-03-22 13:08:38,570 - [INFO] - from application in play-akka.actor.default-dispatcher-180 
+cargando carrusel...
+
+2024-03-22 13:08:49,570 - [INFO] - from application in play-akka.actor.default-dispatcher-185 
+cargando carrusel...
+
+2024-03-22 13:09:00,570 - [INFO] - from application in play-akka.actor.default-dispatcher-186 
+cargando carrusel...
+
+2024-03-22 13:09:11,570 - [INFO] - from application in play-akka.actor.default-dispatcher-173 
+cargando carrusel...
+
+2024-03-22 13:09:22,570 - [INFO] - from application in play-akka.actor.default-dispatcher-173 
+cargando carrusel...
+
+2024-03-22 13:09:33,569 - [INFO] - from application in play-akka.actor.default-dispatcher-190 
+cargando carrusel...
+
+2024-03-22 13:09:44,570 - [INFO] - from application in play-akka.actor.default-dispatcher-190 
+cargando carrusel...
+
+2024-03-22 13:09:55,570 - [INFO] - from application in play-akka.actor.default-dispatcher-195 
+cargando carrusel...
+
+2024-03-22 13:10:06,570 - [INFO] - from application in play-akka.actor.default-dispatcher-197 
+cargando carrusel...
+
+2024-03-22 13:10:17,570 - [INFO] - from application in play-akka.actor.default-dispatcher-197 
+cargando carrusel...
+
+2024-03-22 13:10:28,570 - [INFO] - from application in play-akka.actor.default-dispatcher-196 
+cargando carrusel...
+
+2024-03-22 13:10:39,570 - [INFO] - from application in play-akka.actor.default-dispatcher-198 
+cargando carrusel...
+
+2024-03-22 13:10:50,569 - [INFO] - from application in play-akka.actor.default-dispatcher-196 
+cargando carrusel...
+
+2024-03-22 13:11:01,570 - [INFO] - from application in play-akka.actor.default-dispatcher-202 
+cargando carrusel...
+
+2024-03-22 13:11:12,570 - [INFO] - from application in play-akka.actor.default-dispatcher-204 
+cargando carrusel...
+
+2024-03-22 13:11:23,572 - [INFO] - from application in play-akka.actor.default-dispatcher-202 
+cargando carrusel...
+
+2024-03-22 13:11:34,569 - [INFO] - from application in play-akka.actor.default-dispatcher-212 
+cargando carrusel...
+
+2024-03-22 13:11:45,570 - [INFO] - from application in play-akka.actor.default-dispatcher-210 
+cargando carrusel...
+
+2024-03-22 13:11:56,570 - [INFO] - from application in play-akka.actor.default-dispatcher-209 
+cargando carrusel...
+
+2024-03-22 13:12:09,157 - [INFO] - from play in play-internal-execution-context-43 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:12:09,281 - [INFO] - from play in play-internal-execution-context-43 
+Application started (Dev)
+
+2024-03-22 13:12:09,291 - [INFO] - from application in play-akka.actor.default-dispatcher-210 
+cargando carrusel...
+
+2024-03-22 13:12:10,647 - [INFO] - from application in play-akka.actor.default-dispatcher-214 
+cargando carrusel...
+
+2024-03-22 13:12:48,508 - [INFO] - from play in play-internal-execution-context-49 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:12:48,632 - [INFO] - from play in play-internal-execution-context-49 
+Application started (Dev)
+
+2024-03-22 13:12:48,654 - [INFO] - from application in play-akka.actor.default-dispatcher-214 
+Desde CarruselController.list
+
+2024-03-22 13:12:48,963 - [DEBUG] - from application in play-akka.actor.default-dispatcher-224 
+c1 asc
+
+2024-03-22 13:12:48,970 - [DEBUG] - from application in play-akka.actor.default-dispatcher-224 
+
+
+q2: select t0.id c0, t0.nombre_archivo c1, t0.liga c2, t0.posicion c3, t0.inicio c4, t0.fin c5, t0.titulo c6, t0.contenttype c7, t0.auditinsert c8, t0.auditlastupdate c9 from carrusel t0 where t0.nombre_archivo like ? or t0.liga like ? or t0.posicion like ? or t0.inicio like ? or t0.fin like ? or t0.titulo like ? 
+
+
+
+2024-03-22 13:12:54,442 - [INFO] - from application in play-akka.actor.default-dispatcher-224 
+cargando carrusel...
+
+2024-03-22 13:15:21,174 - [INFO] - from play in play-internal-execution-context-49 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:15:21,307 - [INFO] - from play in play-internal-execution-context-49 
+Application started (Dev)
+
+2024-03-22 13:15:21,319 - [INFO] - from application in play-akka.actor.default-dispatcher-225 
+cargando carrusel...
+
+2024-03-22 13:16:54,303 - [INFO] - from play in play-internal-execution-context-49 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:16:54,429 - [INFO] - from play in play-internal-execution-context-49 
+Application started (Dev)
+
+2024-03-22 13:16:54,438 - [INFO] - from application in play-akka.actor.default-dispatcher-232 
+cargando carrusel...
+
+2024-03-22 13:17:01,056 - [INFO] - from application in play-akka.actor.default-dispatcher-237 
+cargando carrusel...
+
+2024-03-22 13:17:07,163 - [INFO] - from application in play-akka.actor.default-dispatcher-232 
+cargando carrusel...
+
+2024-03-22 13:17:13,272 - [INFO] - from application in play-akka.actor.default-dispatcher-239 
+cargando carrusel...
+
+2024-03-22 13:17:22,377 - [INFO] - from application in play-akka.actor.default-dispatcher-243 
+cargando carrusel...
+
+2024-03-22 13:17:28,482 - [INFO] - from application in play-akka.actor.default-dispatcher-245 
+cargando carrusel...
+
+2024-03-22 13:17:34,593 - [INFO] - from application in play-akka.actor.default-dispatcher-244 
+cargando carrusel...
+
+2024-03-22 13:17:40,694 - [INFO] - from application in play-akka.actor.default-dispatcher-245 
+cargando carrusel...
+
+2024-03-22 13:17:46,785 - [INFO] - from application in play-akka.actor.default-dispatcher-236 
+cargando carrusel...
+
+2024-03-22 13:17:52,964 - [INFO] - from application in play-akka.actor.default-dispatcher-242 
+cargando carrusel...
+
+2024-03-22 13:17:59,065 - [INFO] - from application in play-akka.actor.default-dispatcher-247 
+cargando carrusel...
+
+2024-03-22 13:18:05,158 - [INFO] - from application in play-akka.actor.default-dispatcher-250 
+cargando carrusel...
+
+2024-03-22 13:18:15,856 - [INFO] - from play in play-internal-execution-context-52 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:18:15,967 - [INFO] - from play in play-internal-execution-context-52 
+Application started (Dev)
+
+2024-03-22 13:18:15,979 - [INFO] - from application in play-akka.actor.default-dispatcher-236 
+cargando carrusel...
+
+2024-03-22 13:21:37,448 - [INFO] - from play in play-internal-execution-context-53 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:21:37,557 - [INFO] - from play in play-internal-execution-context-53 
+Application started (Dev)
+
+2024-03-22 13:21:37,568 - [INFO] - from application in play-akka.actor.default-dispatcher-237 
+cargando carrusel...
+
+2024-03-22 13:26:46,286 - [INFO] - from play in play-internal-execution-context-55 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:26:46,403 - [INFO] - from play in play-internal-execution-context-55 
+Application started (Dev)
+
+2024-03-22 13:26:46,416 - [INFO] - from application in play-akka.actor.default-dispatcher-256 
+cargando carrusel...
+
+2024-03-22 13:27:30,420 - [INFO] - from play in play-internal-execution-context-59 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:27:30,538 - [INFO] - from play in play-internal-execution-context-59 
+Application started (Dev)
+
+2024-03-22 13:27:30,549 - [INFO] - from application in play-akka.actor.default-dispatcher-265 
+cargando carrusel...
+
+2024-03-22 13:27:36,675 - [INFO] - from application in play-akka.actor.default-dispatcher-265 
+cargando carrusel...
+
+2024-03-22 13:27:42,793 - [INFO] - from application in play-akka.actor.default-dispatcher-269 
+cargando carrusel...
+
+2024-03-22 13:27:48,906 - [INFO] - from application in play-akka.actor.default-dispatcher-269 
+cargando carrusel...
+
+2024-03-22 13:27:55,028 - [INFO] - from application in play-akka.actor.default-dispatcher-275 
+cargando carrusel...
+
+2024-03-22 13:28:01,133 - [INFO] - from application in play-akka.actor.default-dispatcher-276 
+cargando carrusel...
+
+2024-03-22 13:28:08,601 - [INFO] - from play in play-internal-execution-context-62 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:28:08,733 - [INFO] - from play in play-internal-execution-context-62 
+Application started (Dev)
+
+2024-03-22 13:28:08,747 - [INFO] - from application in play-akka.actor.default-dispatcher-276 
+cargando carrusel...
+
+2024-03-22 13:30:17,923 - [INFO] - from play in play-internal-execution-context-63 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:30:18,033 - [INFO] - from play in play-internal-execution-context-63 
+Application started (Dev)
+
+2024-03-22 13:30:18,044 - [INFO] - from application in play-akka.actor.default-dispatcher-276 
+cargando carrusel...
+
+2024-03-22 13:30:24,179 - [INFO] - from application in play-akka.actor.default-dispatcher-283 
+cargando carrusel...
+
+2024-03-22 13:30:30,284 - [INFO] - from application in play-akka.actor.default-dispatcher-284 
+cargando carrusel...
+
+2024-03-22 13:30:36,417 - [INFO] - from application in play-akka.actor.default-dispatcher-286 
+cargando carrusel...
+
+2024-03-22 13:30:42,521 - [INFO] - from application in play-akka.actor.default-dispatcher-286 
+cargando carrusel...
+
+2024-03-22 13:30:52,572 - [INFO] - from application in play-akka.actor.default-dispatcher-289 
+cargando carrusel...
+
+2024-03-22 13:30:59,572 - [INFO] - from application in play-akka.actor.default-dispatcher-289 
+cargando carrusel...
+
+2024-03-22 13:31:06,572 - [INFO] - from application in play-akka.actor.default-dispatcher-287 
+cargando carrusel...
+
+2024-03-22 13:31:13,573 - [INFO] - from application in play-akka.actor.default-dispatcher-291 
+cargando carrusel...
+
+2024-03-22 13:31:20,577 - [INFO] - from application in play-akka.actor.default-dispatcher-290 
+cargando carrusel...
+
+2024-03-22 13:31:27,572 - [INFO] - from application in play-akka.actor.default-dispatcher-290 
+cargando carrusel...
+
+2024-03-22 13:31:34,574 - [INFO] - from application in play-akka.actor.default-dispatcher-291 
+cargando carrusel...
+
+2024-03-22 13:31:41,572 - [INFO] - from application in play-akka.actor.default-dispatcher-294 
+cargando carrusel...
+
+2024-03-22 13:31:48,572 - [INFO] - from application in play-akka.actor.default-dispatcher-290 
+cargando carrusel...
+
+2024-03-22 13:31:56,821 - [INFO] - from play in play-internal-execution-context-71 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:31:56,932 - [INFO] - from play in play-internal-execution-context-71 
+Application started (Dev)
+
+2024-03-22 13:31:56,942 - [INFO] - from application in play-akka.actor.default-dispatcher-301 
+cargando carrusel...
+
+2024-03-22 13:31:58,620 - [INFO] - from application in play-akka.actor.default-dispatcher-303 
+cargando carrusel...
+
+2024-03-22 13:32:05,752 - [INFO] - from application in play-akka.actor.default-dispatcher-303 
+cargando carrusel...
+
+2024-03-22 13:32:12,865 - [INFO] - from application in play-akka.actor.default-dispatcher-307 
+cargando carrusel...
+
+2024-03-22 13:32:19,984 - [INFO] - from application in play-akka.actor.default-dispatcher-300 
+cargando carrusel...
+
+2024-03-22 13:32:24,239 - [INFO] - from play in play-internal-execution-context-71 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:32:24,349 - [INFO] - from play in play-internal-execution-context-71 
+Application started (Dev)
+
+2024-03-22 13:32:24,359 - [INFO] - from application in play-akka.actor.default-dispatcher-300 
+cargando carrusel...
+
+2024-03-22 13:32:33,473 - [INFO] - from application in play-akka.actor.default-dispatcher-310 
+cargando carrusel...
+
+2024-03-22 13:32:42,582 - [INFO] - from application in play-akka.actor.default-dispatcher-310 
+cargando carrusel...
+
+2024-03-22 13:32:51,677 - [INFO] - from application in play-akka.actor.default-dispatcher-303 
+cargando carrusel...
+
+2024-03-22 13:33:00,776 - [INFO] - from application in play-akka.actor.default-dispatcher-303 
+cargando carrusel...
+
+2024-03-22 13:33:11,189 - [INFO] - from play in play-internal-execution-context-63 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:33:11,300 - [INFO] - from play in play-internal-execution-context-63 
+Application started (Dev)
+
+2024-03-22 13:33:11,311 - [INFO] - from application in play-akka.actor.default-dispatcher-317 
+cargando carrusel...
+
+2024-03-22 13:33:20,419 - [INFO] - from application in play-akka.actor.default-dispatcher-321 
+cargando carrusel...
+
+2024-03-22 13:33:29,512 - [INFO] - from application in play-akka.actor.default-dispatcher-321 
+cargando carrusel...
+
+2024-03-22 13:33:38,611 - [INFO] - from application in play-akka.actor.default-dispatcher-311 
+cargando carrusel...
+
+2024-03-22 13:33:48,850 - [INFO] - from play in play-internal-execution-context-68 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:33:48,958 - [INFO] - from play in play-internal-execution-context-68 
+Application started (Dev)
+
+2024-03-22 13:33:48,968 - [INFO] - from application in play-akka.actor.default-dispatcher-311 
+cargando carrusel...
+
+2024-03-22 13:33:58,081 - [INFO] - from application in play-akka.actor.default-dispatcher-324 
+cargando carrusel...
+
+2024-03-22 13:34:07,192 - [INFO] - from application in play-akka.actor.default-dispatcher-325 
+cargando carrusel...
+
+2024-03-22 13:34:16,293 - [INFO] - from application in play-akka.actor.default-dispatcher-323 
+cargando carrusel...
+
+2024-03-22 13:34:25,384 - [INFO] - from application in play-akka.actor.default-dispatcher-333 
+cargando carrusel...
+
+2024-03-22 13:34:34,475 - [INFO] - from application in play-akka.actor.default-dispatcher-325 
+cargando carrusel...
+
+2024-03-22 13:34:47,752 - [INFO] - from play in play-internal-execution-context-72 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:34:47,870 - [INFO] - from play in play-internal-execution-context-72 
+Application started (Dev)
+
+2024-03-22 13:34:47,879 - [INFO] - from application in play-akka.actor.default-dispatcher-325 
+cargando carrusel...
+
+2024-03-22 13:34:56,996 - [INFO] - from application in play-akka.actor.default-dispatcher-341 
+cargando carrusel...
+
+2024-03-22 13:35:06,095 - [INFO] - from application in play-akka.actor.default-dispatcher-327 
+cargando carrusel...
+
+2024-03-22 13:35:15,208 - [INFO] - from application in play-akka.actor.default-dispatcher-346 
+cargando carrusel...
+
+2024-03-22 13:35:24,390 - [INFO] - from application in play-akka.actor.default-dispatcher-347 
+cargando carrusel...
+
+2024-03-22 13:35:33,479 - [INFO] - from application in play-akka.actor.default-dispatcher-347 
+cargando carrusel...
+
+2024-03-22 13:35:42,604 - [INFO] - from application in play-akka.actor.default-dispatcher-347 
+cargando carrusel...
+
+2024-03-22 13:35:51,718 - [INFO] - from application in play-akka.actor.default-dispatcher-353 
+cargando carrusel...
+
+2024-03-22 13:36:00,833 - [INFO] - from application in play-akka.actor.default-dispatcher-343 
+cargando carrusel...
+
+2024-03-22 13:36:11,098 - [INFO] - from play in play-internal-execution-context-68 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:36:11,223 - [INFO] - from play in play-internal-execution-context-68 
+Application started (Dev)
+
+2024-03-22 13:36:11,233 - [INFO] - from application in play-akka.actor.default-dispatcher-357 
+cargando carrusel...
+
+2024-03-22 13:38:41,946 - [INFO] - from play in play-internal-execution-context-72 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-03-22 13:38:42,052 - [INFO] - from play in play-internal-execution-context-72 
+Application started (Dev)
+
+2024-03-22 13:38:42,063 - [INFO] - from application in play-akka.actor.default-dispatcher-354 
+cargando carrusel...
 

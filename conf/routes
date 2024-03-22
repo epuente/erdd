@@ -318,11 +318,7 @@ GET		/dirigidoa/:id/edit							controllers.DirigidoaController.edit(id:Long)
 GET		/dirigidoa/:id/update						controllers.DirigidoaController.update(id:Long)
 GET		/dirigidoa/:id/delete						controllers.DirigidoaController.delete(id:Long)
 
-
-
 GET		/pruebaCorreo2					controllers.RecursoevaluadorController.pruebaCorreo()
-
-
 GET     /leerXL4                      controllers.Application.leerXL4()
 GET		/validarExistenciaEmail  controllers.EvaluadorController.existeMail(correo:String ?="")
 GET		/validarExistenciaUserPass/:user/:pass	controllers.EvaluadorController.existeUserPass(user:String, pass:String)
@@ -373,3 +369,14 @@ GET     /enviarSocket                     controllers.RecursoWebController.envia
 
 GET     /verOficioE/:id					controllers.EvaluacionEvaluadorController.verOficioE(id:Long)
 GET     /verOficioValoracionE/:id		controllers.EvaluacionEvaluadorController.verOficioValoracionE(id:Long)
+
+GET     /poliMedia/carrusel                     controllers.CarruselController.list()
+GET     /poliMedia/carrusel/carruselDTSS        controllers.CarruselController.carruselDTSS()
+GET     /poliMedia/carrusel/create              controllers.CarruselController.create()
+POST     /poliMedia/carrusel/save               controllers.CarruselController.save()
+
+GET     /webPoliMedia/carrusel                  controllers.WPMCarruselController.mostrar()
+GET     /webPoliMedia/carrusel/verImagen/:id          controllers.WPMCarruselController.verImagen(id:Long)
+
+
+

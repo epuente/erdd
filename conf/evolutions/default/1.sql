@@ -47,11 +47,16 @@ create table calendario (
 
 create table carrusel (
   id                        bigint auto_increment not null,
-  nombre_archivo            varchar(150),
+  nombre_archivo            varchar(255),
   liga                      varchar(255),
   posicion                  integer,
-  caducidad                 datetime,
+  inicio                    datetime,
+  fin                       datetime,
+  titulo                    varchar(100),
+  contenttype               varchar(255),
   contenido                 longblob,
+  auditinsert               datetime not null,
+  auditlastupdate           datetime not null,
   constraint pk_carrusel primary key (id))
 ;
 

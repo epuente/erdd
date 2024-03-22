@@ -57,3 +57,35 @@ reload
 compile
 run 9090
 exit
+run  9090
+compile
+clean
+reload
+compile
+run 9090
+compile
+run 9090
+reload
+compile
+clean
+reload
+compile
+clean
+reload
+compile
+run 9090
+compile
+run 9090
+compile
+run 9090
+clean
+reload
+compile
+run 9090
+run
+run 9090
+clean
+reload
+compile
+run 9090
+exit

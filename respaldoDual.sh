@@ -31,9 +31,9 @@ else
     git add *
     git commit -m "$1"
     if  [[ -z $(git remote) ]]; then
-      git remote add origin https://github.com/epuente/tve.git
+      git remote add origin https://github.com/epuente/erdd.git
     fi
     git push
-    git push https://github.com/epuente/tve.git
-    echo "Se ha respaldado el proyecto en el repositorio https://github.com/epuente/tve.git"
+    git push https://github.com/epuente/erdd.git
+    echo "Se ha respaldado el proyecto en el repositorio https://github.com/epuente/erdd.git"
 fi

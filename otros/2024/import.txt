@@ -1,0 +1,1 @@
+sudo mysql -u root erdd_dev < ~/dumps/erdd_20240312.sql

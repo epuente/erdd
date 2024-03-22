@@ -1,0 +1,142 @@
+@(cs : List[models.polimedia.Carrusel])
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>ERDD</title>
+        <script src="@routes.Assets.at("lib/jquery/jquery.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("lib/bootstrap/js/bootstrap.min.js")" type="text/javascript" defer></script>
+        <script src="@routes.Assets.at("lib/jquery-ui/jquery-ui.min.js")" type="text/javascript"  defer></script>
+
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("lib/bootstrap/css/bootstrap.min.css")">
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="@routes.Assets.at("lib/bootstrap-notify/bootstrap-notify.min.js")" type="text/javascript"></script>
+
+
+
+        <style>
+            .elCarrusel {
+                max-width: 930px;
+                min-width: 150px;
+                margin: 10px;
+            }
+
+
+            .carousel-indicators {
+                bottom: -50px;
+                margin-bottom: 0px;
+                padding-bottom: 0px;
+                margin-top: 0px;
+                padding-top: 0px;
+                .active {
+                    border: 1px solid #C0C0C0;
+                    background-color: #C0C0C0;
+                }
+
+                li {
+                    border: 1px solid #C0C0C0;
+                }
+            }
+            .carousel-inner {
+               margin-bottom:50px;
+            }
+
+            #crSubtitulo {
+                color: #727272;
+                margin-top; 0px;
+                padding-top; 0px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="row">
+            <div class="center-block" style="width:930px;">
+                <div class="elCarrusel">
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" >
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            @for((cr, index) <- cs.zipWithIndex){
+                                <li name="circulo" data-target="#carousel-example-generic" data-slide-to="@index" @if(index==0){class="active"} data-subtitulo="@if(cr.titulo!=null){@cr.titulo}"></li>
+                            }
+                        </ol>
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                            @for((c, ci)<-cs.zipWithIndex){
+                                <div class="item @if(ci==0){active}">
+                                    <a @if(c.liga!=null){href="@c.liga"}>
+                                        <img src="/webPoliMedia/carrusel/verImagen/@c.id" alt="el id @c.id">
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="crSubtitulo" class="center-block" style="width:930px; text-align:center; padding-top:-2px;">
+            </div>
+        </div>
+
+
+        <script>
+            var idleTime = 0;
+            $(document).ready(function () {
+              //Toma el idle cada 10 minutos.
+              var idleInterval = setInterval(timerIncrement, 600000);
+
+              //Zero the idle timer on mouse movement.
+              $(this).mousemove(function (e) {
+                idleTime = 0;
+              });
+              $(this).keypress(function (e) {
+                idleTime = 0;
+              });
+              //Zero the idle timer on touch events.
+              $(this).bind('touchstart', function(){
+               idleTime = 0;
+              });
+              $(this).bind('touchmove', function(){
+               idleTime = 0;
+              });
+            });
+
+            function timerIncrement() {
+              idleTime = idleTime + 1;
+              if (idleTime > 1) {
+                $.notify({
+                    title: "Recargando, ",
+                    message: "buscando actualizaciones..."
+                }, {type: 'info'});
+                // Muestra el notify y despues de 3 segundos recarga la página
+                setTimeout(() => {
+                    location.reload();
+                }, 3000);
+              }
+            }
+
+            $("li[name='circulo']").hover(function() {
+              $("#crSubtitulo").html($(this).attr("data-subtitulo"));
+            }, function() {
+              $("#crSubtitulo").html("");
+            });
+        </script>
+    </body>
+</html>
+

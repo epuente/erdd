@@ -1,0 +1,40 @@
+@(forma: Form[models.polimedia.Carrusel])
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) }
+<section id="algo">
+
+    <fieldset>
+        <table class="table">
+            <tr>
+                <td colspan=1  class="requerido">
+                    <div class="form-group">
+                        @inputText(forma("nombreArchivo"), '_label -> "Nombre archivo", 'required->"required", 'class->"form-control" )
+                    </div>
+                </td>
+                <td colspan=1  class="requerido">
+                    @inputText(forma("paterno"), '_label -> "Paterno", 'required->"required", 'class->"form-control", 'pattern->"[A-Za-záéíóúñÁÉÍÓÚÑ ]*", 'placeholder->"Paterno")
+                </td>
+                <td colspan=1  class="requerido">
+                    @inputText(forma("materno"), '_label -> "Materno", 'required->"required", 'class->"form-control", 'pattern->"[A-Za-záéíóúñÁÉÍÓÚÑ ]*", 'placeholder->"Materno")
+                </td>
+
+
+                <td colspan=1  class="requerido">
+                    @inputText(forma("correo"), '_label -> "Correo", 'required->"required", 'class->"form-control",  'placeholder->"email del evaluador", 'type->"email")
+                </td>
+
+            </tr>
+
+
+
+
+
+
+        </table>
+    </fieldset>
+
+
+</section>
+
+
+
