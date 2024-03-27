@@ -66,7 +66,7 @@ public class miCorreo2 extends Thread{
 			message.setSubject(this.asunto);
 			message.setText(this.mensaje);
 			message.setContent(this.mensaje, "text/html; charset=utf-8");
-			System.out.println("Envio de correo a las "+new Date());			
+			System.out.println("(miCorreo2) Envio de correo a las "+new Date());
 
 
             MimeBodyPart textBodyPart = new MimeBodyPart();

@@ -74,88 +74,88 @@ import views.html.Recurso.actualizadoMaster;
 
 public class RecursoWebController extends Controller{
 
-    
-    public static Result index() {
-    	session().remove("nombre");
-    	session().remove("rol");
-    	session().clear();  	
-      	return ok(index.render());
-      }
 
-    public static Result create() {
-    	System.out.println("desde RecursoWebController.create");
-        Form<Recurso> recursoForm = form(Recurso.class);
-        List<RecursoAutor> autores = null;         
-        return ok(
-        		views.html.Recurso.createMaster.render(recursoForm, autores, null)
-        );
-    }     
+	public static Result index() {
+		session().remove("nombre");
+		session().remove("rol");
+		session().clear();
+		return ok(index.render());
+	}
 
-    
-    @play.db.ebean.Transactional
-    public static Result mastersave() {
-    	String urlSitio= play.Play.application().configuration().getString("urlSitio");
+	public static Result create() {
+		System.out.println("desde RecursoWebController.create");
+		Form<Recurso> recursoForm = form(Recurso.class);
+		List<RecursoAutor> autores = null;
+		return ok(
+				views.html.Recurso.createMaster.render(recursoForm, autores, null)
+		);
+	}
+
+
+	@play.db.ebean.Transactional
+	public static Result mastersave() {
+		String urlSitio= play.Play.application().configuration().getString("urlSitio");
 		//String puerto = Play.application().configuration().getString("http.port");
 		//String direccionPuerto = direccion+":"+puerto;
-        Form<Recurso> recursoForm = form(Recurso.class).bindFromRequest();
-        DynamicForm requestData = form().bindFromRequest(); 
-System.out.println("*************************************    RecursoWebController.mastersave dynamic ");        
-System.out.println(requestData);
-System.out.println("************************************* recursoForm");        
-System.out.println(recursoForm);
+		Form<Recurso> recursoForm = form(Recurso.class).bindFromRequest();
+		DynamicForm requestData = form().bindFromRequest();
+		System.out.println("*************************************    RecursoWebController.mastersave dynamic ");
+		System.out.println(requestData);
+		System.out.println("************************************* recursoForm");
+		System.out.println(recursoForm);
 
 
-        Recurso r =  recursoForm.get(); 
-System.out.println("***  Creado el objeto Recurso");                
-        int i = 0;
-System.out.println("   "+(requestData.get("autor.paterno["+i) != null));
-System.out.println("   "+(requestData.get("autor.materno["+i) != null));
-System.out.println("   "+(requestData.get("autor.nombre["+i) != null));
-System.out.println("   "+requestData.get("autor.autorfuncion["+i) != null);
+		Recurso r =  recursoForm.get();
+		System.out.println("***  Creado el objeto Recurso");
+		int i = 0;
+		System.out.println("   "+(requestData.get("autor.paterno["+i) != null));
+		System.out.println("   "+(requestData.get("autor.materno["+i) != null));
+		System.out.println("   "+(requestData.get("autor.nombre["+i) != null));
+		System.out.println("   "+requestData.get("autor.autorfuncion["+i) != null);
 
-    	while (  ((requestData.get("autor.paterno["+i) != null) && (requestData.get("autor.materno["+i) != null) && (requestData.get("autor.nombre["+i) != null))
-    			&&  requestData.get("autor.autorfuncion["+i) != null){
-                RecursoAutor a = new RecursoAutor();        		
-                a.recurso = r;
-        		a.paterno = requestData.get("autor.paterno["+i); 
-        		a.materno = requestData.get("autor.materno["+i);
-        		a.nombre = requestData.get("autor.nombre["+i);
-        		a.autorfuncion = Autorfuncion.find.byId(  Long.parseLong( requestData.get("autor.autorfuncion["+i),10) );
-        		if ( a.autorfuncion.id == 9L  ){
-        			a.otrafuncion = requestData.get("autor.otroTipoAutoria["+i);
-        		}
-        		if (a.autorfuncion.id == 1L){
-        			a.correo = new CorreoAutor();
-        			a.correo.autor = a;
-        			a.correo.email = requestData.get("autor.correo0");
-            		a.correo.telefono = requestData.get("autor.telefono0");
-        		}
-        		r.autores.add(a);
-System.out.println("agregando autor: "+a.nombre+" "+a.paterno+" "+a.materno);        		
-                i++;
-    	}
-System.out.println("***  Se agregaron "+r.autores.size()+" autores");
-        
+		while (  ((requestData.get("autor.paterno["+i) != null) && (requestData.get("autor.materno["+i) != null) && (requestData.get("autor.nombre["+i) != null))
+				&&  requestData.get("autor.autorfuncion["+i) != null){
+			RecursoAutor a = new RecursoAutor();
+			a.recurso = r;
+			a.paterno = requestData.get("autor.paterno["+i);
+			a.materno = requestData.get("autor.materno["+i);
+			a.nombre = requestData.get("autor.nombre["+i);
+			a.autorfuncion = Autorfuncion.find.byId(  Long.parseLong( requestData.get("autor.autorfuncion["+i),10) );
+			if ( a.autorfuncion.id == 9L  ){
+				a.otrafuncion = requestData.get("autor.otroTipoAutoria["+i);
+			}
+			if (a.autorfuncion.id == 1L){
+				a.correo = new CorreoAutor();
+				a.correo.autor = a;
+				a.correo.email = requestData.get("autor.correo0");
+				a.correo.telefono = requestData.get("autor.telefono0");
+			}
+			r.autores.add(a);
+			System.out.println("agregando autor: "+a.nombre+" "+a.paterno+" "+a.materno);
+			i++;
+		}
+		System.out.println("***  Se agregaron "+r.autores.size()+" autores");
+
 		int j=0;
-		while(requestData.get("palabra.descripcion["+j) != null){	
+		while(requestData.get("palabra.descripcion["+j) != null){
 			Palabraclave pc = new Palabraclave();
 			pc.recurso = r;
 			pc.descripcion = requestData.get("palabra.descripcion["+j);
 			r.palabrasclave.add(pc);
 			j++;
 		}
-System.out.println("***  Se agregaron "+r.palabrasclave.size()+" palabras clave");		
+		System.out.println("***  Se agregaron "+r.palabrasclave.size()+" palabras clave");
 		if (!requestData.get("webUsuario").isEmpty() && !requestData.get("webPassword").isEmpty()){
 			Recursoenweb rw = new Recursoenweb();
 			rw.usuario = requestData.get("webUsuario");
 			rw.password = requestData.get("webPassword");
 			r.recursosenweb.add(rw);
-System.out.println("***  Se agregaron "+r.recursosenweb.size()+" recursos en web");			
+			System.out.println("***  Se agregaron "+r.recursosenweb.size()+" recursos en web");
 		}
 
 		if (requestData.get("dirigidoa.id[0")!=null){
 			if( !requestData.get("dirigidoa.id[0").isEmpty()  ){
-	
+
 				int x=0;
 				while (requestData.get("dirigidoa.id["+x)!= null){
 					recursoDirigidoa rd = new recursoDirigidoa();
@@ -164,82 +164,82 @@ System.out.println("***  Se agregaron "+r.recursosenweb.size()+" recursos en web
 					r.dirigidoa.add(rd);
 					x++;
 				}
-	System.out.println("***  Se agregaron "+r.dirigidoa.size()+" a RecursoDirigidosa");				
+				System.out.println("***  Se agregaron "+r.dirigidoa.size()+" a RecursoDirigidosa");
 			}
 		}
-        
-        if(recursoForm.hasErrors() ||  requestData.hasErrors()  ) {
-System.out.println("ERORRRRRRRRRRRRRRRRR "+recursoForm.errors().toString());        	
-       	 return badRequest(createMaster.render(recursoForm, r.autores, r));
-       }        
 
-        r.estado =  Estado.find.byId(1L);
-    	
-    	//Graba los documentos
-        MultipartFormData body = request().body().asMultipartFormData();
-System.out.println("Num de doctos: "+body.getFiles().size());        
-		
+		if(recursoForm.hasErrors() ||  requestData.hasErrors()  ) {
+			System.out.println("ERORRRRRRRRRRRRRRRRR "+recursoForm.errors().toString());
+			return badRequest(createMaster.render(recursoForm, r.autores, r));
+		}
+
+		r.estado =  Estado.find.byId(1L);
+
+		//Graba los documentos
+		MultipartFormData body = request().body().asMultipartFormData();
+		System.out.println("Num de doctos: "+body.getFiles().size());
+
 		int k = 0;
-    	while (body.getFile("documento.nombrearchivo["+k+"]") != null) {
-    		FilePart fp = body.getFile("documento.nombrearchivo["+k+"]");    			
-    			
-    			//requestData.get("documento.archivo0") != null){
-     		 Documento d = new Documento();   		 
-             d.tipodocumento =  Tipodocumento.find.byId( Long.parseLong(requestData.get("documento.tipodocumento["+k)));
-    		 //MultipartFormData body = request().body().asMultipartFormData();   		 
-    		 //FilePart fp = body.getFile("documento.archivo0");	  
-    		  if (fp != null) {
-    			    String fileName = fp.getFilename();
-    			    String contentType = fp.getContentType(); 
-    			    File file = fp.getFile();
-    			    
-    			    try {
-    					Path p = Paths.get(file.getPath());
-    					 byte[] byteFile = Files.readAllBytes(p);
-    					 
-    					 d.nombrearchivo = fileName;
-    					 d.contenttype = contentType;
-    					 d.contenido =  byteFile;
-    				} catch (FileNotFoundException e) {    					
-    					e.printStackTrace();
-    				} catch (IOException ioe){
-    					
-    				}		    
-    				d.recurso = r;   				
-    				r.documentos.add(d);   		    
-    		  }    		 
-    		 k++;
-    	}
-System.out.println("***  Se agregaron "+r.documentos.size()+" documentos");    	
+		while (body.getFile("documento.nombrearchivo["+k+"]") != null) {
+			FilePart fp = body.getFile("documento.nombrearchivo["+k+"]");
 
-System.out.println("***  Se trata de actualización del recurso????   "+requestData.get("version.id"));
-    	if (  requestData.get("version.id").contains("2")  ){
-System.out.println("***  Si se trata de actualización");    		
-    		r.versionanterior = new Versionanterior();
-    		r.versionanterior.recurso = r;
-    		r.versionanterior.recursoanterior = Recurso.searchByNumControl( requestData.get("versionanterior.recursoanterior_id"));
-System.out.println("***  Se agregó "+r.versionanterior.recursoanterior.numcontrol+" como version anterior");    		
-    	} else {
-    		r.versionanterior = null;
-    	}
+			//requestData.get("documento.archivo0") != null){
+			Documento d = new Documento();
+			d.tipodocumento =  Tipodocumento.find.byId( Long.parseLong(requestData.get("documento.tipodocumento["+k)));
+			//MultipartFormData body = request().body().asMultipartFormData();
+			//FilePart fp = body.getFile("documento.archivo0");
+			if (fp != null) {
+				String fileName = fp.getFilename();
+				String contentType = fp.getContentType();
+				File file = fp.getFile();
 
-System.out.println("***  Se agregó el historial de estados");   
-        r.save();
-        
-        
-System.out.println("***  Se grabó a las tablas correspondientes");        
-        r.refresh();
-System.out.println("***  Num Control generado "+r.numcontrol);
-	    RegistroAcceso ra = new RegistroAcceso();
-	    ra.autor = Recurso.searchByNumControl(r.numcontrol).getResponsable();
-	    ra.ruta = request().path();
-	    ra.ip = request().remoteAddress();
-	    ra.fecha = new Date();
-	    ra.save();        
-        
-        
-        // Envio de correo a autores
-        List<CorreoSalidaPara> listaDirecciones = new ArrayList<CorreoSalidaPara>();
+				try {
+					Path p = Paths.get(file.getPath());
+					byte[] byteFile = Files.readAllBytes(p);
+
+					d.nombrearchivo = fileName;
+					d.contenttype = contentType;
+					d.contenido =  byteFile;
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException ioe){
+
+				}
+				d.recurso = r;
+				r.documentos.add(d);
+			}
+			k++;
+		}
+		System.out.println("***  Se agregaron "+r.documentos.size()+" documentos");
+
+		System.out.println("***  Se trata de actualización del recurso????   "+requestData.get("version.id"));
+		if (  requestData.get("version.id").contains("2")  ){
+			System.out.println("***  Si se trata de actualización");
+			r.versionanterior = new Versionanterior();
+			r.versionanterior.recurso = r;
+			r.versionanterior.recursoanterior = Recurso.searchByNumControl( requestData.get("versionanterior.recursoanterior_id"));
+			System.out.println("***  Se agregó "+r.versionanterior.recursoanterior.numcontrol+" como version anterior");
+		} else {
+			r.versionanterior = null;
+		}
+
+		System.out.println("***  Se agregó el historial de estados");
+		r.save();
+
+
+		System.out.println("***  Se grabó a las tablas correspondientes");
+		r.refresh();
+		System.out.println("\n\n\n\n***  Num Control generado "+r.numcontrol+"\n\n\n\n");
+		RegistroAcceso ra = new RegistroAcceso();
+		ra.autor = Recurso.searchByNumControl(r.numcontrol).getResponsable();
+		ra.ruta = request().path();
+		ra.ip = request().remoteAddress();
+		ra.fecha = new Date();
+		ra.save();
+
+
+		// Envio de correo a autores
+		List<CorreoSalidaPara> listaDirecciones = new ArrayList<CorreoSalidaPara>();
 		for (RecursoAutor a : r.autores) {
 			if (a.autorfuncion.id == 1L){
 				CorreoSalidaPara aux = new CorreoSalidaPara();
@@ -247,155 +247,155 @@ System.out.println("***  Num Control generado "+r.numcontrol);
 				listaDirecciones.add( aux );
 			}
 		}
-		CorreoSalida mc = new CorreoSalida(); 
-        mc.asunto = "Solicitud de ETPRDD";
-        mc.para = listaDirecciones;
-        mc.mensaje ="Estimado usuario:<br><br>";
-        mc.mensaje+="Su solicitud de evaluación de Recurso Didáctico Digital se recibió correctamente.<br>En caso de existir observaciones sobre la información y/o documentos registrados, recibirá una notificación por correo electrónico para realizar las modificaciones conducentes, en un plazo máximo de 72 horas. En caso de no recibirla, por favor comuníquese a la Ext. 57405.<br><br>";
-        mc.mensaje+="La clave de control para el seguimiento de su solicitud es:<br><br>";
-        mc.mensaje+="<big>"+r.numcontrol+"</big>";
-        mc.mensaje+="<br>("+r.ncLetras()+")<br><br>";
-        mc.mensaje+="Ingrese a la dirección <a href='https://"+urlSitio+"'>https://"+urlSitio+"</a> y utilizando su clave de control realice su seguimiento.";
-        mc.recurso = r;
-        mc.estado = r.estado;
-        mc.enviar();
-        
+		CorreoSalida mc = new CorreoSalida();
+		mc.asunto = "Solicitud de ETPRDD";
+		mc.para = listaDirecciones;
+		mc.mensaje ="Estimado usuario:<br><br>";
+		mc.mensaje+="Su solicitud de evaluación de Recurso Didáctico Digital se recibió correctamente.<br>En caso de existir observaciones sobre la información y/o documentos registrados, recibirá una notificación por correo electrónico para realizar las modificaciones conducentes, en un plazo máximo de 72 horas. En caso de no recibirla, por favor comuníquese a la Ext. 57405.<br><br>";
+		mc.mensaje+="La clave de control para el seguimiento de su solicitud es:<br><br>";
+		mc.mensaje+="<big>"+r.numcontrol+"</big>";
+		mc.mensaje+="<br>("+r.ncLetras()+")<br><br>";
+		mc.mensaje+="Ingrese a la dirección <a href='https://"+urlSitio+"'>https://"+urlSitio+"</a> y utilizando su clave de control realice su seguimiento.";
+		mc.recurso = r;
+		mc.estado = r.estado;
+		mc.enviar();
+
 		// Enviar notificacion al celular (docente)
-    	Notificacion n = new Notificacion();
-    	n.enviar(r.numcontrol, "ERDD", "Su solicitud de evaluación de Recurso Didáctico Digital se recibió correctamente");        
-        
-        //Envio de correo al administrador
-        List<CorreoSalidaPara> listaDirecciones2 = new ArrayList<CorreoSalidaPara>();
-        CorreoSalida mc2 = new CorreoSalida(); 
-        mc2.asunto = "Solicitud de ETPRDD";
-        mc2.mensaje="Ha ingresado una nueva solicitud de Recurso con la clave de control: "+r.numcontrol+"<br><br>";
-        mc2.mensaje+="Para revisarla, por favor ingrese al Sistema de Evaluación de Recursos Didácticos Digitales: ";
-        mc2.mensaje+="<a href='https://"+urlSitio+"/login'>https://"+urlSitio+"/login</a>";
-        
-        
-        CorreoSalidaPara aux2 = new CorreoSalidaPara();
-        aux2.para = Personal.elCoordinador().correo;
-        listaDirecciones2.add(aux2);
-        mc2.para = listaDirecciones2;
-        mc2.recurso = r;
-        mc2.estado = r.estado;
-        mc2.enviar();
-        
+		Notificacion n = new Notificacion();
+		n.enviar(r.numcontrol, "ERDD", "Su solicitud de evaluación de Recurso Didáctico Digital se recibió correctamente");
+
+		//Envio de correo al administrador
+		List<CorreoSalidaPara> listaDirecciones2 = new ArrayList<CorreoSalidaPara>();
+		CorreoSalida mc2 = new CorreoSalida();
+		mc2.asunto = "Solicitud de ETPRDD";
+		mc2.mensaje="Ha ingresado una nueva solicitud de Recurso con la clave de control: "+r.numcontrol+"<br><br>";
+		mc2.mensaje+="Para revisarla, por favor ingrese al Sistema de Evaluación de Recursos Didácticos Digitales: ";
+		mc2.mensaje+="<a href='https://"+urlSitio+"/login'>https://"+urlSitio+"/login</a>";
+
+
+		CorreoSalidaPara aux2 = new CorreoSalidaPara();
+		aux2.para = Personal.elCoordinador().correo;
+		listaDirecciones2.add(aux2);
+		mc2.para = listaDirecciones2;
+		mc2.recurso = r;
+		mc2.estado = r.estado;
+		mc2.enviar();
+
 		// Enviar notificacion al celular del coordinador(administrador e2)
-    	Notificacion n2 = new Notificacion();
-    	n2.enviar("fbErddAdmin", "ERDD", mc2.mensaje);        
-        
-        
-        return redirect("/solRecibida/"+r.numcontrol);
-    }      
-    
-    
-    public static Result recibido(String nc){
-    	Recurso r = Recurso.searchByNumControl(nc);
-    	 return ok(recibidoMaster.render(r) );
-    }
-    
-    public static Result masteredit(Long id) {
-        Form<Recurso> recursoForm = form(Recurso.class).fill(
-            Recurso.find.byId(id)        		
-        );
-        Recurso r = recursoForm.get();       
-        Documento.searchByRecurso(r.id);
+		Notificacion n2 = new Notificacion();
+		n2.enviar("fbErddAdmin", "ERDD", mc2.mensaje);
+
+
+		return redirect("/solRecibida/"+r.numcontrol);
+	}
+
+
+	public static Result recibido(String nc){
+		Recurso r = Recurso.searchByNumControl(nc);
+		return ok(recibidoMaster.render(r) );
+	}
+
+	public static Result masteredit(Long id) {
+		Form<Recurso> recursoForm = form(Recurso.class).fill(
+				Recurso.find.byId(id)
+		);
+		Recurso r = recursoForm.get();
+		Documento.searchByRecurso(r.id);
 
 		switch ( r.estado.id.intValue()) {
 			case 2:
 				return ok(editMasterForm.render(id, recursoForm, r) );
 			case 3:
-				return ok( views.html.Reporte.solicitudFirma.render(r) );				
+				return ok( views.html.Reporte.solicitudFirma.render(r) );
 		}
 		return null;
-    }
-    
-    public static Result mastereditAn() {
-    	if (session("idRecurso") == null){
-    		return ok( views.html.accesoNoAutorizado.render("Usted esta intentando acceder a una operación relacionada a una solicitud de recurso sin contar con la misma."));
-    	}
-    	Long rid = Long.parseLong(session("idRecurso"));
-        Form<Recurso> recursoForm = form(Recurso.class).fill(
-            Recurso.find.byId(rid)        		
-        );
-        Recurso r = recursoForm.get();        
+	}
+
+	public static Result mastereditAn() {
+		if (session("idRecurso") == null){
+			return ok( views.html.accesoNoAutorizado.render("Usted esta intentando acceder a una operación relacionada a una solicitud de recurso sin contar con la misma."));
+		}
+		Long rid = Long.parseLong(session("idRecurso"));
+		Form<Recurso> recursoForm = form(Recurso.class).fill(
+				Recurso.find.byId(rid)
+		);
+		Recurso r = recursoForm.get();
 		for(Historialestado he : r.historialestados){
 			System.out.println(he.id+" "+he.estado+" "+he.estado.descripcion );
 		}
 		return ok(views.html.Historial.index.render(  r  ));
-    }
-    
-    public static Result conObservacionesAn(){
-    	Recurso r = Recurso.find.byId( Long.parseLong(session("idRecurso"))    );
-    	
-        Form<Recurso> recursoForm = form(Recurso.class).fill( r );
-    	return ok(editMasterForm.render(r.id, recursoForm, r) );
-    }
-    
-    
-    
-    public static Result imprimirSolicitudAceptada()throws DocumentException, IOException, IOException{
-    	ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
-    	miPdf mipdf = new miPdf(Long.parseLong(session("idRecurso")));
-    	//mipdf.id = Long.parseLong(session("idRecurso"));
-    	mipdf.baos = baosPDF;
-    	mipdf.generarSolicitudEvaluacion();
-        response().setContentType("application/pdf");        
-		return ok (  mipdf.baos.toByteArray() );    	
-    }
-    
+	}
 
-    @play.db.ebean.Transactional
-    public static Result masterupdate(Long id) {
-		DynamicForm requestData = form().bindFromRequest();	
-System.out.println(requestData);
-        Form<Recurso> recursoForm = form(Recurso.class).bindFromRequest();
-System.out.println("................. "+form(Recurso.class).bindFromRequest());        
-        Recurso r =  form(Recurso.class).bindFromRequest().get();
-		
-        if(recursoForm.hasErrors()) {
-            return badRequest(observaciones.render(id, recursoForm,  r));
-        }
-        
+	public static Result conObservacionesAn(){
+		Recurso r = Recurso.find.byId( Long.parseLong(session("idRecurso"))    );
+
+		Form<Recurso> recursoForm = form(Recurso.class).fill( r );
+		return ok(editMasterForm.render(r.id, recursoForm, r) );
+	}
+
+
+
+	public static Result imprimirSolicitudAceptada()throws DocumentException, IOException, IOException{
+		ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
+		miPdf mipdf = new miPdf(Long.parseLong(session("idRecurso")));
+		//mipdf.id = Long.parseLong(session("idRecurso"));
+		mipdf.baos = baosPDF;
+		mipdf.generarSolicitudEvaluacion();
+		response().setContentType("application/pdf");
+		return ok (  mipdf.baos.toByteArray() );
+	}
+
+
+	@play.db.ebean.Transactional
+	public static Result masterupdate(Long id) {
+		DynamicForm requestData = form().bindFromRequest();
+		System.out.println(requestData);
+		Form<Recurso> recursoForm = form(Recurso.class).bindFromRequest();
+		System.out.println("................. "+form(Recurso.class).bindFromRequest());
+		Recurso r =  form(Recurso.class).bindFromRequest().get();
+
+		if(recursoForm.hasErrors()) {
+			return badRequest(observaciones.render(id, recursoForm,  r));
+		}
+
 //        recursoForm.get().update(id);
 
 
-        // AUTORES
+		// AUTORES
 		int i = 0;
 		while (  (requestData.get("autor.paterno["+i) != null) || (requestData.get("autor.materno["+i) != null) || (requestData.get("autor.nombre["+i) != null)
 				||  requestData.get("autor.autorfuncion["+i) != null){
-		        RecursoAutor a = new RecursoAutor();        		
-		        a.recurso = r;
-				a.paterno = requestData.get("autor.paterno["+i); 
-				a.materno = requestData.get("autor.materno["+i);
-				a.nombre = requestData.get("autor.nombre["+i);
-				a.autorfuncion = Autorfuncion.find.byId(  Long.parseLong( requestData.get("autor.autorfuncion["+i),10) );
-				if (a.autorfuncion.id == 1L){
-					a.correo = new CorreoAutor();
-					a.correo.autor = a;
-					a.correo.email = requestData.get("autor.correo0");
-					a.correo.telefono = requestData.get("autor.telefono0");
-				}
-		        r.autores.add(a);
-		        i++;		        		        
+			RecursoAutor a = new RecursoAutor();
+			a.recurso = r;
+			a.paterno = requestData.get("autor.paterno["+i);
+			a.materno = requestData.get("autor.materno["+i);
+			a.nombre = requestData.get("autor.nombre["+i);
+			a.autorfuncion = Autorfuncion.find.byId(  Long.parseLong( requestData.get("autor.autorfuncion["+i),10) );
+			if (a.autorfuncion.id == 1L){
+				a.correo = new CorreoAutor();
+				a.correo.autor = a;
+				a.correo.email = requestData.get("autor.correo0");
+				a.correo.telefono = requestData.get("autor.telefono0");
+			}
+			r.autores.add(a);
+			i++;
 		}
 
-		
+
 		// PALABRAS CLAVE
 		int j=0;
-		while(requestData.get("palabra.descripcion["+j) != null){	
+		while(requestData.get("palabra.descripcion["+j) != null){
 			Palabraclave pc = new Palabraclave();
 			pc.recurso = r;
 			pc.descripcion = requestData.get("palabra.descripcion["+j);
 			r.palabrasclave.add(pc);
 			j++;
-		}		
+		}
 
 		// Dirigido a
 		if (requestData.get("dirigidoa.id[0")!=null){
 			if( !requestData.get("dirigidoa.id[0").isEmpty()  ){
-	
+
 				int x=0;
 				while (requestData.get("dirigidoa.id["+x)!= null){
 					recursoDirigidoa rd = new recursoDirigidoa();
@@ -404,25 +404,25 @@ System.out.println("................. "+form(Recurso.class).bindFromRequest());
 					r.dirigidoa.add(rd);
 					x++;
 				}
-	System.out.println("***  Se agregaron "+r.dirigidoa.size()+" a RecursoDirigidosa");				
+				System.out.println("***  Se agregaron "+r.dirigidoa.size()+" a RecursoDirigidosa");
 			}
-		}		
-		
+		}
+
 		// Borrar documentos
-		 
+
 		List<String> items = Arrays.asList(requestData.get("documentosBorrar").split("\\s*,\\s*"));
 		List<String> observaItems = Arrays.asList(requestData.get("observacionesDocumentosBorrar").split("\\s*,\\s*"));
-System.out.println("Num doctos a eliminar:"+items.size());
-System.out.println("docto eliminar:"+items.get(0).toString());
-	//	r.estado = Estado.find.byId(1L);
-		
+		System.out.println("Num doctos a eliminar:"+items.size());
+		System.out.println("docto eliminar:"+items.get(0).toString());
+		//	r.estado = Estado.find.byId(1L);
+
 		System.out.println("***  Se trata de actualización del recurso????   "+requestData.get("version.id"));
 		if (  requestData.get("version.id").contains("2")  && !requestData.get("versionanterior.recursoanterior_id").isEmpty()    ){
-		System.out.println("***  Si se trata de actualización");    		
+			System.out.println("***  Si se trata de actualización");
 			r.versionanterior = new Versionanterior();
 			r.versionanterior.recurso = r;
 			r.versionanterior.recursoanterior = Recurso.searchByNumControl( requestData.get("versionanterior.recursoanterior_id"));
-		System.out.println("***  Se agregó "+r.versionanterior.recursoanterior.numcontrol+" como version anterior");    		
+			System.out.println("***  Se agregó "+r.versionanterior.recursoanterior.numcontrol+" como version anterior");
 		} else {
 			r.versionanterior = null;
 		}
@@ -432,21 +432,21 @@ System.out.println("docto eliminar:"+items.get(0).toString());
 		r.estado = Estado.find.byId(105L);
 		r.update(id);
 		r.update();
-		
+
 		r.refresh();
 		//Envía correo a administrador indicando que el profesor ha atendido a las observaciones.
 		miCorreo mc = new miCorreo();
 		mc.asunto ="Se han atendido las observaciones a la solicitud "+r.numcontrol;
 		mc.mensaje="Las observaciones a la solicitud con clave de control "+r.numcontrol+" han sido atendidas por el usuario.";
 		mc.para = Arrays.asList(Personal.elCoordinador().correo);
-        mc.run();
-		
+		mc.run();
+
 		try{
 			if (items!= null){
 				for (int y = 0; y< items.size();y++){
 					if ( items.get(y).length() != 0 ){
-						String n = items.get(y);					
-System.out.println("Eliminando docto: "+ n);						
+						String n = items.get(y);
+						System.out.println("Eliminando docto: "+ n);
 						Documento.find.byId( Long.valueOf(n)).delete();
 					}
 				}
@@ -454,106 +454,106 @@ System.out.println("Eliminando docto: "+ n);
 			if (observaItems!= null){
 				for (int y = 0; y< observaItems.size();y++){
 					if ( observaItems.get(y).length() != 0 ){
-						String ncampo = observaItems.get(y);					
-System.out.println("Eliminando obs docto: "+ ncampo);
+						String ncampo = observaItems.get(y);
+						System.out.println("Eliminando obs docto: "+ ncampo);
 						Observacion ona = Observacion.searchByRecursoNombreCampo(r.id, ncampo);
-System.out.println(ona);						
+						System.out.println(ona);
 						if (ona != null)
 							ona.delete();
-System.out.println("Eliminando obs docto: "+ ncampo);
+						System.out.println("Eliminando obs docto: "+ ncampo);
 						Observacion otd = Observacion.searchByRecursoNombreCampo(r.id, ncampo);
-System.out.println(otd);						
+						System.out.println(otd);
 						if (otd != null)
 							otd.delete();
 					}
 				}
-			}			
+			}
 		}
 		catch (NumberFormatException e) {
-			   System.out.println("NumberFormatException: " + e.getMessage());
+			System.out.println("NumberFormatException: " + e.getMessage());
 		}
 		catch (NullPointerException npe){
-			   System.out.println("NullPointerException: " + npe.getMessage());
+			System.out.println("NullPointerException: " + npe.getMessage());
 		}
-		
-    	//DOCUMENTOS
+
+		//DOCUMENTOS
 		MultipartFormData body = request().body().asMultipartFormData();
 		// Documentos recien agregados
 		int k = 0;
-System.out.println("Num de doctos: "+body.getFiles().size());
-    	while (body.getFile("documento.nombrearchivo["+k+"]") != null           ) {
-System.out.println(k);    		
-    		FilePart fp = body.getFile("documento.nombrearchivo["+k+"]");    			
-     		 Documento d = new Documento();   		 
-             d.tipodocumento =  Tipodocumento.find.byId( Long.parseLong(requestData.get("documento.tipodocumento["+k)));	  
-			  if (fp != null) {
-				    String fileName = fp.getFilename();
-System.out.println("    nombre archivo: "+fileName);				    
-				    String contentType = fp.getContentType(); 
-				    File file = fp.getFile();    			    
-				    try {
-						Path p = Paths.get(file.getPath());
-						 byte[] byteFile = Files.readAllBytes(p);
-						 r.refresh();
-System.out.println("el recurso r: "+r);						 
-						 d.recurso = r;
-						 d.nombrearchivo = fileName;
-						 d.contenttype = contentType;
-						 d.contenido =  byteFile;
-					} catch (FileNotFoundException e) {
-						e.printStackTrace();
-					} catch (IOException ioe){
-						
-					}
-				    d.save();
-			  }    		 
-    		 k++;
-    	}
+		System.out.println("Num de doctos: "+body.getFiles().size());
+		while (body.getFile("documento.nombrearchivo["+k+"]") != null           ) {
+			System.out.println(k);
+			FilePart fp = body.getFile("documento.nombrearchivo["+k+"]");
+			Documento d = new Documento();
+			d.tipodocumento =  Tipodocumento.find.byId( Long.parseLong(requestData.get("documento.tipodocumento["+k)));
+			if (fp != null) {
+				String fileName = fp.getFilename();
+				System.out.println("    nombre archivo: "+fileName);
+				String contentType = fp.getContentType();
+				File file = fp.getFile();
+				try {
+					Path p = Paths.get(file.getPath());
+					byte[] byteFile = Files.readAllBytes(p);
+					r.refresh();
+					System.out.println("el recurso r: "+r);
+					d.recurso = r;
+					d.nombrearchivo = fileName;
+					d.contenttype = contentType;
+					d.contenido =  byteFile;
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException ioe){
+
+				}
+				d.save();
+			}
+			k++;
+		}
 
 
-        return ok(actualizadoMaster.render(r));
-         
-    }  
-    
+		return ok(actualizadoMaster.render(r));
 
-    
-    public static Result buscarNC(String nc){
-System.out.println("nc:  "+nc);    	
-    	Recurso r = Recurso.find.where().eq("numcontrol",nc.toString().toUpperCase() ).findUnique();
-System.out.println(r);    
-		if ( r == null){	
-System.out.println(".... NO   existe");		
+	}
+
+
+
+	public static Result buscarNC(String nc){
+		System.out.println("nc:  "+nc);
+		Recurso r = Recurso.find.where().eq("numcontrol",nc.toString().toUpperCase() ).findUnique();
+		System.out.println(r);
+		if ( r == null){
+			System.out.println(".... NO   existe");
 			ObjectNode result = Json.newObject();
 			result.put("estado", "error");
-System.out.println("json: "+result);			
-    		return ok( result );
+			System.out.println("json: "+result);
+			return ok( result );
 		}
 		else {
-System.out.println(".... Existe");				
-		    session("idRecurso", r.id.toString());
-		    RegistroAcceso ra = new RegistroAcceso();
-		    ra.autor = Recurso.searchByNumControl(nc).getResponsable();
-		    ra.ruta = request().path();
-		    ra.ip = request().remoteAddress();
-		    ra.fecha = new Date();
-		    ra.save();
+			System.out.println(".... Existe");
+			session("idRecurso", r.id.toString());
+			RegistroAcceso ra = new RegistroAcceso();
+			ra.autor = Recurso.searchByNumControl(nc).getResponsable();
+			ra.ruta = request().path();
+			ra.ip = request().remoteAddress();
+			ra.fecha = new Date();
+			ra.save();
 			ObjectNode result = Json.newObject();
 			result.put("estado", "success");
 			result.put("titulo", r.titulo);
 			result.put("autor", r.getResponsable().nombreCompleto());
-    		return ok( result );
+			return ok( result );
 		}
-    }    
+	}
 
-    
+
 	public static Result verAn(Long id) {
 		System.out.println("    id:"+id);
 		System.out.println("    idRecurso:"+session("idRecurso"));
 		System.out.println("    cvesRoles:"+session("cvesRoles")+"...");
-		
+
 		// Es docente con idRecurso en session		
 		if (session("cvesRoles")== null && session("idRecurso")!=null) {
-			Recurso r = Recurso.find.byId( Long.parseLong(session("idRecurso")));	
+			Recurso r = Recurso.find.byId( Long.parseLong(session("idRecurso")));
 
 			//Recurso r = Recurso.find.byId( id );
 			Boolean seEncuentra = false;
@@ -561,61 +561,61 @@ System.out.println(".... Existe");
 				if (aux.id == id){
 					seEncuentra |=true;
 					System.out.println("El id del docto pertenece a la solicitud");
-				}	
-			}		
+				}
+			}
 			if (seEncuentra){
-				Documento d = Documento.find.byId( id );					
-				response().setContentType(d.contenttype);		 
+				Documento d = Documento.find.byId( id );
+				response().setContentType(d.contenttype);
 				System.out.println("Docente visualizando docto");
 				return ok (d.contenido);
 			} else {
 				return ok (accesoNoAutorizado.render("El documento que intenta visualizar no pertenece a la solicitud"));
-			}						
+			}
 		} else {
-		//System.out.println(Arrays.asList('1 ', '2 ','3 ').contains("cvesRoles"));
+			//System.out.println(Arrays.asList('1 ', '2 ','3 ').contains("cvesRoles"));
 //			System.out.println(  session("cvesRoles").equalsIgnoreCase("1 ") ||  session("cvesRoles").equalsIgnoreCase("2 ") || session("cvesRoles").equalsIgnoreCase("3 "));
 			//Es coordinador de proceso ERDD
 			if (  session("cvesRoles").equalsIgnoreCase("1 ") ||  session("cvesRoles").equalsIgnoreCase("2 ") || session("cvesRoles").equalsIgnoreCase("3 ")  ) {
 				System.out.println("Evaluador, Admin o Coordinador visualisando docto");
-					Documento d = Documento.find.byId( id );					
-					response().setContentType(d.contenttype);		 
-					return ok (d.contenido);	
-			}			
+				Documento d = Documento.find.byId( id );
+				response().setContentType(d.contenttype);
+				return ok (d.contenido);
+			}
 		}
 		return ok("???");
 
-	}	    
-     
+	}
 
-	
+
+
 	public static Result verDatosEnviados(){
 		Recurso r = Recurso.find.byId( Long.parseLong(session("idRecurso"))   );
 		return ok( views.html.Reporte.cesoe.render(r) );
-	}	
-	
-	
-	
-	
+	}
+
+
+
+
 	public static Result Correo(){
 		miCorreo mc = new miCorreo();
 		mc.para = Arrays.asList(Personal.elCoordinador().correo);
 		mc.mensaje="Este es un correo de prueba Se recibió correctamente!!!";
 		mc.asunto="Prueba Se recibió correctamente";
 		mc.run();
-        return ok(views.html.correoEnviado.render("correo ok") );
+		return ok(views.html.correoEnviado.render("correo ok") );
 	}
-	
-	
+
+
 
 	// REPORTE PDF con objeto miPdf
 	public static Result reporteEvaluacion() throws DocumentException, MalformedURLException, IOException{
-System.out.println("Desde REcursoWebController.reporteEvaluscion2");
+		System.out.println("Desde REcursoWebController.reporteEvaluscion2");
 
 		Recurso r = Recurso.find.byId(Long.parseLong(session("idRecurso")));
 		ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
-		
-		miPdf mipdf = new miPdf(r.id);		
-	//	mipdf.id = r.id;
+
+		miPdf mipdf = new miPdf(r.id);
+		//	mipdf.id = r.id;
 		mipdf.baos = baosPDF;
 		try {
 			mipdf.generarReporteFinal("otro");
@@ -624,254 +624,254 @@ System.out.println("Desde REcursoWebController.reporteEvaluscion2");
 		}
 
 		response().setContentType("application/pdf");
-		
-		return ok (  mipdf.baos.toByteArray() );		
-	}	
-	
-	
-    public static Result ajaxUnidadAcademicaFiltrada(Long nivel){
-    	System.out.println("   ...........................   desde UnidadacademicaController.ajaxUnidadAcademicaFiltrada ");		
+
+		return ok (  mipdf.baos.toByteArray() );
+	}
+
+
+	public static Result ajaxUnidadAcademicaFiltrada(Long nivel){
+		System.out.println("   ...........................   desde UnidadacademicaController.ajaxUnidadAcademicaFiltrada ");
 		JsonContext jsonContext = Ebean.createJsonContext();
 /*		
 		List<Unidadacademica> ua = Unidadacademica.find
 				.where().eq("niveles.nivel.id", nivel).eq("areas.area.id", area).orderBy("nombre")
 				.findList();
-	*/	
+	*/
 		List<Unidadacademica> ua = Unidadacademica.find
 				.where().eq("niveles.nivel.id", nivel).orderBy("nombre")
 				.findList();
-		
-		
+
+
 		System.out.println("Unidades despues del filtro: "+ua.size());
-		return ok ( jsonContext.toJsonString(ua) );    	
-    }	
-	
+		return ok ( jsonContext.toJsonString(ua) );
+	}
 
-    public static Result WSBuscarNC2(String nct) throws JSONException{
-    	System.out.println("desde REcursoWebCXontroller.WSBuscarNC2");
-    	Recurso r = Recurso.find.setAutofetch(false).where().eq("numcontrol",nct.toUpperCase() ).findUnique();
-    	
-    	
-    	
-    	new RetornoWSRecurso();
-    	Ebean.createJsonContext();
-    	
-    	new ArrayList<Long>(); 
-    	
-    	JSONObject result = new JSONObject();
-    	Json.newObject();
-    	
-    	
-    	Niveleducativo.find.all();
-    	
-    	
-     //	System.out.println(r);    
-     			if ( r == null){	
-     	System.out.println(".... NO   existe");		
-     				
-     				result.put("ajaxEstado", "error");
-     				result.put("mensaje", "No se localizó el número de control");
-  //   	System.out.println("json: "+result);
-   	 response().setHeader("Access-Control-Allow-Origin", "148.204.111.41:8000");
-   	 response().setHeader("Allow", "*");
-   	 response().setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
-   	 response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Referer, User-Agent");
-   	
-   	response().setHeader("Access-Control-Allow-Headers", "X-Requested-With");
-   	response().setHeader("Access-Control-Allow-Origin","X-Requested-With");
-     	
-     			}
-     			else {
-     	System.out.println(".... Existe");				
-     			    session("idRecurso", r.id.toString());
-     			    RegistroAcceso ra = new RegistroAcceso();
-     			    ra.autor = Recurso.searchByNumControl(nct).getResponsable();
-     			    ra.ruta = request().path();
-     			    ra.ip = request().remoteAddress();
-     			    ra.fecha = new Date();
-     			    ra.save();
-     				//ret.recurso=r;
-     			    result.put("idRecurso", r.id);
-     				result.put("mensaje", "Localizado");
-     				result.put("ajaxEstado", "success");
-     				result.put("estado", r.estado.id);
-     				result.put("estadoDescripcion", r.estado.descripcion);
-     				result.put("titulo", r.titulo);
-     				result.put("claveControl", r.numcontrol);
-     				result.put("autorResponsable", r.getResponsable().nombreCompleto());     				
-     				if (r.oficio != null) {
-     					result.put("oficio", r.oficio.numero);
-     					result.put("folio", r.oficio.folio);
-     				}
-     				if (r.clasificacion != null) {
-	     				result.put("clasificacion", r.clasificacion.nombreCompletoClasificacion());
-	     				result.put("tipoRecurso", r.clasificacion.tiporecurso.descripcion);
-     				}
-     				
-     				result.put("encuesta", !(r.encuesta == null));
-     				
-     				
-     				
-     				JSONArray jsa = new JSONArray();
-     				r.historialestados.forEach(he->{
-     					JSONObject nodo = new JSONObject();
 
-     					try {
-         					nodo.put("id", he.id);
-         					nodo.put("estado", he.estado.id);
-         					nodo.put("estadoDescripcion", he.estado.descripcion);
-         					
-         					nodo.put("insert", he.auditinsert.toString());     						
-							nodo.put("update", he.auditinsert.toString());
-							
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-     					jsa.put(nodo);
-     				});
-     				result.put("datos", jsa);
-System.out.println("tam recursoevaluadores:   "+r.recursoevaluadores.size());
-					JSONArray jsa2 = new JSONArray();
-     				r.recursoevaluadores.forEach(re->{
-     					JSONObject nodo = new JSONObject();
+	public static Result WSBuscarNC2(String nct) throws JSONException{
+		System.out.println("desde REcursoWebCXontroller.WSBuscarNC2");
+		Recurso r = Recurso.find.setAutofetch(false).where().eq("numcontrol",nct.toUpperCase() ).findUnique();
 
-     					try {
-         					nodo.put("id", re.id);
-         					nodo.put("aspecto", re.aspecto.descripcion);
-         					nodo.put("evaluador", re.evaluador.personal.nombreCompleto());
-         					nodo.put("estado", re.estadoevaluacion.descripcion);
-         					
-         					nodo.put("insert", re.auditinsert.toString());     						
-							nodo.put("update", re.auditinsert.toString());
-							
-						} catch (JSONException e) {							
-							e.printStackTrace();
-						}
-     					jsa2.put(nodo);
-     				});
-     				result.put("rescursoEvaluadores", jsa2);     				
-     				
-					JSONArray jsa3 = new JSONArray();     				
-     				r.historialestadoevaluaciones.forEach(he->{
-     					JSONObject nodo = new JSONObject();
-     					try {
-         					nodo.put("id", he.id);
-         					nodo.put("aspecto", he.recursoevaluador.aspecto.descripcion);
-         					nodo.put("evaluador", he.recursoevaluador.evaluador.personal.nombreCompleto());
-         					nodo.put("estadoDescripcion", he.estado.descripcion);
-         					
-         					nodo.put("insert", he.auditinsert.toString());     						
-							nodo.put("update", he.auditinsert.toString());
-							
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-     					jsa3.put(nodo);
-     				});
-     				result.put("historialEstadoEvaluaciones", jsa3);   
-     				
-					JSONArray jsa4 = new JSONArray();     				
-     				r.historialestadoencuesta.forEach(henc->{
-     					JSONObject nodo = new JSONObject();
-     					try {
-         					nodo.put("id", henc.id);
-         					nodo.put("estado", henc.estado.id);
-         					nodo.put("estadoDescripcion", henc.estado.descripcion);         					
-         					nodo.put("insert", henc.auditinsert.toString());     						
-							nodo.put("update", henc.auditinsert.toString());
-							
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-     					jsa4.put(nodo);
-     				});
-     				result.put("historialestadoencuesta", jsa4);        				
 
-     			}    	
-     			System.out.println("retornando: "+result);
-     			System.out.println("retornando json: " +  new JSONObject(result.toString() ) );
-		    	 response().setHeader("Access-Control-Allow-Origin", "*");
-		    	 response().setHeader("Allow", "*");
-		    	 response().setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
-		    	 response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Referer, User-Agent");      			
- 	    		return ok(     result.toString()     );    	
-    }    
-    
-    public static Result WSAjaxImprimirSolicitudAceptada(Long idRecurso)throws DocumentException, IOException, IOException{
-    	ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
-    	miPdf mipdf = new miPdf(idRecurso);
-    	//mipdf.id = idRecurso;
-    	mipdf.baos = baosPDF;
-    	mipdf.generarSolicitudEvaluacion();
-        response().setContentType("application/pdf");
-        response().setHeader("Content-Disposition", "attachment; filename=SolERDD_" + mipdf.getClaveControl()+".pdf");
-        
-	   	 response().setHeader("Access-Control-Allow-Origin", "*");
-	   	 response().setHeader("Allow", "*");
-	   	 response().setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
-	   	 response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Referer, User-Agent");
-	   			        
-        
-		return ok (  mipdf.baos.toByteArray() );    	
-    }    
-    
-    public static Result WSAjaxImprimirReporteETP(Long idRecurso)throws Throwable{
-    	ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
-    	miPdf mipdf = new miPdf(idRecurso);
-    	//mipdf.id = idRecurso;
-    	mipdf.baos = baosPDF;
-    	mipdf.generarReporteFinal("appMovil");
-        response().setContentType("application/pdf");
-        response().setHeader("Content-Disposition", "attachment; filename=RepETPERDD_" + mipdf.getClaveControl()+".pdf");
-		return ok (  mipdf.baos.toByteArray() );    	
-    }      
-    
-    
-    
-    public static WebSocket<String> pingWs() {
-        return new WebSocket<String>() {
-            public void onReady(WebSocket.In<String> in, WebSocket.Out<String> out) {
-                final ActorRef pingActor = Akka.system().actorOf(Props.create(Pinger.class, in, out));
-                final Cancellable cancellable = Akka.system().scheduler().schedule(Duration.Zero(),
-                                                   Duration.create(5, TimeUnit.SECONDS),
-                                                   pingActor,
-                                                   "Tick",
-                                                   Akka.system().dispatcher(),
-                                                   null
-                                                   );
-                
-                in.onMessage(System.out::println);
-                
-                
-                
-                in.onClose(new Callback0() {
-                    @Override
-                    public void invoke() throws Throwable {
-                        cancellable.cancel();
-                        System.out.println("websocket cerrado ");
-                    }
-                });
-            }
 
-        };
-    }
+		new RetornoWSRecurso();
+		Ebean.createJsonContext();
 
-    
-    
-    public static WebSocket<String> socket() {
-        return WebSocket.whenReady((in, out) -> {
-            // For each event received on the socket,
-            in.onMessage(System.out::println);
+		new ArrayList<Long>();
 
-            // When the socket is closed.
-            in.onClose(() -> System.out.println("Disconnected"));
+		JSONObject result = new JSONObject();
+		Json.newObject();
 
-            // Send a single 'Hello!' message
-            out.write("Hello!");
-        });
-    }
-    
-    public static Result enviarSocket() {
+
+		Niveleducativo.find.all();
+
+
+		//	System.out.println(r);
+		if ( r == null){
+			System.out.println(".... NO   existe");
+
+			result.put("ajaxEstado", "error");
+			result.put("mensaje", "No se localizó el número de control");
+			//   	System.out.println("json: "+result);
+			response().setHeader("Access-Control-Allow-Origin", "148.204.111.41:8000");
+			response().setHeader("Allow", "*");
+			response().setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
+			response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Referer, User-Agent");
+
+			response().setHeader("Access-Control-Allow-Headers", "X-Requested-With");
+			response().setHeader("Access-Control-Allow-Origin","X-Requested-With");
+
+		}
+		else {
+			System.out.println(".... Existe");
+			session("idRecurso", r.id.toString());
+			RegistroAcceso ra = new RegistroAcceso();
+			ra.autor = Recurso.searchByNumControl(nct).getResponsable();
+			ra.ruta = request().path();
+			ra.ip = request().remoteAddress();
+			ra.fecha = new Date();
+			ra.save();
+			//ret.recurso=r;
+			result.put("idRecurso", r.id);
+			result.put("mensaje", "Localizado");
+			result.put("ajaxEstado", "success");
+			result.put("estado", r.estado.id);
+			result.put("estadoDescripcion", r.estado.descripcion);
+			result.put("titulo", r.titulo);
+			result.put("claveControl", r.numcontrol);
+			result.put("autorResponsable", r.getResponsable().nombreCompleto());
+			if (r.oficio != null) {
+				result.put("oficio", r.oficio.numero);
+				result.put("folio", r.oficio.folio);
+			}
+			if (r.clasificacion != null) {
+				result.put("clasificacion", r.clasificacion.nombreCompletoClasificacion());
+				result.put("tipoRecurso", r.clasificacion.tiporecurso.descripcion);
+			}
+
+			result.put("encuesta", !(r.encuesta == null));
+
+
+
+			JSONArray jsa = new JSONArray();
+			r.historialestados.forEach(he->{
+				JSONObject nodo = new JSONObject();
+
+				try {
+					nodo.put("id", he.id);
+					nodo.put("estado", he.estado.id);
+					nodo.put("estadoDescripcion", he.estado.descripcion);
+
+					nodo.put("insert", he.auditinsert.toString());
+					nodo.put("update", he.auditinsert.toString());
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				jsa.put(nodo);
+			});
+			result.put("datos", jsa);
+			System.out.println("tam recursoevaluadores:   "+r.recursoevaluadores.size());
+			JSONArray jsa2 = new JSONArray();
+			r.recursoevaluadores.forEach(re->{
+				JSONObject nodo = new JSONObject();
+
+				try {
+					nodo.put("id", re.id);
+					nodo.put("aspecto", re.aspecto.descripcion);
+					nodo.put("evaluador", re.evaluador.personal.nombreCompleto());
+					nodo.put("estado", re.estadoevaluacion.descripcion);
+
+					nodo.put("insert", re.auditinsert.toString());
+					nodo.put("update", re.auditinsert.toString());
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				jsa2.put(nodo);
+			});
+			result.put("rescursoEvaluadores", jsa2);
+
+			JSONArray jsa3 = new JSONArray();
+			r.historialestadoevaluaciones.forEach(he->{
+				JSONObject nodo = new JSONObject();
+				try {
+					nodo.put("id", he.id);
+					nodo.put("aspecto", he.recursoevaluador.aspecto.descripcion);
+					nodo.put("evaluador", he.recursoevaluador.evaluador.personal.nombreCompleto());
+					nodo.put("estadoDescripcion", he.estado.descripcion);
+
+					nodo.put("insert", he.auditinsert.toString());
+					nodo.put("update", he.auditinsert.toString());
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				jsa3.put(nodo);
+			});
+			result.put("historialEstadoEvaluaciones", jsa3);
+
+			JSONArray jsa4 = new JSONArray();
+			r.historialestadoencuesta.forEach(henc->{
+				JSONObject nodo = new JSONObject();
+				try {
+					nodo.put("id", henc.id);
+					nodo.put("estado", henc.estado.id);
+					nodo.put("estadoDescripcion", henc.estado.descripcion);
+					nodo.put("insert", henc.auditinsert.toString());
+					nodo.put("update", henc.auditinsert.toString());
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				jsa4.put(nodo);
+			});
+			result.put("historialestadoencuesta", jsa4);
+
+		}
+		System.out.println("retornando: "+result);
+		System.out.println("retornando json: " +  new JSONObject(result.toString() ) );
+		response().setHeader("Access-Control-Allow-Origin", "*");
+		response().setHeader("Allow", "*");
+		response().setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
+		response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Referer, User-Agent");
+		return ok(     result.toString()     );
+	}
+
+	public static Result WSAjaxImprimirSolicitudAceptada(Long idRecurso)throws DocumentException, IOException, IOException{
+		ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
+		miPdf mipdf = new miPdf(idRecurso);
+		//mipdf.id = idRecurso;
+		mipdf.baos = baosPDF;
+		mipdf.generarSolicitudEvaluacion();
+		response().setContentType("application/pdf");
+		response().setHeader("Content-Disposition", "attachment; filename=SolERDD_" + mipdf.getClaveControl()+".pdf");
+
+		response().setHeader("Access-Control-Allow-Origin", "*");
+		response().setHeader("Allow", "*");
+		response().setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
+		response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Referer, User-Agent");
+
+
+		return ok (  mipdf.baos.toByteArray() );
+	}
+
+	public static Result WSAjaxImprimirReporteETP(Long idRecurso)throws Throwable{
+		ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
+		miPdf mipdf = new miPdf(idRecurso);
+		//mipdf.id = idRecurso;
+		mipdf.baos = baosPDF;
+		mipdf.generarReporteFinal("appMovil");
+		response().setContentType("application/pdf");
+		response().setHeader("Content-Disposition", "attachment; filename=RepETPERDD_" + mipdf.getClaveControl()+".pdf");
+		return ok (  mipdf.baos.toByteArray() );
+	}
+
+
+
+	public static WebSocket<String> pingWs() {
+		return new WebSocket<String>() {
+			public void onReady(WebSocket.In<String> in, WebSocket.Out<String> out) {
+				final ActorRef pingActor = Akka.system().actorOf(Props.create(Pinger.class, in, out));
+				final Cancellable cancellable = Akka.system().scheduler().schedule(Duration.Zero(),
+						Duration.create(5, TimeUnit.SECONDS),
+						pingActor,
+						"Tick",
+						Akka.system().dispatcher(),
+						null
+				);
+
+				in.onMessage(System.out::println);
+
+
+
+				in.onClose(new Callback0() {
+					@Override
+					public void invoke() throws Throwable {
+						cancellable.cancel();
+						System.out.println("websocket cerrado ");
+					}
+				});
+			}
+
+		};
+	}
+
+
+
+	public static WebSocket<String> socket() {
+		return WebSocket.whenReady((in, out) -> {
+			// For each event received on the socket,
+			in.onMessage(System.out::println);
+
+			// When the socket is closed.
+			in.onClose(() -> System.out.println("Disconnected"));
+
+			// Send a single 'Hello!' message
+			out.write("Hello!");
+		});
+	}
+
+	public static Result enviarSocket() {
     	/*
     	try {
     		FileInputStream serviceAccount = new FileInputStream("/home/epuente/playFramework/erdd/public/fberdd-57e76-firebase-adminsdk-4j6o8-5639cfd7aa.json");
@@ -914,31 +914,31 @@ System.out.println("tam recursoevaluadores:   "+r.recursoevaluadores.size());
     	 
     	
     	*/
-    	
-    	//System.out.println("creando objeto Notificacion");
-    	
-    	System.out.println("enviar a todos (notificaciones celular)");
-    	Recurso.find.all().forEach(r->{
-        	Notificacion n = new Notificacion();
-        	n.enviar(r.numcontrol, "Prueba", "Prueba de notificaciones del Sistema de ERDD");    		
-    	});
-		return ok ("oki");
-    }
-    
-    
-    public static Result index2() {
-        return ok(views.html.index2.render());
-    }    
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
+		//System.out.println("creando objeto Notificacion");
+
+		System.out.println("enviar a todos (notificaciones celular)");
+		Recurso.find.all().forEach(r->{
+			Notificacion n = new Notificacion();
+			n.enviar(r.numcontrol, "Prueba", "Prueba de notificaciones del Sistema de ERDD");
+		});
+		return ok ("oki");
+	}
+
+
+	public static Result index2() {
+		return ok(views.html.index2.render());
+	}
+
+
+
+
+
+
+
+
+
+
 }
 
 

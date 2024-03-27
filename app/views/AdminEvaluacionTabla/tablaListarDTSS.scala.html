@@ -35,9 +35,13 @@ tiposrecursos:List[ClasificadorEjemplo]
 
 @main{
 	<style>
-	.filtrado, mark  {
-	    background-color:#ffffcc !important;  
-	}
+		.filtrado, mark  {
+			background-color:#ffffcc !important;
+		}
+		.swal-wide{
+			width:50rem !important;
+			padding-bottom: 5rem;
+		}
 	</style>
 	
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("lib/datatables/css/dataTables.bootstrap.min.css")"/>
@@ -212,21 +216,19 @@ tiposrecursos:List[ClasificadorEjemplo]
                                 @encabezadosTabla()
 
 							</table>
+							<!--
 				        	<div class="row">
 				        		<div class="col-sm-12">
 						        	<div class="row">
 						        		<div class="col-sm-4">
-
-											<!--
 						        			<input type="button" onclick="botonTempo1()" class="btn btn-default btn-block" value="Marcar criterios">
 						        			<input type="button" onclick="botonTempo2()" class="btn btn-default btn-block" value="Marcar tr">
 											<input type="button" onclick="botonTempo3()" class="btn btn-default btn-block" value="Marcar todo">
-											-->
 				        				</div>
 			        				</div>
 					        	</div>
 				        	</div>
-
+							-->
 						<div class="row">
 							<div class="center-block" style="width:30rem;background-color:#ccc;">
 								<input type="button" onclick="agregarReactivo()" class="btn btn-primary btn-block" id="btnAgregarReactivo" value="Agregar reactivo">
@@ -656,24 +658,21 @@ tiposrecursos:List[ClasificadorEjemplo]
 		  confirmButtonClass: 'btn btn-success',
 		  cancelButtonClass: 'btn btn-danger',
 		  buttonsStyling: false,
-		  reverseButtons: true
+		  reverseButtons: true,
+		  customClass: 'swal-wide'
 		}).then((result) => {
 		  if (result.value) {
 		      var o = new Object;   
 		      o.version = {id: "@version.id"};
 			  o.reactivo = {"id": num };
 			  pagActual =  laTablaDTSS.page.info().page;
-			 // $eliminar = LlamadaAjaxEliminaReactivo(o);
-			 // $eliminar = LlamadaAjax("/ajaxEliminaReactivoTablaEvaluacion", "POST", JSON.stringify( {o}));
-
-
- 			$.ajax({
+			  $.ajax({
 				url: '/ajaxEliminaReactivoTablaEvaluacion',
 				method: 'POST',
 				data: JSON.stringify( {o}),
 				contentType: "application/json; charset=utf-8",
 				dataType: "json"
-			}).success(function(data){
+			  }).success(function(data){
 				console.dir(data)
 				if (data.eliminado==true){
 					console.log("ELIMINADO")
@@ -683,17 +682,11 @@ tiposrecursos:List[ClasificadorEjemplo]
 						title: "Eliminado:",
 						message: "Se eliminó el reactivo "+num+" del instrumento"
 					}, {type: 'success'});
-
-
-
-
 				} else {
 					alert("error ajax en LlamadaAjaxEliminaReactivo ");
 				}
-
 			}).error(function(xhr, status, error) {
 				  alert("error rn ajax -  "+ error );
-
 				});
 		  } else if (
 		    // Read more about handling dismissals

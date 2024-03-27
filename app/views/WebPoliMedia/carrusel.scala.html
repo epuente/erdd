@@ -62,36 +62,43 @@
             <div class="center-block" style="width:930px;">
                 <div class="elCarrusel">
                     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" >
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators">
-                            @for((cr, index) <- cs.zipWithIndex){
-                                <li name="circulo" data-target="#carousel-example-generic" data-slide-to="@index" @if(index==0){class="active"} data-subtitulo="@if(cr.titulo!=null){@cr.titulo}"></li>
-                            }
-                        </ol>
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner">
-                            @for((c, ci)<-cs.zipWithIndex){
-                                <div class="item @if(ci==0){active}">
-                                    <a @if(c.liga!=null){href="@c.liga"}>
-                                        <img src="/webPoliMedia/carrusel/verImagen/@c.id" alt="el id @c.id">
-                                    </a>
-                                </div>
-                            }
-                        </div>
-                        <!-- Controls -->
-                        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
+                        @if(cs.size()==0){
+                        No hay registros
+                        }else{
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                @for((cr, index) <- cs.zipWithIndex){
+                                    <li name="circulo" data-target="#carousel-example-generic" data-slide-to="@index" @if(index==0){class="active"} data-subtitulo="@if(cr.titulo!=null){@cr.titulo}"></li>
+                                }
+                            </ol>
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner">
+                                @for((c, ci)<-cs.zipWithIndex){
+                                    <div class="item @if(ci==0){active}">
+                                        <div class="text-center">
+                                            <a @if(c.liga!=null){href="@c.liga"}>
+                                                <img src="/webPoliMedia/carrusel/verImagen/@c.id" alt="el id @c.id">
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        }
                     </div>
                 </div>
             </div>
             <div id="crSubtitulo" class="center-block" style="width:930px; text-align:center; padding-top:-2px;">
             </div>
+
         </div>
 
 
@@ -119,6 +126,7 @@
 
             function timerIncrement() {
               idleTime = idleTime + 1;
+              console.log("idle time: "+idleTime)
               if (idleTime > 1) {
                 $.notify({
                     title: "Recargando, ",
@@ -126,6 +134,7 @@
                 }, {type: 'info'});
                 // Muestra el notify y despues de 3 segundos recarga la página
                 setTimeout(() => {
+                console.log("....reload");
                     location.reload();
                 }, 3000);
               }

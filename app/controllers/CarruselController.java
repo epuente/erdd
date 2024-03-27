@@ -4,8 +4,11 @@ import com.avaje.ebean.Page;
 import com.avaje.ebean.Query;
 import controllers.ControladorSeguro;
 import models.Areaconocimiento;
+import models.Oficio;
+import models.Recurso;
 import models.Unidadacademica;
 import models.polimedia.Carrusel;
+import org.joda.time.DateTimeComparator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +28,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,9 +36,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.joda.time.DateTime;
+
 public class CarruselController extends Controller {
 
     public static Result GO_HOME = redirect(routes.CarruselController.list());
+
+
 
     public static Result list(){
         Logger.info("Desde CarruselController.list");
@@ -43,6 +51,7 @@ public class CarruselController extends Controller {
 
 
     public static Result carruselDTSS(){
+        Logger.info("Desde CarruselController.carruselDTSS");
         JSONObject json2 = new JSONObject();
         int filtrados = 0;
         int sinFiltro = 0;
@@ -91,7 +100,7 @@ public class CarruselController extends Controller {
 
 
 
-        //AQUI ME QUEDÉ
+
         //Logger.debug("\n\norderBy: "+ "c"+    (colOrden==0?columnasOrdenables.get(0)  :  columnasOrdenables.get(colOrden)-1)  +" "+tipoOrden );
         Logger.debug("c"+   (columnasOrdenables.get(colOrden)-1)  +" "+tipoOrden);
 
@@ -127,11 +136,10 @@ public class CarruselController extends Controller {
         try {
             json2.put("draw",  new Date().getTime()  );
             json2.put("recordsTotal",  sinFiltro );
-//			json2.put("recordsFiltered", ppre3.getTotalRowCount());
             json2.put("recordsFiltered", filtrados);
-
             JSONArray losDatos = new JSONArray();
-
+            DateTime hoy = new DateTime();
+            DateTimeComparator dateTimeComparator = DateTimeComparator.getDateOnlyInstance();
             for( Carrusel p : carr.getList()  ){
                 JSONObject datoP = new JSONObject();
                 datoP.put("id", p.id);
@@ -141,6 +149,9 @@ public class CarruselController extends Controller {
                 datoP.put("inicio", p.inicio);
                 datoP.put("fin", p.fin);
                 datoP.put("titulo", p.titulo);
+                int vigencia = dateTimeComparator.compare(p.fin, hoy);
+                System.out.println("------ "+vigencia);
+                datoP.put("vigente", vigencia>=0?true:false );
                 losDatos.put(datoP);
             }
             if ( carr.getTotalRowCount()>0 ){
@@ -151,7 +162,7 @@ public class CarruselController extends Controller {
             }
 
         } catch (JSONException e) {
-            System.out.println("Ocurrio un error: "+e);
+            System.out.println("Ocurrio un error: " + e);
             e.printStackTrace();
         }
 //System.out.println("retorno "+json2.toString());
@@ -209,5 +220,51 @@ public class CarruselController extends Controller {
         return GO_HOME;
     }
 
+        public static Result edit(Long id){
+            Form<Carrusel> c = form(Carrusel.class).fill(
+                    Carrusel.find.byId(id)
+            );
+            return ok (views.html.poliMedia.edit.render(id, c) );
+        }
+
+    public static Result update(Long id) throws ParseException {
+        Form<Carrusel> forma = form(Carrusel.class).bindFromRequest();
+        Carrusel cr = Carrusel.find.byId(id);
+        DateFormat formatter = null;
+        formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+
+        Http.MultipartFormData body = request().body().asMultipartFormData();
+        Http.MultipartFormData.FilePart fp = body.getFile("contenido");
+        if (fp != null) {
+            String fileName = fp.getFilename();
+            String contentType = fp.getContentType();
+            File file = fp.getFile();
+            try {
+                Path p = Paths.get(file.getPath());
+                byte[] byteFile = Files.readAllBytes(p);
+                cr.nombreArchivo = fileName;
+                cr.liga = forma.field("liga").value();
+                cr.posicion = Integer.parseInt(forma.field("posicion").value());
+                cr.inicio = (Date) formatter.parse( forma.field("inicio").value()  );
+                cr.fin = (Date) formatter.parse( forma.field("fin").value()  );
+                cr.titulo = forma.field("titulo").value();
+                cr.contenttype = forma.field("contenttype").value();
+                cr.contenido = forma.field("contenido").value().getBytes();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException ioe){
+
+            }
+        }
+        cr.update();
+        return GO_HOME;
+    }
+
+    public static Result delete(Long id) throws ParseException {
+        Carrusel.find.byId(id).delete();
+        flash("success", "Se eliminó el registro.");
+        return GO_HOME;
+    }
 
 }

@@ -54,7 +54,7 @@ public class miCorreo extends Thread{
 			message.setSubject(this.asunto);
 			message.setText(this.mensaje);
 			message.setContent(this.mensaje, "text/html; charset=utf-8");
-			System.out.println("Envio de correo a las "+new Date());			
+			System.out.println("(miCorreo) Envio de correo a las "+new Date());
 			Transport.send(message);
 			for(String p : para){
 				System.out.println("      Se envio correctamente a "+p);

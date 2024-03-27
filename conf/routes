@@ -373,7 +373,10 @@ GET     /verOficioValoracionE/:id		controllers.EvaluacionEvaluadorController.ver
 GET     /poliMedia/carrusel                     controllers.CarruselController.list()
 GET     /poliMedia/carrusel/carruselDTSS        controllers.CarruselController.carruselDTSS()
 GET     /poliMedia/carrusel/create              controllers.CarruselController.create()
-POST     /poliMedia/carrusel/save               controllers.CarruselController.save()
+POST    /poliMedia/carrusel/save                controllers.CarruselController.save()
+GET     /poliMedia/carrusel/edit/:id            controllers.CarruselController.edit(id:Long)
+POST    /poliMedia/carrusel/update/:id          controllers.CarruselController.update(id:Long)
+GET    /poliMedia/carrusel/delete/:id          controllers.CarruselController.delete(id:Long)
 
 GET     /webPoliMedia/carrusel                  controllers.WPMCarruselController.mostrar()
 GET     /webPoliMedia/carrusel/verImagen/:id          controllers.WPMCarruselController.verImagen(id:Long)

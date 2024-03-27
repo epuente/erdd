@@ -3,13 +3,12 @@ package models.polimedia;
 import com.avaje.ebean.annotation.CreatedTimestamp;
 import com.avaje.ebean.annotation.UpdatedTimestamp;
 import models.Aspecto;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.*;
 import javax.validation.Constraint;
 import java.util.Date;
 
@@ -22,6 +21,9 @@ public class Carrusel extends Model {
     public String liga;
     @Constraints.Required
     public int posicion;
+
+    @Transient
+    public DateTime hoy;
     public Date inicio;
     public Date fin;
     @Column(length = 100)
@@ -35,4 +37,15 @@ public class Carrusel extends Model {
     public Date auditlastupdate;
 
     public static Model.Finder<Long, Carrusel> find = new Model.Finder<Long,Carrusel>(Long.class, Carrusel.class);
+
+    public Carrusel() {
+        this.hoy = new DateTime();
+    }
+
+
+    public boolean estaVigente(){
+        DateTimeComparator dateTimeComparator = DateTimeComparator.getDateOnlyInstance();
+        int v = dateTimeComparator.compare(this.fin, hoy);
+        return v>=0;
+    }
 }

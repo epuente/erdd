@@ -89,3 +89,12 @@ reload
 compile
 run 9090
 exit
+run 9090
+exit
+run 9090
+exit
+run 9090
+exit
+run 9090
+compile
+run 9090

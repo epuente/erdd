@@ -5,13 +5,14 @@
         }
     </style>
     <div class="container">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <ol class="breadcrumb">
-                <li>Carrusel</li>
-            </ol>
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li>Carrusel</li>
+                    <li class="active">Listar</li>
+                </ol>
+            </div>
         </div>
-    </div>
 
     <div class="row">
         <div class="col-sm-12">
@@ -30,6 +31,7 @@
                 <th>Título</th>
                 <th>Archivo</th>
                 <th>url</th>
+                <th>Vigente</th>
                 <th></th>
             </tr>
             </thead>
@@ -100,11 +102,17 @@
                         return data==null?"<small>No definido</small>": data;
                     }
                 },
+                {   "data": "vigente",
+                    "sortable" : false,
+                    "render": function(data, type, row, meta){
+                        return data==null?"<small>No definido</small>":  data==true?"Si":"No";
+                    }
+                },
                 {   "data": "null",
                     "sortable" : false,
                     "render": function(data, type, row, meta){
-                        @*return "<span class=\"mismaLinea\"><a href=\"nasda\"><i class='fa fa-pencil' aria-hidden='true'></i></a><a href=\"nasda\"><i class='fa fa-trash' aria-hidden='true'></i></a></span>";*@
-                        return "<div class=\"row\"><div class=\"col-xs-12 col-sm-6 col-md-6 col-lg-6\"><a href=\"nasda\" ><i class='fa fa-pencil' aria-hidden='true'></i></a></div>    <div class=\"col-xs-12 col-sm-6 col-md-6 col-lg-6\"><a href=\"nasda\"><i class='fa fa-trash' aria-hidden='true'></i></a></div></div>";
+                        @*return "<span class=\"mismaLinea\"><a href=\"edit"><i class='fa fa-pencil' aria-hidden='true'></i></a><a href=\"nasda\"><i class='fa fa-trash' aria-hidden='true'></i></a></span>";*@
+                        return "<div class=\"row\"><div class=\"col-xs-12 col-sm-6 col-md-6 col-lg-6\"><a href=\"/poliMedia/carrusel/edit/"+row.id+"\" ><i class='fa fa-pencil' aria-hidden='true'></i></a></div>    <div class=\"col-xs-12 col-sm-6 col-md-6 col-lg-6\"><a href=\"/poliMedia/carrusel/delete/"+row.id+"\"><i class='fa fa-trash' aria-hidden='true'></i></a></div></div>";
                     }
                 }
               ]

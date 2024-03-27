@@ -1,1 +1,11 @@
-sudo mysql -u root erdd_dev < ~/dumps/erdd_20240312.sql
+SE EXPORTÓ COMO
+
+CREA TABLAS, sin rutinas
+mysqldump -u erdd -p erdd_dev --ignore-table=erdd_dev.play_evolutions  --routines=false --no-tablespaces > ~/dumps/erdd_dev_completo_20240325.sql
+
+CREA INSERTS
+mysqldump -u erdd -p erdd --ignore-table=erdd.play_evolutions --no-tablespaces --complete-insert --no-create-db --no-create-info  --routines=false --skip-triggers > ~/dumps/erdd_inserts_20240325.sql
+
+
+SE RESTAURA CON
+mysql -u erdd erdd_dev < ~/dumps/erdd_inserts_20240325.sql

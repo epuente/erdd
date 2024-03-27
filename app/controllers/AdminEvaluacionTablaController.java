@@ -885,14 +885,15 @@ System.out.println("002 "+r.size());
 
 	@play.db.ebean.Transactional
     public static Result ajaxAgregarReactivoTablaEvaluacion(){
+		System.out.println("\n\n\nDesde AdminEvaluacionTablaController.ajaxAgregarReactivoTablaEvaluacion");
     	EvaluacionTablaReactivo auxReactivo = new EvaluacionTablaReactivo();
     	JsonNode json = request().body().asJson();
 		System.out.println(json);
 		boolean retorno = false;
-System.out.println("0001");		 
+		System.out.println("0001");
 
 
-for (int x = 0; x< json.size(); x++){
+		for (int x = 0; x< json.size(); x++){
 		    JsonNode i = json.get(x); 
 		
 			System.out.println(" - - - -    "+i);
@@ -903,64 +904,58 @@ for (int x = 0; x< json.size(); x++){
 			
 			Long reactivo = Long.parseLong(i.findPath("reactivo").findPath("id").asText());  
 			String descripcion = i.findPath("nuevoReactivo").asText();
-			
-			
-		
-			
-			
-				 //Es un nuevo reactivo, habrá que crearlo en el catálogo de reactivos
-				 if (reactivo == 0){
-					 EvaluacionTablaReactivo busca = EvaluacionTablaReactivo.find.where().eq("descripcion", descripcion).findUnique();
-					 if (busca == null){
-						 EvaluacionTablaReactivo nuevo = new EvaluacionTablaReactivo();
-						 nuevo.descripcion = descripcion;
-						 nuevo.save();
-						 nuevo.refresh();
-						 auxReactivo = nuevo;
-					 }
-					 else {
-						 auxReactivo = busca;
-					 }
-				 } else {
-					auxReactivo = EvaluacionTablaReactivo.find.byId( reactivo );
+			 //Es un nuevo reactivo, habrá que crearlo en el catálogo de reactivos
+			 if (reactivo == 0){
+				 EvaluacionTablaReactivo busca = EvaluacionTablaReactivo.find.where().eq("descripcion", descripcion).findUnique();
+				 if (busca == null){
+					 EvaluacionTablaReactivo nuevo = new EvaluacionTablaReactivo();
+					 nuevo.descripcion = descripcion;
+					 nuevo.save();
+					 nuevo.refresh();
+					 System.out.println("reactivo nuevo "+nuevo.id);
+					 auxReactivo = nuevo;
 				 }
-				 
-				 
-				 
+				 else {
+					 System.out.println("reactivo NO nuevo");
+					 auxReactivo = busca;
+				 }
+			 } else {
+				auxReactivo = EvaluacionTablaReactivo.find.byId( reactivo );
+			 }
 				 // Ademas dee agregar el reactivo, se especifican aspecto y criterios, y tiposreducros
-				 
 
-					ObjectMapper mapper = new ObjectMapper();				
-					try {
-						
-						
-						
-						for (JsonNode unNodo : i) {
-							System.out.println("001");
-										    if (unNodo instanceof ObjectNode) {
-							System.out.println("    001   -   001");
-										        ObjectNode object = (ObjectNode) unNodo;
-							System.out.println("                                        "   +  object  );
-										        object.remove("nuevoReactivo");
-										    }
-										}		
-							System.out.println("se eliminó el nodo nuevoReactivo  "+i);							
-						
-System.out.println("antes del mapper");				 
-System.out.println("           "+i.findPath("evaluacionTabla"));
+				ObjectMapper mapper = new ObjectMapper();
+				try {
+					for (JsonNode unNodo : i) {
+						System.out.println("001");
+										if (unNodo instanceof ObjectNode) {
+						System.out.println("    001   -   001");
+											ObjectNode object = (ObjectNode) unNodo;
+						System.out.println("                                        "   +  object  );
+											object.remove("nuevoReactivo");
+										}
+									}
+						System.out.println("se eliminó el nodo nuevoReactivo  "+i);
 
-						EvaluacionTabla obj = mapper.readValue(i.findPath("evaluacionTabla").traverse(), EvaluacionTabla.class);
-System.out.println("despues del mapper");
-						obj.reactivo = auxReactivo;
-						obj.save();
-						retorno = true;
-					} catch (IOException e) {
-						System.out.println("Ocurrio un error: "+e);
-						e.printStackTrace();
-					}		
-			}
-		 return ok( "{\"agregado\":"+ retorno +"}" );
-    	
+						System.out.println("antes del mapper");
+						System.out.println(i.findPath("evaluacionTabla"));
+
+					EvaluacionTabla obj = mapper.readValue(i.findPath("evaluacionTabla").traverse(), EvaluacionTabla.class);
+					System.out.println("despues del mapper");
+					System.out.println("obj.id "+obj.id);
+					System.out.println("auxReactivo "+auxReactivo);
+					obj.reactivo = auxReactivo;
+					obj.save();
+					retorno = true;
+				} catch (IOException e) {
+					System.out.println("----------------Ocurrio un error: "+e);
+					e.printStackTrace();
+				} catch (Exception e){
+					System.out.println("----------------Ocurrio un error: "+e);
+					e.printStackTrace();
+				}
+		}
+	 	return ok( "{\"agregado\":"+ retorno +"}" );
     }
 
 
