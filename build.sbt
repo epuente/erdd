@@ -1,3 +1,5 @@
+import sbt.compiler.ComponentCompiler.javaVersion
+
 name := """erdd"""
 
 version := "0.0.1-SNAPSHOT"
@@ -81,4 +83,10 @@ libraryDependencies += "org.webjars" % "Eonasdan-bootstrap-datetimepicker" % "4.
 // https://mvnrepository.com/artifact/org.webjars.npm/moment
 libraryDependencies += "org.webjars.npm" % "moment" % "2.22.2"
 
+
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
+
+javaOptions ++= Seq("-source", "1.8", "-target", "1.8")
+
+
+

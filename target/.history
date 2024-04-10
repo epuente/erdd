@@ -98,3 +98,17 @@ exit
 run 9090
 compile
 run 9090
+compile
+run  9089
+exit
+version
+sbtVersion
+exit
+compile
+exit
+run
+clean
+reload
+compile
+run
+exit

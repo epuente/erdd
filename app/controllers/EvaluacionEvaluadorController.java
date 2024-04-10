@@ -123,11 +123,14 @@ r.forEach(x->{
 			// Se eliminó la funcion de db: VersionActualTerminada()
 
 			SqlRow sqlRow = Ebean.createSqlQuery("select max(version) as vt from evaluacion_tabla_version where terminado = 'S'").findUnique();
+			SqlRow sqlRow2 = Ebean.createSqlQuery("select max(version) as vt from evaluacion_tabla_version where terminado = 'S'").findUnique();
 
 			int VersionReciente = sqlRow.getInteger("vt");
+			Long VersionRecienteID =  EvaluacionTablaVersion.find.where().eq("version", VersionReciente).findUnique().id;
 
 
 			System.out.println("versionReciente: "+VersionReciente);
+			System.out.println("versionRecienteID "+VersionRecienteID);
 			Clasificacion c = Clasificacion.find.where().eq("recurso.id",id).findUnique();
 
 			ClasificadorCriterio3 cc3 = ClasificadorCriterio3.find.byId(  c.criterio3.id);
@@ -163,7 +166,7 @@ r.forEach(x->{
 
 			List<Object> qevTab2 = EvaluacionTabla.find
 					.where()
-					.eq("version.id",VersionReciente)
+					.eq("version.id",VersionRecienteID)
 					.eq("aspecto.id", idAspecto)
 					.eq("criterio1.id", c.criterio1.id)
 					.eq("criterio2.id", c.criterio2.id)
