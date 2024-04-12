@@ -14,7 +14,7 @@
         <h1>Carrusel PoliMedia - Edición</h1>
 
 
-        @form(CSRF(routes.CarruselController.update(45)), 'role -> "form", 'id -> "frmCarrusel", 'enctype -> "multipart/form-data", 'role->"form") {
+        @form(CSRF(routes.CarruselController.update(id)), 'role -> "form", 'id -> "frmCarrusel", 'enctype -> "multipart/form-data", 'role->"form") {
             <div class="row">
                 <div class="col-lg-12">
                     @carruselForm(forma)

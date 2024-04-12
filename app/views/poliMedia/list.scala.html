@@ -14,31 +14,30 @@
             </div>
         </div>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <h1 id="homeTitle">Carrusel  <a href="@routes.CarruselController.create()" data-toggle="popover" data-content="Agregar elemento" class="text-success">  <i class="fa fa-plus-circle" aria-hidden="true"></i> </a>
-            </h1>
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 id="homeTitle">Carrusel  <a href="@routes.CarruselController.create()" data-toggle="popover" data-content="Agregar elemento" class="text-success">  <i class="fa fa-plus-circle" aria-hidden="true"></i> </a>
+                </h1>
+            </div>
+        </div>
+        @views.html.flashes()
+        <div id="no-more-tables">
+            <table class="table table-bordered table-striped" id="tablaCarrusel" class="display" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Posición</th>
+                    <th>Inicia</th>
+                    <th>Termina</th>
+                    <th>Título</th>
+                    <th>Archivo</th>
+                    <th>url</th>
+                    <th>Vigente</th>
+                    <th></th>
+                </tr>
+                </thead>
+            </table>
         </div>
     </div>
-    @views.html.flashes()
-    <div id="no-more-tables">
-        <table class="table table-bordered table-striped" id="tablaCarrusel" class="display" cellspacing="0" width="100%">
-            <thead>
-            <tr>
-                <th>Posición</th>
-                <th>Inicia</th>
-                <th>Termina</th>
-                <th>Título</th>
-                <th>Archivo</th>
-                <th>url</th>
-                <th>Vigente</th>
-                <th></th>
-            </tr>
-            </thead>
-        </table>
-    </div>
-
-</div>
 }
 
 
@@ -115,7 +114,7 @@
                         return "<div class=\"row\"><div class=\"col-xs-12 col-sm-6 col-md-6 col-lg-6\"><a href=\"/poliMedia/carrusel/edit/"+row.id+"\" ><i class='fa fa-pencil' aria-hidden='true'></i></a></div>    <div class=\"col-xs-12 col-sm-6 col-md-6 col-lg-6\"><a href=\"/poliMedia/carrusel/delete/"+row.id+"\"><i class='fa fa-trash' aria-hidden='true'></i></a></div></div>";
                     }
                 }
-              ]
+            ]
         } );
 
 

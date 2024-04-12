@@ -268,8 +268,14 @@ GET			/listaEvaluacionTablaAjax/:version/:desde/:hasta		    controllers.AdminEva
 
 
 POST	/nuevaVersion							controllers.TablaEvaluacionVersionController.versionCreate()
+POST	/nuevaVersionAjax						controllers.TablaEvaluacionVersionController.versionCreateAjax()
+POST	/auxNuevaVersionAjax					controllers.TablaEvaluacionVersionController.auxVersionCreateAjax()
+
+
 POST	/toggle/:idVersion						controllers.TablaEvaluacionVersionController.toggle(idVersion:Long)
 GET		/evaluacionTablaAgregarReactivo			controllers.AdminEvaluacionTablaController.agregarReactivo()
+GET		/evaluacionTablaReactivoDTSS			controllers.AdminEvaluacionTablaController.reactivosDTSS()
+POST    /evaluacionTablaReactivoDelete          controllers.AdminEvaluacionTablaController.ajaxDeleteReactivo()
 
 GET		/prorrogaList							controllers.ProrrogaController.list(p:Int ?= 0, s ?= "auditinsert", o ?= "desc", f ?= "", c ?="auditinsert", rdioSolicitud:Int ?= -1)
 #GET		/prorrogaCreate/:idRecEv/:ndias				controllers.ProrrogaController.create(idRecEv:Long, ndias:Int)

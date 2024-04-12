@@ -172,16 +172,19 @@ tiposrecursos:List[ClasificadorEjemplo]
 							        <h4 class="modal-title" id="myModalLabel">Creacion de una nueva versión</h4>
 							      </div>
 							      <div class="modal-body">
-									
-										Se creará una nueva versión del instrumento de evaluación<br><br>
-										Puede crear una versión a partir de cero, o a partir de una copia de la versión que actualmente esta mostradose, para lograrlo marque la casilla "Iniciar como una copia de la versión X".									
-									
+										Se creará una nueva versión del instrumento de evaluación.<br><br>
+										Puede crear una versión a partir de cero, o a partir de una copia de la versión que actualmente esta mostradose, para lograrlo marque la casilla "Iniciar como una copia de la versión X".
 							      </div>
+									<!--Faltan <span id="indicador"></span> registros-->
+
 							      <div class="modal-footer">
 							      	<div class="modalPie"> <input type="checkbox" name="cbxcopia" value="sí"></input>    Iniciar como una copia de la versión @version.version</div>
 							      	<input type="hidden" name="versionEnPantalla" value="@version.version" >
 							        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 							        <button type="submit" class="btn btn-primary">Agregar versión</button>
+									<!--
+									 <button type="button" class="btn btn-primary" id="btnAgregarReactivoAjax">Agregar versión (ajax)</button>
+									 -->
 							      </div>
 							    </div>
 							  </div>
@@ -1178,6 +1181,46 @@ alert("error hjk6");
       });    	
       return d.promise();
     }
+
+
+	$("#btnAgregarReactivoAjax").click(function(e){
+		console.log("click");
+		console.log(  $("[name='cbxcopia']").prop("checked")   )
+
+		var cx =  "";
+		if ($("[name='cbxcopia']").prop("checked"))
+			cx="si";
+		else
+			cx="no";
+
+		var vp = @version.version;
+		var $x = LlamadaAjax("@routes.TablaEvaluacionVersionController.versionCreateAjax()", "POST", JSON.stringify({"cbxcopia": cx, "versionEnPantalla": vp}));
+		$.when($x).done(function(data){
+			console.dir(data)
+			if (data.conCopia =="si" && data.nregistros >0){
+				var faltantes = data.reactivosIds.length;
+				//$("#indicador").text(faltantes);
+
+				data.reactivosIds.forEach(function(id) {
+					console.log("bucle id: "+id)
+					var $y=LlamadaAjax("@routes.TablaEvaluacionVersionController.auxVersionCreateAjax()", "POST", JSON.stringify({"vorigen": vp, "vdestino": data.etvId, "reactivoId": id.reactivo_id}));
+					$.when($y).done(function(dataAux){
+						if (dataAux.estado!="ok"){
+							faltantes -= 1;
+							console.log("faltantes: "+faltantes)
+							//$("#indicador").text(faltantes);
+						}
+					});
+				})
+				//$("#indicador").text(faltantes);
+				console.log("bucles terminados")
+			}
+
+
+		});
+	});
+
+
     
 </script>
 

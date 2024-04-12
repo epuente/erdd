@@ -228,7 +228,10 @@ public class CarruselController extends Controller {
         }
 
     public static Result update(Long id) throws ParseException {
+        System.out.println("Desde uppdate");
         Form<Carrusel> forma = form(Carrusel.class).bindFromRequest();
+        System.out.println("id "+id);
+        System.out.println(forma);
         Carrusel cr = Carrusel.find.byId(id);
         DateFormat formatter = null;
         formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -238,23 +241,24 @@ public class CarruselController extends Controller {
         Http.MultipartFormData.FilePart fp = body.getFile("contenido");
         if (fp != null) {
             String fileName = fp.getFilename();
+            Logger.debug("filename nuevo: "+fileName);
+            Logger.debug("filename Anterior: "+cr.nombreArchivo);
             String contentType = fp.getContentType();
             File file = fp.getFile();
             try {
                 Path p = Paths.get(file.getPath());
                 byte[] byteFile = Files.readAllBytes(p);
                 cr.nombreArchivo = fileName;
-                cr.liga = forma.field("liga").value();
-                cr.posicion = Integer.parseInt(forma.field("posicion").value());
-                cr.inicio = (Date) formatter.parse( forma.field("inicio").value()  );
-                cr.fin = (Date) formatter.parse( forma.field("fin").value()  );
-                cr.titulo = forma.field("titulo").value();
-                cr.contenttype = forma.field("contenttype").value();
-                cr.contenido = forma.field("contenido").value().getBytes();
+                cr.contenido =  byteFile;
+                cr.contenttype = contentType;
             } catch (FileNotFoundException e) {
+                flash("error", "No fué posible agregar el registro, No se encontró el archivo.");
+                System.out.println("Error "+e.toString());
                 e.printStackTrace();
             } catch (IOException ioe){
-
+                flash("error", "No fué posible agregar el registro, error de i/o.");
+                System.out.println("Error "+ioe.toString());
+                ioe.printStackTrace();
             }
         }
         cr.update();

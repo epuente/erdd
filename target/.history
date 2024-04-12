@@ -112,3 +112,22 @@ reload
 compile
 run
 exit
+run 9000
+update
+reload
+compile
+run 9000
+run
+run 9000
+compile
+run 9000
+compile
+JSONException;
+compile
+run 9000
+run 
+run 80
+run 8080
+clean
+dist
+exit
