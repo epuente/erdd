@@ -3,7 +3,7 @@
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
 
 @main {
-	<div class=container-fluid style="background-color: white; padding: 10px;">	
+	<div class="container-fluid">
 	    <h1>Editar evaluador</h1>
 	    @form(CSRF(routes.EvaluadorController.update2(id)), 'id->"frmEvaluador") {
 	        <fieldset>

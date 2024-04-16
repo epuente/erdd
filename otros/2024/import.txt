@@ -8,4 +8,4 @@ mysqldump -u erdd -p erdd --ignore-table=erdd.play_evolutions --no-tablespaces -
 
 
 SE RESTAURA CON
-mysql -u erdd erdd_dev < ~/dumps/erdd_inserts_20240325.sql
+mysql -u erdd -p erdd_dev < ~/dumps/erdd_inserts_20240325.sql

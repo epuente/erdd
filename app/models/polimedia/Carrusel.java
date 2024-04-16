@@ -3,6 +3,7 @@ package models.polimedia;
 import com.avaje.ebean.annotation.CreatedTimestamp;
 import com.avaje.ebean.annotation.UpdatedTimestamp;
 import models.Aspecto;
+import models.Recurso;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
 import play.data.validation.Constraints;
@@ -31,6 +32,10 @@ public class Carrusel extends Model {
     public String contenttype;
     @Lob
     public byte[] contenido;
+
+    @ManyToMany
+    public Recurso recurso;
+
     @CreatedTimestamp
     public Date auditinsert;
     @UpdatedTimestamp

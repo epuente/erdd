@@ -2,9 +2,8 @@
 @import helper._
 @implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) } 
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/>
-@re.observacionEvaluacion
 @main{
-	<div style="background-color: white; padding: 10px" >  
+	<div class="container-fluid">
 		<div style="display: none;" id="divGral">
 			<h3>Evaluación del aspecto  @re.aspecto.descripcion  del recurso: @re.recurso.titulo &nbsp;<span class="badge" id="bdg@re.aspecto.id" data-toggle="popover" data-title="Detalle de calificación" data-trigger="hover" title="Calificación" style="display: none" ></span></h3>
 			Clasificación:   @re.recurso.clasificacion.criterio1.descripcion / @re.recurso.clasificacion.criterio2.descripcion / @re.recurso.clasificacion.criterio3.catalogo.descripcion
@@ -41,17 +40,26 @@
 							@mensajes
 							<p>  		        			
 					        <button type="button" class="btn btn-default" id="btnSolProrroga">Solicitar prórroga</button>
+							</p>
 				        }			        
-			        </p>					        
+
 				</div>
 			} else {
 				@form(CSRF(routes.EvaluacionEvaluadorController.save(re.recurso.id, re.aspecto.id)), 'role -> "form", 'id -> "frmEvaluacion",'style->"background-color: white;") {
 					@evaluacionPanelesForm(re:Recursoevaluador, cr:List[EvaluacionTabla])
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<input type="submit" value="Guardar la evaluación y continuar más tarde" class="btn btn-primary btn-block btn-md center-block"  id="btnEvaluar" style="width:90%">
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<input type="button" value="Solicitar la cancelación de este recurso" class="btn btn-danger btn-block btn-md center-block"  id="btnCancelar" style="width:90%">
+						</div>
+					</div>
 				}
 			}
-			<!-- 
+			<!--
 			<a href='javascript: marcarTodos()'>marcar todos (prueba)</a>
-			 -->        
+			 -->
 		</div>
 		
 	</div>

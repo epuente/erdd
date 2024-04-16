@@ -1,8 +1,6 @@
 @(logs:List[Log])
 
-
 @for((log,il)<-logs.zipWithIndex){
-
 	 	@if(log.tipo=="e"){
 					<div class="widget widget-stats bg-blue-lighter" >
 					 	<small id="dif@il" class="pull-right ml"></small>
@@ -10,7 +8,8 @@
 			            <div class="stats-icon stats-icon-sm"><i class="fa fa fa-file-text-o fa-fw"></i></div>
 			            <p>@log.recurso.numcontrol</p>
 			             <p class='h6'>@log.recurso.titulo</p>";
-						Estado: @log.estado.descripcion					 							
+						Estado: @log.estado.descripcion
+					</div>
 		}
 	 	@if(log.tipo=="ev"){
 					<div class="widget widget-stats bg-aqua-lighter">
@@ -21,7 +20,8 @@
 			            </div>
 			            <p>@log.recurso.numcontrol</p>
 			            <p class='h6'>@log.recurso.titulo</p>";
-						Estado evaluación: @log.estadoevaluacion.descripcion			 							
+						Estado evaluación: @log.estadoevaluacion.descripcion
+					</div>
 		}
  		@if(log.tipo=="en"){
 					<div class="widget widget-stats bg-purple-lighter">
@@ -32,13 +32,11 @@
 			            </div>
 			            <p>@log.recurso.numcontrol</p>
 			            <p class='h6 mt-0 mb-1'>@log.recurso.titulo</p>";
-	 				    Estado encuesta: @log.estadoencuesta.descripcion		
+	 				    Estado encuesta: @log.estadoencuesta.descripcion
+					</div>
 		}
-			        </div>
- 
+
 }
-
-
 
 <script type="text/javascript">
 	$(function() {
@@ -57,5 +55,4 @@
 			}
 		});
 	});
-
 </script>

@@ -25,7 +25,7 @@
 </style>
 
 
-<div class=container-fluid style="background-color: white; padding: 10px;">
+<div class="container-fluid">
 
     <div class="page-header">
         <h1 id="timeline">Seguimiento</h1>
@@ -129,25 +129,25 @@
 				             			<div name="divDetalleEvaluaciones">
 						             			<div style="display: block;  margin-left: auto;  margin-right: auto;">Detalle de evaluaciones</div> 
 						             			<ul class="timeline"> 
-												@for((hev,iev) <- estado.recurso.historialestadoevaluaciones.zipWithIndex){
-										          @if( (iev % 2) != 0){
-										          	<li class="timeline-inverted">
-										          } else {
-										          	<li>
-										          }	
-										          @hev.estado.id.toInt match {
-													  case 400  => {
-													  					<div class="timeline-badge warning"><i class="glyphicon glyphicon-warning-sign"></i>
-													  				}
-													  case whoa  => {
-													  					@if(hev.estado.descripcion.contains("observa")){
-													  						<div class="timeline-badge info"><i class="glyphicon glyphicon-eye-open"></i>
-													  					
-													  					} else {
-													  						<div class="timeline-badge success"><i class="glyphicon glyphicon-ok"></i>
-													  					}
-													  				}
-												  }
+													@for((hev,iev) <- estado.recurso.historialestadoevaluaciones.zipWithIndex){
+													  @if( (iev % 2) != 0){
+														<li class="timeline-inverted">
+													  } else {
+														<li>
+													  }
+													  @hev.estado.id.toInt match {
+														  case 400  => {
+																			<div class="timeline-badge warning"><i class="glyphicon glyphicon-warning-sign"></i>
+																		}
+														  case whoa  => {
+																			@if(hev.estado.descripcion.contains("observa")){
+																				<div class="timeline-badge info"><i class="glyphicon glyphicon-eye-open"></i>
+
+																			} else {
+																				<div class="timeline-badge success"><i class="glyphicon glyphicon-ok"></i>
+																			}
+																		}
+													  }
 												  </div>
 										          <div class="timeline-panel">
 										            <div class="timeline-heading">

@@ -1,0 +1,11 @@
+Con CREATE DATABASE, DROP TABLE IF EXISTS, CREATE TABLE
+mysqldump -u erdd -p erdd_dev --ignore-table=erdd_dev.play_evolutions --routines=false --no-tablespaces --complete-insert > ~/dumps/erdd_completo_20240415.sql
+
+
+Solo inserts
+mysqldump -u erdd -p -B erdd_dev --ignore-table=erdd_dev.play_evolutions --no-tablespaces --complete-insert --skip-triggers --no-create-db --no-create-info --skip-add-drop-table> ~/dumps/erdd_dev_soloInserts_20240415.sql
+
+
+
+
+

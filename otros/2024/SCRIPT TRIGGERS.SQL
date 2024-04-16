@@ -1,44 +1,53 @@
-DELIMITER ;;
-CREATE TRIGGER `recurso_BEFORE_INSERT` BEFORE INSERT ON `recurso` FOR EACH ROW BEGIN
-	declare auxNC varchar(255);
-    declare existe boolean;
-    ciclo:
-		repeat
-			set auxNC = conv(floor(rand() * 99999999999999), 20, 36);
-			select count(numcontrol) into existe from recurso where numcontrol = auxNC;
-		until existe = 0
-		end repeat ciclo;
-	set new.numcontrol = auxNC;
-    if new.auditinsert is null then
-		set new.auditinsert = current_timestamp();
-    end if;
-END;;
-CREATE TRIGGER `recurso_AFTER_INSERT` AFTER INSERT ON `recurso` FOR EACH ROW BEGIN
-	insert into historialestado values (null, new.id, new.estado_id, null,now());
-END;;
-CREATE TRIGGER `recurso_AFTER_UPDATE` AFTER UPDATE ON `recurso` FOR EACH ROW BEGIN
-	insert into historialestado values (null, new.id, new.estado_id, null,now());
-END;;
-DELIMITER ;
+// El siguiente query genera los comandos a ejecutar en consola para crear los triggers de TODAS LAS TABLAS DEL ESQUEMA
+// Se crean los triggers que actualizan los campos auditInsert y auditinsert y auditlastupdate de cada tabla en los eventos before_insert y before_update.
 
-
-// El siguiente query genera los comandos a ejecutar en consola para crear los triggers
 SELECT
 	'DELIMITER ;;'
 UNION
 SELECT
-		concat('CREATE TRIGGER `',table_name,'_BEFORE_INSERT`',' BEFORE INSERT ON `',table_name,'` FOR EACH ROW BEGIN  if (new.auditinsert is null) then     set new.auditinsert = current_timestamp();   end if; END;;')
+		concat('CREATE TRIGGER '',table_name,'_BEFORE_INSERT'',' BEFORE INSERT ON '',table_name,'' FOR EACH ROW BEGIN  if (new.auditinsert is null) then     set new.auditinsert = current_timestamp();   end if; END;;')
 FROM information_schema.tables
 where table_schema = 'erdd_dev' and table_name!='recurso'
 UNION
 SELECT
-		concat('CREATE TRIGGER `',table_name,'_BEFORE_UPDATE`',' BEFORE UPDATE ON `',table_name,'` FOR EACH ROW BEGIN  set new.auditlastupdate = current_timestamp(); END;;')
+		concat('CREATE TRIGGER '',table_name,'_BEFORE_UPDATE'',' BEFORE UPDATE ON '',table_name,'' FOR EACH ROW BEGIN  set new.auditlastupdate = current_timestamp(); END;;')
 FROM information_schema.tables
 where table_schema = 'erdd_dev'
 UNION
 SELECT
 	'DELIMITER ;';
 
+
+Los siguientes 3 triggers son de la tabla recurso que ademas de actualizar los campos de auditoria, agregan registreos a la tabla historialestado y el trigger 'recurso_BEFORE_INSERT' genera el numero de control cada que se agrega un registro a la tabla 'recurso'
+
+DELIMITER ;;
+CREATE TRIGGER recurso_BEFORE_INSERT BEFORE INSERT ON recurso
+FOR EACH ROW
+BEGIN
+    DECLARE auxNC VARCHAR(255);
+    DECLARE existe BOOLEAN;
+    ciclo:
+        REPEAT
+            SET auxNC = CONV(FLOOR(RAND() * 99999999999999), 20, 36);
+            SELECT COUNT(numcontrol) INTO existe FROM recurso WHERE numcontrol = auxNC;
+        UNTIL existe = 0
+        END REPEAT ciclo;
+    SET new.numcontrol = auxNC;
+    IF new.auditinsert IS NULL THEN
+        SET new.auditinsert = CURRENT_TIMESTAMP();
+    END IF;
+END;;
+DELIMITER ;
+DELIMITER ;;
+CREATE TRIGGER recurso_AFTER_INSERT AFTER INSERT ON recurso FOR EACH ROW BEGIN
+	insert into historialestado values (null, new.id, new.estado_id, null,now());
+END;;
+DELIMITER ;
+DELIMITER ;;
+CREATE TRIGGER recurso_AFTER_UPDATE AFTER UPDATE ON recurso FOR EACH ROW BEGIN
+	insert into historialestado values (null, new.id, new.estado_id, null,now());
+END;;
+DELIMITER ;
 
 
 

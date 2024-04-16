@@ -13,18 +13,8 @@ libraryDependencies ++= Seq(
   "org.webjars" % "jquery" % "1.12.0",
   "org.webjars" % "jquery-ui" % "1.12.1",
 
-  //"org.webjars" % "jquery" % "2.2.4",
-  //"org.webjars" % "jquery-ui" % "1.12.1",
-
-  //"org.webjars" % "jquery" % "3.3.1",
-  //"org.webjars" % "jquery-ui" % "1.12.1",
-  //"org.webjars" % "bootstrap" % "3.3.7-1",
-	
-
-
-  //"mysql" % "mysql-connector-java" % "5.1.26",
-
-  "mysql" % "mysql-connector-java" % "8.0.33",
+  //"mysql" % "mysql-connector-java" % "8.0.33",
+  "com.mysql" % "mysql-connector-j" % "8.3.0",
 
   "com.feth" %% "play-authenticate" % "0.6.8",
   "org.json" % "org.json" % "chargebee-1.0",

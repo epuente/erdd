@@ -3,7 +3,6 @@
 	@if(encres.isEmpty()){
 		<div class="well">No se localizaron registros</div>
 	} else {
-
 		<table class="table table-striped table-bordered" id="tabla">
 			<thead>
 				<tr>
@@ -11,13 +10,13 @@
 					<th>Título</th>
 					<th>Fecha inicio de encuesta</th>
 					<th>Oficio de valoración</th>
-					<th></th>	
+					<th></th>
 				</tr>
 			</thead>
-			@for((r,ii) <- encres.zipWithIndex) {				
+			@for((r,ii) <- encres.zipWithIndex) {
 				<tr>
 					<td rowspan="1"><a href="/reporte/cesoe/@r.recurso.id">@r.recurso.numcontrol  </a> </td>
-					<td rowspan="1">@r.recurso.titulo</td>					
+					<td rowspan="1">@r.recurso.titulo</td>
 					<td rowspan="1">@r.auditinsert.format("dd/MM/yyyy HH:mm:ss")</td>
 					@if(r.recurso.oficiovaloracion==null){
 						<td rowspan="1">
@@ -38,15 +37,8 @@
 						<td rowspan="1">
 							<a href="@routes.EncuestaController.conObservaciones(r.id)" role="button" class="btn btn-primary btn-block center-block" style="width: 70%">Observaciones</a>
 						</td>
-					}	
-					
-					
-					@if(r.recurso.oficiovaloracion==null){
 					}
-					
 				</tr>
 			}
-
-			
 		</table>
 		}

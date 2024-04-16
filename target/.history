@@ -131,3 +131,27 @@ run 8080
 clean
 dist
 exit
+clean
+reload
+compile
+run 8080
+run 9000
+exit
+run 9000
+exit
+run 9000
+exit
+run 9000
+clean
+reload
+compile
+exit
+clean
+reload
+compile
+run 9000
+clean
+reload
+compile
+run 9000
+exit
