@@ -270,6 +270,8 @@ GET			/listaEvaluacionTablaAjax/:version/:desde/:hasta		    controllers.AdminEva
 POST	/nuevaVersion							controllers.TablaEvaluacionVersionController.versionCreate()
 POST	/nuevaVersionAjax						controllers.TablaEvaluacionVersionController.versionCreateAjax()
 POST	/auxNuevaVersionAjax					controllers.TablaEvaluacionVersionController.auxVersionCreateAjax()
+POST	/versionCreateAjaxParcial				controllers.TablaEvaluacionVersionController.versionCreateAjaxParcial()
+POST	/conteoVersion					        controllers.TablaEvaluacionVersionController.conteoVersion()
 
 
 POST	/toggle/:idVersion						controllers.TablaEvaluacionVersionController.toggle(idVersion:Long)

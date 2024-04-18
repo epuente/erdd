@@ -1,25 +1,210 @@
-2024-04-16 13:43:30,451 - [INFO] - from play in pool-32-thread-2 
+2024-04-18 09:54:34,942 - [INFO] - from play in pool-6-thread-4 
 Listening for HTTP on /0:0:0:0:0:0:0:0:9000
 
-2024-04-16 13:43:39,468 - [INFO] - from play in play-internal-execution-context-1 
+2024-04-18 09:54:43,976 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
 
-2024-04-16 13:43:40,501 - [INFO] - from play in play-internal-execution-context-1 
+2024-04-18 09:54:44,888 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2024-04-16 13:56:12,452 - [INFO] - from application in play-akka.actor.default-dispatcher-18 
+2024-04-18 09:55:16,841 - [DEBUG] - from application in play-akka.actor.default-dispatcher-8 
+{"vp":6,"conCopia":"si"}
 
+2024-04-18 09:55:16,887 - [DEBUG] - from application in play-akka.actor.default-dispatcher-8 
+sqrRs tam: 261
 
+2024-04-18 09:55:16,899 - [DEBUG] - from application in play-akka.actor.default-dispatcher-8 
+Se agregó a la tabla de versiones
 
-Desde AdminEvaluacionTablaController.reactivoDTSS
+2024-04-18 09:58:53,580 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
 
-2024-04-16 13:56:12,454 - [DEBUG] - from application in play-akka.actor.default-dispatcher-18 
-c0 asc
+2024-04-18 09:58:53,802 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
 
-2024-04-16 13:56:12,475 - [DEBUG] - from application in play-akka.actor.default-dispatcher-18 
+2024-04-18 09:59:00,405 - [DEBUG] - from application in play-akka.actor.default-dispatcher-22 
+{"vp":7,"conCopia":"si"}
 
+2024-04-18 09:59:00,472 - [DEBUG] - from application in play-akka.actor.default-dispatcher-22 
+sqrRs tam: 261
 
-q2: select t0.id c0, t0.descripcion c1, t0.auditinsert c2, t0.auditlastupdate c3 from evaluacion_tabla_reactivo t0 where t0.descripcion like ? 
+2024-04-18 09:59:00,480 - [DEBUG] - from application in play-akka.actor.default-dispatcher-22 
+Se agregó a la tabla de versiones
 
+2024-04-18 10:00:41,461 - [INFO] - from play in play-internal-execution-context-3 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
 
+2024-04-18 10:00:41,667 - [INFO] - from play in play-internal-execution-context-3 
+Application started (Dev)
+
+2024-04-18 10:00:46,301 - [DEBUG] - from application in play-akka.actor.default-dispatcher-29 
+{"vp":7,"conCopia":"si"}
+
+2024-04-18 10:00:46,331 - [DEBUG] - from application in play-akka.actor.default-dispatcher-29 
+sqrRs tam: 261
+
+2024-04-18 10:00:46,337 - [DEBUG] - from application in play-akka.actor.default-dispatcher-29 
+Se agregó a la tabla de versiones
+
+2024-04-18 10:01:47,518 - [INFO] - from play in play-internal-execution-context-3 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-04-18 10:01:47,726 - [INFO] - from play in play-internal-execution-context-3 
+Application started (Dev)
+
+2024-04-18 10:01:51,853 - [DEBUG] - from application in play-akka.actor.default-dispatcher-35 
+{"vp":7,"conCopia":"si"}
+
+2024-04-18 10:01:51,888 - [DEBUG] - from application in play-akka.actor.default-dispatcher-35 
+sqrRs tam: 261
+
+2024-04-18 10:01:51,897 - [DEBUG] - from application in play-akka.actor.default-dispatcher-35 
+Se agregó a la tabla de versiones
+
+2024-04-18 10:03:04,368 - [INFO] - from play in play-internal-execution-context-3 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-04-18 10:03:04,521 - [INFO] - from play in play-internal-execution-context-3 
+Application started (Dev)
+
+2024-04-18 10:03:12,102 - [DEBUG] - from application in play-akka.actor.default-dispatcher-45 
+{"vp":7,"conCopia":"si"}
+
+2024-04-18 10:03:12,131 - [DEBUG] - from application in play-akka.actor.default-dispatcher-45 
+sqrRs tam: 261
+
+2024-04-18 10:03:12,137 - [DEBUG] - from application in play-akka.actor.default-dispatcher-45 
+Se agregó a la tabla de versiones
+
+2024-04-18 10:03:34,986 - [DEBUG] - from application in play-akka.actor.default-dispatcher-45 
+{"vp":7,"conCopia":"si"}
+
+2024-04-18 10:03:35,016 - [DEBUG] - from application in play-akka.actor.default-dispatcher-45 
+sqrRs tam: 261
+
+2024-04-18 10:03:35,021 - [DEBUG] - from application in play-akka.actor.default-dispatcher-45 
+Se agregó a la tabla de versiones
+
+2024-04-18 10:05:04,181 - [INFO] - from play in play-internal-execution-context-3 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-04-18 10:05:04,323 - [INFO] - from play in play-internal-execution-context-3 
+Application started (Dev)
+
+2024-04-18 10:05:09,001 - [DEBUG] - from application in play-akka.actor.default-dispatcher-55 
+{"vp":7,"conCopia":"si"}
+
+2024-04-18 10:05:09,031 - [DEBUG] - from application in play-akka.actor.default-dispatcher-55 
+sqrRs tam: 261
+
+2024-04-18 10:05:09,037 - [DEBUG] - from application in play-akka.actor.default-dispatcher-55 
+Se agregó a la tabla de versiones
+
+2024-04-18 10:05:57,449 - [DEBUG] - from application in play-akka.actor.default-dispatcher-62 
+{"vp":7,"conCopia":"si"}
+
+2024-04-18 10:05:57,481 - [DEBUG] - from application in play-akka.actor.default-dispatcher-62 
+sqrRs tam: 261
+
+2024-04-18 10:05:57,487 - [DEBUG] - from application in play-akka.actor.default-dispatcher-62 
+Se agregó a la tabla de versiones
+
+2024-04-18 10:07:17,098 - [INFO] - from play in play-internal-execution-context-3 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-04-18 10:07:17,251 - [INFO] - from play in play-internal-execution-context-3 
+Application started (Dev)
+
+2024-04-18 10:07:25,342 - [DEBUG] - from application in play-akka.actor.default-dispatcher-72 
+{"vp":7,"conCopia":"si"}
+
+2024-04-18 10:07:25,379 - [DEBUG] - from application in play-akka.actor.default-dispatcher-72 
+sqrRs tam: 261
+
+2024-04-18 10:07:25,385 - [DEBUG] - from application in play-akka.actor.default-dispatcher-72 
+Se agregó a la tabla de versiones
+
+2024-04-18 10:08:03,835 - [INFO] - from play in play-internal-execution-context-3 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-04-18 10:08:03,977 - [INFO] - from play in play-internal-execution-context-3 
+Application started (Dev)
+
+2024-04-18 10:08:07,879 - [DEBUG] - from application in play-akka.actor.default-dispatcher-80 
+{"vp":7,"conCopia":"si"}
+
+2024-04-18 10:08:07,928 - [DEBUG] - from application in play-akka.actor.default-dispatcher-80 
+sqrRs tam: 261
+
+2024-04-18 10:08:07,934 - [DEBUG] - from application in play-akka.actor.default-dispatcher-80 
+Se agregó a la tabla de versiones
+
+2024-04-18 10:09:14,905 - [INFO] - from play in play-internal-execution-context-6 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-04-18 10:09:15,247 - [INFO] - from play in play-internal-execution-context-6 
+Application started (Dev)
+
+2024-04-18 10:09:20,039 - [DEBUG] - from application in play-akka.actor.default-dispatcher-85 
+{"vp":7,"conCopia":"si"}
+
+2024-04-18 10:09:20,083 - [DEBUG] - from application in play-akka.actor.default-dispatcher-85 
+sqrRs tam: 261
+
+2024-04-18 10:09:20,089 - [DEBUG] - from application in play-akka.actor.default-dispatcher-85 
+Se agregó a la tabla de versiones
+
+2024-04-18 10:10:03,669 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-04-18 10:10:03,829 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2024-04-18 10:10:08,284 - [DEBUG] - from application in play-akka.actor.default-dispatcher-89 
+{"vp":7,"conCopia":"si"}
+
+2024-04-18 10:10:08,320 - [DEBUG] - from application in play-akka.actor.default-dispatcher-89 
+sqrRs tam: 261
+
+2024-04-18 10:10:08,327 - [DEBUG] - from application in play-akka.actor.default-dispatcher-89 
+Se agregó a la tabla de versiones
+
+2024-04-18 10:11:18,915 - [DEBUG] - from application in play-akka.actor.default-dispatcher-79 
+{"vp":18,"conCopia":"si"}
+
+2024-04-18 10:11:18,952 - [DEBUG] - from application in play-akka.actor.default-dispatcher-79 
+sqrRs tam: 261
+
+2024-04-18 10:11:18,958 - [DEBUG] - from application in play-akka.actor.default-dispatcher-79 
+Se agregó a la tabla de versiones
+
+2024-04-18 10:12:49,506 - [DEBUG] - from application in play-akka.actor.default-dispatcher-96 
+{"vp":19,"conCopia":"si"}
+
+2024-04-18 10:12:49,546 - [DEBUG] - from application in play-akka.actor.default-dispatcher-96 
+sqrRs tam: 260
+
+2024-04-18 10:12:49,554 - [DEBUG] - from application in play-akka.actor.default-dispatcher-96 
+Se agregó a la tabla de versiones
+
+2024-04-18 10:33:22,940 - [INFO] - from play in play-internal-execution-context-12 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-04-18 10:33:23,087 - [INFO] - from play in play-internal-execution-context-12 
+Application started (Dev)
+
+2024-04-18 10:33:28,056 - [DEBUG] - from application in play-akka.actor.default-dispatcher-104 
+{"vp":19,"conCopia":"si"}
+
+2024-04-18 10:33:28,091 - [DEBUG] - from application in play-akka.actor.default-dispatcher-104 
+sqrRs tam: 260
+
+2024-04-18 10:33:28,097 - [DEBUG] - from application in play-akka.actor.default-dispatcher-104 
+Se agregó a la tabla de versiones
+
+2024-04-18 10:38:47,187 - [INFO] - from play in play-internal-execution-context-12 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev
+
+2024-04-18 10:38:47,331 - [INFO] - from play in play-internal-execution-context-12 
+Application started (Dev)
 

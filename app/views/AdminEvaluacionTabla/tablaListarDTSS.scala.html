@@ -122,7 +122,7 @@ tiposrecursos:List[ClasificadorEjemplo]
 						</div>	
 					}
 						
-						@form(CSRF(routes.TablaEvaluacionVersionController.versionCreate())){	
+						@form(CSRF(routes.TablaEvaluacionVersionController.versionCreate()), 'id->"frmVersiones"){
 							<div class="pull-right">						
 								<table id="tablaVersiones" border="1" stye="table-layout: fixed">
 									<tr>
@@ -133,7 +133,6 @@ tiposrecursos:List[ClasificadorEjemplo]
 															@v.version														
 														</a>
 														<div id="divCandado@v.id">
-														
 															@if(v.numEvaluacionRespuestas != 0){
 																<a href="javascript:toggleTabla(@v.id)" data-toggle="popover" role ="button" tabindex="0" title="Versión cerrada" data-content="No es posible agregar o eliminar reactivos en una versión cerrada. De click sobre el candado para abrir o cerrar esta versión." data-trigger="hover">														
 																	<i class="fa fa-lock"></i>
@@ -152,11 +151,7 @@ tiposrecursos:List[ClasificadorEjemplo]
 																	}																
 																}
 															}
-															
-
-
-																
-														</div>																									
+														</div>
 													</td>								
 											}
 										<td style="padding-left: 0.5em; padding-right: 0.5em;"><a class="btn btn-primary btn-block" onclick="muestraModal()" role="button">Agregar versión  <i class="fa fa-plus"></i></a></td>
@@ -174,17 +169,19 @@ tiposrecursos:List[ClasificadorEjemplo]
 							      <div class="modal-body">
 										Se creará una nueva versión del instrumento de evaluación.<br><br>
 										Puede crear una versión a partir de cero, o a partir de una copia de la versión que actualmente esta mostradose, para lograrlo marque la casilla "Iniciar como una copia de la versión X".
+
+									  <div><span id="indicador"></span></div>
 							      </div>
-									<!--Faltan <span id="indicador"></span> registros-->
+
 
 							      <div class="modal-footer">
 							      	<div class="modalPie"> <input type="checkbox" name="cbxcopia" value="sí"></input>    Iniciar como una copia de la versión @version.version</div>
 							      	<input type="hidden" name="versionEnPantalla" value="@version.version" >
 							        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-							        <button type="submit" class="btn btn-primary">Agregar versión</button>
-									<!--
-									 <button type="button" class="btn btn-primary" id="btnAgregarReactivoAjax">Agregar versión (ajax)</button>
-									 -->
+							        <!--button type="submit" class="btn btn-primary">Agregar versión</button-->
+
+									 <button type="button" class="btn btn-primary" id="btnAgregarReactivoAjax">Agregar versión</button>
+
 							      </div>
 							    </div>
 							  </div>
@@ -251,7 +248,8 @@ tiposrecursos:List[ClasificadorEjemplo]
 
 
 <script type="text/javascript">
-    laTablaDTSS = null;	
+    laTablaDTSS = null;
+    let intervalID;
 
 	$(function() {
 		$("#principal").hide();
@@ -431,7 +429,7 @@ tiposrecursos:List[ClasificadorEjemplo]
             laTablaDTSS.data().each(function(dato){
             	$("input[type='radio'][name='aspecto"+dato.reactivoId+"'][value='"+dato.aspectoId+"']").prop("checked", true);
                 dato.criterios.forEach(function(c){
-                	console.dir(c)
+                	//console.dir(c)
                     $("#criterio_"+dato.reactivoId+"_"+c.c1+"_"+c.c2+"_"+c.c3).prop("checked", true);
                     if(c.trecursos!=undefined){
                     	c.trecursos.forEach(function(tr){
@@ -1184,44 +1182,82 @@ alert("error hjk6");
 
 
 	$("#btnAgregarReactivoAjax").click(function(e){
-		console.log("click");
-		console.log(  $("[name='cbxcopia']").prop("checked")   )
-
+		console.clear();
+		if ($("[name='cbxcopia']").prop("checked")==false){
+			$("#frmVersiones").submit();
+		}
 		var cx =  "";
 		if ($("[name='cbxcopia']").prop("checked"))
 			cx="si";
 		else
 			cx="no";
-
 		var vp = @version.version;
 		var $x = LlamadaAjax("@routes.TablaEvaluacionVersionController.versionCreateAjax()", "POST", JSON.stringify({"cbxcopia": cx, "versionEnPantalla": vp}));
 		$.when($x).done(function(data){
-			console.dir(data)
+			//console.dir(data)
 			if (data.conCopia =="si" && data.nregistros >0){
-				var faltantes = data.reactivosIds.length;
-				//$("#indicador").text(faltantes);
+					// revisarConteo, repetirLlamadoCada1000miliSegundos, idDeLaVersionNueva, cunatosRegistrosSeAgregaran
+					intervalID = setInterval(revisarConteo,500,data.etvId, data.nregistros);
+					$("#indicador").text("Iniciando copia de "+data.nregistros.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" registros, procesando...");
+					var arregloOriginal = data.ids;
+					var arreglosMasPequenos = [];
+					var Llamadas = [];
+					var partes = 5;
+					for (var i = 0; i < partes; i++) {
+					  arreglosMasPequenos.push([]);
+					  Llamadas.push([]);
+					}
+					for (var i = 0; i < arregloOriginal.length; i++) {
+					  var indiceArreglo = i % partes;
+					  arreglosMasPequenos[indiceArreglo].push(arregloOriginal[i]);
+					}
+					console.log("...iniciando arreglo Llamadas")
+					for (var x=0; x < arreglosMasPequenos.length; x++){
+						Llamadas[x] = LlamadaAjax("@routes.TablaEvaluacionVersionController.versionCreateAjaxParcial()", "POST", JSON.stringify({"vorigen": vp, "vdestino": data.etvId, "ids": arreglosMasPequenos[x]  }));
+					}
+					console.log("...se llamaron Llamadas")
 
-				data.reactivosIds.forEach(function(id) {
-					console.log("bucle id: "+id)
-					var $y=LlamadaAjax("@routes.TablaEvaluacionVersionController.auxVersionCreateAjax()", "POST", JSON.stringify({"vorigen": vp, "vdestino": data.etvId, "reactivoId": id.reactivo_id}));
-					$.when($y).done(function(dataAux){
-						if (dataAux.estado!="ok"){
-							faltantes -= 1;
-							console.log("faltantes: "+faltantes)
-							//$("#indicador").text(faltantes);
-						}
-					});
-				})
-				//$("#indicador").text(faltantes);
-				console.log("bucles terminados")
-			}
-
-
+					$.when.apply($, Llamadas)
+						.done(function(data){
+							clearInterval(intervalID);
+							intervalID=null;
+							$("#indicador").text("La copia ha terminado");
+							setTimeout(() => {
+								$('#myModal').modal('hide');
+								location.reload();
+							}, "1500");
+						}).fail(function(e){
+							alert("ERROR "+e );
+						});
+				}
 		});
 	});
 
 
-    
+	function revisarConteo(id, total){
+		//console.log("-- total "+total)
+		//console.log("-- revisarConteo "+id)
+		var $z=LlamadaAjax("@routes.TablaEvaluacionVersionController.conteoVersion()", "POST", JSON.stringify({"versionId": id}));
+		$.when($z).done(function(dataConteo){
+			//console.dir(dataConteo)
+			//console.log(total," - ",dataConteo.registros)
+			//console.log(total - dataConteo.registros)
+			var faltantes = (total - dataConteo.registros);
+			$("#indicador").text("Faltan "+faltantes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" registros");
+			if (faltantes==77777777777777777777777777777777777777770){
+				clearInterval(intervalID);
+				intervalID=null;
+				$("#indicador").text("La copia ha terminado.....").show();
+				setTimeout(() => {
+				  	$('#myModal').modal('hide');
+					location.reload();
+				}, "1500");
+
+			}
+
+		});
+	}
+
 </script>
 
 <script src="@routes.Assets.at("lib/datatables/js/jquery.dataTables.min.js")" type="text/javascript"></script>

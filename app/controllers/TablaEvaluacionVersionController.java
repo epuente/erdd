@@ -8,7 +8,9 @@ import java.util.Objects;
 
 
 import com.avaje.ebean.SqlRow;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import models.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,7 +72,7 @@ System.out.println("copíando "+et.size()+" registros");
 				etvr.save();
 			}
 System.out.println(" Total en EvaluacionTabla:  "+EvaluacionTabla.find.findRowCount());
-	return redirect(controllers.routes.AdminEvaluacionTablaController.listarTabla(etvr.id));   
+	return redirect(controllers.routes.AdminEvaluacionTablaController.listarTabla(etvr.id));
 		
 	}
 	
@@ -128,12 +130,7 @@ System.out.println(etv.terminado);
 			List<SqlRow> sqrRs = Ebean.createSqlQuery("select et.reactivo_id from evaluacion_tabla et where et.version_id ="+versionId +
 					" GROUP by et.reactivo_id").findList();
 			Logger.debug("sqrRs tam: "+sqrRs.size());
-
-
 			retorno.put("reactivosIds", new JSONArray(new ArrayList<>(sqrRs)));
-
-
-
 		}
 
 		EvaluacionTablaVersion etvr = new EvaluacionTablaVersion();
@@ -145,38 +142,8 @@ System.out.println(etv.terminado);
 		etvr.save();
 		etvr.refresh();
 		retorno.put("etvId", etvr.id);
+		Logger.debug("Se agregó a la tabla de versiones");
 		return ok( retorno.toString());
-	}
-
-	public static Result auxVersionCreateAjaxAnterior() throws JSONException {
-		Logger.debug("lllllllllllllllllllll");
-		JsonNode json = request().body().asJson();
-		JSONObject retorno = new JSONObject();
-		long etvId = json.get("etvId").longValue();
-		long etId = json.get("etId").longValue();
-
-		EvaluacionTablaVersion etv = EvaluacionTablaVersion.find.byId(etvId);
-		EvaluacionTabla et = EvaluacionTabla.find.byId(etId);
-
-		EvaluacionTabla x = new EvaluacionTabla();
-		x.version = etv;
-		x.reactivo =EvaluacionTablaReactivo.find.byId(et.reactivo.id);
-		x.aspecto = Aspecto.find.byId(et.aspecto.id);
-		x.criterio1 =ClasificadorCriterio1.find.byId( et.criterio1.id);
-		x.criterio2 =ClasificadorCriterio2.find.byId( et.criterio2.id);
-		x.criterio3 =ClasificadorCriterio3.find.byId( et.criterio3.id);
-
-		for ( EvaluacionTablaTipoRecurso ettr : et.tiposrecursos  ) {
-			EvaluacionTablaTipoRecurso y = new EvaluacionTablaTipoRecurso();
-			y.evaluaciontabla = x;
-			y.tiporecurso = ettr.tiporecurso;
-			x.tiposrecursos.add(y);
-		}
-		etv.evaluacionTablas.add(x);
-		etv.save();
-
-		retorno.put("estado", "ok");
-		return ok (retorno.toString());
 	}
 
 
@@ -185,26 +152,30 @@ System.out.println(etv.terminado);
 		JSONObject retorno = new JSONObject();
 		System.out.println("---> "+json.toString());
 		long vdestino = json.get("vdestino").longValue();
-		long vorigen = json.get("vorigen").longValue();
-		long reactivoId = json.get("reactivoId").longValue();
 
-		EvaluacionTablaVersion etvorigen = EvaluacionTablaVersion.find.byId(vorigen);
+
+		long vorigen =  EvaluacionTablaVersion.find.where().eq("version", json.get("vorigen").longValue()).findUnique().id;
+
 		EvaluacionTablaVersion etvdestino = EvaluacionTablaVersion.find.byId(vdestino);
-		List<EvaluacionTabla> ets = EvaluacionTabla.find.where().eq("version.id", vorigen).eq("reactivo.id", reactivoId).findList();
+		//List<EvaluacionTabla> ets = EvaluacionTabla.find.where().eq("version.id", vorigen).eq("reactivo.id", reactivoId).findList();
+		List<EvaluacionTabla> ets = EvaluacionTabla.find.where().eq("version.id", vorigen).findList();
 
 		Logger.debug("\t\tets tam: "+ets.size());
+		System.out.println("\n\n\n\n\nhaciendo copia de "+ets.size()+" registros ................");
 
-		for ( EvaluacionTabla et : ets ) {
-			EvaluacionTabla x = new EvaluacionTabla();
+		EvaluacionTabla x;
+		EvaluacionTablaTipoRecurso y;
+		for (EvaluacionTabla et : ets) {
+			x = new EvaluacionTabla();
 			x.version = etvdestino;
 			x.reactivo = EvaluacionTablaReactivo.find.byId(et.reactivo.id);
 			x.aspecto = Aspecto.find.byId(et.aspecto.id);
 			x.criterio1 = ClasificadorCriterio1.find.byId(et.criterio1.id);
 			x.criterio2 = ClasificadorCriterio2.find.byId(et.criterio2.id);
 			x.criterio3 = ClasificadorCriterio3.find.byId(et.criterio3.id);
-			Logger.debug("\t\t\t\tet.tiposrecursos tam: "+et.tiposrecursos.size());
+
 			for (EvaluacionTablaTipoRecurso ettr : et.tiposrecursos) {
-				EvaluacionTablaTipoRecurso y = new EvaluacionTablaTipoRecurso();
+				y = new EvaluacionTablaTipoRecurso();
 				y.evaluaciontabla = x;
 				y.tiporecurso = ettr.tiporecurso;
 				x.tiposrecursos.add(y);
@@ -212,10 +183,68 @@ System.out.println(etv.terminado);
 			etvdestino.evaluacionTablas.add(x);
 			etvdestino.update();
 		}
-
 		retorno.put("estado", "ok");
 		return ok (retorno.toString());
 	}
+
+
+
+	// recibe un array con los ids EvaluacionTabla y genera la copia parcial
+	public static Result versionCreateAjaxParcial() throws JSONException {
+		//System.out.println("Desde versionCreateAjaxParcial...");
+		JsonNode json = request().body().asJson();
+		JSONObject retorno = new JSONObject();
+		//System.out.println("---> "+json.toString());
+		long vdestino = json.get("vdestino").longValue();
+		long vorigen =  EvaluacionTablaVersion.find.where().eq("version", json.get("vorigen").longValue()).findUnique().id;
+		JsonNode idsReactivosArray = json.get("ids");
+		List<Long> ids = new ObjectMapper().convertValue(idsReactivosArray, new TypeReference<List<Long>>() {});
+		EvaluacionTablaVersion etvdestino = EvaluacionTablaVersion.find.byId(vdestino);
+		//List<EvaluacionTabla> ets = EvaluacionTabla.find.where().eq("version.id", vorigen).eq("reactivo.id", reactivoId).findList();
+		//List<EvaluacionTabla> ets = EvaluacionTabla.find.where().eq("version.id", vorigen).findList();
+		List<EvaluacionTabla> ets = EvaluacionTabla.find.where().eq("version.id", vorigen).in("id",ids).findList();
+
+		//Logger.debug("\t\tets tam: "+ets.size());
+		//System.out.println("\n\n\n\n\nhaciendo copia de "+ets.size()+" registros ................");
+
+		EvaluacionTabla x;
+		EvaluacionTablaTipoRecurso y;
+		for (EvaluacionTabla et : ets) {
+			x = new EvaluacionTabla();
+			x.version = etvdestino;
+			x.reactivo = EvaluacionTablaReactivo.find.byId(et.reactivo.id);
+			x.aspecto = Aspecto.find.byId(et.aspecto.id);
+			x.criterio1 = ClasificadorCriterio1.find.byId(et.criterio1.id);
+			x.criterio2 = ClasificadorCriterio2.find.byId(et.criterio2.id);
+			x.criterio3 = ClasificadorCriterio3.find.byId(et.criterio3.id);
+
+			for (EvaluacionTablaTipoRecurso ettr : et.tiposrecursos) {
+				y = new EvaluacionTablaTipoRecurso();
+				y.evaluaciontabla = x;
+				y.tiporecurso = ettr.tiporecurso;
+				x.tiposrecursos.add(y);
+			}
+			etvdestino.evaluacionTablas.add(x);
+			etvdestino.update();
+		}
+		retorno.put("estado", "ok");
+		return ok (retorno.toString());
+	}
+
+
+	public static Result conteoVersion() throws JSONException {
+		//Logger.debug("Desde TablaEvaluacionVersionController.conteoVersion");
+		JsonNode json = request().body().asJson();
+		//System.out.println("conteoVersion "+json);
+		long versionId = json.get("versionId").longValue();
+		//Logger.debug("versionId:"+versionId);
+		JSONObject joRetorno = new JSONObject();
+		int x = EvaluacionTabla.find.where().eq("version.id", versionId).findList().size();
+		joRetorno.put("registros", x);
+		//System.out.println("retorno de conteoVersion "+ joRetorno  );
+		return ok( joRetorno.toString() );
+	}
+
 
 
 

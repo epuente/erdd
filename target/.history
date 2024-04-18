@@ -155,3 +155,15 @@ reload
 compile
 run 9000
 exit
+run 9000
+exit
+run 9000
+compile
+run 9000
+compile
+run 9000
+compile
+run 9000
+exit
+run 9000
+exit
