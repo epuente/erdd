@@ -136,6 +136,7 @@ System.out.println(df);
 	}	
 	
 	public static Result verOficio(Long id) {
+		System.out.println("DEsde OficioController.verOficio");
 		Oficio o = Oficio.find.where().eq("recurso.id", id).findUnique();
 		response().setContentType(o.contenttype);		 
 		return ok (o.contenido);

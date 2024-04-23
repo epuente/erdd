@@ -168,14 +168,11 @@ System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 System.out.println("************* Seliminó el recurso ");	        
 	        
 	    } catch (PersistenceException pe) {	   	 
-		   	 System.out.println("000 ***************************"+pe+"\n"+pe.getCause());
-		   	System.out.println("000 ***************************"+pe+"\n"+pe.getMessage()+"  \n  "+pe.getStackTrace());
 		   	 if (   pe.getCause().toString().contains("IntegrityConstraint")){
 		   		 flash("error", "No se puede eliminar puesto que se hace uso de la misma en otros registros. Por ejemplo, si tiene actualizaciones.  ");	
 		   	 }
 		   	 
 	    } catch (Exception e){
-	    	System.out.println("001 **********************   "+e+"\n"+e.getMessage()+"\n"+e.getCause()+"\n"+e.getStackTrace());
 	    	flash("error", "No se pudo eliminar.  ");
 	    }
 	    return redirect(routes.RecursoController.ajaxListTabla(0, "titulo", "asc", "", "titulo")); 	

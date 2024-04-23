@@ -245,8 +245,8 @@ System.out.println("retornano:"+losDatos.toString());
     
     public static Result descripcionCriterio(){
     	JsonNode json = request().body().asJson();
-    	Long criterio = json.findPath("criterio").asLong();
-    	Long id = json.findPath("id").asLong();
+    	long criterio = json.findPath("criterio").asLong();
+    	long id = json.findPath("id").asLong();
     	String aux = "";
     	if (criterio == 2L){
     		ClasificadorCriterio2 d = ClasificadorCriterio2.find.byId(id);

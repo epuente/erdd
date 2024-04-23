@@ -1,9 +1,9 @@
-@(re:List[Recursoevaluador], idAspecto:String)
+@(re:List[Recursoevaluador], idAspecto:String, recurso : Recurso)
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/lineasColoresPaneles.css")"/>
 
 
 @main{
-	<div class="container-fluid">
+	<div class="container-fluid" id="div0" style="display:none">
 			<div class="row">
 				<div class="col-md-12">
 					<ol class="breadcrumb">
@@ -23,7 +23,7 @@
 							<div class="row">
 					  			<div class="col-md-12">
 									<div style="font-size: large;" class="text-center">
-										@re.get(0).recurso.numcontrol
+										@recurso.numcontrol
 									</div>
 								</div>
 							</div>					  
@@ -31,9 +31,9 @@
 							<div class="row">
 					  			<div class="col-md-12">
 									<div style="font-size: large;" class="text-center">
-										Calificación general<div></div>@re.get(0).recurso.calificacionPorcentajeGral
+										Calificación general<div></div>@recurso.calificacion.calificacion
 										<br>
-					  					@re.get(0).recurso.calificacionLetraGral
+					  					@recurso.calificacionLetraGral
 				  					</div>
 					  			</div>
 				  			</div>		
@@ -45,7 +45,7 @@
 			  			</div>
 					  	<div class="row">
 					  		<div class="col-sm-12">
-					  			@for(r<-re){
+					  			@for(r<-recurso.calificacion.calificacionesAspectos){
 					  				<div class="row">
 					  					<div class="col-sm-12">
 					  						<strong>Detalle aspecto @r.aspecto.descripcion</strong>
@@ -56,7 +56,7 @@
 				  							<div class="small">Calificación aspecto</div>
 				  						</div>
 				  						<div class="col-sm-3">
-				  							<div id="calAspecto@r.aspecto.id" class="small pull-right"></div>
+				  							<div id="calAspecto@r.aspecto.id" class="small pull-right">@r.calificacion</div>
 				  						</div>
 			  						</div>	
 				  					<div class="row">
@@ -96,7 +96,7 @@
 				  					<div class="row">
 				  						<div class="col-sm-9">
 											<div style="display:inline-block" class='refLineaColor1 small'></div>
-				  							<div style="display:inline-block"class="small">Parcialmente</div>
+				  							<div style="display:inline-block" class="small">Parcialmente</div>
 				  						</div>
 				  						<div class="col-sm-3">
 				  							<div id="totalParcial@r.aspecto.id" class="small pull-right"></div>					  						
@@ -105,10 +105,10 @@
 				  					<div class="row">
 				  						<div class="col-sm-9">
 											<div style="display:inline-block" class='refLineaColorNA small'></div>
-				  							<div style="display:inline-block"class="small">No aplica</div>
+				  							<div style="display:inline-block" class="small">No aplica</div>
 				  						</div>
 				  						<div class="col-sm-3">
-				  							<div id="totalNA@r.aspecto.id"class="small pull-right"></div>					  						
+				  							<div id="totalNA@r.aspecto.id" class="small pull-right"></div>
 				  						</div>
 				  					</div>
 				  					<div class="row">
@@ -116,25 +116,11 @@
 			  						</div>
 					  			}
 							</div>					  		
-					  		
-					  		
-					  		
-					  		
-
-
-
-
 				  		</div>
 			  		  </div>
 				    </div>		
-
-
-					
 				</div>
-
-				
-				
-				<div class="col-md-10">		  
+				<div class="col-md-10">
   				    <ul id="tabs" class="nav nav-tabs nav-justified" data-tabs="tabs">
 						@for((r,ir) <- re.zipWithIndex){
 							<li @if(ir==0){class="active"}><a href="#divAspecto@r.aspecto.id" data-toggle="tab">Aspecto: @r.aspecto.descripcion</a></li>
@@ -155,9 +141,6 @@
 				</div>
 			</div>
 	</div>
-
-
-
 }
 
 
@@ -165,18 +148,18 @@
 	$(function() {
     	$("#div0").hide();
         $('#tabs').tab();
-        $('[data-toggle="popover"]').popover({html: true});        
+        $('[data-toggle="popover"]').popover({html: true});
         navegacionPaneles();
     	leer();
     	$("#btnEvaluar, #btnCancelar, input:button[id^='btnNA']").hide();
     	$("input:radio[name^='califica'], textarea").prop("disabled",true);
 
     	$("textarea").prop("readonly",true);
-    	
+
     	$("div[id^='divAspecto']").each(function(i,e){
     			$(this).find("[name='cpPagina']:first").click();
     	});
-    	$("#div0").show();    	
+    	$("#div0").show();
     });
     
 
@@ -272,7 +255,7 @@
 	    	$("#totalNo@r.aspecto.id").html(($("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='0']:checked").length) );
 	    	$("#totalParcial@r.aspecto.id").html( ($("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='1']:checked").length)  );
 	    	$("#totalNA@r.aspecto.id").html(($("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='-1']:checked").length)  );
-	    	$("#calAspecto@r.aspecto.id").html(@r.calificacionPorcentajeAspecto());
+	    //	$("#calAspecto@r.aspecto.id").html(@r.calificacionPorcentajeAspecto());
 			
 			// Pone lineas de color
 			$("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='-1']:checked").closest(".panel-body").before("<div class='lineaColorNA'></div>")

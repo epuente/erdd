@@ -556,7 +556,7 @@ public class RecursoWebController extends Controller{
 			Recurso r = Recurso.find.byId( Long.parseLong(session("idRecurso")));
 
 			//Recurso r = Recurso.find.byId( id );
-			Boolean seEncuentra = false;
+			boolean seEncuentra = false;
 			for(Documento aux : r.documentos){
 				if (aux.id == id){
 					seEncuentra |=true;
@@ -926,9 +926,7 @@ public class RecursoWebController extends Controller{
 	}
 
 
-	public static Result index2() {
-		return ok(views.html.index2.render());
-	}
+
 
 
 

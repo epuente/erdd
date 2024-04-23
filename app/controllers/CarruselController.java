@@ -1,13 +1,12 @@
 package controllers;
 
-import com.avaje.ebean.Page;
-import com.avaje.ebean.Query;
+import com.avaje.ebean.*;
 import controllers.ControladorSeguro;
-import models.Areaconocimiento;
-import models.Oficio;
-import models.Recurso;
-import models.Unidadacademica;
+import models.*;
 import models.polimedia.Carrusel;
+import models.polimedia.Polimedia;
+import models.polimedia.PolimediaCarrusel;
+import models.polimedia.PolimediaCarruselImagen;
 import org.joda.time.DateTimeComparator;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,15 +24,15 @@ import static play.data.Form.form;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.joda.time.DateTime;
@@ -220,12 +219,12 @@ public class CarruselController extends Controller {
         return GO_HOME;
     }
 
-        public static Result edit(Long id){
-            Form<Carrusel> c = form(Carrusel.class).fill(
-                    Carrusel.find.byId(id)
-            );
-            return ok (views.html.poliMedia.edit.render(id, c) );
-        }
+    public static Result edit(Long id){
+        Form<Carrusel> c = form(Carrusel.class).fill(
+                Carrusel.find.byId(id)
+        );
+        return ok (views.html.poliMedia.edit.render(id, c) );
+    }
 
     public static Result update(Long id) throws ParseException {
         System.out.println("Desde uppdate");
@@ -269,6 +268,257 @@ public class CarruselController extends Controller {
         Carrusel.find.byId(id).delete();
         flash("success", "Se eliminó el registro.");
         return GO_HOME;
+    }
+
+
+
+    //////////////////////////////////////////////////////////////
+
+    public static Result list2(){
+        Logger.info("Desde CarruselController.list");
+        return ok(  views.html.poliMedia.list2.render()  );
+    }
+
+
+    public static Result carruselDTSS2(){
+        Logger.info("Desde CarruselController.carruselDTSS2");
+        System.out.println( "parametros 0:"+ request() );
+        JSONObject json2 = new JSONObject();
+        int filtrados = 0;
+        int sinFiltro = 0;
+        Map<Integer, Integer> columnasOrdenables = new HashMap<Integer, Integer>();
+        columnasOrdenables.put(0, 3);   //posicion
+        columnasOrdenables.put(1, 4);   //inicio
+        columnasOrdenables.put(2, 5);   //fin
+        columnasOrdenables.put(3, 6);   //titulo
+        columnasOrdenables.put(4, 1);   //archivo
+        columnasOrdenables.put(5, 2);   //url
+
+        System.out.println( columnasOrdenables.get(0)  );
+        System.out.println( columnasOrdenables.get(1)  );
+
+        String filtro = request().getQueryString("search[value]");
+        Integer colOrden =   Integer.parseInt( request().getQueryString("order[0][column]")   );
+        String tipoOrden = request().getQueryString("order[0][dir]");
+        System.out.println( "parametro start:"+ Integer.parseInt(request().getQueryString("start")));
+        System.out.println( "parametro length:"+ Integer.parseInt(request().getQueryString("length")));
+        System.out.println( "parametros order[0][column]:"+ colOrden);
+        System.out.println( "parametros order[0][dir]:"+ tipoOrden);
+        System.out.println( "filtrando :"+ filtro);
+        int numPag = 0;
+        if (Integer.parseInt(request().getQueryString("start")) != 0)
+            numPag = Integer.parseInt(request().getQueryString("start")) /   Integer.parseInt(request().getQueryString("length"));
+        int numRegistros = Integer.parseInt(request().getQueryString("length"));
+
+        System.out.println("**************************************************************************************"       );
+
+
+        Page<PolimediaCarrusel> carr = null;
+
+        Query<PolimediaCarrusel> q1 = PolimediaCarrusel.find;
+        Query<PolimediaCarrusel> q2 = PolimediaCarrusel.find.where(
+                "nombreArchivo like :cadena "+
+                        "or liga like :cadena "+
+                        "or posicion like :cadena "+
+                        "or inicio like :cadena "+
+                        "or fin like :cadena "+
+                        "or titulo like :cadena "
+        ).setParameter("cadena", "%"+filtro+"%");
+
+        q2 = PolimediaCarrusel.find.where(
+                "nombreArchivo like :cadena "+
+                        "or liga like :cadena "+
+                        "or posicion like :cadena "+
+                        "or inicio like :cadena "+
+                        "or fin like :cadena "+
+                        "or polimedia.recurso.titulo like :cadena "
+        ).setParameter("cadena", "%"+filtro+"%");
+
+
+
+        //Logger.debug("\n\norderBy: "+ "c"+    (colOrden==0?columnasOrdenables.get(0)  :  columnasOrdenables.get(colOrden)-1)  +" "+tipoOrden );
+        Logger.debug("c"+   (columnasOrdenables.get(colOrden)-1)  +" "+tipoOrden);
+
+        carr = PolimediaCarrusel.find
+                .where(
+                        "nombreArchivo like :cadena "+
+                                "or liga like :cadena "+
+                                "or posicion like :cadena "+
+                                "or inicio like :cadena "+
+                                "or fin like :cadena "+
+                                "or polimedia.recurso.titulo like :cadena "
+                ).setParameter("cadena", "%"+filtro+"%")
+                // .orderBy( "c"+    (colOrden==0?columnasOrdenables.get(0)  :  columnasOrdenables.get(colOrden)-1)  +" "+tipoOrden )
+                .orderBy( "c"+   (columnasOrdenables.get(colOrden)-1)  +" "+tipoOrden )
+                .findPagingList(numRegistros)
+                .setFetchAhead(false)
+                .getPage(numPag);
+
+
+        filtrados = q2.findList().size();
+        sinFiltro = q1.findList().size();
+
+
+
+        Logger.debug("\n\nq2: "+ q2.getGeneratedSql()+"\n\n" );
+
+
+
+        System.out.println("**************************************************************************************"       );
+//System.out.println("tam page: "+serv.getTotalPageCount());
+
+
+        try {
+            json2.put("draw",  new Date().getTime()  );
+            json2.put("recordsTotal",  sinFiltro );
+            json2.put("recordsFiltered", filtrados);
+            JSONArray losDatos = new JSONArray();
+            DateTime hoy = new DateTime();
+            DateTimeComparator dateTimeComparator = DateTimeComparator.getDateOnlyInstance();
+            for( PolimediaCarrusel p : carr.getList()  ){
+                JSONObject datoP = new JSONObject();
+                datoP.put("id", p.id);
+                datoP.put("nombreArchivo", p.nombreArchivo);
+                datoP.put("liga", p.liga);
+                datoP.put("posicion", p.posicion);
+                datoP.put("inicio", p.inicio);
+                datoP.put("fin", p.fin);
+                datoP.put("titulo", p.polimedia.recurso.titulo);
+                int vigencia = dateTimeComparator.compare(p.fin, hoy);
+                System.out.println("------ "+vigencia);
+                datoP.put("vigente", vigencia>=0?true:false );
+                losDatos.put(datoP);
+            }
+            if ( carr.getTotalRowCount()>0 ){
+                json2.put("data", losDatos);
+            } else {
+                json2.put("data", new JSONArray() );
+                return ok( json2.toString()  );
+            }
+        } catch (JSONException e) {
+            System.out.println("Ocurrio un error: " + e);
+            e.printStackTrace();
+        }
+//System.out.println("retorno "+json2.toString());
+        return ok( json2.toString()  );
+
+
+    }
+
+    public static Result create2(){
+        Logger.info("Desde CarruselController.create2");
+        Form<PolimediaCarrusel> c = form(PolimediaCarrusel.class);
+        List<Long> rsPolimedia = Polimedia.find.findList().stream().map(m->m.recurso.id).collect(Collectors.toList());
+        List<Recurso> recursos = Recurso.find.where().not(Expr.in("id", rsPolimedia)).findList();
+
+        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        for(Recurso op: recursos) {
+            options.put(op.id.toString(), op.titulo);
+        }
+
+        // Prueba de las anotaciones Pre y Post del modelo APrueba01
+        /*
+        Logger.debug("------------APrueba01");
+        APrueba001 a = new APrueba001();
+        a.descripcion ="AAAAA";
+        a.save();
+        */
+        /*
+        // Prueba de calificacionPorcentajeAspectos en la tabla Recurso
+
+            Recurso recurso = Recurso.find.byId(1L);
+            RecursoCalificacion rCal = new RecursoCalificacion();
+            rCal.recurso = recurso;
+            float calGeneral = 0;
+            for (Recursoevaluador res :  recurso.recursoevaluadores  ){
+                int acum = 0;
+                int numNA = 0;
+                int calMaxima = 0;
+                calMaxima = res.evaluaciones.size();
+                System.out.println("\n\ncalMaxima "+calMaxima);
+                for  ( Evaluacion eva : res.evaluaciones){
+                    if (eva.respuesta != -1){
+                        acum+=eva.respuesta;
+                    } else {
+                        numNA++;
+                    }
+                    System.out.println("acum "+acum);
+                    System.out.println("numNA "+numNA);
+                }
+                float cal = ((float) (acum * 25) / ((calMaxima - numNA) * 2) );
+                calGeneral+=cal;
+                System.out.println("cal "+cal);
+                RecursoCalificacionAspecto rca = new RecursoCalificacionAspecto();
+                rca.recursocalificacion = rCal;
+                rca.aspecto = res.aspecto;
+                // Se redondea a 1 decimal
+                rca.calificacion = (float) (Math.round(cal * 10.0) / 10.0);;
+                rCal.calificacionesAspectos.add(rca);
+            }
+
+            rCal.calificacion = calGeneral;
+            recurso.calificacion = rCal;
+            recurso.update();
+            */
+
+        Recurso r = Recurso.find.byId(1L);
+        r.estado = Estado.find.byId(10L);
+        r.update();
+        return ok(  views.html.poliMedia.create2.render(c, options)  );
+    }
+
+    public static Result save2() throws ParseException {
+        Logger.info("Desde CarruselController.save2");
+        DynamicForm df = form().bindFromRequest();
+        System.out.println(df);
+        Http.MultipartFormData body = request().body().asMultipartFormData();
+        Http.MultipartFormData.FilePart fp = body.getFile("contenido");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        Logger.debug(df.get("recurso.id"));
+        long recursoId = Long.parseLong( df.get("recurso.id") );
+
+            Polimedia pm = new Polimedia();
+            PolimediaCarrusel carrusel = new PolimediaCarrusel();
+            PolimediaCarruselImagen imagen = new PolimediaCarruselImagen();
+
+            pm.recurso = Recurso.find.byId(recursoId);
+            pm.carrusel = carrusel;
+
+            carrusel.polimedia = pm;
+            carrusel.posicion = Integer.parseInt(df.get("posicion"));
+            carrusel.inicio = sdf.parse(df.get("inicio"));
+            carrusel.fin = sdf.parse(df.get("fin"));
+            carrusel.polimedia.recurso = Recurso.find.byId(recursoId);
+            carrusel.liga = df.get("liga");
+
+            if (fp != null) {
+                Logger.debug("fp != null");
+                String fileName = fp.getFilename();
+                String contentType = fp.getContentType();
+                File file = fp.getFile();
+                try {
+                    Path p = Paths.get(file.getPath());
+                    byte[] byteFile = Files.readAllBytes(p);
+                    carrusel.nombreArchivo = fileName;
+                    carrusel.imagen = imagen;
+                    imagen.polimediacarrusel = carrusel;
+                    imagen.contenido = byteFile;
+                    imagen.contenttype = contentType;
+                } catch (FileNotFoundException e) {
+                    flash("error", "No fué posible agregar el registro, No se encontró el archivo.");
+                    System.out.println("Error " + e.toString());
+                    e.printStackTrace();
+                } catch (IOException ioe) {
+                    flash("error", "No fué posible agregar el registro, error de i/o.");
+                    System.out.println("Error " + ioe.toString());
+                    ioe.printStackTrace();
+                }
+            }
+            pm.save();
+            flash("success", "Se agregó el registro.");
+       return redirect(routes.CarruselController.list2());
     }
 
 }

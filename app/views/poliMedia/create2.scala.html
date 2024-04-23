@@ -1,0 +1,31 @@
+@(forma: Form[models.polimedia.PolimediaCarrusel], recursosOptions : Map[String,String])
+@import helper._
+@main{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li><a href="/poliMedia/carrusel2">Carrusel</a></li>
+                    <li class="active">Nuevo</li>
+                </ol>
+            </div>
+        </div>
+
+        <h1>Carrusel PoliMedia - nuevo</h1>
+        @form( CSRF(routes.CarruselController.save2()), 'role -> "form", 'id -> "frmEvaluador", 'enctype -> "multipart/form-data", 'role->"form") {
+            <div class="row">
+                <div class="col-lg-12">
+                    @carruselForm2(forma, recursosOptions)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <input type="submit" value="Agregar" class="btn btn-primary" >
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+

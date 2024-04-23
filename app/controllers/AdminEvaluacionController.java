@@ -134,7 +134,7 @@ System.out.println("no");
 		r.update();		
 		// ¿todas las evaluaciones terminadas para el recurso?
 		
-		Boolean terminadosTodos = true;
+		boolean terminadosTodos = true;
 		for (Recursoevaluador x :  Recursoevaluador.find.where().eq("recurso.id", id).findList() ){
 			terminadosTodos &= (x.estadoevaluacion.id == 5L);
 		}

@@ -167,7 +167,7 @@ System.out.println("Desde UnidadacademicaController.ajaxListDTSS............");
 System.out.println( "parametros 0:"+ request() );
 		
 		String filtro = request().getQueryString("search[value]");
-		Integer colOrden =   Integer.parseInt( request().getQueryString("order[0][column]")   );
+		int colOrden =   Integer.parseInt( request().getQueryString("order[0][column]")   );
 		String tipoOrden = request().getQueryString("order[0][dir]");
 System.out.println( "parametro start:"+ Integer.parseInt(request().getQueryString("start")));
 System.out.println( "parametro length:"+ Integer.parseInt(request().getQueryString("length")));		

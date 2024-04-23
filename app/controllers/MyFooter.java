@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.logging.Logger;
 
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
@@ -105,18 +106,13 @@ public class MyFooter implements PdfPageEvent {
         tablaEnc.setTotalWidth( document.right() - document.left()  );
         
         tablaEnc.writeSelectedRows(0, -1, 0, -1, document.left(), document.top()+70, cb);
-                
-        
-        
-        Phrase footer = new Phrase("Página "+writer.getCurrentPageNumber(), ffont);
-        
 
-        
+        Phrase footer = new Phrase("Página "+writer.getCurrentPageNumber(), ffont);
+
         ColumnText.showTextAligned(cb, Element.ALIGN_CENTER,
                 footer,
                 (document.right() - document.left()) / 2 + document.leftMargin(),
                 document.bottom() - 20, 0);
-
 	}
 
 	@Override
@@ -134,7 +130,6 @@ public class MyFooter implements PdfPageEvent {
 
 	@Override
 	public void onParagraphEnd(PdfWriter arg0, Document arg1, float arg2) {
-
 
 	}
 	

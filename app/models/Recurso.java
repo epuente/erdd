@@ -10,6 +10,7 @@ import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.CreatedTimestamp;
 import com.avaje.ebean.annotation.UpdatedTimestamp;
 
+import play.Logger;
 import play.db.ebean.*;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
@@ -165,15 +166,19 @@ public class Recurso extends Model {
     
     @OneToOne(mappedBy="recurso", cascade=CascadeType.ALL)
     public ObservacionCancelacion observacioncancelacion;
-    
+
+
+    @OneToOne(mappedBy="recurso", cascade=CascadeType.ALL)
+    public RecursoCalificacion calificacion;
+
     @OneToOne(mappedBy="recurso", cascade=CascadeType.ALL)
     public EncuestaRespuesta encuesta;
     
     public static Finder<Long,Recurso> find = new Finder<Long,Recurso>(Long.class, Recurso.class);    
     
     public static Page<Recurso> page(int page, int pageSize, String sortBy, String order, String filter, String campoFiltro) {
-System.out.println("desde el modelo Recurso: ");
-System.out.println("pageSize:"+pageSize+"  sortBy:"+sortBy+"   order:"+order+"  Filter:"+filter+"       campoFiltro:"+campoFiltro);
+        System.out.println("desde el modelo Recurso: ");
+        System.out.println("pageSize:"+pageSize+"  sortBy:"+sortBy+"   order:"+order+"  Filter:"+filter+"       campoFiltro:"+campoFiltro);
 
 		Query<Recurso> busqueda = find.where()
                 .ilike(campoFiltro, "%" + filter + "%")
@@ -191,10 +196,7 @@ for( Recurso p :   Ebean.find(Recurso.class).findList()){
 		
 	System.out.println("   --* "+p.id+" "+p.titulo+" "+p.numcontrol);
 };
-
-
         return  r;
-                
     }    
 
  
@@ -287,7 +289,63 @@ for( Recurso p :   Ebean.find(Recurso.class).findList()){
     	return cadena.substring(0, cadena.lastIndexOf('-'));
     }
     
-    
+    @PostUpdate
+    public void preUpdate(){
+        //Cuando el estado cambia a 10 (evaulación concluida)
+        /*
+        if (this.estado.id == 10){
+            Logger.debug("--------------------------El estado del recurso "+this.id+" ha cambiado a 'Evaluación concluida'");
+            RecursoCalificacion rc = new RecursoCalificacion();
+            rc.recurso = this;
+            for ( Recursoevaluador res :  rc.recurso.recursoevaluadores  ){
+                RecursoCalificacionAspecto rca = new RecursoCalificacionAspecto();
+                rca.recursocalificacion = rc;
+                rca.aspecto = res.aspecto;
+                rca.calificacion = res.calificacionPorcentajeAspecto();
+                //this.calificacion.calificacionesAspectos.add(rca);
+                rc.calificacionesAspectos.add(rca);
+            }
+            rc.calificacion = this.calificacionPorcentajeGral();
+            this.calificacion = rc;
+        }
+        */
+
+
+
+
+        RecursoCalificacion rCal = new RecursoCalificacion();
+        rCal.recurso = this;
+        float calGeneral = 0;
+        for (Recursoevaluador res :  this.recursoevaluadores  ){
+            int acum = 0;
+            int numNA = 0;
+            int calMaxima = 0;
+            calMaxima = res.evaluaciones.size();
+            System.out.println("\n\ncalMaxima "+calMaxima);
+            for  ( Evaluacion eva : res.evaluaciones){
+                if (eva.respuesta != -1){
+                    acum+=eva.respuesta;
+                } else {
+                    numNA++;
+                }
+                System.out.println("acum "+acum);
+                System.out.println("numNA "+numNA);
+            }
+            float cal = ((float) (acum * 25) / ((calMaxima - numNA) * 2) );
+            System.out.println("cal "+cal);
+            RecursoCalificacionAspecto rca = new RecursoCalificacionAspecto();
+            rca.recursocalificacion = rCal;
+            rca.aspecto = res.aspecto;
+            // Se redondea a 1 decimal
+            rca.calificacion = (float) (Math.round(cal * 10.0) / 10.0);;
+            calGeneral+=rca.calificacion;
+            rCal.calificacionesAspectos.add(rca);
+        }
+
+        rCal.calificacion = calGeneral;
+        this.calificacion = rCal;
+
+    }
 
     
     

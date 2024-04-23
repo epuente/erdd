@@ -30,6 +30,9 @@ import models.recursoDirigidoa;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 public class miPdf {
 	public Long id;
 	private String numControl;
@@ -423,7 +426,8 @@ doc.add(tabla7);
 	        celda.setPhrase(new Phrase("Porcentaje obtenido: ", fontCuerpo));
 	        tablaRE.addCell(celda);
 	        
-	        celda.setPhrase( new Phrase( reev.calificacionPorcentajeAspectos().toString()+"%"  , fontCuerpo  )  );
+	        //celda.setPhrase( new Phrase( reev.calificacionPorcentajeAspectos().toString()+"%"  , fontCuerpo  )  );
+			celda.setPhrase( new Phrase( reev.recurso.calificacion.calificacionesAspectos.stream().filter(f-> Objects.equals(f.aspecto.id, reev.aspecto.id)).collect(Collectors.toList()).get(0).calificacion+"%"  , fontCuerpo  )  );
 	        celda.setColspan(3);
 	        tablaRE.addCell(celda);
 	        
@@ -466,7 +470,8 @@ doc.add(tabla7);
          
 
         celda.setColspan(3);
-        celda.setPhrase(new Phrase( r.calificacionPorcentajeGral()+"%" , fontCuerpo));
+        //celda.setPhrase(new Phrase( r.calificacionPorcentajeGral()+"%" , fontCuerpo));
+		celda.setPhrase(new Phrase( r.calificacion.calificacion+"%" , fontCuerpo));
         tabla10.addCell(celda);	        
         
         celda.setPhrase( new Phrase(""));

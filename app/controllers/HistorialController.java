@@ -103,11 +103,8 @@ public class HistorialController extends Controller{
 	   			
 		
 		if ( listLog.size() <= 10 ){
-		//	return ok( log.render( listLog.subList(0, listLog.size())  ) );
 			 return ok (jArray.toString());
-		//	return ok (new Gson().toJson(jArray));
 		} else {
-			//return ok( jsonContext.toJsonString( listLog.subList(0, 10)  ) );
 			return ok (jArray.toString());
 		}
 	}

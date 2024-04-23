@@ -167,3 +167,20 @@ run 9000
 exit
 run 9000
 exit
+run 9000
+compile
+sbt
+run
+compile
+run 9000
+compile
+run 9000
+compile
+run 9000
+compile
+run 9000
+compile
+reload
+compile
+run 9000
+exit

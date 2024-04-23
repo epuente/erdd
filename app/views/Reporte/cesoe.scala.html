@@ -162,12 +162,15 @@
 									<div class="contenido"><a href="@routes.RecursoWebController.verAn(ds.id)" target="blank">@ds.nombrearchivo</a></div>
 								}
 								@if(session.get("cvesRoles")){
-									@if(session.get("cvesRoles").contains("1 ")){
+									@if(session.get("cvesRoles").contains("3 ")){
 										<div class="contenido"><a href="@routes.RecursoController.ver(ds.id)" target="blank">@ds.nombrearchivo</a></div>
 									}								
 								}
-							<td>	
-								<div class="contenido">@ds.tipodocumento.descripcion</div>
+							<td>
+
+									<div class="contenido">@ds.tipodocumento.descripcion</div>
+
+
 							</td>
 						</tr>				
 						}
@@ -189,7 +192,12 @@
 				</table>			
 			</td>
 		</tr>
-		
+
+		<tr>
+			<td colspan="8"><h1>Seguimiento</h1></td>
+		</tr>
+
+
 		@if(recurso.oficio != null){
 		<tr>
 			<td colspan="6">
@@ -197,7 +205,12 @@
 					<tr>
 						<td><div class="etiqueta">Oficio número</div><div class="contenido">@recurso.oficio.numero</div></td>
 						<td><div class="etiqueta">Folio</div><div class="contenido">@recurso.oficio.folio</div></td>
-						<td><div class="etiqueta">Ver</div><div class="contenido">   <a href="@routes.EvaluacionEvaluadorController.verOficioE(recurso.id)" target="blank">Ver oficio</a>  </div></td>
+						@if( session.get("cvesRoles").contains("2 ")){
+							<td><div class="etiqueta">Ver</div><div class="contenido">   <a href="@routes.EvaluacionEvaluadorController.verOficioE(recurso.id)" target="blank">Ver oficio</a>  </div></td>
+						}
+						@if( session.get("cvesRoles").contains("3 ")){
+							<td><div class="etiqueta">Ver</div><div class="contenido">   <a href="@routes.OficioController.verOficio(recurso.id)" target="blank">Ver oficio</a>  </div></td>
+							}
 					</tr>
 				</table>
 			</td>

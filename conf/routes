@@ -368,8 +368,6 @@ GET		/WSAjaxImprimirReporteETP/:idRecurso		controllers.RecursoWebController.WSAj
 
 #GET  	/WebSocket									controllers.RecursoWebController.socket()
 
-
-GET     /index2                           controllers.RecursoWebController.index2()
 GET     /pingWs                     controllers.RecursoWebController.pingWs()
 
 GET     /socket                     controllers.RecursoWebController.socket()
@@ -388,6 +386,11 @@ GET    /poliMedia/carrusel/delete/:id          controllers.CarruselController.de
 
 GET     /webPoliMedia/carrusel                  controllers.WPMCarruselController.mostrar()
 GET     /webPoliMedia/carrusel/verImagen/:id          controllers.WPMCarruselController.verImagen(id:Long)
+
+GET     /poliMedia/carrusel2                    controllers.CarruselController.list2()
+GET     /poliMedia/carrusel/carruselDTSS2       controllers.CarruselController.carruselDTSS2()
+GET     /poliMedia/carrusel/create2             controllers.CarruselController.create2()
+POST    /poliMedia/carrusel/save2               controllers.CarruselController.save2()
 
 
 

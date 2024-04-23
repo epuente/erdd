@@ -297,7 +297,7 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
         String filtro = request().getQueryString("search[value]");
 
         Long version =   Long.parseLong( request().getQueryString("version"));
-        Integer colOrden =   Integer.parseInt( request().getQueryString("order[0][column]")   );
+        int colOrden =   Integer.parseInt( request().getQueryString("order[0][column]")   );
         String tipoOrden = request().getQueryString("order[0][dir]");
         System.out.println( "parametro start:"+ Integer.parseInt(request().getQueryString("start")));
         System.out.println( "parametro length:"+ Integer.parseInt(request().getQueryString("length")));
@@ -874,7 +874,7 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
         EvaluacionTablaReactivo auxReactivo = new EvaluacionTablaReactivo();
         JsonNode json = request().body().asJson();
         System.out.println(json);
-        Long reactivo = Long.parseLong(json.findPath("reactivo").asText());
+        long reactivo = Long.parseLong(json.findPath("reactivo").asText());
         String descripcion = json.findPath("descripcion").asText();
 
 
@@ -920,7 +920,7 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
             ///*************************************     continuar el loop de json
 
 
-            Long reactivo = Long.parseLong(i.findPath("reactivo").findPath("id").asText());
+            long reactivo = Long.parseLong(i.findPath("reactivo").findPath("id").asText());
             String descripcion = i.findPath("nuevoReactivo").asText();
             //Es un nuevo reactivo, habrá que crearlo en el catálogo de reactivos
             if (reactivo == 0){

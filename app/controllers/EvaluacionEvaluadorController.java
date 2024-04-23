@@ -454,8 +454,6 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 					}
 				}
 			}
-		} else {
-
 		}
 		return ok(views.html.EvaluacionEvaluador.create.render(re,  evTab, mensajes));
 	}
@@ -594,11 +592,13 @@ System.out.println("..............................entrando");
 
 		re.estadoevaluacion = EstadoEvaluacion.find.byId(3L);
 		re.update();
-
+		/*
 		HistorialestadoEvaluacion hedoEv = new HistorialestadoEvaluacion();
 		hedoEv.estado = re.estadoevaluacion;
 		hedoEv.recurso = r;
 		hedoEv.recursoevaluador = re;
+
+		 */
 
 		flash("success","Se enviaron las correcciones del recurso "+r.numcontrol);
 
@@ -672,6 +672,7 @@ System.out.println("............................");
 
 	// El evaluador puede ver oficios, pero solo los oficios relacionados a sus RDDs
 	public static Result verOficioE(Long id) {
+
 		Recurso rdd = Recurso.find.where().eq("id", id).findUnique();
 		if (  (rdd != null)  &&
 				(rdd.recursoevaluadores.stream().filter(f -> f.evaluador.id == Long.parseLong(session("idEvaluador"))).collect(Collectors.toList()).size()!=0 )) {

@@ -49,13 +49,10 @@ public class DocumentoController extends ControladorSeguro {
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException ioe){
-				
+				ioe.printStackTrace();
 			}		    
 		    
-	        
-System.out.println("......"+d.recurso);	
-System.out.println("......"+d.contenido);
-System.out.println("......"+d.tipodocumento.descripcion);
+
 	        
 	        //documentoForm.get().save();
 			d.save();

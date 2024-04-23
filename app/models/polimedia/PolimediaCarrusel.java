@@ -2,7 +2,6 @@ package models.polimedia;
 
 import com.avaje.ebean.annotation.CreatedTimestamp;
 import com.avaje.ebean.annotation.UpdatedTimestamp;
-import models.Recurso;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
 import play.data.validation.Constraints;
@@ -12,10 +11,14 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Carrusel extends Model {
+public class PolimediaCarrusel extends Model {
     private static final long serialVersionUID = 1L;
     @Id
     public Long id;
+
+    @OneToOne
+    public Polimedia polimedia;
+
     public String nombreArchivo;
     public String liga;
     @Constraints.Required
@@ -25,23 +28,20 @@ public class Carrusel extends Model {
     public DateTime hoy;
     public Date inicio;
     public Date fin;
-    @Column(length = 100)
-    public String titulo;
-    public String contenttype;
-    @Lob
-    public byte[] contenido;
 
-    @ManyToMany
-    public Recurso recurso;
+    @OneToOne(mappedBy = "polimediacarrusel", cascade = CascadeType.ALL)
+    public PolimediaCarruselImagen imagen;
+
 
     @CreatedTimestamp
     public Date auditinsert;
     @UpdatedTimestamp
     public Date auditlastupdate;
 
-    public static Model.Finder<Long, Carrusel> find = new Model.Finder<>(Long.class, Carrusel.class);
 
-    public Carrusel() {
+    public static Model.Finder<Long, PolimediaCarrusel> find = new Model.Finder<>(Long.class, PolimediaCarrusel.class);
+
+    public PolimediaCarrusel() {
         this.hoy = new DateTime();
     }
 
@@ -51,4 +51,5 @@ public class Carrusel extends Model {
         int v = dateTimeComparator.compare(this.fin, hoy);
         return v>=0;
     }
+
 }

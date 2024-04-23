@@ -15,15 +15,16 @@
 	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/index.css")"/>
 		<div class="container">
 		  <section>
-			  <h1>Bienvenido docente</h1>
-			  <big>
+
+			  <div style="font-size:medium; padding: 5rem;">
+				  <h1>Bienvenido docente</h1>
 				  <p>Al Sistema de Evaluación de Recursos Didácticos Digitales, mediante el cual podrá registrar los recursos que desea someter a evaluación técnico pedagógica.</p> 
-				  <p>Para iniciar el proceso de registro, oprima el botón Continuar y complete la información que se solicita, anexando los documentos que se indican en el formulario.</p>
-			  	  <p><a class="btn btn-success btn-lg" href="@routes.RecursoWebController.create" role="button">Continuar</a></p>
+				  <p>Para iniciar el proceso de registro, oprima el botón 'Iniciar solicitud' y complete la información que se solicita, anexando los documentos que se indican en el formulario.</p>
+			  	  <p style="text-align: center;"><a class="btn btn-success btn-lg" href="@routes.RecursoWebController.create" role="button">Iniciar la solicitud</a></p>
 			  	  <p></p>	 
-	 		  	  <br>
+	 		  	  <br><br>
 			  	  <p>Si usted ya cuenta con una clave de control y desea conocer el estado de su solicitud, escríbalo a continuación y oprima el botón Ingresar.</p>
-		  	  </big>
+
 					<form class="form-inline">
 						<table id="tablaBuscaNC">
 							<tr>
@@ -41,6 +42,7 @@
 							</tr>
 						</table>
 					</form>
+			  </div>
 			</section>
 		</div>
 <script type="text/javascript">
@@ -56,14 +58,12 @@
 		var nc = $('#nc').val();		
 		if(nc.length == 0 ){
 			$('#msgBuscarNc').html( "Debe proporcionar el número de control" ).addClass("error");
-			
 			return false;
 		}
 		$.ajax({
 		  method: "GET",
 		  url: "/buscarNC/"+nc,
 		  dataType:"json"
-
 		})
 		  .success(function( data ) {
 		  	if ( (data.estado == "error"))
@@ -75,7 +75,6 @@
 				$('form')[0].submit();
 			}
 		  })
-		  
 		  .error(function(data){
 		  	$('#msgBuscarNc').html( "Error" );
 		  });

@@ -16,12 +16,6 @@ public class WPMCarruselController extends Controller {
 
     public static Result mostrar(){
         Logger.info("cargando carrusel...");
-
-
-
-        //int vigencia = dateTimeComparator.compare(p.fin, hoy);
-        //dateTimeComparator.compare(p.fin, hoy)
-
         List<Carrusel> auxcs = Carrusel.find
                 .where().ne("posicion", 0)
                 .setOrderBy("posicion")
@@ -30,17 +24,12 @@ public class WPMCarruselController extends Controller {
         List<Carrusel> cs = auxcs.stream()
                 .filter(f-> f.estaVigente())
                 .collect(Collectors.toList());
-
-
         return ok ( views.html.WebPoliMedia.carrusel.render(cs) );
     }
-
 
     public static Result verImagen(Long id) {
         Carrusel c = Carrusel.find.byId(id);
         response().setContentType(c.contenttype);
         return ok (c.contenido);
     }
-
-
 }
