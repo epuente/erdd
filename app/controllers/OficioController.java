@@ -74,10 +74,10 @@ public class OficioController extends ControladorSeguroCoordinador{
 					o.nombrearchivo = fileName;						 
 					o.contenttype = contentType;
 					o.contenido =  byteFile;
-				} catch (FileNotFoundException e) {    					
-					e.printStackTrace();
-				} catch (IOException ioe){
-					
+				} catch (FileNotFoundException ioe) {
+                    System.out.println("Error -- No se encontró el archivo");
+				} catch (IOException e){
+                    System.out.println("Error -- "+e.getMessage()+"\n"+e.getCause());
 				}		    
 		  }               
         
@@ -117,10 +117,10 @@ System.out.println(df);
 						r.oficio.nombrearchivo = fileName;						 
 						r.oficio.contenttype = contentType;
 						r.oficio.contenido =  byteFile;
-					} catch (FileNotFoundException e) {    					
-						e.printStackTrace();
-					} catch (IOException ioe){
-						
+					} catch (FileNotFoundException ioe) {
+						ioe.printStackTrace();
+					} catch (IOException e){
+                        System.out.println("Error -- "+e.getMessage()+"\n"+e.getCause());
 					}		    
 			  }
 		r.estado = Estado.find.byId(4L);

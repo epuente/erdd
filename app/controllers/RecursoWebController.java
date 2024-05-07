@@ -31,7 +31,7 @@ import actions.miPdf;
 import akka.actor.ActorRef;
 import akka.actor.Cancellable;
 import akka.actor.Props;
-import clases.RetornoWSRecurso;
+import classes.RetornoWSRecurso;
 import models.RecursoAutor;
 import models.Autorfuncion;
 import models.CorreoAutor;
@@ -72,7 +72,7 @@ import views.html.Recurso.editMasterForm;
 import views.html.Recurso.recibidoMaster;
 import views.html.Recurso.actualizadoMaster;
 
-public class RecursoWebController extends Controller{
+public class RecursoWebController extends ControladorDefault{
 
 
 	public static Result index() {
@@ -85,9 +85,9 @@ public class RecursoWebController extends Controller{
 	public static Result create() {
 		System.out.println("desde RecursoWebController.create");
 		Form<Recurso> recursoForm = form(Recurso.class);
-		List<RecursoAutor> autores = null;
+		//List<RecursoAutor> autores = null;
 		return ok(
-				views.html.Recurso.createMaster.render(recursoForm, autores, null)
+				views.html.Recurso.createMaster.render(recursoForm, null, null)
 		);
 	}
 
@@ -111,7 +111,7 @@ public class RecursoWebController extends Controller{
 		System.out.println("   "+(requestData.get("autor.paterno["+i) != null));
 		System.out.println("   "+(requestData.get("autor.materno["+i) != null));
 		System.out.println("   "+(requestData.get("autor.nombre["+i) != null));
-		System.out.println("   "+requestData.get("autor.autorfuncion["+i) != null);
+		//System.out.println("   "+requestData.get("autor.autorfuncion["+i) != null);
 
 		while (  ((requestData.get("autor.paterno["+i) != null) && (requestData.get("autor.materno["+i) != null) && (requestData.get("autor.nombre["+i) != null))
 				&&  requestData.get("autor.autorfuncion["+i) != null){
@@ -203,7 +203,7 @@ public class RecursoWebController extends Controller{
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException ioe){
-
+                    System.out.println("Error -- "+ioe.getMessage()+"\n"+ioe.getCause());
 				}
 				d.recurso = r;
 				r.documentos.add(d);
@@ -503,16 +503,13 @@ public class RecursoWebController extends Controller{
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException ioe){
-
+                    System.out.println("Error -- "+ioe.getMessage()+"\n"+ioe.getCause());
 				}
 				d.save();
 			}
 			k++;
 		}
-
-
 		return ok(actualizadoMaster.render(r));
-
 	}
 
 

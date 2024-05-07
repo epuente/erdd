@@ -34,7 +34,7 @@ tiposrecursos:List[ClasificadorEjemplo]
 
 
 @main{
-	<style>
+	<style nonce="@session.get("nonce")">
 		.filtrado, mark  {
 			background-color:#ffffcc !important;
 		}
@@ -73,7 +73,7 @@ tiposrecursos:List[ClasificadorEjemplo]
 
 					<!-- Modal -->
 					@form(CSRF(routes.AdminEvaluacionTablaController.agregarReactivo()), 'id -> "frmModal2") {
-						<input type="hidden" value="@version.id" name="version"></input>	
+						<input type="hidden" value="@version.id" name="version">
 						<div class="modal fade modal-wide" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						  <div class="modal-dialog">
 						    <div class="modal-content">
@@ -82,7 +82,7 @@ tiposrecursos:List[ClasificadorEjemplo]
 						        <h4 class="modal-title" >Agregar reactivo al instrumento de evaluación en la versión @version.version</h4>
 						      </div>
 						      <div class="modal-body" id="modalBody2" style="height: 60em">
-									<input type="hidden" value="@version.id" name="otro"></input>									
+									<input type="hidden" value="@version.id" name="otro">
 									<select  name="reactivo" id ="reactivo"></select>
 									<div id="nuevoReactivo" style="display: none;">
 										<label>Nuevo texto de reactivo</label>
@@ -175,7 +175,7 @@ tiposrecursos:List[ClasificadorEjemplo]
 
 
 							      <div class="modal-footer">
-							      	<div class="modalPie"> <input type="checkbox" name="cbxcopia" value="sí"></input>    Iniciar como una copia de la versión @version.version</div>
+							      	<div class="modalPie"> <input type="checkbox" name="cbxcopia" value="sí">    Iniciar como una copia de la versión @version.version</div>
 							      	<input type="hidden" name="versionEnPantalla" value="@version.version" >
 							        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 							        <!--button type="submit" class="btn btn-primary">Agregar versión</button-->
@@ -693,11 +693,12 @@ tiposrecursos:List[ClasificadorEjemplo]
 		    // Read more about handling dismissals
 		    result.dismiss === swal.DismissReason.cancel
 		  ) {
-		    swal(
-		      'Cancelado',
-		      'Se conserva el reactivo',
-		      'error'
-		    )
+		    swal({
+		      title: 'Cancelado',
+		      text: 'Se conserva el reactivo',
+		      confirmButtonText: 'Aceptar',
+		      type: 'error'
+		      })
 		  }
 		})
 		

@@ -2,10 +2,7 @@ package controllers;
 
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import models.EncuestaRespuesta;
 import models.EvaluacionProrroga;
@@ -37,8 +34,8 @@ public class CoordinadorController extends ControladorSeguroCoordinador {
     	int r3 = Recurso.find.where().eq("estado.id", 3L).findRowCount();
     	int r4 = Recurso.find.where().eq("estado.id", 4L).findRowCount();
     	int r5 = Recurso.find.where().eq("estado.id", 5L).findRowCount();
-    	int r6 = Recurso.find.where().in("estado.id", Arrays.asList(6L)).findRowCount();
-    	int r6p = Recurso.find.where().in("estado.id", Arrays.asList(100L)).findRowCount();
+    	int r6 = Recurso.find.where().in("estado.id", Collections.singletonList(6L)).findRowCount();
+    	int r6p = Recurso.find.where().in("estado.id", Collections.singletonList(100L)).findRowCount();
     	
     	
     	registros.put("rs1", r1);

@@ -14,8 +14,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import models.Ctacorreo;
-import actions.miCorreo;
-
 
 public class miCorreo extends Thread{
 	public List<String> para;

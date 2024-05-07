@@ -31,7 +31,7 @@ public class Carrusel extends Model {
     @Lob
     public byte[] contenido;
 
-    @ManyToMany
+    @ManyToOne
     public Recurso recurso;
 
     @CreatedTimestamp

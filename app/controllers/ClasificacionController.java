@@ -3,6 +3,7 @@ package controllers;
 import static play.data.Form.form;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -88,22 +89,20 @@ System.out.println(" *  00000");
 System.out.println(" *  00010");        
         if (  cancela.isEmpty()  ){
 			System.out.println("No es cancelable");
-			//c.criterio3.id = ccc3.id;
-//			c.tiporecurso = c.tiporecurso;
 			r.clasificacion.observacion = null;        	
         	
         } else {
         	System.out.println("cancelable");	        	
 			// Enviar correo al autor y al administrador indicando que se cancela la solicitud
 			miCorreo mc = new miCorreo();
-			mc.para = Arrays.asList(r.getResponsable().correo.email);
+			mc.para = Collections.singletonList(r.getResponsable().correo.email);
 			mc.asunto="Cancelación del recurso "+r.numcontrol +" - "+r.titulo;
 			mc.mensaje ="Estimado(a): "+r.getResponsable().nombreCompleto()+".<br><br>";
 			mc.mensaje +="Se determinó que la solicitud que usted presentó sea cancelada debido que su clasificación...";
 			//mc.enviar();
 			mc.run();
 			
-			mc.para = Arrays.asList( Personal.elCoordinador().correo  );
+			mc.para = Collections.singletonList(Personal.elCoordinador().correo);
 			mc.mensaje = "Se ha cancelado la solicitud "+r.numcontrol +" - "+ r.titulo +" durante el proceso de clasificación";
 			//mc.enviar();
 			mc.run();
@@ -219,8 +218,6 @@ System.out.println(c1+" - "+c2+" - "+c3);
     	}    
 System.out.println("retornano:"+losDatos.toString());    	
 		return ok ( losDatos.toString() );
-		//return ok (Json.toJson(ejemplos));
-		//return ok ("hola");
     }
 
     

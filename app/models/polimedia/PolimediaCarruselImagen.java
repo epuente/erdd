@@ -2,10 +2,7 @@ package models.polimedia;
 
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class PolimediaCarruselImagen extends Model {
@@ -13,10 +10,13 @@ public class PolimediaCarruselImagen extends Model {
     @Id
     public Long id;
 
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
     public PolimediaCarrusel polimediacarrusel;
 
     public String contenttype;
     @Lob
     public byte[] contenido;
+
+    public static Model.Finder<Long, PolimediaCarruselImagen> find = new Model.Finder<>(Long.class, PolimediaCarruselImagen.class);
+
 }

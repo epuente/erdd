@@ -2,10 +2,7 @@ package controllers;
 
 import java.io.ByteArrayOutputStream;
 import java.text.DateFormatSymbols;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.avaje.ebean.annotation.Transactional;
@@ -41,7 +38,7 @@ public class AdminEvaluacionController extends ControladorSeguroCoordinador {
 		String urlSitio= play.Play.application().configuration().getString("urlSitio");
 	//	String puerto = Play.application().configuration().getString("http.port");
 		//String direccionPuerto = direccion+":"+puerto;
-System.out.println("AdminEvaluacionController.saveObservaciones");		
+        System.out.println("AdminEvaluacionController.saveObservaciones");
 		DynamicForm df = DynamicForm.form().bindFromRequest();
 		Recurso r = Recurso.find.byId(id);
 
@@ -175,8 +172,8 @@ System.out.println("numObserva:  "+numObserva);
 	        //controllers.RecursoevaluadorController.writePdf(id, outputStream);
 	        
 	        //mc.adjuntos = Arrays.asList(outputStream);
-	        mc.adjuntos = Arrays.asList(mipdf.baos);
-	        mc.nombresAdjuntos = Arrays.asList("Reporte de Evaluación Técnico Pedagógica del recurso "+r.numcontrol);
+	        mc.adjuntos = Collections.singletonList(mipdf.baos);
+	        mc.nombresAdjuntos = Collections.singletonList("Reporte de Evaluación Técnico Pedagógica del recurso " + r.numcontrol);
 			//mc.enviar();
 	        mc.run();
 			
@@ -188,7 +185,7 @@ System.out.println("numObserva:  "+numObserva);
 		} else {
 			// Se envía correo al evaluador indicando que hay observaciones
 			miCorreo mc = new miCorreo();
-			mc.para = Arrays.asList(er.get(0).recursoevaluador.evaluador.personal.correo);
+			mc.para = Collections.singletonList(er.get(0).recursoevaluador.evaluador.personal.correo);
 			if (numObserva!=0){
 				mc.asunto ="Observaciones al recurso "+r.numcontrol;
 				mc.mensaje="El administrador hizo "+numObserva+" observaciones al aspecto "+re.aspecto.descripcion+" referentes al recurso con clave de control "+r.numcontrol+". Sírvase atenderlas.";

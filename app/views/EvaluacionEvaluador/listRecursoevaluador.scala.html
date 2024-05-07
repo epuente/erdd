@@ -1,5 +1,5 @@
 @(recurso: List[Recurso])
- <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/> 
+
 @import helper._
 @import models._
 @implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) } 
@@ -41,7 +41,7 @@
 					<td>
 						<div style="display: table; width: 100%">
 
-@System.out.println("* * * *")
+                            @System.out.println("* * * *")
 							@for(re <- r.recursoevaluadores){
 							 <div style="display: table-row;">
                                 <div style="display:table-cell;">@re.aspecto.descripcion</div>
@@ -72,8 +72,15 @@
 	                                            <input type="submit" class="btn btn-warning" value="Solicitar prórroga">
 	                                        }                                        
                                         }
-                                        
-@System.out.println(re.fueraDeTiempo+" .  "+r.estado.id+" . "+re.prorrogas.isEmpty)                                        
+                                        <!-- Si esta fuera de tiempo y sin oficio de valoración y con prórroga vencida -->
+                                        @if(re.fueraDeTiempo && r.estado.id!=110 && !re.prorrogas.isEmpty && r.estado.id<10  && re.estadoevaluacion.id<5){
+                                           @form(CSRF(routes.EvaluacionEvaluadorController.solicitarProrroga(re.id, re.aspecto.id, 10)), 'rol->"form") {
+                                                <input type="submit" class="btn btn-warning" value="Solicitar prórroga">
+                                           }
+                                        }
+
+
+                                        @System.out.println(re.fueraDeTiempo+" .  "+r.estado.id+" . "+re.prorrogas.isEmpty)
                                         <!-- Si no esta fuera de tiempo y sin oficio de valoración y con solicitudes de prórroga sin autorizar-->
                                         @if(!re.fueraDeTiempo && r.estado.id!=110 && !re.prorrogas.isEmpty){                                        
                                             @if(re.prorrogas.last.autorizado == false){
@@ -118,6 +125,4 @@
 
 
 
-<script type="text/javascript">
-
-</script>
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/>

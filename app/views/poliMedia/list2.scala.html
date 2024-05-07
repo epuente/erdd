@@ -1,5 +1,5 @@
 @main {
-    <style>
+    <style nonce="@session.get("nonce")">
         .filtrado, mark  {
             background-color:#ffffcc !important;
         }
@@ -108,7 +108,7 @@
                 {   "data": "null",
                     "sortable" : false,
                     "render": function(data, type, row, meta){
-                        return "<div class=\"row\"><div class=\"col-xs-12 col-sm-6 col-md-6 col-lg-6\"><a href=\"/poliMedia/carrusel/edit/"+row.id+"\" ><i class='fa fa-pencil' aria-hidden='true'></i></a></div>    <div class=\"col-xs-12 col-sm-6 col-md-6 col-lg-6\"><a href=\"/poliMedia/carrusel/delete/"+row.id+"\"><i class='fa fa-trash' aria-hidden='true'></i></a></div></div>";
+                        return "<div class=\"row\"><div class=\"col-xs-12 col-sm-6 col-md-6 col-lg-6\"><a href=\"/poliMedia/carrusel/edit2/"+row.id+"\" ><i class='fa fa-pencil' aria-hidden='true'></i></a></div>    <div class=\"col-xs-12 col-sm-6 col-md-6 col-lg-6\"><a href=\"/poliMedia/carrusel/delete2/"+row.id+"\"><i class='fa fa-trash' aria-hidden='true'></i></a></div></div>";
                     }
                 }
             ]

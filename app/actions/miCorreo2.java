@@ -20,7 +20,6 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
 import models.Ctacorreo;
-import actions.miCorreo2;
 
 
 public class miCorreo2 extends Thread{

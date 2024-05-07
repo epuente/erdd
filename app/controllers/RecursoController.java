@@ -10,35 +10,17 @@ import java.util.stream.Collectors;
 
 import javax.persistence.PersistenceException;
 import com.avaje.ebean.Ebean;
+import models.*;
+import models.polimedia.Polimedia;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.ebean.Model;
 import play.mvc.*;
 import views.html.Recurso.*;
-import models.RecursoAutor;
-import models.ObservacionCancelacion;
-import models.Oficio;
-import models.OficioValoracion;
-import models.SolicitudCancelacion;
-import models.Versionanterior;
-import models.Clasificacion;
-import models.ClasificadorCriterio3;
-import models.CorreoSalida;
-import models.Documento;
-import models.EncuestaRespuesta;
-import models.Estado;
-import models.EvaluacionObservacion;
-import models.EvaluacionObservacionGral;
-import models.Evaluacion;
-import models.EvaluacionFecha;
-import models.EvaluacionTabla;
-import models.EvaluacionTablaTipoRecurso;
-import models.Historialestado;
-import models.HistorialestadoEncuesta;
-import models.HistorialestadoEvaluacion;
-import models.Observacion;
-import models.Recurso;
-import models.Recursoevaluador;
 import actions.Notificacion;
 import actions.miCorreo;
 
@@ -128,10 +110,10 @@ System.out.println("************* Seliminó el recurso '"+t+"'");
 				//d.historialestadoevaluaciones.forEach(heeva->{HistorialestadoEvaluacion.find.byId(heeva.id).delete();});
 				//d.historialestados.forEach(hedos->{Historialestado.find.byId(hedos.id).delete();});
 			
-			
+			/*
 			System.out.println(" REcursoEvaluador ");
 			Recursoevaluador.find.where().eq("recurso.id",id).findList().forEach(Model::delete);
-			
+			*/
 			System.out.println(" Clasificacion ");
 			Clasificacion.find.where().eq("recurso.id",id).findList().forEach(Model::delete);
 			
@@ -153,26 +135,74 @@ System.out.println("************* Seliminó el recurso '"+t+"'");
 			System.out.println(" Versionanterior ");
 			Versionanterior.find.where().eq("recurso.id",id).findList().forEach(Model::delete);
 
-			Recurso r = Recurso.find.byId(id);
-			//Recurso r = Ebean.find(Recurso.class, id);
-			
-			//SqlUpdate tangoDown = Ebean.createSqlUpdate("DELETE FROM recurso WHERE id = "+id);
-			//tangoDown.execute();			
-			
-			
-			
-System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");			
-			r.delete();
-System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");	
+
+            System.out.println(" recursoevaluador");
+            Ebean.find(Recursoevaluador.class)
+                    .fetch("prorrogas")
+                    .fetch("evaluaciones")
+                    .fetch("observacionEvaluacion")
+                    .where().eq("recurso.id", id)
+                    .findList().forEach(Model::delete);
+
+
+            System.out.println(" Polimedia");
+            Ebean.find(Polimedia.class)
+                    .fetch("carrusel")
+                    .fetch("carrusel.imagen")
+                    .where().eq("recurso.id", id)
+                    .findList().forEach(Model::delete);
+
+             //   Ebean.delete(pm);
+              //  System.out.println("Se eliminó de polimedia");
+
+
+            System.out.println("... inicia");
+            Recurso recurso = Recurso.find
+                    .where().eq("id",id).findUnique();
+                    /*
+                    .fetch("palabrasclave")
+                    .fetch("recursosenweb")
+                    .fetch("autores")
+                    .fetch("documentos")
+                    .fetch("observaciones")
+                    .fetch("oficio")
+                    .fetch("oficiovaloracion")
+                    .fetch("historialestados")
+                    .fetch("historialestadoevaluaciones")
+                    .fetch("historialestadoencuesta")
+                    .fetch("clasificacion")
+                    .fetch("clasificacion.observacion")
+                    .fetch("recursoevaluadores")
+                    .fetch("recursoevaluadores.prorrogas")
+                    .fetch("recursoevaluadores.evaluaciones")
+                    .fetch("recursoevaluadores.observacionEvaluacion")
+                    .fetch("dirigidoa")
+                    .fetch("solicitudescancelacion")
+                    .fetch("versionanterior")
+                    .fetch("oficio")
+                    .fetch("oficiovaloracion")
+                    .fetch("clasificacion")
+                    .fetch("evaluacionFecha")
+                    .fetch("observacioncancelacion")
+                    .fetch("calificacion")
+                    .fetch("encuesta")
+                     */
+                   // .findUnique();
+
+            recurso.delete();
+            System.out.println("El recurso se borró");
+            System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 	        flash("success", "El recurso  ha sido eliminado");
-System.out.println("************* Seliminó el recurso ");	        
+            System.out.println("************* Seliminó el recurso ");
 	        
-	    } catch (PersistenceException pe) {	   	 
+	    } catch (PersistenceException pe) {
+            System.out.println("error pe "+ pe.getMessage()+"\n\n"+pe.getCause());
 		   	 if (   pe.getCause().toString().contains("IntegrityConstraint")){
 		   		 flash("error", "No se puede eliminar puesto que se hace uso de la misma en otros registros. Por ejemplo, si tiene actualizaciones.  ");	
 		   	 }
 		   	 
 	    } catch (Exception e){
+            System.out.println("error e "+ e.getMessage()+"\n\n"+e.getCause());
 	    	flash("error", "No se pudo eliminar.  ");
 	    }
 	    return redirect(routes.RecursoController.ajaxListTabla(0, "titulo", "asc", "", "titulo")); 	
@@ -301,11 +331,11 @@ System.out.println(a.nombre);
 System.out.println(a.correo.email);				
 				mc.para =  Arrays.asList(a.correo.email);
 				mc.mensaje = "Estimado usuario:<br><br>";
-				mc.mensaje+="Su solicitud en línea del recurso con clave de control "+r.numcontrol+" ha sido revisada por la UPEV";
+				mc.mensaje+="Su solicitud en línea del recurso con clave de control "+r.numcontrol+" ha sido revisada por la DEV";
 		    	if (otro.size() > 0){
 					mc.mensaje+=" y tiene "+otro.size()+" observaciones, las cuales deberá atender en un plazo máximo de 5 días hábiles; de lo contrario su solicitud se cancelará y deberá iniciar nuevamente el proceso.<br><br>Favor de ingresar a la dirección <a href='https://"+urlSitio+"'>https://"+urlSitio+"</a> y utilizando su clave de control acceda a su solicitud para revisar y atender las observaciones que se realizaron. ";			
 		    	} else {
-		    		mc.mensaje+=", favor de enviar el oficio de solicitud dirigido al director de la UPEV y los documentos originales de su solicitud.";
+		    		mc.mensaje+=", favor de enviar el oficio de solicitud dirigido al director de la DEV y los documentos originales de su solicitud.";
 		    	}
 			}
 			mc.run();      
@@ -538,7 +568,59 @@ System.out.println("Desde cancelarRecursoEvaluacion");
 		//return ok("oki".toString());
 		flash("success","Se reactivó el recurso "+sc.recurso.numcontrol);
 		return redirect ("/solicitudCanceladoList");
-	}	
+	}
+
+
+
+    // Este método deberá de asignar calificaciones a todos los recursos que tengan sus evaluaciones de los 4 aspectos terminados.
+    public static Result calificarRecursos(){
+        JSONObject joRetorno = new JSONObject();
+        JSONArray jaRecurso = new JSONArray();
+
+        // Los recursos con estados: 10, 11, 12, 105, 110
+        List<Recurso> recursos = Recurso.find
+                .where()
+                .in("estado.id", Arrays.asList(10, 11, 12, 105, 110))
+             //   .eq("calificacion", null)
+                .findList();
+        Logger.debug("Tam recursos por calificar "+recursos.size());
+        try {
+            joRetorno.put("nregistros", recursos.size());
+            for (Recurso r : recursos){
+                JSONObject joRecurso = new JSONObject();
+                joRecurso.put("id", r.id);
+                joRecurso.put("titulo", r.titulo);
+                if (r.calificacion!=null) {
+                    joRecurso.put("cGral", r.calificacion.calificacion);
+                    if (r.calificacion.calificacionesAspectos!=null) {
+                        JSONArray jaCalAspectos = new JSONArray();
+                        for (RecursoCalificacionAspecto rca : r.calificacion.calificacionesAspectos) {
+                            JSONObject joCalAspecto = new JSONObject();
+                            joCalAspecto.put("aspectoId", rca.aspecto.id);
+                            joCalAspecto.put("aspecto", rca.aspecto.descripcion);
+                            joCalAspecto.put("calificacion", rca.calificacion);
+                            jaCalAspectos.put(joCalAspecto);
+                        }
+                        joRecurso.put("calAspectos", jaCalAspectos  );
+                    }
+                }
+                jaRecurso.put(joRecurso);
+            }
+
+
+
+            recursos.forEach(Recurso::Calificar);
+
+
+
+            joRetorno.put("recursos", jaRecurso);
+        }catch (JSONException je){
+            System.out.println("Error de jason "+je.getCause());
+        }
+
+        return ok (joRetorno.toString());
+
+    }
 	
 }
 

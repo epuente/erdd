@@ -184,3 +184,53 @@ reload
 compile
 run 9000
 exit
+run
+run 9000
+}
+run 9000
+sbt
+run 9000
+clean
+reload
+compile
+run 9000
+compile
+run 9000
+clean
+dist
+run 9000
+compile
+run 9000
+compile
+run 9000
+compile
+run 9000
+compile
+run 9000
+reload
+compile
+exit
+clean
+compile
+run 9091
+reload
+run 9091
+clean
+reload
+compile
+run 9091
+sbt
+clena
+clean
+reload
+compile
+run 9091
+clean
+reload
+compile
+run 9091
+clean
+reload
+compile
+run 9091
+exit

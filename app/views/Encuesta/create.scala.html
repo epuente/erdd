@@ -146,13 +146,13 @@
 			if ( (event.which != 8  && event.which != 46  ))
 				event.preventDefault();
 			actual.css("border-color","#FF0000");			
-			actual.parent().find("div[name='divErrorTextArea']").html("Este campo ha excedido los 600 caracteres").show();
-			actual.parent().find("div[name='divErrorTextArea']").addClass("error");
+			actual.parent().find("div[data-identidad='divErrorTextArea']").html("Este campo ha excedido los 600 caracteres").show();
+			actual.parent().find("div[data-identidad='divErrorTextArea']").addClass("error");
 			
 		} else {
 			actual.css("border-color","");			
-			actual.parent().find("div[name='divErrorTextArea']").hide();	
-			actual.parent().find("div[name='divErrorTextArea']").removeClass("error");
+			actual.parent().find("div[data-identidad='divErrorTextArea']").hide();
+			actual.parent().find("div[data-identidad='divErrorTextArea']").removeClass("error");
 		}
 	});	 
 

@@ -2,7 +2,6 @@ package controllers;
 import static play.data.Form.form;
 
 import java.io.IOException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
 import com.avaje.ebean.*;
@@ -27,6 +26,7 @@ import models.EvaluacionTablaVersion;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.db.ebean.Model;
 import play.mvc.Result;
 import views.html.AdminEvaluacionTabla.*;
 
@@ -242,12 +242,6 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
 
         int registros = Evaluacion.find.where().in("evaluaciontabla.id", ids).findRowCount();
 
-/*
-    	List<EvaluacionTabla> listaX = EvaluacionTabla.find
-    			.fetch("reactivo")
-    			.fetch("aspecto")
-    			.where().eq("version.id", version).orderBy("id").findList();
-  */
         List<ClasificadorEjemplo> tiposrecursos = ClasificadorEjemplo.find.fetch("tiporecurso").orderBy("tiporecurso.descripcion").findList();
 
         ///	return ok(tablaListar3.render( 	snr, aspectos, cc1, cc2, cc3, letv,  versiones, listaX, registros, tiposrecursos	));
@@ -388,15 +382,7 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
                     //aux.put("c3", crit.catalogo.id);
                     aux.put("c3", crit.id);
                     aux.put("c3Descripcion", crit.catalogo.descripcion);
-						
-						/*
-						Collections.sort(crit.ejemplos, new Comparator<ClasificadorCriterio3Ejemplo>() {
-							@Override
-							public int compare(ClasificadorCriterio3Ejemplo o1, ClasificadorCriterio3Ejemplo o2) {
-								return o1.tiporecurso.descripcion.compareTo(o2.tiporecurso.descripcion);
-							}
-						});						
-						*/
+
                     for(ClasificadorCriterio3Ejemplo ej : crit.ejemplos
 
                     ){
@@ -432,8 +418,8 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
                             criterios.append("trecursos", new JSONObject().put("id", t.tiporecurso.id) );
 
                         } catch (JSONException e) {
-                            System.out.println("Ocurrio un error: "+e);
-                            e.printStackTrace();
+                            System.out.println("Ocurrio un error: "+e.getMessage());
+                            e.getMessage();
                         }
                     });
 
@@ -456,8 +442,8 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
                 return ok( json2.toString()  );
             }
         }catch (JSONException e) {
-            System.out.println("Ocurrio un error: "+e);
-            e.printStackTrace();
+            System.out.println("Ocurrio un error: "+e.getMessage());
+            e.getMessage();
         }
         //System.out.println(json2.toString());
         return ok( json2.toString()  );
@@ -525,8 +511,8 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
             }
 
         } catch (JSONException e) {
-            System.out.println("Ocurrio un error: "+e);
-            e.printStackTrace();
+            System.out.println("Ocurrio un error: "+e.getMessage());
+            e.getMessage();
         }
 
         return ok( json2.toString()  );
@@ -559,7 +545,7 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
             setId.add(c.reactivo.id);
         });
 
-        String cadena = "";
+        StringBuilder cadena = new StringBuilder();
         if (!idsR.isEmpty()){
             reactivos = EvaluacionTablaReactivo.find.where().not(Expr.in("id", setId) ).orderBy("id").findList();
         } else {
@@ -568,7 +554,7 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
 
         if(!reactivos.isEmpty()){
             for(EvaluacionTablaReactivo r:reactivos){
-                cadena += "<option value="+r.id+">"+r.id+".- "+r.descripcion+"</option>";
+                cadena.append("<option value=").append(r.id).append(">").append(r.id).append(".- ").append(r.descripcion).append("</option>");
             }
         }
 //System.out.println("ajax - options "+ cadena );
@@ -609,11 +595,7 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
                 //nuevo.reactivo = EvaluacionTablaReactivo.find.byId( Long.parseLong(m.get("reactivo")));
                 nuevo.reactivo = auxReactivo;
                 nuevo.aspecto = Aspecto.find.byId( Long.parseLong( df.get("aspecto0")) );
-				/*
-				nuevo.criterio1 = ClasificadorCriterio1.find.byId(Long.parseLong(aux[2]));
-				nuevo.criterio2 = ClasificadorCriterio2.find.byId(Long.parseLong(aux[3]));
-				nuevo.criterio3 = ClasificadorCriterio3.find.byId(Long.parseLong(aux[4]));
-				*/
+
                 nuevo.criterio1 = ClasificadorCriterio1.find.byId(Long.parseLong(aux[0]));
                 nuevo.criterio2 = ClasificadorCriterio2.find.byId(Long.parseLong(aux[1]));
                 nuevo.criterio3 = ClasificadorCriterio3.find.byId(Long.parseLong(aux[2]));
@@ -657,14 +639,17 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
             System.out.println("002");
 
         } catch (JsonParseException e) {
-            e.printStackTrace();
+            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
+            e.getMessage();
         } catch (JsonMappingException e) {
-            e.printStackTrace();
+            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
+            e.getMessage();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
+            e.getMessage();
         } catch ( Exception e){
             System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
-            e.printStackTrace();
+            e.getMessage();
         }
         return ok( "{\"estado\":\"ok\"}" );
 
@@ -728,14 +713,17 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
             //Quitar nodo 'id'
 
         } catch (JsonParseException e) {
-            e.printStackTrace();
+            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
+            e.getMessage();
         } catch (JsonMappingException e) {
-            e.printStackTrace();
+            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
+            e.getMessage();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
+            e.getMessage();
         } catch ( Exception e){
             System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
-            e.printStackTrace();
+            e.getMessage();
         }
         return ok( "{\"estado\":\"ok\"}" );
 
@@ -821,14 +809,17 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
             //Quitar nodo 'id'
 
         } catch (JsonParseException e) {
-            e.printStackTrace();
+            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
+            e.getMessage();
         } catch (JsonMappingException e) {
-            e.printStackTrace();
+            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
+            e.getMessage();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
+            e.getMessage();
         } catch ( Exception e){
             System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
-            e.printStackTrace();
+            e.getMessage();
         }
         return ok( "{\"estado\":\"ok\"}" );
 
@@ -843,31 +834,23 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
         Long version =  Long.parseLong( json.findPath("version").findPath("id").asText() );
         Long reactivo = Long.parseLong(json.findPath("reactivo").findPath("id").asText());
 
-
-
-
         List<EvaluacionTabla> evts = EvaluacionTabla.find.where()
                 .eq("version.id", version)
                 .eq("reactivo.id", reactivo)
                 .findList();
-
 
         List<Evaluacion> evaluacion = Evaluacion.find.where().in("evaluaciontabla", evts).findList();
         System.out.println("000  Hay evaluaciones con ese criterio? "+evaluacion.size());
         if (!evaluacion.isEmpty()){
             return ok( "{\"eliminado\":"+ false+", \"mensaje\":\"El reactivo forma parte de un instrumento que ha sido usado en una o mas evaluaciones.\"}" );
         }
-
-
         System.out.println("001");
-        evts.forEach(t->t.delete());
+        evts.forEach(Model::delete);
         List<EvaluacionTabla> r = EvaluacionTabla.find.where()
                 .eq("version.id", version)
                 .eq("reactivo.id", reactivo)
                 .findList();
-        System.out.println("002 "+r.size());
-        return ok( "{\"eliminado\":"+ Boolean.parseBoolean(""+(r.size()==0)+"")+"}" );
-
+        return ok( "{\"eliminado\":"+ Boolean.parseBoolean(""+(r.isEmpty()))+"}" );
     }
 
     public static Result ajaxAgregarReactivoTablaEvaluacionAnterior(){
@@ -967,10 +950,10 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
                 retorno = true;
             } catch (IOException e) {
                 System.out.println("----------------Ocurrio un error: "+e);
-                e.printStackTrace();
+                e.getMessage();
             } catch (Exception e){
                 System.out.println("----------------Ocurrio un error: "+e);
-                e.printStackTrace();
+                e.getMessage();
             }
         }
         return ok( "{\"agregado\":"+ retorno +"}" );
@@ -1127,7 +1110,7 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
 
         } catch (JSONException e) {
             System.out.println("Ocurrio un error: " + e);
-            e.printStackTrace();
+            e.getMessage();
         }
 //System.out.println("retorno "+json2.toString());
         return ok( json2.toString()  );

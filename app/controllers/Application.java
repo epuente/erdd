@@ -16,7 +16,7 @@ import static play.data.Form.*;
 import views.html.*;
 import models.*;
 
-public class Application extends Controller {
+public class Application extends ControladorDefault {
 
 
     
@@ -57,35 +57,41 @@ public class Application extends Controller {
 			return ok( "" );
 		} else {
 	        session("nombre", u.personal.nombreCompleto());
-	        String roles = "";
-	        String cvesRoles="";
+	        StringBuilder roles = new StringBuilder();
+	        StringBuilder cvesRoles= new StringBuilder();
 	        for (UsuarioRol ur : u.personal.usuario.roles){
-	        	roles+=ur.rol.descripcion  +" ";
-	        	cvesRoles+=ur.rol.id+" ";
+	        	roles.append(ur.rol.descripcion).append(" ");
+	        	cvesRoles.append(ur.rol.id).append(" ");
 	        }
-	        if (cvesRoles.contains("1 ")){	        	
+	        if (cvesRoles.toString().contains("1 ")){
 	        	session("idAdmin", u.personal.id.toString());
 	        }
 	        
-	        if (cvesRoles.contains("2 ")){
+	        if (cvesRoles.toString().contains("2 ")){
 	        	Evaluador e = Evaluador.find.where().eq("personal.id", u.id).findUnique();
 	        	session("idEvaluador", e.id.toString());
 	        }
 
-	        if (cvesRoles.contains("3 ")){
+	        if (cvesRoles.toString().contains("3 ")){
 	        	session("idAdminProceso", u.personal.id.toString());
-	        }	        
-	        session("roles",roles);
-	        session("cvesRoles",cvesRoles);
+	        }
+
+			if (cvesRoles.toString().contains("4 ")){
+				session("idAdminPM", u.personal.id.toString());
+			}
+	        session("roles", roles.toString());
+	        session("cvesRoles", cvesRoles.toString());
 	        
 	        
-System.out.println("*******************************");
-System.out.println("****"+u.personal.nombre.toString()+" "+u.personal.paterno.toString()+" "+u.personal.materno.toString()+"****");
-System.out.println("****"+cvesRoles+"****");
-System.out.println("****"+roles+"****");
-System.out.println("****"+session("idAdmin")+"****");
-System.out.println("****"+session("idEvaluador")+"****");
-System.out.println("****"+session("idAdminProceso")+"****");
+			System.out.println("*******************************");
+			System.out.println("****"+u.personal.nombre.toString()+" "+u.personal.paterno.toString()+" "+u.personal.materno.toString()+"****");
+			System.out.println("****"+cvesRoles+"****");
+			System.out.println("****"+roles+"****");
+			System.out.println("****"+session("idAdmin")+"****");
+			System.out.println("****"+session("idEvaluador")+"****");
+			System.out.println("****"+session("idAdminProceso")+"****");
+			System.out.println("****"+session("idAdminPM")+"****");
+
 
 System.out.println("*******************************");
 
@@ -109,20 +115,7 @@ System.out.println("*******************************");
         		)
             );
     }    
-/*
-    public static Result javascriptRoutes() {
-        response().setContentType("text/javascript");
-        return ok(
-            Routes.javascriptRouter("myJsRoutes",
-                routes.javascript.Application.getItem(),
-                routes.javascript.Application.newItem(),
-                routes.javascript.Application.updateItem(),
-                //inside somepackage
-                controllers.somepackage.routes.javascript.Application.updateItem()
-            )
-        );
-    }    
-*/    
+
     
     
     

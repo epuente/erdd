@@ -153,17 +153,17 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         String m3 = " fue asignado(a) como evaluador(a) del recurso didáctico digital '"+r.titulo+"', con número de folio "+r.oficio.folio+" y clasificado como "+r.clasificacion.criterio2.descripcion+" de tipo "+r.clasificacion.criterio3.catalogo.descripcion+".";
 
         String m4 = "<br><br>El equipo de evaluación está integrado por:<br><br>";
-        String listaEvaluadores = "";
+        StringBuilder listaEvaluadores = new StringBuilder();
         String enWeb="";
         String credenciales = "";
 
         int u = 1;
 
         for(Recursoevaluador linea : r.recursoevaluadores){
-            listaEvaluadores += (u++)+". "+ linea.evaluador.personal.nombreCompleto()+" (evaluador del aspecto: "+ linea.aspecto.descripcion +").<br>";
+            listaEvaluadores.append((u++)).append(". ").append(linea.evaluador.personal.nombreCompleto()).append(" (evaluador del aspecto: ").append(linea.aspecto.descripcion).append(").<br>");
 
         }
-        listaEvaluadores+="<br><br>";
+        listaEvaluadores.append("<br><br>");
 
         String m6="";
         if (r.formatoentregaotro.isEmpty()){
@@ -222,7 +222,6 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
                     .not(Expr.in("recurso.estado.id", Arrays.asList(400, 401,402)))
                     .eq("estadoevaluacion.id", 1L).findList();
         }
-        System.out.println("re.size: "+re.size());
         return ok(listarEvaluacionesSinAtender.render(re, tipo));
     }
 
@@ -252,7 +251,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
                     .not(Expr.in("recurso.estado.id", Arrays.asList(400, 401,402)))
                     .eq("estadoevaluacion.id", 3).findList();
         }
-        System.out.println("REcurso con todas sus evaluaciones por revisar: "+re.size());
+        //System.out.println("REcurso con todas sus evaluaciones por revisar: "+re.size());
         return ok(listarEvaluacionesPorRevisar.render(re, tipo));
     }
 

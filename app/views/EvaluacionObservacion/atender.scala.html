@@ -41,14 +41,14 @@
 												@r.reactivo.id 
 												@r.reactivo.descripcion
 											</td>
-							        		<td name="celdaCalifica" style="width: 15em;">
+							        		<td data-identidad="celdaCalifica" style="width: 15em;">
 							        			<div>
 							        			    <input type="radio" name="califica@r.id" value="-1" class="activo"> No aplica</br>
 								        			<input type="radio" name="califica@r.id" value="0" class="activo"> No cumple</br>
 								        			<input type="radio" name="califica@r.id" value="1" class="activo"> Cumple parcialmente</br>
 								        			<input type="radio" name="califica@r.id" value="2" class="activo"> Sí cumple	
 							        			</div>
-							        			<div name="divNA@r.id" style="display: none; text-align: center; vertical-align: middle; ">NO APLICA</div>		        			
+							        			<div data-identidad="divNA@r.id" style="display: none; text-align: center; vertical-align: middle; ">NO APLICA</div>
 						             		</td>
 						             		<td style="width: 30%"> 
 						             			<textarea name="observacion@r.id" rows="" cols="30%" style="display: none; min-width: 100%; background-color: #FFFDDD" disabled="disabled" readonly="readonly" class="form-control"  ></textarea>

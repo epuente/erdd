@@ -5,7 +5,7 @@
 @main{
 
 
-<style>
+<style nonce="@session.get("nonce")">
 .glyphicon{
 	top: 16px;
 	left: 15px;
@@ -187,7 +187,7 @@
 				             			@if(estado.recurso.encuesta == null){
 				             				<hr>
 				             				<p style="font-size: small;">
-												Su opinión sobre el proceso de evaluación que la UPEV ha realizado en torno a su solicitud, es muy importante para nosotros. A continuación encontrará el botón de acceso a una breve encuesta de satisfacción que esperamos pueda responder para conocer su experiencia y mejorar nuestro servicio.<br><br>
+												Su opinión sobre el proceso de evaluación que la DEV ha realizado en torno a su solicitud, es muy importante para nosotros. A continuación encontrará el botón de acceso a una breve encuesta de satisfacción que esperamos pueda responder para conocer su experiencia y mejorar nuestro servicio.<br><br>
 												Agradecemos de antemano su tiempo y le informamos que si su encuesta es enviada y aprobada por el sistema, usted recibirá en un máximo de 48 horas hábiles una notificación por correo electrónico que le permitirá descargar en formato digital el oficio de valoración e informe de evaluación técnico pedagógica correspondientes a su solicitud, con sello y firmas de esta Unidad.<br><br>
 											</p>				             				
 				             				

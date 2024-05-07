@@ -65,10 +65,10 @@
 								}
 								</td>
 								<td>@p.activo.descripcion</td>
-		 						<td><button type="button" class="btn btn-primary btn-sm" name="btnEdit@p.id.toString">Editar</button></td>
+		 						<td><button type="button" class="btn btn-primary btn-sm" data-identidad="btnEdit@p.id.toString">Editar</button></td>
 								<td>
 									@form(CSRF(routes.EvaluadorController.delete(p.id)), 'class -> "topRight") {						
-										<button type="button" class="btn btn-primary btn-sm" name="btnDelete@p.id.toString">Eliminar</button>
+										<button type="button" class="btn btn-primary btn-sm" data-identidad="btnDelete@p.id.toString">Eliminar</button>
 										}
 								</td>								
 							</tr>
@@ -110,8 +110,8 @@
 					                                     </br>
 					                                     
 	                                                       <div class="social-links text-center">
-	                                                           <a href="" name="btnDelete@p.id.toString" class=""><i class="fa fa-trash-o"></i></a>
-	                                                           <a href="" name="btnEdit@p.id.toString" class=""><i class="fa fa-pencil"></i></a>
+	                                                           <a href="" data-identidad="btnDelete@p.id.toString" class=""><i class="fa fa-trash-o"></i></a>
+	                                                           <a href="" data-identidad="btnEdit@p.id.toString" class=""><i class="fa fa-pencil"></i></a>
 	                                                       </div>					                                     
 					                                     
 					                                 </div>
@@ -182,17 +182,41 @@
 }
 
 <script type="text/javascript">
-	$( document ).on( "click", "[name*='btnDelete']", function(e) {
+	$( document ).on( "click", "[data-identidad*='btnDelete']", function(e) {
 		e.preventDefault();
-		 var num = $(this).attr('name').substring(9); 		  
+		var num = $(this).attr('data-identidad').substring(9);
+		swal({
+		  title: '¿Desea eliminar al evaluador?',
+		  text: "",
+		  type: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		  confirmButtonText: 'Si',
+		  cancelButtonText: 'No',
+		  confirmButtonClass: 'btn btn-success',
+		  cancelButtonClass: 'btn btn-danger',
+		  buttonsStyling: false,
+		  reverseButtons: true,
+		  customClass: 'swal-wide'
+		}).then((result) => {
+		    if (result.value) {
+		        $(this).parent().submit();
+            }
+		})
+
+
+
+          @*
 		  if (confirm("¿Desea eliminar al evaluador?")){
 			$(this).parent().submit();	  
 		  }
+		  *@
 		  
 	});
 	
 	
-	$( document ).on( "click", "[name*='btnEdit']", function(e) {
+	$( document ).on( "click", "[data-identidad*='btnEdit']", function(e) {
 		e.preventDefault();
 		 var num = $(this).attr('name').substring(7); 
 
@@ -232,6 +256,6 @@
             $card.addClass('hover');
         }
     }
-	
-	
 </script>
+
+<script src="@routes.Assets.at("sweetalert2/sweetalert2.all.js")" type="text/javascript"></script>

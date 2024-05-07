@@ -116,10 +116,8 @@ System.out.println("*********************************aplicados: "+ndAplicados);
 System.out.println("*********************************calculado: "+calculado.getTime());
 
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-		
-		//response().setContentType("application/json");
-		
-		//return ok(formato.format(calculado.getTime()));
+
+
 		String retorno = formato.format(calculado.getTime());
 System.out.println("::: "+retorno);			
 		return retorno;

@@ -1,0 +1,6 @@
+sudo mysql -u root -p
+
+CREATE DATABASE erdd_test2 DEFAULT CHARACTER SET latin1;
+grant all on erdd_test2.* to erdd@localhost;
+grant super on *.* to erdd@localhost;
+

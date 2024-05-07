@@ -29,7 +29,7 @@ public class PolimediaCarrusel extends Model {
     public Date inicio;
     public Date fin;
 
-    @OneToOne(mappedBy = "polimediacarrusel", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "polimediacarrusel", orphanRemoval = true, cascade = CascadeType.ALL)
     public PolimediaCarruselImagen imagen;
 
 
@@ -51,5 +51,8 @@ public class PolimediaCarrusel extends Model {
         int v = dateTimeComparator.compare(this.fin, hoy);
         return v>=0;
     }
+
+
+
 
 }

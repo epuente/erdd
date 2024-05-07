@@ -22,11 +22,11 @@ public class UsuarioRol extends Model {
 	 @ManyToOne
 	 public Rol rol;
 	 
-		@CreatedTimestamp
-	    public Date auditinsert;
-		@UpdatedTimestamp
-	    public Date auditlastupdate; 
+	@CreatedTimestamp
+	public Date auditinsert;
+	@UpdatedTimestamp
+	public Date auditlastupdate;
 	 
-	 public static Finder<Long,UsuarioRol> find = new Finder<Long,UsuarioRol>(Long.class, UsuarioRol.class);  	 
+	 public static Model.Finder<Long,UsuarioRol> find = new Finder<Long,UsuarioRol>(Long.class, UsuarioRol.class);
 	
 }

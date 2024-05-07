@@ -4,20 +4,19 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.CreatedTimestamp;
 import com.avaje.ebean.annotation.UpdatedTimestamp;
 
-import play.Logger;
+import models.polimedia.Polimedia;
+import org.springframework.format.annotation.DateTimeFormat;
 import play.db.ebean.*;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 
 
 @Entity
-//@EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class Recurso extends Model {
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -60,6 +59,7 @@ public class Recurso extends Model {
     @NotNull
     @Constraints.Required
     @Formats.DateTime(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     public Date elaboracion;    
     
     @NotNull
@@ -174,7 +174,7 @@ public class Recurso extends Model {
     @OneToOne(mappedBy="recurso", cascade=CascadeType.ALL)
     public EncuestaRespuesta encuesta;
     
-    public static Finder<Long,Recurso> find = new Finder<Long,Recurso>(Long.class, Recurso.class);    
+    public static Finder<Long,Recurso> find = new Finder<Long,Recurso>(Long.class, Recurso.class);
     
     public static Page<Recurso> page(int page, int pageSize, String sortBy, String order, String filter, String campoFiltro) {
         System.out.println("desde el modelo Recurso: ");
@@ -184,24 +184,14 @@ public class Recurso extends Model {
                 .ilike(campoFiltro, "%" + filter + "%")
                 
                 .orderBy(sortBy + " " + order);
-
 		Page<Recurso> r = busqueda
                 .findPagingList(pageSize)
                 
                 .getPage(page);
-System.out.println("tam:"+  r.getTotalRowCount() );
-
-for( Recurso p :   Ebean.find(Recurso.class).findList()){
-		
-		
-	System.out.println("   --* "+p.id+" "+p.titulo+" "+p.numcontrol);
-};
+        System.out.println("tam:"+  r.getTotalRowCount() );
         return  r;
     }    
 
- 
-    
-   
     public static Map<String,String> options() {
         LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
         for(Recurso c: Recurso.find.orderBy("titulo").findList()) {
@@ -212,16 +202,14 @@ for( Recurso p :   Ebean.find(Recurso.class).findList()){
 
     public static Map<String,String> optionsSoloActualizaciones() {
         LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
-        // Los recursos que son actualización, pero que no estan en la tabla de Versionanterior
+        // Los recursos que son actualización, pero que no están en la tabla de Versionanterior
         List<Recurso> rs2 = Recurso.find.where().eq("version.id", 2L).eq("versionanterior", null).orderBy("numcontrol").findList();       
         for(Recurso c: rs2 ) {
             options.put(c.id.toString(), c.numcontrol+" "+c.titulo);
         }
         return options;
     }     
-    
-    
-    
+
     public  RecursoAutor getResponsable(){
     	RecursoAutor retorno = null;
     	for (RecursoAutor x : this.autores){
@@ -236,30 +224,16 @@ for( Recurso p :   Ebean.find(Recurso.class).findList()){
     public static Recurso searchByNumControl(String nc){    	
 		return Recurso.find.where().eq("numcontrol", nc).findUnique();    	
     }
- 
 
-    public  Float calificacionPorcentajeGral(){
-		Float total = (float) 0;
-    	for(Recursoevaluador re : this.recursoevaluadores){
-    		total += re.calificacionPorcentajeAspectos();
-    	}
-		return total;    	
-    }
-    
     public  String calificacionLetraGral(){
-		Float total =  (float) 0;
 		String cadena ="";
-    	for(Recursoevaluador re : this.recursoevaluadores){
-    		total += re.calificacionPorcentajeAspectos();
-    	}
-
+        float total = this.calificacion.calificacion;
     	if (  total >= 96)
     		cadena = "Excelente";
     	if (total >= 86 && total <= 95 )
     		cadena = "Bueno";
-    	if ( (total >=80) && (total <=85)){
+    	if ( (total >=80) && (total <=85))
     		cadena = "Regular";
-    	}
     	if (total<= 79)
     		cadena = "No aprobatorio";
 		return cadena;    	
@@ -288,30 +262,51 @@ for( Recurso p :   Ebean.find(Recurso.class).findList()){
     	}
     	return cadena.substring(0, cadena.lastIndexOf('-'));
     }
-    
-    @PostUpdate
-    public void preUpdate(){
-        //Cuando el estado cambia a 10 (evaulación concluida)
-        /*
-        if (this.estado.id == 10){
-            Logger.debug("--------------------------El estado del recurso "+this.id+" ha cambiado a 'Evaluación concluida'");
-            RecursoCalificacion rc = new RecursoCalificacion();
-            rc.recurso = this;
-            for ( Recursoevaluador res :  rc.recurso.recursoevaluadores  ){
-                RecursoCalificacionAspecto rca = new RecursoCalificacionAspecto();
-                rca.recursocalificacion = rc;
-                rca.aspecto = res.aspecto;
-                rca.calificacion = res.calificacionPorcentajeAspecto();
-                //this.calificacion.calificacionesAspectos.add(rca);
-                rc.calificacionesAspectos.add(rca);
+
+    // Este método es temporal, para calificar los recursos que ya estaban en la db
+    public void Calificar(){
+        RecursoCalificacion rCal = new RecursoCalificacion();
+        rCal.recurso = this;
+        float calGeneral = 0;
+        for (Recursoevaluador res :  this.recursoevaluadores  ){
+            int acum = 0;
+            int numNA = 0;
+            int nreactivosAspecto = 0;
+            nreactivosAspecto = res.evaluaciones.size();
+            System.out.println("\n\ncalMaxima "+nreactivosAspecto);
+            for  ( Evaluacion eva : res.evaluaciones){
+                if (eva.respuesta != -1){
+                    acum+=eva.respuesta;
+                } else {
+                    numNA++;
+                }
             }
-            rc.calificacion = this.calificacionPorcentajeGral();
-            this.calificacion = rc;
+            float cal = ((float) (acum * 25) / ((nreactivosAspecto - numNA) * 2) );
+            RecursoCalificacionAspecto rca = new RecursoCalificacionAspecto();
+            rca.recursocalificacion = rCal;
+            rca.aspecto = res.aspecto;
+            // Se redondea a 1 decimal
+            rca.calificacion = (float) (Math.round(cal * 10.0) / 10.0);
+            calGeneral+=rca.calificacion;
+            rCal.calificacionesAspectos.add(rca);
         }
-        */
+        rCal.calificacion = calGeneral;
+        this.calificacion = rCal;
+
+        // Si la calificación general es igual o mayor a 96, se agrega el id del recurso a la tabla Polimedia
+        if (  this.calificacion.calificacion >= 96 ){
+            Polimedia pm = new Polimedia();
+            pm.recurso = this;
+            pm.save();
+        }
+        this.update();
+    }
 
 
-
+    @PreUpdate
+    public void preUpdate(){
+        //Cuando el estado cambia a 10 (evaulación concluida) se califica, la calificación por aspecctos se guarda en
+        // la tabla RecursoCalificacionAspecto y la calificacion general se guarda en RecursoCalificación
 
         RecursoCalificacion rCal = new RecursoCalificacion();
         rCal.recurso = this;
@@ -319,9 +314,9 @@ for( Recurso p :   Ebean.find(Recurso.class).findList()){
         for (Recursoevaluador res :  this.recursoevaluadores  ){
             int acum = 0;
             int numNA = 0;
-            int calMaxima = 0;
-            calMaxima = res.evaluaciones.size();
-            System.out.println("\n\ncalMaxima "+calMaxima);
+            int nreactivosAspecto = 0;
+            nreactivosAspecto = res.evaluaciones.size();
+            System.out.println("\n\ncalMaxima "+nreactivosAspecto);
             for  ( Evaluacion eva : res.evaluaciones){
                 if (eva.respuesta != -1){
                     acum+=eva.respuesta;
@@ -331,22 +326,24 @@ for( Recurso p :   Ebean.find(Recurso.class).findList()){
                 System.out.println("acum "+acum);
                 System.out.println("numNA "+numNA);
             }
-            float cal = ((float) (acum * 25) / ((calMaxima - numNA) * 2) );
+            float cal = ((float) (acum * 25) / ((nreactivosAspecto - numNA) * 2) );
             System.out.println("cal "+cal);
             RecursoCalificacionAspecto rca = new RecursoCalificacionAspecto();
             rca.recursocalificacion = rCal;
             rca.aspecto = res.aspecto;
             // Se redondea a 1 decimal
-            rca.calificacion = (float) (Math.round(cal * 10.0) / 10.0);;
+            rca.calificacion = (float) (Math.round(cal * 10.0) / 10.0);
             calGeneral+=rca.calificacion;
             rCal.calificacionesAspectos.add(rca);
         }
-
         rCal.calificacion = calGeneral;
         this.calificacion = rCal;
 
+        // Si la calificación general es igual o mayor a 96, se agrega el id del recurso a la tabla Polimedia
+        if (  this.calificacion.calificacion >= 96 ){
+            Polimedia pm = new Polimedia();
+            pm.recurso = this;
+            pm.save();
+        }
     }
-
-    
-    
 }

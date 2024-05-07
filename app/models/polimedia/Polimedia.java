@@ -6,7 +6,9 @@ import models.Recurso;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Polimedia extends Model {
@@ -15,11 +17,28 @@ public class Polimedia extends Model {
     public Long id;
 
     @ManyToOne
+    @Column(nullable = false, unique = true)
     public Recurso recurso;
 
-    @OneToOne(mappedBy = "polimedia", cascade = CascadeType.ALL)
-    public PolimediaCarrusel carrusel;
+    @NotNull
+    public boolean habilitado=false;
 
+
+    @ManyToOne
+    @Column(nullable = false)
+    public Tipo tipo;
+
+    @NotNull
+    public boolean tieneURL = false;
+
+    @OneToMany(mappedBy = "polimedia", cascade = CascadeType.ALL)
+    public List<PolimediaArchivo> archivos;
+
+    @OneToOne(mappedBy = "polimedia", cascade = CascadeType.ALL)
+    public PolimediaUrl polimediaUrl;
+
+    @OneToOne(mappedBy = "polimedia", cascade = CascadeType.ALL, orphanRemoval = true)
+    public PolimediaCarrusel carrusel;
 
     @CreatedTimestamp
     public Date auditinsert;

@@ -2,7 +2,6 @@ package controllers;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.logging.Logger;
 
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
@@ -47,7 +46,7 @@ public class MyFooter implements PdfPageEvent {
 
         Image imgUPEV = null;
 		try {
-			imgUPEV = Image.getInstance("public/images/logoUPEV.png");
+			imgUPEV = Image.getInstance("public/images/LogoDEVReporte.png");
 		} catch (BadElementException | IOException  e) {
 			e.printStackTrace();
 		}
@@ -70,11 +69,13 @@ public class MyFooter implements PdfPageEvent {
 		} catch (BadElementException e) {
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+            System.out.println("Error -- "+e.getMessage()+"\n"+e.getCause());
+        } catch (IOException ioe) {
+            System.out.println("Error -- "+ioe.getMessage()+"\n"+ioe.getCause());
 		}
+        assert escudoPoli != null;
         escudoPoli.scaleToFit(46, 59);
+        assert imgUPEV != null;
         imgUPEV.scaleToFit(80, 52);
 		//doc.add(imgUPEV);        
         
@@ -87,7 +88,7 @@ public class MyFooter implements PdfPageEvent {
         tablaEnc.addCell(cell);
         
         Font fontbold = FontFactory.getFont("Cournier-bold", 10, Font.BOLD);
-        PdfPCell cell3 = new PdfPCell(new Phrase("INSTITUTO POLITÉCNICO NACIONAL\nSECRETARÍA ACADÉMICA\nUNIDAD POLITÉCNICA PARA LA EDUCACIÓN VIRTUAL\n"+this.titulo,fontbold));
+        PdfPCell cell3 = new PdfPCell(new Phrase("INSTITUTO POLITÉCNICO NACIONAL\nSECRETARÍA ACADÉMICA\nDIRECCIÓN DE EDUCACIÓN VIRTUAL\n"+this.titulo,fontbold));
         cell3.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell3.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell3.setBorder(Rectangle.NO_BORDER);		        
@@ -142,28 +143,27 @@ public class MyFooter implements PdfPageEvent {
 
 	@Override
 	public void onSectionEnd(PdfWriter arg0, Document arg1, float arg2) {
-
-
 	}
 
 	@Override
 	public void onStartPage(PdfWriter writer, Document doc) {
-		if (this.emisor != null)
-		if (!this.emisor.contentEquals("admin") ){
-			PdfContentByte cb = writer.getDirectContent();
-			Image watermark_image = null;
-			try {
-				watermark_image = Image.getInstance("public/images/watermark3.jpg");
-			} catch (BadElementException | IOException e) {
-				e.printStackTrace();
-			}
-	        watermark_image.setAbsolutePosition(0, 100);
-			try {
-				cb.addImage(watermark_image);
-			} catch (DocumentException e) {
-				e.printStackTrace();
-			}
-		}
+		if (this.emisor != null) {
+            if (!this.emisor.contentEquals("admin")) {
+                PdfContentByte cb = writer.getDirectContent();
+                Image watermark_image = null;
+                try {
+                    watermark_image = Image.getInstance("public/images/watermark3.jpg");
+                } catch (BadElementException | IOException e) {
+                    System.out.println("Error Excepción de basd element-- " + e.getMessage() + "\n" + e.getCause());
+                }
+                assert watermark_image != null;
+                watermark_image.setAbsolutePosition(0, 100);
+                try {
+                    cb.addImage(watermark_image);
+                } catch (DocumentException e) {
+                    System.out.println("Error de Excepción de documento -- " + e.getMessage() + "\n" + e.getCause());
+                }
+            }
+        }
 	}
-
 }

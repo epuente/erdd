@@ -28,7 +28,9 @@
                     if(data == "3 "){    
                         $('form')[0].action = "/coord";
                     } 
-                    
+                    if(data == "4 "){
+                        $('form')[0].action = "/polimedia";
+                    }
                 $('form')[0].submit();
             }           
 

@@ -29,38 +29,37 @@
 	    
 		<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("font-awesome-4.4.0/css/font-awesome.min.css")">	    
 
-	    
 		<script type="text/javascript" src='@routes.Application.javascriptRoutes()'></script>
 
-	    
     </head>
     
-<style>
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: auto;
-  background-color: #f5f5f5;
-}
-
-
-/* Custom page CSS
--------------------------------------------------- */
-/* Not required for template or sticky footer method. */
-
-body > .container {
-  padding: 0px 0px 0;
-  margin: 0px;
-}		
-
-</style>    
+    <style nonce="@session.get("nonce")">
+        body > .container {
+          padding: 0px 0px 0;
+          margin: 0px;
+        }
+        #footer {
+            background-color: #6c1645;
+            color:white;
+            text-align: center;  font-size: smaller;
+        }
+        #footer a:link{
+            text-decoration: underline;
+            color:white;
+        }
+        #footer a:hover{
+            color: #ff0000;
+        }
+        #footer a:visited{
+            color: white;
+            text-decoration: underline;
+        }
+    </style>
     <body>
     	<div id="wrapper">
 			<div class="header">
 				<img src="@routes.Assets.at("images/escudoSEP-IPN.png")" class="img-responsive center-block" alt="Escudos" width="1920px" height="58px">
-				<img src="@routes.Assets.at("images/indexEncabezado2.png")" class="img-responsive center-block" alt="Escudos" >
+				<img src="@routes.Assets.at("images/indexdevEncabezado.png")" class="img-responsive center-block" alt="Escudos" >
 			</div>
 			<div id="content">
 				<div class="menu">@megamenu()</div>
@@ -69,12 +68,12 @@ body > .container {
 		        </div> 
 			</div>
  			
-			<div id="footer">
-    			<div style="background-color: #6c1645; text-align: center;">
-    				<img src="@routes.Assets.at("images/pie.png")"  class="img-responsive center-block" alt="Datos de la UPEV">
-    			</div>			
-			</div>
-        </div> 
+            <div id="footer">
+                <!--img src="@routes.Assets.at("images/pie.png")"  class="img-responsive center-block" alt="Datos de la DEV"-->
+                Unidad Profesional “Adolfo López Mateos”, Edificio “Adolfo Ruiz Cortines”, planta baja. Avenida Wilfrido Massieu s/n,<br>
+                esquina Luis Enrique Erro, Colonia Zacatenco, Alcaldía Gustavo A. Madero, C.P. 07738, Ciudad de México. Conmutador: 55 5729 6000, 55 5729 6300, extensiones 57401 y 57435 <a href="https://www.ipn.mx/dev/"> www.ipn.mx/dev</a>
+            </div>
+        </div>
     </body>
 </html>
 

@@ -72,7 +72,7 @@ System.out.println("...   "+this.id);
 		//List<Recursoevaluador> re = Recursoevaluador.find.where().eq("recurso.id", r.id).findList();
 		List<Recursoevaluador> re = r.recursoevaluadores;
         Document doc = new Document(PageSize.LETTER, 40,40,90,40);
-        PdfWriter docWriter = null;
+        PdfWriter docWriter;
         docWriter = PdfWriter.getInstance(doc, this.baos);
         
         MyFooter auxPie = new MyFooter();
@@ -333,9 +333,7 @@ doc.add(tabla6);
         celda.setColspan(1);
         tablaFe.addCell(celda);
         celda = new PdfPCell(celdaInicial);
-//	        tablaFe.completeRow();
-//	        tabla7.addCell(tablaFe);
-//	        celda = new PdfPCell(celdaInicial);
+
         
     if (r.url.isEmpty()){
         	celda.setPhrase(new Phrase("   ", fontCuerpo));
@@ -556,7 +554,7 @@ System.out.println("otro");
         celda.setColspan(6);		        
         tabla12.addCell(celda);	        
     
-        celda.setPhrase(new Phrase("Clave de registro UPEV", fontCuerpo)  );
+        celda.setPhrase(new Phrase("Clave de registro DEV", fontCuerpo)  );
         celda.setPadding(10);
         celda.setHorizontalAlignment(Element.ALIGN_CENTER);
         celda.setBackgroundColor(null); 
@@ -626,7 +624,7 @@ doc.add(tabla13);
 
         
         Document doc = new Document(PageSize.LETTER, 40,40,90,40);
-        PdfWriter docWriter = null;
+        PdfWriter docWriter;
         docWriter = PdfWriter.getInstance(doc, this.baos);
         
         MyFooter auxPie = new MyFooter();

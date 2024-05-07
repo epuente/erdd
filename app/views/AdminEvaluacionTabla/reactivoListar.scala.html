@@ -5,7 +5,7 @@ versiones:List[EvaluacionTablaVersion]
 @implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.render) } 
 
 
-<style>
+<style nonce="@session.get("nonce")">
 	.dataTables_filter{
 		text-align: right;
 	}

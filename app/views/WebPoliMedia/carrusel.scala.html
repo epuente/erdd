@@ -1,4 +1,4 @@
-@(cs : List[models.polimedia.Carrusel])
+@(cs : List[models.polimedia.PolimediaCarrusel])
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -23,7 +23,7 @@
 
 
 
-        <style>
+        <style nonce="@session.get("nonce")">
             .elCarrusel {
                 max-width: 930px;
                 min-width: 150px;
@@ -68,7 +68,7 @@
                             <!-- Indicators -->
                             <ol class="carousel-indicators">
                                 @for((cr, index) <- cs.zipWithIndex){
-                                    <li name="circulo" data-target="#carousel-example-generic" data-slide-to="@index" @if(index==0){class="active"} data-subtitulo="@if(cr.titulo!=null){@cr.titulo}"></li>
+                                    <li data-identidad="circulo" data-target="#carousel-example-generic" data-slide-to="@index" @if(index==0){class="active"} data-subtitulo="@if(cr.polimedia.recurso.titulo!=null){@cr.polimedia.recurso.titulo}"></li>
                                 }
                             </ol>
                             <!-- Wrapper for slides -->
@@ -140,7 +140,7 @@
               }
             }
 
-            $("li[name='circulo']").hover(function() {
+            $("li[data-identidad='circulo']").hover(function() {
               $("#crSubtitulo").html($(this).attr("data-subtitulo"));
             }, function() {
               $("#crSubtitulo").html("");

@@ -13,9 +13,9 @@ public class TiporecursoController extends ControladorSeguro{
     			.fetch("tiporecurso")
     			.orderBy("tiporecurso.descripcion")
     			.findList();
-    	String aux = "";
+    	StringBuilder aux = new StringBuilder();
     	for(ClasificadorEjemplo ejemplo : ejemplos){
-    		aux+="<tr><td>"+ejemplo.tiporecurso.descripcion+"</td></tr>";
+    		aux.append("<tr><td>").append(ejemplo.tiporecurso.descripcion).append("</td></tr>");
     	}    
 System.out.println("Ejemplos :"+aux);    	
 		return ok (Json.toJson(ejemplos));

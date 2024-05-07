@@ -12,19 +12,13 @@ import com.avaje.ebean.*;
 import actions.Notificacion;
 import actions.miCorreo;
 import models.*;
-import models.polimedia.Carrusel;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeComparator;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import play.Logger;
+
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.ebean.Transactional;
 import play.mvc.Result;
 import views.html.EvaluacionEvaluador.*;
-import views.html.errorPage;
+
 
 public class EvaluacionEvaluadorController extends ControladorSeguroEvaluador{
 
@@ -327,7 +321,7 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 			// Enviar correo al evaluador indicando que terminó de evaluar el recurso
 
 			miCorreo mc = new miCorreo();
-			mc.para = Arrays.asList(  Personal.find.byId(   Evaluador.find.byId( Long.parseLong(session("idEvaluador"))).personal.id ).correo);
+			mc.para = Collections.singletonList(Personal.find.byId(Evaluador.find.byId(Long.parseLong(session("idEvaluador"))).personal.id).correo);
 
 			mc.asunto="Terminada la evaluación del recurso "+otro.recurso.numcontrol+" del aspecto "+otro.aspecto.descripcion;
 			mc.mensaje="Usted ha terminado de evaluar el recurso "+otro.recurso.titulo+" con clave de control "+otro.recurso.numcontrol +" para el aspecto "+otro.aspecto.descripcion +".<br><br";
@@ -345,7 +339,7 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 
 
 			// Enviar correo al administrador indicando que el evaluador terminó de evaluar
-			mc.para = Arrays.asList( Personal.elCoordinador().correo  );
+			mc.para = Collections.singletonList(Personal.elCoordinador().correo);
 
 			mc.asunto="El evaluador "+ Personal.find.byId(Evaluador.find.byId( Long.parseLong(session("idEvaluador"))).personal.id   ).nombreCompleto();
 			mc.asunto+=" ha terminado la evaluación del recurso con clave de control "+otro.recurso.numcontrol;
@@ -370,7 +364,7 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 
 			// Enviar correo al evaluador indicando que la evaluación ha sido parcial
 			miCorreo mc = new miCorreo();
-			mc.para = Arrays.asList(  Personal.find.byId(   Evaluador.find.byId( Long.parseLong(session("idEvaluador"))).personal.id ).correo);
+			mc.para = Collections.singletonList(Personal.find.byId(Evaluador.find.byId(Long.parseLong(session("idEvaluador"))).personal.id).correo);
 
 			mc.asunto ="Evaluación parcial del recurso "+otro.recurso.numcontrol+" del aspecto "+otro.aspecto.descripcion;
 			mc.mensaje="Usted ha evaluado parcialmente el recurso "+otro.recurso.titulo+" con clave de control "+otro.recurso.numcontrol +" para el aspecto "+otro.aspecto.descripcion +".<br><br>";
@@ -383,7 +377,7 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 			mc.run();
 
 			//Enviar correo al administrador indicando que es evaluación parcial
-			mc.para = Arrays.asList( Personal.elCoordinador().correo  );
+			mc.para = Collections.singletonList(Personal.elCoordinador().correo);
 
 			mc.asunto="El evaluador "+ Personal.find.byId(Evaluador.find.byId( Long.parseLong(session("idEvaluador"))).personal.id   ).nombreCompleto();
 			mc.asunto+=" ha realizado la evaluación parcial del recurso con folio "+otro.recurso.oficio.folio;
@@ -414,7 +408,7 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 	// El evaluador edita su evaluación
 	public static Result edit(Long id, Long aspecto){
 		System.out.println("desde EvaluacionEvaluadorController.edit");
-		String mensajes ="";
+		StringBuilder mensajes = new StringBuilder();
 		Recurso recurso = Recurso.find.byId(id);
 		Recursoevaluador re = Recursoevaluador.find.where().eq("recurso.id",recurso.id).eq("aspecto.id", aspecto).eq("evaluador.id", session("idEvaluador")).findUnique();
 
@@ -445,17 +439,17 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 		if (recurso.evaluacionFecha.fechalimite.compareTo(new Date()) < 0 ){
 			if (re.evaluador.id == Long.parseLong(session("idEvaluador"))){
 				if (re.prorrogas.isEmpty()){
-					mensajes += "Tiempo superado y no tiene prorroga para el aspecto "+re.aspecto.descripcion+"\n";
+					mensajes.append("Tiempo superado y no tiene prorroga para el aspecto ").append(re.aspecto.descripcion).append("\n");
 				} else {
 					for(EvaluacionProrroga p : re.prorrogas){
 						if (p.fecha.compareTo(new Date()) < 0){
-							mensajes+="Se terminó la prorroga para el aspecto "+re.aspecto.descripcion+"\n";
+							mensajes.append("Se terminó la prorroga para el aspecto ").append(re.aspecto.descripcion).append("\n");
 						}
 					}
 				}
 			}
 		}
-		return ok(views.html.EvaluacionEvaluador.create.render(re,  evTab, mensajes));
+		return ok(views.html.EvaluacionEvaluador.create.render(re,  evTab, mensajes.toString()));
 	}
 
 	public static Result porAtenderAdmin(){
@@ -652,7 +646,7 @@ System.out.println("............................");
 
 		// Enviar correo al administrador indicándole que se le solicitó una prórroga
 		miCorreo mc = new miCorreo();
-		mc.para = Arrays.asList( Personal.elCoordinador().correo  );
+		mc.para = Collections.singletonList(Personal.elCoordinador().correo);
 
 		String evaluador = Personal.find.byId(Evaluador.find.byId( Long.parseLong(session("idEvaluador"))).personal.id   ).nombreCompleto();
 

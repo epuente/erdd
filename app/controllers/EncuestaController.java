@@ -5,6 +5,7 @@ import static play.data.Form.form;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import actions.Notificacion;
@@ -91,7 +92,7 @@ System.out.println("id "+idEnc);
 			mc.asunto = "Observaciones a la encuesta correspondiente al recurso "+enResp.recurso.titulo;
 			mc.mensaje = "Estimado(a)"+ responsable.nombreCompleto() +", la encuesta realizada por usted tiene algunas observaciones .....";
 			mc.mensaje += "<br>Ingrese a <a href=https://'"+urlSitio+"'>Atender observaciones</a>";
-			mc.para = Arrays.asList( responsable.correo.email  );
+			mc.para = Collections.singletonList(responsable.correo.email);
 
 			// Enviar notificacion al celular
 	    	Notificacion n = new Notificacion();
@@ -149,7 +150,7 @@ System.out.println("id "+idEnc);
 		mc.asunto = "Oficio de valoración del recurso "+ofv.recurso.titulo;
 		mc.mensaje = "Estimado(a)"+ responsable.nombreCompleto() +", le agradecemos la encuesta que contestó, para nosotros es iportante .......\nLe enviamos el oficio de valoración ........";
 		
-		mc.para = Arrays.asList( responsable.correo.email  );
+		mc.para = Collections.singletonList(responsable.correo.email);
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream(ofv.contenido.length);
 		baos.write(ofv.contenido, 0, ofv.contenido.length);		
@@ -161,8 +162,8 @@ System.out.println("id "+idEnc);
 	        }
 		}		
 		
-		mc.adjuntos = Arrays.asList( baos );
-		mc.nombresAdjuntos = Arrays.asList("Oficio valoración recurso "+ofv.recurso.numcontrol);
+		mc.adjuntos = Collections.singletonList(baos);
+		mc.nombresAdjuntos = Collections.singletonList("Oficio valoración recurso " + ofv.recurso.numcontrol);
 		
 		try {
 			//mc.enviar();

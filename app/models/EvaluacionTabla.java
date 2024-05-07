@@ -15,6 +15,8 @@ import com.avaje.ebean.annotation.UpdatedTimestamp;
 
 import play.db.ebean.Model;
 
+/* Contiene el instrumento de evaluación*/
+
 @Entity
 public class EvaluacionTabla extends Model{
 	private static final long serialVersionUID = 1L;	

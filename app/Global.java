@@ -6,7 +6,6 @@ import play.api.db.DB;
 import play.api.mvc.EssentialFilter;
 import play.filters.csrf.CSRFFilter;
 import play.filters.gzip.GzipFilter;
-import play.filters.headers.SecurityHeadersFilter;
 import play.libs.F.Promise;
 import play.mvc.Http.RequestHeader;
 import play.mvc.Result;

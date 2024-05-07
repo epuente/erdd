@@ -18,7 +18,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.Encuesta.*;
 
-public class EncuestaWebController extends Controller{
+public class EncuestaWebController extends ControladorDefault{
 	
 	public static Result desdeLiga(String ncontrol){
 		session("idRecurso", Recurso.searchByNumControl(ncontrol).id.toString()   );

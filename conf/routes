@@ -11,7 +11,8 @@ GET     /logout                     controllers.Application.logout()
 POST    /autentica                  controllers.Application.autentica()
 GET     /timeOut                    controllers.Application.timeOut()
 GET     /admin						controllers.AdminController.index()
-GET		/coord						controllers.CoordinadorController.index()
+GET     /coord						controllers.CoordinadorController.index()
+GET     /polimedia					controllers.PoliMediaController.tablero()
 POST	/cambiarPassword			controllers.Application.cambiarPassword()
 POST	/cambiarEmail				controllers.Application.cambiarEmail()
 
@@ -168,6 +169,9 @@ POST   /ctaAdminEdit/update     controllers.PersonalController.AdminUpdate()
 GET    /ctaCoordEdit            controllers.PersonalController.CoordEdit() 
 POST   /ctaCoordEdit/update     controllers.PersonalController.CoordUpdate()
 
+GET    /ctaAdminPMEdit          controllers.PersonalController.CtaAdminPMEdit()
+POST   /ctaAdminPMEdit/update   controllers.PersonalController.AdminPMUpdate()
+POST   /ctaAdminPMEdit/save     controllers.PersonalController.AdminPMSave()
 
 GET       /aspectos             controllers.AspectoController.list()
 GET       /aspecto/new          controllers.AspectoController.create()
@@ -391,6 +395,12 @@ GET     /poliMedia/carrusel2                    controllers.CarruselController.l
 GET     /poliMedia/carrusel/carruselDTSS2       controllers.CarruselController.carruselDTSS2()
 GET     /poliMedia/carrusel/create2             controllers.CarruselController.create2()
 POST    /poliMedia/carrusel/save2               controllers.CarruselController.save2()
+GET     /poliMedia/carrusel/edit2/:id           controllers.CarruselController.edit2(id:Long)
+GET     /poliMedia/carrusel/delete2/:id         controllers.CarruselController.delete2(id:Long)
 
+GET     /poliMedia/admin/list                   controllers.PoliMediaController.list()
+GET     /ajaxListaPoliMediaDTSS                 controllers.PoliMediaController.ajaxListaPoliMediaDTSS()
+GET     /poliMedia/admin/edit/:id               controllers.PoliMediaController.edit(id:Long)
+POST    /poliMedia/admin/delete                 controllers.PoliMediaController.delete()
 
-
+GET     /calificarRecursos                      controllers.RecursoController.calificarRecursos()

@@ -19,7 +19,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 //import views.html.Historial.log2;
 
-public class HistorialController extends Controller{
+public class HistorialController extends ControladorDefault{
 	
 	public static Result ajaxActualizaLog(Integer nitems){
 		System.out.println("desde HistorialController.ajaxActualizaLog");
@@ -101,12 +101,14 @@ public class HistorialController extends Controller{
 	   	 response().setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
 	   	 response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Referer, User-Agent");
 	   			
-		
+		/*
 		if ( listLog.size() <= 10 ){
 			 return ok (jArray.toString());
 		} else {
 			return ok (jArray.toString());
 		}
+		 */
+        return ok (jArray.toString());
 	}
 
 }

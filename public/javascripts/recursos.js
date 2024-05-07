@@ -37,9 +37,7 @@
 	function eliminarAutor2(renglon){	
 		$("#rowAutor"+renglon).remove();
 	}
-	
-	
-																																																			
+
 	var  agregarPalabra = function(){
 		var renglon = '<td><div class="form-group" style="min-width:100%"><input type="text" name="'+"palabra.descripcion"+$("#tablaPalabras tbody tr").length+'" value="" class="form-control validaRegExp" patron="[a-z0-9àèìòùáéíóúñ_ \'/*-+.,()ü#$%&/!¿?¡{}=<>:;-]+" , maxlength="40" style="min-width:100%"/><div class="help-block with-errors"></div></div><textarea placeholder="Escriba su observacion..." name="'+"observacion_palabra.descripcion"+$("#tablaPalabras tbody tr").length+'" class="observacion"></textarea>    <button type="button" name="btnObservacion_palabra.descripcion'+$("#tablaPalabras tbody tr").length+'" class="btn btn-primary btn-xs form-control">Corregir</button>     </td>';			
 		$('#tablaPalabras > tbody:last').append('<tr>'+renglon+'<td><input type="button" value="Quitar palabra" onclick="eliminarPalabra(this)"></td></tr>');		
@@ -51,13 +49,7 @@
     	var i = renglon.parentNode.parentNode.rowIndex;
     	document.getElementById("tablaPalabras").deleteRow(i);
 	}	
-	
-	
-	
 
-	
-	
-	
 	function eliminarDocumento2(renglon){		
     	var i = renglon;    	
     	var id = $("#docId"+i).html();
@@ -137,8 +129,6 @@
 			this.name = 'palabra.descripcion['+i+']';	
 		});
 
-		
-		
 		$("input[name^='documento.nombrearchivo']").filter(function() {
 		    return $(this).val().length != 0;
 		  }).each(function(i){
@@ -146,29 +136,6 @@
 			this.name = 'documento.nombrearchivo['+i+']';
 			$("select[name^='documento.tipodocumento"+num+"']").attr('name','documento.tipodocumento['+i+']');
 		});
-		
-		
-		
-		
-		
-		// Ordenar documento.nombrearchivo por su documento.tipodocumento
-		//Usando el método de la burbuja
-		/*
-		var tam = $("input[name^='documento.nombrearchivo']").length;
-		for (i=0; i < tam; i++){
-			var numiitera =  $("input[name^='documento.nombrearchivo']:eq("+i+")").attr('name').substring("documento.nombrearchivo".length);
-			
-			var idTipoDocto 
-		
-			for (j=0; j < tam-i; j++){
-				var numj =  $(this).attr('name').substring("documento.tipodocumento".length);
-				if (  numj > numi   ){
-					
-				}
-			}
-		}
-		*/
-
 	}
 	
 
@@ -399,18 +366,11 @@
 		var tipos = [];
 		
 		$("select[name^='documento.tipodocumento'] option:selected").each(function(e){
-			console.log("...", $(this).val() )
+			//console.log("...", $(this).val() )
 			tipos.push($(this).val());
 		});
-		
-
-		console.log("values: ",tipos);
-		
-
 
 		var tiposObligatorios = ["2","3","4","5","6"];
-
-		console.log(tiposObligatorios)
 		//arrayContainsArray busca en 'tipos' que tenga todos los elementos de 'tiposObligatorios'
 		var correcto = arrayContainsArray(tipos, tiposObligatorios); 
 		
@@ -441,68 +401,42 @@
 				$('#formatoentregaotro').parent().parent().removeClass("error");
 		}
 		
-		//
-		
-		//Si se opta por otro alcance curricular, especificar cual	
-		//console.log( $("#alcancecurricular_id option:selected").val()  );
 
-				if ( $("#alcancecurricular_id option:selected").val() == 99 ){
-							if (!$('#alcancecurricularotro').val()){
-								$('#alcancecurricularotro').parent().parent().addClass("error");
-								mensajesError+="Debe indicar cual es el alcance curricular.<br>";
-							} else
-								$('#alcancecurricularotro').parent().parent().removeClass("error");
-						}		
 		
+		//Si se opta por otro alcance curricular, especificar cual
+        if ( $("#alcancecurricular_id option:selected").val() == 99 ){
+            if (!$('#alcancecurricularotro').val()){
+                $('#alcancecurricularotro').parent().parent().addClass("error");
+                mensajesError+="Debe indicar cual es el alcance curricular.<br>";
+            } else
+                $('#alcancecurricularotro').parent().parent().removeClass("error");
+        }
 		
-		//Si el navegador no soporta input type=date, comprobar con js el formato dd/mm/aaaa
-		/*
-			if (!checkDateInput){
-					if (!validaFechaDDMMAAAA($("#elaboracion").val())){
-						$('#elaboracion').parent().parent().addClass("error");
-						mensajesError+="La fecha de elaboración debe ser del formato dd/mm/aaaa.<br>";
-					} 
-			}
-			*/		
-					
+
 		// Verificar que la fecha de elaboración sea menor a la fecha actual		
 		if (validaFechaElaboracion(  $('#elaboracion').val()  ) == false){
 			$('#elaboracion').parent().parent().addClass("error");
 			mensajesError+="La fecha de elaboración del recurso debe ser anterior a la fecha de hoy.<br>";
 		}
-		
-		
 
 		
-		
 		//Valida el campo de la versión anterior (si aplica)
-console.log("#version_id_2: "+$("#version_id_2").is(':checked'));		
 		if ( $("#version_id_2").is(':checked'))
 		{
-console.log("   2: "+$("input[type='radio'][name='extra1']:checked").length);			
 			if ( $("input[type='radio'][name='extra1']:checked").length==0 ){
-console.log("   3: ");
 				$("#divVersion").find(".form-group").addClass("error");
 				mensajesError+="Especifique si recuerda la clave de control del recurso que va a actualizar.<br>";		
 			} else {			
-console.log("   4: "+$("#extra1_S").is(":checked"));				
-				if (  $("#extra1_S").is(":checked")) {					
+				if (  $("#extra1_S").is(":checked")) {
 					if ($("#versionanterior_recursoanterior_id").val().length == 0  ){
 				
-console.log("   5: ");					
 						$("#divNumControl").addClass("error");
 						mensajesError+="Escriba la clave de control de la evaluación que se esta actualizando.<br>";
 					} else {
-console.log("   6: ");					
 					//Validar existencia de numero de control
-console.log("   7: ");
-
 						if (bnca()==0){
 							mensajesError+="El número de control que ingresó no existe.<br>";
 						}
-
-						
-
 					}
 				}
 				if ( $("#extra1_N").is(":checked")){
@@ -517,13 +451,8 @@ console.log("   7: ");
 			$("#sinopsis").parent().parent().addClass("has-error");
 			$("#sinopsis").parent().parent().addClass("error");	
 			mensajesError = mensajesError + "La sinopsis no debe exceder los 600 caracteres.<br>";
-		}		
-		
-		
-
-		
-		
-console.log("   mensajesError: ",mensajesError);		
+		}
+        console.log("   mensajesError: ",mensajesError);
 		return mensajesError;
 	}	
 	
@@ -556,9 +485,6 @@ console.log("   mensajesError: ",mensajesError);
 	function clickAlcance(e){
 		//***La siguiente línea se eliminó a petición del usuario Febrero2018
 		//$("#duracion").closest(".clearfix").parent().toggle( $(e).val() ==3 || $(e).val() ==4 || $(e).val()==5  );
-		
-		
-		
 		$("#alcancecurricularotro, label[for='alcancecurricularotro']").toggle($(e).val() == 99);
 	}
 	
@@ -569,7 +495,6 @@ console.log("   mensajesError: ",mensajesError);
 		//Quita botones de quitar palabras, autores y documentos
 		$("#tablaPalabras input[type='button'], #tablaAutores input[type='button'], #tablaDocumentos input[type='button']").hide();
 
-		
 		//Quita botones de agregar palabras , autores y documentos
 		$("#tablaPalabras tfoot, #tablaAutores tfoot,  #tablaDocumentos tfoot").hide();
 		
@@ -578,10 +503,6 @@ console.log("   mensajesError: ",mensajesError);
 			$("#tablaDocumentos input[type='button']").show();
 			$("#tablaDocumentos tfoot").show();
 		}
-		
-		
-		
-		
 	}
 	
 	
@@ -649,32 +570,16 @@ console.log("   mensajesError: ",mensajesError);
 	
 	function filtradoUnidadesAcademicas(){
 		$("#unidadacademica_id").find("option").remove();
-		/*
-    	if ($("#niveleducativo_id option:selected").val().length == 0  &&  $("#areaconocimiento_id option:selected").val().length == 0 ){
-    		   $("#unidadacademica_id").append($("<option></option>").addClass("blank").text("Seleccione Nivel educativo y Área del conocimiento"));
-    	}
-        if ($("#niveleducativo_id option:selected").val().length > 0  &&  $("#areaconocimiento_id option:selected").val().length == 0 ){
-            $("#unidadacademica_id").append($("<option></option>").addClass("blank").text("Seleccione Área del conocimiento"));
-        }
-        
-        if ($("#niveleducativo_id option:selected").val().length == 0  &&  $("#areaconocimiento_id option:selected").val().length > 0 ){
-            $("#unidadacademica_id").append($("<option></option>").addClass("blank").text("Seleccione Nivel educativo"));
-        }
-        if ($("#niveleducativo_id option:selected").val().length > 0  &&  $("#areaconocimiento_id option:selected").val().length > 0 ){
-        */
-		
 		if ($("#niveleducativo_id option:selected").val().length == 0){
             $("#unidadacademica_id").append($("<option></option>").addClass("blank").text("Seleccione primero el nivel educativo"));
         }
 		if ($("#niveleducativo_id option:selected").val().length > 0){
 			$.ajax({
 				  method: "GET",
-//				  url: "/ajaxUnidadAcademicaFiltrada/"+$("#niveleducativo_id option:selected").val()+"/"+$("#areaconocimiento_id option:selected").val(),
 				  url: "/ajaxUnidadAcademicaFiltrada/"+$("#niveleducativo_id option:selected").val(),
 				  dataType: "json"
 				})
-				  .done(function( retorno ) { 		
-				//	  console.dir(retorno)					  
+				  .done(function( retorno ) {
 					  if (retorno.length==0){
 						  $("#unidadacademica_id").append($("<option></option>").addClass("blank").text("No se encontraron Unidades Académicas")); 
 					  } else {
@@ -690,27 +595,8 @@ console.log("   mensajesError: ",mensajesError);
 				  });           
         }         
     }	
-	
-	
-	/*
-	
-	$(document).on("keydown blur", 'input, textarea', function(event){
-        var key = event.keyCode || event.charCode;
-		console.log(  key )
-		$(this).parent().find(".help-block").html("");
-        if (key == 8 || key == 46){}		
-		if ($(this).attr("maxlength") != undefined){
-			if (  $(this).val().length >= $(this).attr("maxlength")  ){
-				console.log("sobrepasado")
-				$(this).closest(".form-group").addClass("has-error");
-				$(this).parent().find(".help-block").html("Se ha alcanzado la longitud máxima para este campo.");
-			} else {
-				$(this).closest(".form-group").removeClass("has-error");
-			}
-		}
-	});
-	
-	*/
+
+
 	$(document).on("keyup5", 'input, textarea', function(event){
         var key = event.keyCode || event.charCode;
 		if (key == 8 || key == 46){		
@@ -725,255 +611,119 @@ console.log("   mensajesError: ",mensajesError);
 			}
 		}
 	});	
-	
-	
 
-
-
-    
- 
-    
         // VAlida campos de tipo hora
-        $(".soloHora").blur(function () {
-            if ($(this).val()){                
-            	if (!/^(?:\d|[01]\d|2[0-3]):[0-5]\d$/.test($(this).val())) {
-                    $(this).popover({
-                      title: "Error de validación",
-                      content: "Este campo solo acepta hora en formato hh:mm",
-                      placement: "top"
-                    });
-                    $(this).parent().addClass('has-error');
-                    $(this).popover('show');
-                } else {
-                    $(this).parent().removeClass('has-error');
-                    $(this).popover('hide');
-                }
+    $(".soloHora").blur(function () {
+        if ($(this).val()){
+            if (!/^(?:\d|[01]\d|2[0-3]):[0-5]\d$/.test($(this).val())) {
+                $(this).popover({
+                  title: "Error de validación",
+                  content: "Este campo solo acepta hora en formato hh:mm",
+                  placement: "top"
+                });
+                $(this).parent().addClass('has-error');
+                $(this).popover('show');
+            } else {
+                $(this).parent().removeClass('has-error');
+                $(this).popover('hide');
             }
-        });	
-	
-        
-        
-        //Valida que los campos solo acepten letras, especios, signos de puntuación
-        $(document).on("blur",".validaRegExp", function (e) {
-        	$(this).keydown();
-        });
-        
-        $(document).on("paste",".validaRegExp", function (e) {
-        	var patron = $(this).attr("patron");
-        	var pastedData = e.originalEvent.clipboardData.getData('text');
-        	if (   !eval("/^"+patron+"$/").test(pastedData)){
-				alert("Al menos uno de los caracteres que intenta copiar no es válido.");
-        		return false;
-        	}
-        });
-        
-        $(document).on("keydown",".validaRegExp", function (e) {
-        	console.log("... validaRegExp   " )
-        	$(this).parent().find(".help-block").html("");  
-        	tecla = e.keyCode || e.which;
-        	console.dir( $(this).val() )
-        	//console.dir( e.shiftKey+"   "+tecla )
-        	console.dir(e)
-        	console.log("Tamaños: "+$(this).val().length +"    "+ $(this).attr("maxlength"))
-        	$(this).closest(".form-group").removeClass("has-error");        	
+        }
+    });
 
-        	var re = new RegExp($(this).attr("patron"), 'i');
-        	console.log("re: "+re)
-        	console.log("key: "+e.key)       	
-        	
-        	console.log( re.test(e.key)  )
-        	console.log("tecla: "+ tecla)
-        	
-        	if ( re.test(e.key) || tecla == undefined ){
-        		console.log("...PASA...")
-        	} else {
-        		console.log("es tecla especial?")
-                // Allow: backspace, delete, tab, escape, enter, F5
-                if ($.inArray(tecla, [46, 8, 9, 27, 13, 116]) !== -1 ||
-                     // Allow: Ctrl+A, Command+A
-                    (tecla === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-                    // Control c
-                    (tecla === 67 && (e.ctrlKey === true || e.metaKey === true)) ||
-                    // Alt
-                    (tecla === 18 && (e.altKey === true)) ||
-                    // Alt Gr
-                    (tecla === 225 && (e.key === "AltGraph")) ||            
-                     // Allow: home, end, left, right, down, up
-                    (tecla >= 35 && tecla <= 40) ){
-                         // let it happen, don't do anything
-                	console.log("ignorado")
-                         return;
-                } else {
-        			console.log("...NO PASA...")
-        			//console.log(e.key.match(re))
-        			var patron = $(this).attr("patron").replace("]","");
-        			patron = patron.replace("]","");
-        			patron = patron.replace("[","");
-        			console.log("se encontró algun error")
-        			var msgError ="Este campo acepta: ";
-        			let aux=patron;
-        			if (patron.includes("a-z") ){
-        				aux = aux.replace("a-z", "", "gi");
-        				aux = aux.replace("A-Z", "", "gi");
-        				msgError+= " letras, "
-        					console.log("patron aux: "+aux)
-        			}
-        			if (patron.includes(" ")){
-        				aux = aux.replace(" ", "", "gi");
-        				msgError+= " espacios, "
-        					console.log("patron aux: "+aux)
-        			}
-        			if (patron.includes("0-9")){
-        				aux = aux.replace("0-9", "", "gi");
-        				msgError+= " números, "
-        					console.log("patron aux: "+aux)
-        			}
-        			
-        			console.log("patron aux: "+aux)
-        			
-        			if (aux.length>0){
-        				msgError+=" y los caracteres ";
-        				for (let c of aux){
-        					msgError+=c+"  ";
-        				}
-        			}
-        			
-					$(this).closest(".form-group").addClass("has-error");
-					$(this).parent().find(".help-block").html(msgError.substring(0, msgError.length-2));            	
-	                e.preventDefault();  
+
+
+    //Valida que los campos solo acepten letras, especios, signos de puntuación
+    $(document).on("blur",".validaRegExp", function (e) {
+        $(this).keydown();
+    });
+
+    $(document).on("paste",".validaRegExp", function (e) {
+        var patron = $(this).attr("patron");
+        var pastedData = e.originalEvent.clipboardData.getData('text');
+        if (   !eval("/^"+patron+"$/").test(pastedData)){
+            alert("Al menos uno de los caracteres que intenta copiar no es válido.");
+            return false;
+        }
+    });
+
+    $(document).on("keydown",".validaRegExp", function (e) {
+        console.log("... validaRegExp   " )
+        $(this).parent().find(".help-block").html("");
+        tecla = e.keyCode || e.which;
+        console.dir( $(this).val() )
+        //console.dir( e.shiftKey+"   "+tecla )
+        console.dir(e)
+        console.log("Tamaños: "+$(this).val().length +"    "+ $(this).attr("maxlength"))
+        $(this).closest(".form-group").removeClass("has-error");
+
+        var re = new RegExp($(this).attr("patron"), 'i');
+        console.log("re: "+re)
+        console.log("key: "+e.key)
+
+        console.log( re.test(e.key)  )
+        console.log("tecla: "+ tecla)
+
+        if ( re.test(e.key) || tecla == undefined ){
+
+        } else {
+            // Allow: backspace, delete, tab, escape, enter, F5
+            if ($.inArray(tecla, [46, 8, 9, 27, 13, 116]) !== -1 ||
+                 // Allow: Ctrl+A, Command+A
+                (tecla === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Control c
+                (tecla === 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Alt
+                (tecla === 18 && (e.altKey === true)) ||
+                // Alt Gr
+                (tecla === 225 && (e.key === "AltGraph")) ||
+                 // Allow: home, end, left, right, down, up
+                (tecla >= 35 && tecla <= 40) ){
+                     // let it happen, don't do anything
+                console.log("ignorado")
+                     return;
+            } else {
+                console.log("...NO PASA...")
+                //console.log(e.key.match(re))
+                var patron = $(this).attr("patron").replace("]","");
+                patron = patron.replace("]","");
+                patron = patron.replace("[","");
+                console.log("se encontró algun error")
+                var msgError ="Este campo acepta: ";
+                let aux=patron;
+                if (patron.includes("a-z") ){
+                    aux = aux.replace("a-z", "", "gi");
+                    aux = aux.replace("A-Z", "", "gi");
+                    msgError+= " letras, "
+                        console.log("patron aux: "+aux)
                 }
-        		
-        		
-        	}
-        	
-        	
-        	
-        	
-        	
-    /*    	
-        	
-        	if (  e.key!=undefined )
-        		if ( e.key.match(re)  ||   (e.key='Backspace')  )
-        		{
-        		console.log("...PASA...")
-        		console.log(e.key.match(re))
-    			if ($(this).attr("maxlength") != undefined){
-    				if (  $(this).val().length >= $(this).attr("maxlength")  ){
-    					$(this).closest(".form-group").addClass("has-error");
-    					$(this).parent().find(".help-block").html("Se ha alcanzado la longitud máxima para este campo..");        		
-    				}
-    			}
-        		} else {
-        			console.log("...NO PASA...")
-        			console.log(e.key.match(re))
-        			var patron = $(this).attr("patron").replace("]","");
-        			patron = patron.replace("]","");
-        			patron = patron.replace("[","");
-        			var msgError ="Este campo acepta: ";
-        			let aux=patron;
-        			if (patron.includes("a-z") ){
-        				aux = aux.replace("a-z", "", "gi");
-        				aux = aux.replace("A-Z", "", "gi");
-        				msgError+= " letras, "
-        					console.log("patron aux: "+aux)
-        			}
-        			if (patron.includes(" ")){
-        				aux = aux.replace(" ", "", "gi");
-        				msgError+= " espacios, "
-        					console.log("patron aux: "+aux)
-        			}
-        			if (patron.includes("0-9")){
-        				aux = aux.replace("0-9", "", "gi");
-        				msgError+= " números, "
-        					console.log("patron aux: "+aux)
-        			}
-        			
-        			console.log("patron aux: "+aux)
-        			
-        			if (aux.length>0){
-        				msgError+=" y los caracteres ";
-        				for (let c of aux){
-        					msgError+=c+"  ";
-        				}
-        			}
-        			
-					$(this).closest(".form-group").addClass("has-error");
-					$(this).parent().find(".help-block").html(msgError.substring(0, msgError.length-2));            	
-	                e.preventDefault();  
-        		}
-        	
-        	*/
-        	
-        	
-        	/*
-
-        // Allow: backspace, delete, tab, escape, enter, F5
-        if ($.inArray(tecla, [46, 8, 9, 27, 13, 116]) !== -1 ||
-             // Allow: Ctrl+A, Command+A
-            (tecla === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-            // Control c
-            (tecla === 67 && (e.ctrlKey === true || e.metaKey === true)) ||
-            // Alt
-            (tecla === 18 && (e.altKey === true)) ||
-            // Alt Gr
-            (tecla === 225 && (e.key === "AltGraph")) ||            
-             // Allow: home, end, left, right, down, up
-            (tecla >= 35 && tecla <= 40) ){
-                 // let it happen, don't do anything
-        	console.log("ignorado")
-                 return;
-        }            
-            
-            
-        	
-        	
-
-        	
-            
-            
-                // VErificar que son characteres permitidos y detener keypress
-        	if (   
-        			(   ((tecla >= 65 && tecla <= 90)  ||tecla==192)  ) //letras (incluyendo ñ)con o sin shift
-        		 || ( e.shiftKey==false && (tecla >= 96 && tecla <= 105)) //numeros pad numérico
-        		 || ( e.shiftKey==false && (tecla >= 106 && tecla <= 111)) //* + - . /
-        		 || ( e.shiftKey==false && (tecla >= 48 && tecla <= 57)) //numeros teclado
-        				
-        				//checar    http://fgualambo.blogspot.com/2011/09/validar-campo-de-texto-que-solo-permita.html
-        				
-        				
-        				|| tecla == 32		// espacio 
-        				|| tecla == 190		// punto
-        				|| tecla == 188		// coma        				
-        				|| tecla == 187		// =
-        				|| tecla == 189		// -
-        				|| tecla == 219		// '
-        				|| tecla == 187		// =
-        				|| tecla == 222		// { [
-        				|| tecla == 191		// } ]
-        				|| (e.shiftKey==true && (tecla == 56 || tecla == 57))		// ( )
-        				|| (e.shiftKey==false && (tecla == 56 || tecla == 57))		// ( )
-        				|| tecla == 222		// 
-        				
-        				|| (e.shiftKey==true && tecla == 50) // " shift 2
-        				|| tecla == 20
-        				|| (e.shiftKey==true && tecla == 16)	// shift
-        				|| (e.ctrlKey==true && tecla == 17)   // control
-        				
-        				
-        			
-        	   ) {
-        		console.log("sin error")
-        			$(this).closest(".form-group").removeClass("has-error");
-        		} else {
-        			console.log("con error")
-					$(this).closest(".form-group").addClass("has-error");
-					$(this).parent().find(".help-block").html("Este campo solo acepta letras, números.");            	
-	                e.preventDefault();        			
-                	
+                if (patron.includes(" ")){
+                    aux = aux.replace(" ", "", "gi");
+                    msgError+= " espacios, "
+                        console.log("patron aux: "+aux)
                 }
-                
-        	*/
-            });        
+                if (patron.includes("0-9")){
+                    aux = aux.replace("0-9", "", "gi");
+                    msgError+= " números, "
+                        console.log("patron aux: "+aux)
+                }
+
+                console.log("patron aux: "+aux)
+
+                if (aux.length>0){
+                    msgError+=" y los caracteres ";
+                    for (let c of aux){
+                        msgError+=c+"  ";
+                    }
+                }
+
+                $(this).closest(".form-group").addClass("has-error");
+                $(this).parent().find(".help-block").html(msgError.substring(0, msgError.length-2));
+                e.preventDefault();
+            }
+
+
+        }
+    });
         
         
 	

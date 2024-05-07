@@ -3,7 +3,7 @@
 # MySQL credentials
 user="erdd"
 password="dberdd2024"
-db="erdd_dev"
+db="erdd_test2"
 
 # Create a variable with the command to list all tables
 tables=$(mysql -u $user -p$password -Nse 'SHOW TABLES' $db)

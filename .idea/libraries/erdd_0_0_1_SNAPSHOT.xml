@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="erdd-0.0.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/universal/erdd-0.0.1-SNAPSHOT.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

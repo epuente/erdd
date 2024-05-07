@@ -1,7 +1,7 @@
 @(niveles : List[Niveleducativo])
 @import helper._
 @main {
-<style>
+<style nonce="@session.get("nonce")">
 .filtrado, mark  {
     background-color:#ffffcc !important;  
 }

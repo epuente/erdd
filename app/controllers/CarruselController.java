@@ -1,7 +1,6 @@
 package controllers;
 
 import com.avaje.ebean.*;
-import controllers.ControladorSeguro;
 import models.*;
 import models.polimedia.Carrusel;
 import models.polimedia.Polimedia;
@@ -14,7 +13,6 @@ import org.json.JSONObject;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
-import play.db.ebean.Model;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -24,12 +22,10 @@ import static play.data.Form.form;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -37,7 +33,7 @@ import java.util.stream.Collectors;
 
 import org.joda.time.DateTime;
 
-public class CarruselController extends Controller {
+public class CarruselController extends ControladorDefault {
 
     public static Result GO_HOME = redirect(routes.CarruselController.list());
 
@@ -150,7 +146,7 @@ public class CarruselController extends Controller {
                 datoP.put("titulo", p.titulo);
                 int vigencia = dateTimeComparator.compare(p.fin, hoy);
                 System.out.println("------ "+vigencia);
-                datoP.put("vigente", vigencia>=0?true:false );
+                datoP.put("vigente", vigencia >= 0);
                 losDatos.put(datoP);
             }
             if ( carr.getTotalRowCount()>0 ){
@@ -207,11 +203,9 @@ public class CarruselController extends Controller {
             } catch (FileNotFoundException e) {
                 flash("error", "No fué posible agregar el registro, No se encontró el archivo.");
                 System.out.println("Error "+e.toString());
-                e.printStackTrace();
             } catch (IOException ioe){
                 flash("error", "No fué posible agregar el registro, error de i/o.");
                 System.out.println("Error "+ioe.toString());
-                ioe.printStackTrace();
             }
         }
         cr.save();
@@ -253,11 +247,9 @@ public class CarruselController extends Controller {
             } catch (FileNotFoundException e) {
                 flash("error", "No fué posible agregar el registro, No se encontró el archivo.");
                 System.out.println("Error "+e.toString());
-                e.printStackTrace();
             } catch (IOException ioe){
                 flash("error", "No fué posible agregar el registro, error de i/o.");
                 System.out.println("Error "+ioe.toString());
-                ioe.printStackTrace();
             }
         }
         cr.update();
@@ -386,7 +378,7 @@ public class CarruselController extends Controller {
                 datoP.put("titulo", p.polimedia.recurso.titulo);
                 int vigencia = dateTimeComparator.compare(p.fin, hoy);
                 System.out.println("------ "+vigencia);
-                datoP.put("vigente", vigencia>=0?true:false );
+                datoP.put("vigente", vigencia >= 0);
                 losDatos.put(datoP);
             }
             if ( carr.getTotalRowCount()>0 ){
@@ -408,21 +400,30 @@ public class CarruselController extends Controller {
     public static Result create2(){
         Logger.info("Desde CarruselController.create2");
         Form<PolimediaCarrusel> c = form(PolimediaCarrusel.class);
-        List<Long> rsPolimedia = Polimedia.find.findList().stream().map(m->m.recurso.id).collect(Collectors.toList());
-        List<Recurso> recursos = Recurso.find.where().not(Expr.in("id", rsPolimedia)).findList();
+        // List de los recursos que ya estan en polimediacarrusel
+        List<Long> enCarrusel = PolimediaCarrusel.find.all().stream().map(m->m.polimedia.recurso.id).collect(Collectors.toList());
+        // List de los recursos que esten en polimedia
+        List<Polimedia> polis = Polimedia.find
+                                    .where()
+                                    .not(Expr.in("recurso.id", enCarrusel))
+                                        .eq("habilitado", true)
+                                    .findList();
 
         LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
-        for(Recurso op: recursos) {
-            options.put(op.id.toString(), op.titulo);
+        for(Polimedia op: polis) {
+            options.put(op.recurso.id.toString(), op.recurso.titulo);
         }
 
-        // Prueba de las anotaciones Pre y Post del modelo APrueba01
-        /*
-        Logger.debug("------------APrueba01");
-        APrueba001 a = new APrueba001();
-        a.descripcion ="AAAAA";
-        a.save();
-        */
+
+
+
+
+        Recurso recurso = Recurso.find.byId(4L);
+        recurso.estado = Estado.find.byId(10L);
+        recurso.update();
+
+
+
         /*
         // Prueba de calificacionPorcentajeAspectos en la tabla Recurso
 
@@ -460,10 +461,13 @@ public class CarruselController extends Controller {
             recurso.calificacion = rCal;
             recurso.update();
             */
-
-        Recurso r = Recurso.find.byId(1L);
+/*
+        System.out.println("Iniciando update manual desde CarruselController.create2.....................................");
+        Recurso r = Recurso.find.byId(2L);
         r.estado = Estado.find.byId(10L);
         r.update();
+
+ */
         return ok(  views.html.poliMedia.create2.render(c, options)  );
     }
 
@@ -520,5 +524,36 @@ public class CarruselController extends Controller {
             flash("success", "Se agregó el registro.");
        return redirect(routes.CarruselController.list2());
     }
+
+    public static Result edit2(Long id){
+        Form<PolimediaCarrusel> c = form(PolimediaCarrusel.class).fill(
+                PolimediaCarrusel.find.byId(id)
+        );
+
+        List<Long> enCarrusel = PolimediaCarrusel.find.all().stream().map(m->m.polimedia.recurso.id).collect(Collectors.toList());
+        // List de los recursos que esten en polimedia
+        List<Polimedia> polis = Polimedia.find
+                .where()
+                .not(Expr.in("recurso.id", enCarrusel))
+                .eq("habilitado", true)
+                .findList();
+
+        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        for(Polimedia op: polis) {
+            options.put(op.recurso.id.toString(), op.recurso.titulo);
+        }
+
+
+        return ok (views.html.poliMedia.edit2.render(id, c, options) );
+    }
+
+
+
+    public static Result delete2(Long id) throws ParseException {
+        PolimediaCarrusel.find.byId(id).delete();
+        flash("success", "Se eliminó el registro.");
+        return redirect(routes.CarruselController.list2());
+    }
+
 
 }

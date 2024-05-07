@@ -3,7 +3,7 @@ package controllers;
 import static play.data.Form.form;
 
 import java.util.Arrays;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
@@ -85,13 +85,13 @@ public class EvaluadorController extends ControladorSeguro{
         //Enviar correo al evaluador
         miCorreo mc = new miCorreo();
         mc.asunto = "Se ha agregado como Evaluador";
-        mc.para = Arrays.asList(p.correo);
+        mc.para = Collections.singletonList(p.correo);
         		
         mc.mensaje="Usted ha sido asignado como evaluador para el sistema ERDD.<br><br>Su nombre de usuario es: "+p.usuario.usuario+" y su clave de acceso es: "+p.usuario.password+"<br><br>";
         mc.mensaje+="<br>Evaluará el(los) aspectos:<br>";
-        String losAspectos="";
+        StringBuilder losAspectos= new StringBuilder();
         for (EvaluadorAspecto ea : p.evaluador.evaluadoraspectos) {        	
-        	losAspectos+=ea.aspecto.descripcion+"<br>";
+        	losAspectos.append(ea.aspecto.descripcion).append("<br>");
         }
         mc.mensaje+=losAspectos;
         mc.mensaje+="<br>";
@@ -107,8 +107,8 @@ public class EvaluadorController extends ControladorSeguro{
     		notifica+="de los aspectos: ";
     	else 
     		notifica+="del aspecto ";
-    	losAspectos=losAspectos.replace("<br>", ", ");
-    	losAspectos=losAspectos.substring(0,losAspectos.length()-2)+".";
+    	losAspectos = new StringBuilder(losAspectos.toString().replace("<br>", ", "));
+    	losAspectos = new StringBuilder(losAspectos.substring(0, losAspectos.length() - 2) + ".");
     	//notifica.replace("<br>", ", ");
     	notifica+=losAspectos;
     	n.enviar("fbErddAdmin", "ERDD", notifica);   
@@ -162,12 +162,8 @@ public class EvaluadorController extends ControladorSeguro{
 		for (EvaluadorAspecto borra : y.evaluador.evaluadoraspectos){
 			borra.delete();
 		}		
-		
 		y.evaluador.evaluadoraspectos.clear();
-		
-		
-		System.out.println(" 0 -   "+y.evaluador.evaluadoraspectos.size());		
-        // Los aspectos del evaluador        
+        // Los aspectos del evaluador
         List<Aspecto> asp = Aspecto.find.all();
         for(Aspecto aux : asp){
         	for(int i=0; i < asp.size(); i++){
@@ -187,8 +183,8 @@ public class EvaluadorController extends ControladorSeguro{
         miCorreo mc = new miCorreo();
         
         mc.asunto = "Se ha modificado su perfil de Evaluador";
-        mc.para = Arrays.asList(y.correo);
-System.out.println("activo: "+y.activo.id+"    activo anterior: "+estadoActivoAnterior);        
+        mc.para = Collections.singletonList(y.correo);
+        System.out.println("activo: "+y.activo.id+"    activo anterior: "+estadoActivoAnterior);
         if (y.activo.id == 2  && y.activo.id == estadoActivoAnterior){
 	        mc.mensaje="Se le informa que su perfil como evaluador para el Sistema de Evaluación de Recursos Didácticos Digitales se ha modificado.<br><br>Su nombre de usuario es: "+y.usuario.usuario+" y su clave de acceso es: "+y.usuario.password+"<br><br>";
 	        mc.mensaje+="<br>Evaluará el(los) aspectos:<br>";
@@ -214,7 +210,7 @@ System.out.println("activo: "+y.activo.id+"    activo anterior: "+estadoActivoAn
  
     public static Result existeMail(String mail){
     	int aux = Evaluador.find.fetch("personal").where().eq("personal.correo", mail).findRowCount();   	
-System.out.println("\n\n\nexisteMail ("+mail+"): "+aux);     	
+        System.out.println("\n\n\nexisteMail ("+mail+"): "+aux);
 		if (aux != 0){
 			return badRequest(); 
 		}
@@ -226,7 +222,7 @@ System.out.println("\n\n\nexisteMail ("+mail+"): "+aux);
 
     public static Result existeUserPass(String user, String pass){
     	int aux = Usuario.find.fetch("roles").where().eq("usuario",user).eq("password",pass).eq("roles.rol.id",2).findRowCount();   	
-System.out.println("\n\n\nexisteUserPass ("+user+", "+pass+"): "+aux);     	
+        System.out.println("\n\n\nexisteUserPass ("+user+", "+pass+"): "+aux);
 		if (aux != 0)
 			return ok("1");
 		else

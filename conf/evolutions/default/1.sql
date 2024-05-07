@@ -63,6 +63,7 @@ create table carrusel (
   titulo                    varchar(100),
   contenttype               varchar(255),
   contenido                 longblob,
+  recurso_id                bigint,
   auditinsert               datetime not null,
   auditlastupdate           datetime not null,
   constraint pk_carrusel primary key (id))
@@ -537,9 +538,23 @@ create table personal (
 create table polimedia (
   id                        bigint auto_increment not null,
   recurso_id                bigint,
+  habilitado                tinyint(1) default 0 not null,
+  tipo_id                   bigint,
+  tiene_url                 tinyint(1) default 0 not null,
   auditinsert               datetime not null,
   auditlastupdate           datetime not null,
   constraint pk_polimedia primary key (id))
+;
+
+create table polimedia_archivo (
+  id                        bigint auto_increment not null,
+  polimedia_id              bigint,
+  nombre_archivo            varchar(200),
+  contenttype               varchar(255),
+  contenido                 longblob,
+  auditinsert               datetime not null,
+  auditlastupdate           datetime not null,
+  constraint pk_polimedia_archivo primary key (id))
 ;
 
 create table polimedia_carrusel (
@@ -561,6 +576,15 @@ create table polimedia_carrusel_imagen (
   contenttype               varchar(255),
   contenido                 longblob,
   constraint pk_polimedia_carrusel_imagen primary key (id))
+;
+
+create table polimedia_url (
+  id                        bigint auto_increment not null,
+  polimedia_id              bigint,
+  url                       varchar(200),
+  auditinsert               datetime not null,
+  auditlastupdate           datetime not null,
+  constraint pk_polimedia_url primary key (id))
 ;
 
 create table recurso (
@@ -616,6 +640,8 @@ create table recurso_calificacion_aspecto (
   recursocalificacion_id    bigint,
   aspecto_id                bigint,
   calificacion              float not null,
+  auditinsert               datetime not null,
+  auditlastupdate           datetime not null,
   constraint pk_recurso_calificacion_aspecto primary key (id))
 ;
 
@@ -674,6 +700,14 @@ create table solicitud_cancelacion (
   auditinsert               datetime not null,
   auditlastupdate           datetime not null,
   constraint pk_solicitud_cancelacion primary key (id))
+;
+
+create table tipo (
+  id                        bigint auto_increment not null,
+  descripcion               varchar(255) not null,
+  auditinsert               datetime not null,
+  auditlastupdate           datetime not null,
+  constraint pk_tipo primary key (id))
 ;
 
 create table tipodocumento (
@@ -774,208 +808,216 @@ create table recurso_dirigidoa (
   constraint pk_recurso_dirigidoa primary key (id))
 ;
 
-alter table clasificacion add constraint fk_clasificacion_recurso_1 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_clasificacion_recurso_1 on clasificacion (recurso_id);
-alter table clasificacion add constraint fk_clasificacion_criterio1_2 foreign key (criterio1_id) references clasificador_criterio1 (id) on delete restrict on update restrict;
-create index ix_clasificacion_criterio1_2 on clasificacion (criterio1_id);
-alter table clasificacion add constraint fk_clasificacion_criterio2_3 foreign key (criterio2_id) references clasificador_criterio2 (id) on delete restrict on update restrict;
-create index ix_clasificacion_criterio2_3 on clasificacion (criterio2_id);
-alter table clasificacion add constraint fk_clasificacion_criterio3_4 foreign key (criterio3_id) references clasificador_criterio3 (id) on delete restrict on update restrict;
-create index ix_clasificacion_criterio3_4 on clasificacion (criterio3_id);
-alter table clasificacion add constraint fk_clasificacion_tiporecurso_5 foreign key (tiporecurso_id) references clasificador_tiporecurso (id) on delete restrict on update restrict;
-create index ix_clasificacion_tiporecurso_5 on clasificacion (tiporecurso_id);
-alter table clasificador_cancelable add constraint fk_clasificador_cancelable_criterio1_6 foreign key (criterio1_id) references clasificador_criterio1 (id) on delete restrict on update restrict;
-create index ix_clasificador_cancelable_criterio1_6 on clasificador_cancelable (criterio1_id);
-alter table clasificador_cancelable add constraint fk_clasificador_cancelable_criterio2_7 foreign key (criterio2_id) references clasificador_criterio2 (id) on delete restrict on update restrict;
-create index ix_clasificador_cancelable_criterio2_7 on clasificador_cancelable (criterio2_id);
-alter table clasificador_cancelable add constraint fk_clasificador_cancelable_criterio3_8 foreign key (criterio3_id) references clasificador_criterio3 (id) on delete restrict on update restrict;
-create index ix_clasificador_cancelable_criterio3_8 on clasificador_cancelable (criterio3_id);
-alter table clasificador_criterio2 add constraint fk_clasificador_criterio2_criterio1_9 foreign key (criterio1_id) references clasificador_criterio1 (id) on delete restrict on update restrict;
-create index ix_clasificador_criterio2_criterio1_9 on clasificador_criterio2 (criterio1_id);
-alter table clasificador_criterio3 add constraint fk_clasificador_criterio3_criterio1_10 foreign key (criterio1_id) references clasificador_criterio1 (id) on delete restrict on update restrict;
-create index ix_clasificador_criterio3_criterio1_10 on clasificador_criterio3 (criterio1_id);
-alter table clasificador_criterio3 add constraint fk_clasificador_criterio3_criterio2_11 foreign key (criterio2_id) references clasificador_criterio2 (id) on delete restrict on update restrict;
-create index ix_clasificador_criterio3_criterio2_11 on clasificador_criterio3 (criterio2_id);
-alter table clasificador_criterio3 add constraint fk_clasificador_criterio3_catalogo_12 foreign key (catalogo_id) references clasificador_catalogo_criterio3 (id) on delete restrict on update restrict;
-create index ix_clasificador_criterio3_catalogo_12 on clasificador_criterio3 (catalogo_id);
-alter table clasificador_criterio3ejemplo add constraint fk_clasificador_criterio3ejemplo_criterio3_13 foreign key (criterio3_id) references clasificador_criterio3 (id) on delete restrict on update restrict;
-create index ix_clasificador_criterio3ejemplo_criterio3_13 on clasificador_criterio3ejemplo (criterio3_id);
-alter table clasificador_criterio3ejemplo add constraint fk_clasificador_criterio3ejemplo_tiporecurso_14 foreign key (tiporecurso_id) references clasificador_tiporecurso (id) on delete restrict on update restrict;
-create index ix_clasificador_criterio3ejemplo_tiporecurso_14 on clasificador_criterio3ejemplo (tiporecurso_id);
-alter table clasificador_ejemplo add constraint fk_clasificador_ejemplo_criterio1_15 foreign key (criterio1_id) references clasificador_criterio1 (id) on delete restrict on update restrict;
-create index ix_clasificador_ejemplo_criterio1_15 on clasificador_ejemplo (criterio1_id);
-alter table clasificador_ejemplo add constraint fk_clasificador_ejemplo_criterio2_16 foreign key (criterio2_id) references clasificador_criterio2 (id) on delete restrict on update restrict;
-create index ix_clasificador_ejemplo_criterio2_16 on clasificador_ejemplo (criterio2_id);
-alter table clasificador_ejemplo add constraint fk_clasificador_ejemplo_criterio3_17 foreign key (criterio3_id) references clasificador_criterio3 (id) on delete restrict on update restrict;
-create index ix_clasificador_ejemplo_criterio3_17 on clasificador_ejemplo (criterio3_id);
-alter table clasificador_ejemplo add constraint fk_clasificador_ejemplo_tiporecurso_18 foreign key (tiporecurso_id) references clasificador_tiporecurso (id) on delete restrict on update restrict;
-create index ix_clasificador_ejemplo_tiporecurso_18 on clasificador_ejemplo (tiporecurso_id);
-alter table clasificador_noevaluable add constraint fk_clasificador_noevaluable_criterio1_19 foreign key (criterio1_id) references clasificador_criterio1 (id) on delete restrict on update restrict;
-create index ix_clasificador_noevaluable_criterio1_19 on clasificador_noevaluable (criterio1_id);
-alter table clasificador_noevaluable add constraint fk_clasificador_noevaluable_criterio2_20 foreign key (criterio2_id) references clasificador_criterio2 (id) on delete restrict on update restrict;
-create index ix_clasificador_noevaluable_criterio2_20 on clasificador_noevaluable (criterio2_id);
-alter table clasificador_noevaluable add constraint fk_clasificador_noevaluable_criterio3_21 foreign key (criterio3_id) references clasificador_criterio3 (id) on delete restrict on update restrict;
-create index ix_clasificador_noevaluable_criterio3_21 on clasificador_noevaluable (criterio3_id);
-alter table correo_autor add constraint fk_correo_autor_autor_22 foreign key (autor_id) references recurso_autor (id) on delete restrict on update restrict;
-create index ix_correo_autor_autor_22 on correo_autor (autor_id);
-alter table correo_salida add constraint fk_correo_salida_recurso_23 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_correo_salida_recurso_23 on correo_salida (recurso_id);
-alter table correo_salida add constraint fk_correo_salida_estado_24 foreign key (estado_id) references estado (id) on delete restrict on update restrict;
-create index ix_correo_salida_estado_24 on correo_salida (estado_id);
-alter table correo_salida_para add constraint fk_correo_salida_para_correosalida_25 foreign key (correosalida_id) references correo_salida (id) on delete restrict on update restrict;
-create index ix_correo_salida_para_correosalida_25 on correo_salida_para (correosalida_id);
-alter table documento add constraint fk_documento_recurso_26 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_documento_recurso_26 on documento (recurso_id);
-alter table documento add constraint fk_documento_tipodocumento_27 foreign key (tipodocumento_id) references tipodocumento (id) on delete restrict on update restrict;
-create index ix_documento_tipodocumento_27 on documento (tipodocumento_id);
-alter table encuesta_observacion add constraint fk_encuesta_observacion_encuesta_28 foreign key (encuesta_id) references encuesta_respuesta (id) on delete restrict on update restrict;
-create index ix_encuesta_observacion_encuesta_28 on encuesta_observacion (encuesta_id);
-alter table encuesta_respuesta add constraint fk_encuesta_respuesta_recurso_29 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_encuesta_respuesta_recurso_29 on encuesta_respuesta (recurso_id);
-alter table encuesta_respuesta add constraint fk_encuesta_respuesta_estado_30 foreign key (estado_id) references estado_encuesta (id) on delete restrict on update restrict;
-create index ix_encuesta_respuesta_estado_30 on encuesta_respuesta (estado_id);
-alter table evaluacion add constraint fk_evaluacion_recursoevaluador_31 foreign key (recursoevaluador_id) references recursoevaluador (id) on delete restrict on update restrict;
-create index ix_evaluacion_recursoevaluador_31 on evaluacion (recursoevaluador_id);
-alter table evaluacion add constraint fk_evaluacion_evaluaciontabla_32 foreign key (evaluaciontabla_id) references evaluacion_tabla (id) on delete restrict on update restrict;
-create index ix_evaluacion_evaluaciontabla_32 on evaluacion (evaluaciontabla_id);
-alter table evaluacion_fecha add constraint fk_evaluacion_fecha_recurso_33 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_evaluacion_fecha_recurso_33 on evaluacion_fecha (recurso_id);
-alter table evaluacion_observacion add constraint fk_evaluacion_observacion_respuesta_34 foreign key (respuesta_id) references evaluacion (id) on delete restrict on update restrict;
-create index ix_evaluacion_observacion_respuesta_34 on evaluacion_observacion (respuesta_id);
-alter table evaluacion_observacion_gral add constraint fk_evaluacion_observacion_gral_recursoevaluador_35 foreign key (recursoevaluador_id) references recursoevaluador (id) on delete restrict on update restrict;
-create index ix_evaluacion_observacion_gral_recursoevaluador_35 on evaluacion_observacion_gral (recursoevaluador_id);
-alter table evaluacion_observacion_observacion_gral add constraint fk_evaluacion_observacion_observacion_gral_evaluacionobservac_36 foreign key (evaluacionobservaciongral_id) references evaluacion_observacion_gral (id) on delete restrict on update restrict;
-create index ix_evaluacion_observacion_observacion_gral_evaluacionobservac_36 on evaluacion_observacion_observacion_gral (evaluacionobservaciongral_id);
-alter table evaluacion_prorroga add constraint fk_evaluacion_prorroga_recursoevaluador_37 foreign key (recursoevaluador_id) references recursoevaluador (id) on delete restrict on update restrict;
-create index ix_evaluacion_prorroga_recursoevaluador_37 on evaluacion_prorroga (recursoevaluador_id);
-alter table evaluacion_tabla add constraint fk_evaluacion_tabla_version_38 foreign key (version_id) references evaluacion_tabla_version (id) on delete restrict on update restrict;
-create index ix_evaluacion_tabla_version_38 on evaluacion_tabla (version_id);
-alter table evaluacion_tabla add constraint fk_evaluacion_tabla_reactivo_39 foreign key (reactivo_id) references evaluacion_tabla_reactivo (id) on delete restrict on update restrict;
-create index ix_evaluacion_tabla_reactivo_39 on evaluacion_tabla (reactivo_id);
-alter table evaluacion_tabla add constraint fk_evaluacion_tabla_aspecto_40 foreign key (aspecto_id) references aspecto (id) on delete restrict on update restrict;
-create index ix_evaluacion_tabla_aspecto_40 on evaluacion_tabla (aspecto_id);
-alter table evaluacion_tabla add constraint fk_evaluacion_tabla_criterio1_41 foreign key (criterio1_id) references clasificador_criterio1 (id) on delete restrict on update restrict;
-create index ix_evaluacion_tabla_criterio1_41 on evaluacion_tabla (criterio1_id);
-alter table evaluacion_tabla add constraint fk_evaluacion_tabla_criterio2_42 foreign key (criterio2_id) references clasificador_criterio2 (id) on delete restrict on update restrict;
-create index ix_evaluacion_tabla_criterio2_42 on evaluacion_tabla (criterio2_id);
-alter table evaluacion_tabla add constraint fk_evaluacion_tabla_criterio3_43 foreign key (criterio3_id) references clasificador_criterio3 (id) on delete restrict on update restrict;
-create index ix_evaluacion_tabla_criterio3_43 on evaluacion_tabla (criterio3_id);
-alter table evaluacion_tabla_tipo_recurso add constraint fk_evaluacion_tabla_tipo_recurso_evaluaciontabla_44 foreign key (evaluaciontabla_id) references evaluacion_tabla (id) on delete restrict on update restrict;
-create index ix_evaluacion_tabla_tipo_recurso_evaluaciontabla_44 on evaluacion_tabla_tipo_recurso (evaluaciontabla_id);
-alter table evaluacion_tabla_tipo_recurso add constraint fk_evaluacion_tabla_tipo_recurso_tiporecurso_45 foreign key (tiporecurso_id) references clasificador_tiporecurso (id) on delete restrict on update restrict;
-create index ix_evaluacion_tabla_tipo_recurso_tiporecurso_45 on evaluacion_tabla_tipo_recurso (tiporecurso_id);
-alter table evaluador add constraint fk_evaluador_personal_46 foreign key (personal_id) references personal (id) on delete restrict on update restrict;
-create index ix_evaluador_personal_46 on evaluador (personal_id);
-alter table evaluador_aspecto add constraint fk_evaluador_aspecto_evaluador_47 foreign key (evaluador_id) references evaluador (id) on delete restrict on update restrict;
-create index ix_evaluador_aspecto_evaluador_47 on evaluador_aspecto (evaluador_id);
-alter table evaluador_aspecto add constraint fk_evaluador_aspecto_aspecto_48 foreign key (aspecto_id) references aspecto (id) on delete restrict on update restrict;
-create index ix_evaluador_aspecto_aspecto_48 on evaluador_aspecto (aspecto_id);
-alter table historialestado add constraint fk_historialestado_recurso_49 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_historialestado_recurso_49 on historialestado (recurso_id);
-alter table historialestado add constraint fk_historialestado_estado_50 foreign key (estado_id) references estado (id) on delete restrict on update restrict;
-create index ix_historialestado_estado_50 on historialestado (estado_id);
-alter table historialestado_encuesta add constraint fk_historialestado_encuesta_recurso_51 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_historialestado_encuesta_recurso_51 on historialestado_encuesta (recurso_id);
-alter table historialestado_encuesta add constraint fk_historialestado_encuesta_estado_52 foreign key (estado_id) references estado_encuesta (id) on delete restrict on update restrict;
-create index ix_historialestado_encuesta_estado_52 on historialestado_encuesta (estado_id);
-alter table historialestado_evaluacion add constraint fk_historialestado_evaluacion_recurso_53 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_historialestado_evaluacion_recurso_53 on historialestado_evaluacion (recurso_id);
-alter table historialestado_evaluacion add constraint fk_historialestado_evaluacion_recursoevaluador_54 foreign key (recursoevaluador_id) references recursoevaluador (id) on delete restrict on update restrict;
-create index ix_historialestado_evaluacion_recursoevaluador_54 on historialestado_evaluacion (recursoevaluador_id);
-alter table historialestado_evaluacion add constraint fk_historialestado_evaluacion_estado_55 foreign key (estado_id) references estado_evaluacion (id) on delete restrict on update restrict;
-create index ix_historialestado_evaluacion_estado_55 on historialestado_evaluacion (estado_id);
-alter table observacion add constraint fk_observacion_recurso_56 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_observacion_recurso_56 on observacion (recurso_id);
-alter table observacion_cancelacion add constraint fk_observacion_cancelacion_recurso_57 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_observacion_cancelacion_recurso_57 on observacion_cancelacion (recurso_id);
-alter table oficio add constraint fk_oficio_recurso_58 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_oficio_recurso_58 on oficio (recurso_id);
-alter table oficio_valoracion add constraint fk_oficio_valoracion_recurso_59 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_oficio_valoracion_recurso_59 on oficio_valoracion (recurso_id);
-alter table palabraclave add constraint fk_palabraclave_recurso_60 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_palabraclave_recurso_60 on palabraclave (recurso_id);
-alter table personal add constraint fk_personal_activo_61 foreign key (activo_id) references estado_activo (id) on delete restrict on update restrict;
-create index ix_personal_activo_61 on personal (activo_id);
-alter table polimedia add constraint fk_polimedia_recurso_62 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_polimedia_recurso_62 on polimedia (recurso_id);
-alter table polimedia_carrusel add constraint fk_polimedia_carrusel_polimedia_63 foreign key (polimedia_id) references polimedia (id) on delete restrict on update restrict;
-create index ix_polimedia_carrusel_polimedia_63 on polimedia_carrusel (polimedia_id);
-alter table polimedia_carrusel_imagen add constraint fk_polimedia_carrusel_imagen_polimediacarrusel_64 foreign key (polimediacarrusel_id) references polimedia_carrusel (id) on delete restrict on update restrict;
-create index ix_polimedia_carrusel_imagen_polimediacarrusel_64 on polimedia_carrusel_imagen (polimediacarrusel_id);
-alter table recurso add constraint fk_recurso_areaconocimiento_65 foreign key (areaconocimiento_id) references areaconocimiento (id) on delete restrict on update restrict;
-create index ix_recurso_areaconocimiento_65 on recurso (areaconocimiento_id);
-alter table recurso add constraint fk_recurso_niveleducativo_66 foreign key (niveleducativo_id) references niveleducativo (id) on delete restrict on update restrict;
-create index ix_recurso_niveleducativo_66 on recurso (niveleducativo_id);
-alter table recurso add constraint fk_recurso_unidadmedida_67 foreign key (unidadmedida_id) references unidad_medida (id) on delete restrict on update restrict;
-create index ix_recurso_unidadmedida_67 on recurso (unidadmedida_id);
-alter table recurso add constraint fk_recurso_unidadacademica_68 foreign key (unidadacademica_id) references unidadacademica (id) on delete restrict on update restrict;
-create index ix_recurso_unidadacademica_68 on recurso (unidadacademica_id);
-alter table recurso add constraint fk_recurso_alcancecurricular_69 foreign key (alcancecurricular_id) references alcance_curricular (id) on delete restrict on update restrict;
-create index ix_recurso_alcancecurricular_69 on recurso (alcancecurricular_id);
-alter table recurso add constraint fk_recurso_modalidad_70 foreign key (modalidad_id) references modalidad (id) on delete restrict on update restrict;
-create index ix_recurso_modalidad_70 on recurso (modalidad_id);
-alter table recurso add constraint fk_recurso_version_71 foreign key (version_id) references version (id) on delete restrict on update restrict;
-create index ix_recurso_version_71 on recurso (version_id);
-alter table recurso add constraint fk_recurso_formatoentrega_72 foreign key (formatoentrega_id) references formatoentrega (id) on delete restrict on update restrict;
-create index ix_recurso_formatoentrega_72 on recurso (formatoentrega_id);
-alter table recurso add constraint fk_recurso_estado_73 foreign key (estado_id) references estado (id) on delete restrict on update restrict;
-create index ix_recurso_estado_73 on recurso (estado_id);
-alter table recurso_autor add constraint fk_recurso_autor_recurso_74 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_recurso_autor_recurso_74 on recurso_autor (recurso_id);
-alter table recurso_autor add constraint fk_recurso_autor_autorfuncion_75 foreign key (autorfuncion_id) references autorfuncion (id) on delete restrict on update restrict;
-create index ix_recurso_autor_autorfuncion_75 on recurso_autor (autorfuncion_id);
-alter table recurso_calificacion add constraint fk_recurso_calificacion_recurso_76 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_recurso_calificacion_recurso_76 on recurso_calificacion (recurso_id);
-alter table recurso_calificacion_aspecto add constraint fk_recurso_calificacion_aspecto_recursocalificacion_77 foreign key (recursocalificacion_id) references recurso_calificacion (id) on delete restrict on update restrict;
-create index ix_recurso_calificacion_aspecto_recursocalificacion_77 on recurso_calificacion_aspecto (recursocalificacion_id);
-alter table recurso_calificacion_aspecto add constraint fk_recurso_calificacion_aspecto_aspecto_78 foreign key (aspecto_id) references aspecto (id) on delete restrict on update restrict;
-create index ix_recurso_calificacion_aspecto_aspecto_78 on recurso_calificacion_aspecto (aspecto_id);
-alter table recursoenweb add constraint fk_recursoenweb_recurso_79 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_recursoenweb_recurso_79 on recursoenweb (recurso_id);
-alter table recursoevaluador add constraint fk_recursoevaluador_recurso_80 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_recursoevaluador_recurso_80 on recursoevaluador (recurso_id);
-alter table recursoevaluador add constraint fk_recursoevaluador_aspecto_81 foreign key (aspecto_id) references aspecto (id) on delete restrict on update restrict;
-create index ix_recursoevaluador_aspecto_81 on recursoevaluador (aspecto_id);
-alter table recursoevaluador add constraint fk_recursoevaluador_evaluador_82 foreign key (evaluador_id) references evaluador (id) on delete restrict on update restrict;
-create index ix_recursoevaluador_evaluador_82 on recursoevaluador (evaluador_id);
-alter table recursoevaluador add constraint fk_recursoevaluador_estadoevaluacion_83 foreign key (estadoevaluacion_id) references estado_evaluacion (id) on delete restrict on update restrict;
-create index ix_recursoevaluador_estadoevaluacion_83 on recursoevaluador (estadoevaluacion_id);
-alter table registro_acceso add constraint fk_registro_acceso_usuario_84 foreign key (usuario_id) references usuario (id) on delete restrict on update restrict;
-create index ix_registro_acceso_usuario_84 on registro_acceso (usuario_id);
-alter table registro_acceso add constraint fk_registro_acceso_autor_85 foreign key (autor_id) references recurso_autor (id) on delete restrict on update restrict;
-create index ix_registro_acceso_autor_85 on registro_acceso (autor_id);
-alter table solicitud_cancelacion add constraint fk_solicitud_cancelacion_recurso_86 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_solicitud_cancelacion_recurso_86 on solicitud_cancelacion (recurso_id);
-alter table solicitud_cancelacion add constraint fk_solicitud_cancelacion_evaluador_87 foreign key (evaluador_id) references evaluador (id) on delete restrict on update restrict;
-create index ix_solicitud_cancelacion_evaluador_87 on solicitud_cancelacion (evaluador_id);
-alter table solicitud_cancelacion add constraint fk_solicitud_cancelacion_recursoestadoanterior_88 foreign key (recursoestadoanterior_id) references estado (id) on delete restrict on update restrict;
-create index ix_solicitud_cancelacion_recursoestadoanterior_88 on solicitud_cancelacion (recursoestadoanterior_id);
-alter table tipodocumento add constraint fk_tipodocumento_estado_89 foreign key (estado_id) references estado_activo (id) on delete restrict on update restrict;
-create index ix_tipodocumento_estado_89 on tipodocumento (estado_id);
-alter table unidadacademica_areaconocimiento add constraint fk_unidadacademica_areaconocimiento_unidadacademica_90 foreign key (unidadacademica_id) references unidadacademica (id) on delete restrict on update restrict;
-create index ix_unidadacademica_areaconocimiento_unidadacademica_90 on unidadacademica_areaconocimiento (unidadacademica_id);
-alter table unidadacademica_areaconocimiento add constraint fk_unidadacademica_areaconocimiento_area_91 foreign key (area_id) references areaconocimiento (id) on delete restrict on update restrict;
-create index ix_unidadacademica_areaconocimiento_area_91 on unidadacademica_areaconocimiento (area_id);
-alter table unidadacademica_niveleducativo add constraint fk_unidadacademica_niveleducativo_unidadacademica_92 foreign key (unidadacademica_id) references unidadacademica (id) on delete restrict on update restrict;
-create index ix_unidadacademica_niveleducativo_unidadacademica_92 on unidadacademica_niveleducativo (unidadacademica_id);
-alter table unidadacademica_niveleducativo add constraint fk_unidadacademica_niveleducativo_nivel_93 foreign key (nivel_id) references niveleducativo (id) on delete restrict on update restrict;
-create index ix_unidadacademica_niveleducativo_nivel_93 on unidadacademica_niveleducativo (nivel_id);
-alter table usuario add constraint fk_usuario_personal_94 foreign key (personal_id) references personal (id) on delete restrict on update restrict;
-create index ix_usuario_personal_94 on usuario (personal_id);
-alter table usuario_rol add constraint fk_usuario_rol_usuario_95 foreign key (usuario_id) references usuario (id) on delete restrict on update restrict;
-create index ix_usuario_rol_usuario_95 on usuario_rol (usuario_id);
-alter table usuario_rol add constraint fk_usuario_rol_rol_96 foreign key (rol_id) references rol (id) on delete restrict on update restrict;
-create index ix_usuario_rol_rol_96 on usuario_rol (rol_id);
-alter table versionanterior add constraint fk_versionanterior_recurso_97 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_versionanterior_recurso_97 on versionanterior (recurso_id);
-alter table versionanterior add constraint fk_versionanterior_recursoanterior_98 foreign key (recursoanterior_id) references recurso (id) on delete restrict on update restrict;
-create index ix_versionanterior_recursoanterior_98 on versionanterior (recursoanterior_id);
-alter table clasificacion_observacion add constraint fk_clasificacion_observacion_clasificacion_99 foreign key (clasificacion_id) references clasificacion (id) on delete restrict on update restrict;
-create index ix_clasificacion_observacion_clasificacion_99 on clasificacion_observacion (clasificacion_id);
-alter table recurso_dirigidoa add constraint fk_recurso_dirigidoa_recurso_100 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
-create index ix_recurso_dirigidoa_recurso_100 on recurso_dirigidoa (recurso_id);
-alter table recurso_dirigidoa add constraint fk_recurso_dirigidoa_dirigidoa_101 foreign key (dirigidoa_id) references dirigidoa (id) on delete restrict on update restrict;
-create index ix_recurso_dirigidoa_dirigidoa_101 on recurso_dirigidoa (dirigidoa_id);
+alter table carrusel add constraint fk_carrusel_recurso_1 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_carrusel_recurso_1 on carrusel (recurso_id);
+alter table clasificacion add constraint fk_clasificacion_recurso_2 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_clasificacion_recurso_2 on clasificacion (recurso_id);
+alter table clasificacion add constraint fk_clasificacion_criterio1_3 foreign key (criterio1_id) references clasificador_criterio1 (id) on delete restrict on update restrict;
+create index ix_clasificacion_criterio1_3 on clasificacion (criterio1_id);
+alter table clasificacion add constraint fk_clasificacion_criterio2_4 foreign key (criterio2_id) references clasificador_criterio2 (id) on delete restrict on update restrict;
+create index ix_clasificacion_criterio2_4 on clasificacion (criterio2_id);
+alter table clasificacion add constraint fk_clasificacion_criterio3_5 foreign key (criterio3_id) references clasificador_criterio3 (id) on delete restrict on update restrict;
+create index ix_clasificacion_criterio3_5 on clasificacion (criterio3_id);
+alter table clasificacion add constraint fk_clasificacion_tiporecurso_6 foreign key (tiporecurso_id) references clasificador_tiporecurso (id) on delete restrict on update restrict;
+create index ix_clasificacion_tiporecurso_6 on clasificacion (tiporecurso_id);
+alter table clasificador_cancelable add constraint fk_clasificador_cancelable_criterio1_7 foreign key (criterio1_id) references clasificador_criterio1 (id) on delete restrict on update restrict;
+create index ix_clasificador_cancelable_criterio1_7 on clasificador_cancelable (criterio1_id);
+alter table clasificador_cancelable add constraint fk_clasificador_cancelable_criterio2_8 foreign key (criterio2_id) references clasificador_criterio2 (id) on delete restrict on update restrict;
+create index ix_clasificador_cancelable_criterio2_8 on clasificador_cancelable (criterio2_id);
+alter table clasificador_cancelable add constraint fk_clasificador_cancelable_criterio3_9 foreign key (criterio3_id) references clasificador_criterio3 (id) on delete restrict on update restrict;
+create index ix_clasificador_cancelable_criterio3_9 on clasificador_cancelable (criterio3_id);
+alter table clasificador_criterio2 add constraint fk_clasificador_criterio2_criterio1_10 foreign key (criterio1_id) references clasificador_criterio1 (id) on delete restrict on update restrict;
+create index ix_clasificador_criterio2_criterio1_10 on clasificador_criterio2 (criterio1_id);
+alter table clasificador_criterio3 add constraint fk_clasificador_criterio3_criterio1_11 foreign key (criterio1_id) references clasificador_criterio1 (id) on delete restrict on update restrict;
+create index ix_clasificador_criterio3_criterio1_11 on clasificador_criterio3 (criterio1_id);
+alter table clasificador_criterio3 add constraint fk_clasificador_criterio3_criterio2_12 foreign key (criterio2_id) references clasificador_criterio2 (id) on delete restrict on update restrict;
+create index ix_clasificador_criterio3_criterio2_12 on clasificador_criterio3 (criterio2_id);
+alter table clasificador_criterio3 add constraint fk_clasificador_criterio3_catalogo_13 foreign key (catalogo_id) references clasificador_catalogo_criterio3 (id) on delete restrict on update restrict;
+create index ix_clasificador_criterio3_catalogo_13 on clasificador_criterio3 (catalogo_id);
+alter table clasificador_criterio3ejemplo add constraint fk_clasificador_criterio3ejemplo_criterio3_14 foreign key (criterio3_id) references clasificador_criterio3 (id) on delete restrict on update restrict;
+create index ix_clasificador_criterio3ejemplo_criterio3_14 on clasificador_criterio3ejemplo (criterio3_id);
+alter table clasificador_criterio3ejemplo add constraint fk_clasificador_criterio3ejemplo_tiporecurso_15 foreign key (tiporecurso_id) references clasificador_tiporecurso (id) on delete restrict on update restrict;
+create index ix_clasificador_criterio3ejemplo_tiporecurso_15 on clasificador_criterio3ejemplo (tiporecurso_id);
+alter table clasificador_ejemplo add constraint fk_clasificador_ejemplo_criterio1_16 foreign key (criterio1_id) references clasificador_criterio1 (id) on delete restrict on update restrict;
+create index ix_clasificador_ejemplo_criterio1_16 on clasificador_ejemplo (criterio1_id);
+alter table clasificador_ejemplo add constraint fk_clasificador_ejemplo_criterio2_17 foreign key (criterio2_id) references clasificador_criterio2 (id) on delete restrict on update restrict;
+create index ix_clasificador_ejemplo_criterio2_17 on clasificador_ejemplo (criterio2_id);
+alter table clasificador_ejemplo add constraint fk_clasificador_ejemplo_criterio3_18 foreign key (criterio3_id) references clasificador_criterio3 (id) on delete restrict on update restrict;
+create index ix_clasificador_ejemplo_criterio3_18 on clasificador_ejemplo (criterio3_id);
+alter table clasificador_ejemplo add constraint fk_clasificador_ejemplo_tiporecurso_19 foreign key (tiporecurso_id) references clasificador_tiporecurso (id) on delete restrict on update restrict;
+create index ix_clasificador_ejemplo_tiporecurso_19 on clasificador_ejemplo (tiporecurso_id);
+alter table clasificador_noevaluable add constraint fk_clasificador_noevaluable_criterio1_20 foreign key (criterio1_id) references clasificador_criterio1 (id) on delete restrict on update restrict;
+create index ix_clasificador_noevaluable_criterio1_20 on clasificador_noevaluable (criterio1_id);
+alter table clasificador_noevaluable add constraint fk_clasificador_noevaluable_criterio2_21 foreign key (criterio2_id) references clasificador_criterio2 (id) on delete restrict on update restrict;
+create index ix_clasificador_noevaluable_criterio2_21 on clasificador_noevaluable (criterio2_id);
+alter table clasificador_noevaluable add constraint fk_clasificador_noevaluable_criterio3_22 foreign key (criterio3_id) references clasificador_criterio3 (id) on delete restrict on update restrict;
+create index ix_clasificador_noevaluable_criterio3_22 on clasificador_noevaluable (criterio3_id);
+alter table correo_autor add constraint fk_correo_autor_autor_23 foreign key (autor_id) references recurso_autor (id) on delete restrict on update restrict;
+create index ix_correo_autor_autor_23 on correo_autor (autor_id);
+alter table correo_salida add constraint fk_correo_salida_recurso_24 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_correo_salida_recurso_24 on correo_salida (recurso_id);
+alter table correo_salida add constraint fk_correo_salida_estado_25 foreign key (estado_id) references estado (id) on delete restrict on update restrict;
+create index ix_correo_salida_estado_25 on correo_salida (estado_id);
+alter table correo_salida_para add constraint fk_correo_salida_para_correosalida_26 foreign key (correosalida_id) references correo_salida (id) on delete restrict on update restrict;
+create index ix_correo_salida_para_correosalida_26 on correo_salida_para (correosalida_id);
+alter table documento add constraint fk_documento_recurso_27 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_documento_recurso_27 on documento (recurso_id);
+alter table documento add constraint fk_documento_tipodocumento_28 foreign key (tipodocumento_id) references tipodocumento (id) on delete restrict on update restrict;
+create index ix_documento_tipodocumento_28 on documento (tipodocumento_id);
+alter table encuesta_observacion add constraint fk_encuesta_observacion_encuesta_29 foreign key (encuesta_id) references encuesta_respuesta (id) on delete restrict on update restrict;
+create index ix_encuesta_observacion_encuesta_29 on encuesta_observacion (encuesta_id);
+alter table encuesta_respuesta add constraint fk_encuesta_respuesta_recurso_30 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_encuesta_respuesta_recurso_30 on encuesta_respuesta (recurso_id);
+alter table encuesta_respuesta add constraint fk_encuesta_respuesta_estado_31 foreign key (estado_id) references estado_encuesta (id) on delete restrict on update restrict;
+create index ix_encuesta_respuesta_estado_31 on encuesta_respuesta (estado_id);
+alter table evaluacion add constraint fk_evaluacion_recursoevaluador_32 foreign key (recursoevaluador_id) references recursoevaluador (id) on delete restrict on update restrict;
+create index ix_evaluacion_recursoevaluador_32 on evaluacion (recursoevaluador_id);
+alter table evaluacion add constraint fk_evaluacion_evaluaciontabla_33 foreign key (evaluaciontabla_id) references evaluacion_tabla (id) on delete restrict on update restrict;
+create index ix_evaluacion_evaluaciontabla_33 on evaluacion (evaluaciontabla_id);
+alter table evaluacion_fecha add constraint fk_evaluacion_fecha_recurso_34 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_evaluacion_fecha_recurso_34 on evaluacion_fecha (recurso_id);
+alter table evaluacion_observacion add constraint fk_evaluacion_observacion_respuesta_35 foreign key (respuesta_id) references evaluacion (id) on delete restrict on update restrict;
+create index ix_evaluacion_observacion_respuesta_35 on evaluacion_observacion (respuesta_id);
+alter table evaluacion_observacion_gral add constraint fk_evaluacion_observacion_gral_recursoevaluador_36 foreign key (recursoevaluador_id) references recursoevaluador (id) on delete restrict on update restrict;
+create index ix_evaluacion_observacion_gral_recursoevaluador_36 on evaluacion_observacion_gral (recursoevaluador_id);
+alter table evaluacion_observacion_observacion_gral add constraint fk_evaluacion_observacion_observacion_gral_evaluacionobservac_37 foreign key (evaluacionobservaciongral_id) references evaluacion_observacion_gral (id) on delete restrict on update restrict;
+create index ix_evaluacion_observacion_observacion_gral_evaluacionobservac_37 on evaluacion_observacion_observacion_gral (evaluacionobservaciongral_id);
+alter table evaluacion_prorroga add constraint fk_evaluacion_prorroga_recursoevaluador_38 foreign key (recursoevaluador_id) references recursoevaluador (id) on delete restrict on update restrict;
+create index ix_evaluacion_prorroga_recursoevaluador_38 on evaluacion_prorroga (recursoevaluador_id);
+alter table evaluacion_tabla add constraint fk_evaluacion_tabla_version_39 foreign key (version_id) references evaluacion_tabla_version (id) on delete restrict on update restrict;
+create index ix_evaluacion_tabla_version_39 on evaluacion_tabla (version_id);
+alter table evaluacion_tabla add constraint fk_evaluacion_tabla_reactivo_40 foreign key (reactivo_id) references evaluacion_tabla_reactivo (id) on delete restrict on update restrict;
+create index ix_evaluacion_tabla_reactivo_40 on evaluacion_tabla (reactivo_id);
+alter table evaluacion_tabla add constraint fk_evaluacion_tabla_aspecto_41 foreign key (aspecto_id) references aspecto (id) on delete restrict on update restrict;
+create index ix_evaluacion_tabla_aspecto_41 on evaluacion_tabla (aspecto_id);
+alter table evaluacion_tabla add constraint fk_evaluacion_tabla_criterio1_42 foreign key (criterio1_id) references clasificador_criterio1 (id) on delete restrict on update restrict;
+create index ix_evaluacion_tabla_criterio1_42 on evaluacion_tabla (criterio1_id);
+alter table evaluacion_tabla add constraint fk_evaluacion_tabla_criterio2_43 foreign key (criterio2_id) references clasificador_criterio2 (id) on delete restrict on update restrict;
+create index ix_evaluacion_tabla_criterio2_43 on evaluacion_tabla (criterio2_id);
+alter table evaluacion_tabla add constraint fk_evaluacion_tabla_criterio3_44 foreign key (criterio3_id) references clasificador_criterio3 (id) on delete restrict on update restrict;
+create index ix_evaluacion_tabla_criterio3_44 on evaluacion_tabla (criterio3_id);
+alter table evaluacion_tabla_tipo_recurso add constraint fk_evaluacion_tabla_tipo_recurso_evaluaciontabla_45 foreign key (evaluaciontabla_id) references evaluacion_tabla (id) on delete restrict on update restrict;
+create index ix_evaluacion_tabla_tipo_recurso_evaluaciontabla_45 on evaluacion_tabla_tipo_recurso (evaluaciontabla_id);
+alter table evaluacion_tabla_tipo_recurso add constraint fk_evaluacion_tabla_tipo_recurso_tiporecurso_46 foreign key (tiporecurso_id) references clasificador_tiporecurso (id) on delete restrict on update restrict;
+create index ix_evaluacion_tabla_tipo_recurso_tiporecurso_46 on evaluacion_tabla_tipo_recurso (tiporecurso_id);
+alter table evaluador add constraint fk_evaluador_personal_47 foreign key (personal_id) references personal (id) on delete restrict on update restrict;
+create index ix_evaluador_personal_47 on evaluador (personal_id);
+alter table evaluador_aspecto add constraint fk_evaluador_aspecto_evaluador_48 foreign key (evaluador_id) references evaluador (id) on delete restrict on update restrict;
+create index ix_evaluador_aspecto_evaluador_48 on evaluador_aspecto (evaluador_id);
+alter table evaluador_aspecto add constraint fk_evaluador_aspecto_aspecto_49 foreign key (aspecto_id) references aspecto (id) on delete restrict on update restrict;
+create index ix_evaluador_aspecto_aspecto_49 on evaluador_aspecto (aspecto_id);
+alter table historialestado add constraint fk_historialestado_recurso_50 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_historialestado_recurso_50 on historialestado (recurso_id);
+alter table historialestado add constraint fk_historialestado_estado_51 foreign key (estado_id) references estado (id) on delete restrict on update restrict;
+create index ix_historialestado_estado_51 on historialestado (estado_id);
+alter table historialestado_encuesta add constraint fk_historialestado_encuesta_recurso_52 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_historialestado_encuesta_recurso_52 on historialestado_encuesta (recurso_id);
+alter table historialestado_encuesta add constraint fk_historialestado_encuesta_estado_53 foreign key (estado_id) references estado_encuesta (id) on delete restrict on update restrict;
+create index ix_historialestado_encuesta_estado_53 on historialestado_encuesta (estado_id);
+alter table historialestado_evaluacion add constraint fk_historialestado_evaluacion_recurso_54 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_historialestado_evaluacion_recurso_54 on historialestado_evaluacion (recurso_id);
+alter table historialestado_evaluacion add constraint fk_historialestado_evaluacion_recursoevaluador_55 foreign key (recursoevaluador_id) references recursoevaluador (id) on delete restrict on update restrict;
+create index ix_historialestado_evaluacion_recursoevaluador_55 on historialestado_evaluacion (recursoevaluador_id);
+alter table historialestado_evaluacion add constraint fk_historialestado_evaluacion_estado_56 foreign key (estado_id) references estado_evaluacion (id) on delete restrict on update restrict;
+create index ix_historialestado_evaluacion_estado_56 on historialestado_evaluacion (estado_id);
+alter table observacion add constraint fk_observacion_recurso_57 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_observacion_recurso_57 on observacion (recurso_id);
+alter table observacion_cancelacion add constraint fk_observacion_cancelacion_recurso_58 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_observacion_cancelacion_recurso_58 on observacion_cancelacion (recurso_id);
+alter table oficio add constraint fk_oficio_recurso_59 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_oficio_recurso_59 on oficio (recurso_id);
+alter table oficio_valoracion add constraint fk_oficio_valoracion_recurso_60 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_oficio_valoracion_recurso_60 on oficio_valoracion (recurso_id);
+alter table palabraclave add constraint fk_palabraclave_recurso_61 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_palabraclave_recurso_61 on palabraclave (recurso_id);
+alter table personal add constraint fk_personal_activo_62 foreign key (activo_id) references estado_activo (id) on delete restrict on update restrict;
+create index ix_personal_activo_62 on personal (activo_id);
+alter table polimedia add constraint fk_polimedia_recurso_63 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_polimedia_recurso_63 on polimedia (recurso_id);
+alter table polimedia add constraint fk_polimedia_tipo_64 foreign key (tipo_id) references tipo (id) on delete restrict on update restrict;
+create index ix_polimedia_tipo_64 on polimedia (tipo_id);
+alter table polimedia_archivo add constraint fk_polimedia_archivo_polimedia_65 foreign key (polimedia_id) references polimedia (id) on delete restrict on update restrict;
+create index ix_polimedia_archivo_polimedia_65 on polimedia_archivo (polimedia_id);
+alter table polimedia_carrusel add constraint fk_polimedia_carrusel_polimedia_66 foreign key (polimedia_id) references polimedia (id) on delete restrict on update restrict;
+create index ix_polimedia_carrusel_polimedia_66 on polimedia_carrusel (polimedia_id);
+alter table polimedia_carrusel_imagen add constraint fk_polimedia_carrusel_imagen_polimediacarrusel_67 foreign key (polimediacarrusel_id) references polimedia_carrusel (id) on delete restrict on update restrict;
+create index ix_polimedia_carrusel_imagen_polimediacarrusel_67 on polimedia_carrusel_imagen (polimediacarrusel_id);
+alter table polimedia_url add constraint fk_polimedia_url_polimedia_68 foreign key (polimedia_id) references polimedia (id) on delete restrict on update restrict;
+create index ix_polimedia_url_polimedia_68 on polimedia_url (polimedia_id);
+alter table recurso add constraint fk_recurso_areaconocimiento_69 foreign key (areaconocimiento_id) references areaconocimiento (id) on delete restrict on update restrict;
+create index ix_recurso_areaconocimiento_69 on recurso (areaconocimiento_id);
+alter table recurso add constraint fk_recurso_niveleducativo_70 foreign key (niveleducativo_id) references niveleducativo (id) on delete restrict on update restrict;
+create index ix_recurso_niveleducativo_70 on recurso (niveleducativo_id);
+alter table recurso add constraint fk_recurso_unidadmedida_71 foreign key (unidadmedida_id) references unidad_medida (id) on delete restrict on update restrict;
+create index ix_recurso_unidadmedida_71 on recurso (unidadmedida_id);
+alter table recurso add constraint fk_recurso_unidadacademica_72 foreign key (unidadacademica_id) references unidadacademica (id) on delete restrict on update restrict;
+create index ix_recurso_unidadacademica_72 on recurso (unidadacademica_id);
+alter table recurso add constraint fk_recurso_alcancecurricular_73 foreign key (alcancecurricular_id) references alcance_curricular (id) on delete restrict on update restrict;
+create index ix_recurso_alcancecurricular_73 on recurso (alcancecurricular_id);
+alter table recurso add constraint fk_recurso_modalidad_74 foreign key (modalidad_id) references modalidad (id) on delete restrict on update restrict;
+create index ix_recurso_modalidad_74 on recurso (modalidad_id);
+alter table recurso add constraint fk_recurso_version_75 foreign key (version_id) references version (id) on delete restrict on update restrict;
+create index ix_recurso_version_75 on recurso (version_id);
+alter table recurso add constraint fk_recurso_formatoentrega_76 foreign key (formatoentrega_id) references formatoentrega (id) on delete restrict on update restrict;
+create index ix_recurso_formatoentrega_76 on recurso (formatoentrega_id);
+alter table recurso add constraint fk_recurso_estado_77 foreign key (estado_id) references estado (id) on delete restrict on update restrict;
+create index ix_recurso_estado_77 on recurso (estado_id);
+alter table recurso_autor add constraint fk_recurso_autor_recurso_78 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_recurso_autor_recurso_78 on recurso_autor (recurso_id);
+alter table recurso_autor add constraint fk_recurso_autor_autorfuncion_79 foreign key (autorfuncion_id) references autorfuncion (id) on delete restrict on update restrict;
+create index ix_recurso_autor_autorfuncion_79 on recurso_autor (autorfuncion_id);
+alter table recurso_calificacion add constraint fk_recurso_calificacion_recurso_80 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_recurso_calificacion_recurso_80 on recurso_calificacion (recurso_id);
+alter table recurso_calificacion_aspecto add constraint fk_recurso_calificacion_aspecto_recursocalificacion_81 foreign key (recursocalificacion_id) references recurso_calificacion (id) on delete restrict on update restrict;
+create index ix_recurso_calificacion_aspecto_recursocalificacion_81 on recurso_calificacion_aspecto (recursocalificacion_id);
+alter table recurso_calificacion_aspecto add constraint fk_recurso_calificacion_aspecto_aspecto_82 foreign key (aspecto_id) references aspecto (id) on delete restrict on update restrict;
+create index ix_recurso_calificacion_aspecto_aspecto_82 on recurso_calificacion_aspecto (aspecto_id);
+alter table recursoenweb add constraint fk_recursoenweb_recurso_83 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_recursoenweb_recurso_83 on recursoenweb (recurso_id);
+alter table recursoevaluador add constraint fk_recursoevaluador_recurso_84 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_recursoevaluador_recurso_84 on recursoevaluador (recurso_id);
+alter table recursoevaluador add constraint fk_recursoevaluador_aspecto_85 foreign key (aspecto_id) references aspecto (id) on delete restrict on update restrict;
+create index ix_recursoevaluador_aspecto_85 on recursoevaluador (aspecto_id);
+alter table recursoevaluador add constraint fk_recursoevaluador_evaluador_86 foreign key (evaluador_id) references evaluador (id) on delete restrict on update restrict;
+create index ix_recursoevaluador_evaluador_86 on recursoevaluador (evaluador_id);
+alter table recursoevaluador add constraint fk_recursoevaluador_estadoevaluacion_87 foreign key (estadoevaluacion_id) references estado_evaluacion (id) on delete restrict on update restrict;
+create index ix_recursoevaluador_estadoevaluacion_87 on recursoevaluador (estadoevaluacion_id);
+alter table registro_acceso add constraint fk_registro_acceso_usuario_88 foreign key (usuario_id) references usuario (id) on delete restrict on update restrict;
+create index ix_registro_acceso_usuario_88 on registro_acceso (usuario_id);
+alter table registro_acceso add constraint fk_registro_acceso_autor_89 foreign key (autor_id) references recurso_autor (id) on delete restrict on update restrict;
+create index ix_registro_acceso_autor_89 on registro_acceso (autor_id);
+alter table solicitud_cancelacion add constraint fk_solicitud_cancelacion_recurso_90 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_solicitud_cancelacion_recurso_90 on solicitud_cancelacion (recurso_id);
+alter table solicitud_cancelacion add constraint fk_solicitud_cancelacion_evaluador_91 foreign key (evaluador_id) references evaluador (id) on delete restrict on update restrict;
+create index ix_solicitud_cancelacion_evaluador_91 on solicitud_cancelacion (evaluador_id);
+alter table solicitud_cancelacion add constraint fk_solicitud_cancelacion_recursoestadoanterior_92 foreign key (recursoestadoanterior_id) references estado (id) on delete restrict on update restrict;
+create index ix_solicitud_cancelacion_recursoestadoanterior_92 on solicitud_cancelacion (recursoestadoanterior_id);
+alter table tipodocumento add constraint fk_tipodocumento_estado_93 foreign key (estado_id) references estado_activo (id) on delete restrict on update restrict;
+create index ix_tipodocumento_estado_93 on tipodocumento (estado_id);
+alter table unidadacademica_areaconocimiento add constraint fk_unidadacademica_areaconocimiento_unidadacademica_94 foreign key (unidadacademica_id) references unidadacademica (id) on delete restrict on update restrict;
+create index ix_unidadacademica_areaconocimiento_unidadacademica_94 on unidadacademica_areaconocimiento (unidadacademica_id);
+alter table unidadacademica_areaconocimiento add constraint fk_unidadacademica_areaconocimiento_area_95 foreign key (area_id) references areaconocimiento (id) on delete restrict on update restrict;
+create index ix_unidadacademica_areaconocimiento_area_95 on unidadacademica_areaconocimiento (area_id);
+alter table unidadacademica_niveleducativo add constraint fk_unidadacademica_niveleducativo_unidadacademica_96 foreign key (unidadacademica_id) references unidadacademica (id) on delete restrict on update restrict;
+create index ix_unidadacademica_niveleducativo_unidadacademica_96 on unidadacademica_niveleducativo (unidadacademica_id);
+alter table unidadacademica_niveleducativo add constraint fk_unidadacademica_niveleducativo_nivel_97 foreign key (nivel_id) references niveleducativo (id) on delete restrict on update restrict;
+create index ix_unidadacademica_niveleducativo_nivel_97 on unidadacademica_niveleducativo (nivel_id);
+alter table usuario add constraint fk_usuario_personal_98 foreign key (personal_id) references personal (id) on delete restrict on update restrict;
+create index ix_usuario_personal_98 on usuario (personal_id);
+alter table usuario_rol add constraint fk_usuario_rol_usuario_99 foreign key (usuario_id) references usuario (id) on delete restrict on update restrict;
+create index ix_usuario_rol_usuario_99 on usuario_rol (usuario_id);
+alter table usuario_rol add constraint fk_usuario_rol_rol_100 foreign key (rol_id) references rol (id) on delete restrict on update restrict;
+create index ix_usuario_rol_rol_100 on usuario_rol (rol_id);
+alter table versionanterior add constraint fk_versionanterior_recurso_101 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_versionanterior_recurso_101 on versionanterior (recurso_id);
+alter table versionanterior add constraint fk_versionanterior_recursoanterior_102 foreign key (recursoanterior_id) references recurso (id) on delete restrict on update restrict;
+create index ix_versionanterior_recursoanterior_102 on versionanterior (recursoanterior_id);
+alter table clasificacion_observacion add constraint fk_clasificacion_observacion_clasificacion_103 foreign key (clasificacion_id) references clasificacion (id) on delete restrict on update restrict;
+create index ix_clasificacion_observacion_clasificacion_103 on clasificacion_observacion (clasificacion_id);
+alter table recurso_dirigidoa add constraint fk_recurso_dirigidoa_recurso_104 foreign key (recurso_id) references recurso (id) on delete restrict on update restrict;
+create index ix_recurso_dirigidoa_recurso_104 on recurso_dirigidoa (recurso_id);
+alter table recurso_dirigidoa add constraint fk_recurso_dirigidoa_dirigidoa_105 foreign key (dirigidoa_id) references dirigidoa (id) on delete restrict on update restrict;
+create index ix_recurso_dirigidoa_dirigidoa_105 on recurso_dirigidoa (dirigidoa_id);
 
 
 
@@ -1093,9 +1135,13 @@ drop table personal;
 
 drop table polimedia;
 
+drop table polimedia_archivo;
+
 drop table polimedia_carrusel;
 
 drop table polimedia_carrusel_imagen;
+
+drop table polimedia_url;
 
 drop table recurso;
 
@@ -1114,6 +1160,8 @@ drop table registro_acceso;
 drop table rol;
 
 drop table solicitud_cancelacion;
+
+drop table tipo;
 
 drop table tipodocumento;
 

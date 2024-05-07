@@ -74,7 +74,7 @@
 		           						@for(p <- re.prorrogas){
 		           						    @if(p.autorizado == true){
 				           						<table class="table table-bordered table-condensed" name="tblProrrogasExistentes">
-					           						<tr><td>Número de días otorgados</td><td>@p.ndias</td><td rowspan="2"><div class="center-block"><a name="btnEliminar" id ="id@p.id" class="btn btn-danger btn-sm btn-block" disabled="disabled" role="button">Eliminar  <i class="fa fa-trash-o"></i></a></div></td></tr>
+					           						<tr><td>Número de días otorgados</td><td>@p.ndias</td><td rowspan="2"><div class="center-block"><a id ="id@p.id"  data-identidad="btnEliminar"  class="btn btn-danger btn-sm btn-block" disabled="disabled" role="button">Eliminar  <i class="fa fa-trash-o"></i></a></div></td></tr>
 	                                                <tr><td>Prórroga al</td><td><div name="divFl">@p.fecha.format("dd/MM/yyyy")</div></td></tr>
 				           						</table>
 			           						}
@@ -125,7 +125,7 @@
 
 <script type="text/javascript">
 	$(function() {
-		$("[name='btnEliminar']:last").attr("disabled", false);
+		$("[data-identidad='btnEliminar']:last").attr("disabled", false);
 		$('#calendar').fullCalendar({		
 			editable: false,
 			allDaySlot: false,
@@ -215,7 +215,7 @@
 	
 
 	
-	$( document ).on( "click", "[name='btnEliminar']:last", function() {		
+	$( document ).on( "click", "[data-identidad='btnEliminar']:last", function() {
 		$("#modalBody").html("¿Desea continuar con la eliminación de la prórroga al día "+$("[name='divFl']:last").html()+"?");
 		$("#myModal").modal('show');
 	});	
@@ -224,7 +224,7 @@
 	$("#btnBorrar").on("click", function(){
 		$.ajax({
 			  type: "POST",			  
-			  url: '/prorrogaDelete/'+$("[name='btnEliminar']:last").attr("id").substring(2)
+			  url: '/prorrogaDelete/'+$("[data-identidad='btnEliminar']:last").attr("id").substring(2)
 			  			
 		})
 		.success(function( data ) {
@@ -233,7 +233,7 @@
 			if ($("[name='tblProrrogasExistentes']").length == 0){
 				$("#encTablas").hide();
 			}
-			$("[name='btnEliminar']:last").attr("disabled",false);
+			$("[data-identidad='btnEliminar']:last").attr("disabled",false);
 		})
 		.error(function(){
 			alert("error de ajax");

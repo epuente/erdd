@@ -3,7 +3,7 @@
 @import helper._
 @main{
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("lib/datatables/css/dataTables.bootstrap.min.css")"/>
-<style>
+<style nonce="@session.get("nonce")">
 .filtrado, mark  {
     background-color:#ffffcc !important;  
 }
