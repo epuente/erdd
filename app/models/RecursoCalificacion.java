@@ -20,11 +20,6 @@ public class RecursoCalificacion extends Model {
     @Column(unique = true)
     public Recurso recurso;
 
-
-    @OneToMany(mappedBy = "recursocalificacion", cascade = CascadeType.ALL)
-    @NotNull
-    public List<RecursoCalificacionAspecto> calificacionesAspectos;
-
     @NotNull
     public Float calificacion;
 

@@ -425,7 +425,7 @@ doc.add(tabla7);
 	        tablaRE.addCell(celda);
 	        
 	        //celda.setPhrase( new Phrase( reev.calificacionPorcentajeAspectos().toString()+"%"  , fontCuerpo  )  );
-			celda.setPhrase( new Phrase( reev.recurso.calificacion.calificacionesAspectos.stream().filter(f-> Objects.equals(f.aspecto.id, reev.aspecto.id)).collect(Collectors.toList()).get(0).calificacion+"%"  , fontCuerpo  )  );
+			celda.setPhrase( new Phrase( reev.recurso.calificacionesAspectos.stream().filter(f-> Objects.equals(f.aspecto.id, reev.aspecto.id)).collect(Collectors.toList()).get(0).calificacion+"%"  , fontCuerpo  )  );
 	        celda.setColspan(3);
 	        tablaRE.addCell(celda);
 	        

@@ -45,75 +45,77 @@
 			  			</div>
 					  	<div class="row">
 					  		<div class="col-sm-12">
-					  			@for(r<-recurso.calificacion.calificacionesAspectos){
-					  				<div class="row">
-					  					<div class="col-sm-12">
-					  						<strong>Detalle aspecto @r.aspecto.descripcion</strong>
-					  					</div>
-					  				</div>
-				  					<div class="row">
-				  						<div class="col-sm-9" >
-				  							<div class="small">Calificación aspecto</div>
-				  						</div>
-				  						<div class="col-sm-3">
-				  							<div id="calAspecto@r.aspecto.id" class="small pull-right">@r.calificacion</div>
-				  						</div>
-			  						</div>	
-				  					<div class="row">
-				  						<div class="col-sm-12" style="height: 0.8em">
-				  						
-				  						</div>
-				  					</div>			  										  				
-					  				<div class="row">					  				
-					  					<div class="col-sm-9 small">
-					  						Total reactivos
-					  					</div>
-					  					<div class="col-sm-3">
-					  						<div id="totalReactivos@r.aspecto.id" class="small pull-right"></div>
-					  					</div>
-				  					</div>
-				  					<div class="row">
-				  						<div class="col-sm-12" style="height: 0.8em"></div>
-				  					</div>					  					
-				  					<div class="row">
-				  						<div class="col-sm-9">
-											<div style="display:inline-block" class='refLineaColor2 small'></div>
-				  							<div style="display:inline-block" class="small">Sí cumple</div>
-				  						</div>
-				  						<div class="col-sm-3">
-								  			<div id="totalSi@r.aspecto.id" class="small pull-right"></div>
-				  						</div>
-				  					</div>
-				  					<div class="row">
-				  						<div class="col-sm-9">
-											<div style="display:inline-block" class='refLineaColor0 small'></div>
-				  							<div style="display:inline-block" class="small">No cumple</div>
-				  						</div>
-				  						<div class="col-sm-3">
-				  							<div id="totalNo@r.aspecto.id" class="small pull-right"></div>					  						
-				  						</div>
-				  					</div>
-				  					<div class="row">
-				  						<div class="col-sm-9">
-											<div style="display:inline-block" class='refLineaColor1 small'></div>
-				  							<div style="display:inline-block" class="small">Parcialmente</div>
-				  						</div>
-				  						<div class="col-sm-3">
-				  							<div id="totalParcial@r.aspecto.id" class="small pull-right"></div>					  						
-				  						</div>
-				  					</div>
-				  					<div class="row">
-				  						<div class="col-sm-9">
-											<div style="display:inline-block" class='refLineaColorNA small'></div>
-				  							<div style="display:inline-block" class="small">No aplica</div>
-				  						</div>
-				  						<div class="col-sm-3">
-				  							<div id="totalNA@r.aspecto.id" class="small pull-right"></div>
-				  						</div>
-				  					</div>
-				  					<div class="row">
-				  						<div class="col-sm-12 small"><hr></div>
-			  						</div>
+					  			@for(r<-recurso.calificacionesAspectos){
+                                    @if( (re.size()==1  && re.get(0).aspecto.id==r.aspecto.id)   ||   (idAspecto=="0") ){
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <strong>Detalle aspecto @r.aspecto.descripcion</strong>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-9" >
+                                                <div class="small">Calificación aspecto</div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div id="calAspecto@r.aspecto.id" class="small pull-right">@r.calificacion</div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12" style="height: 0.8em">
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-9 small">
+                                                Total reactivos
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div id="totalReactivos@r.aspecto.id" class="small pull-right"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12" style="height: 0.8em"></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-9">
+                                                <div style="display:inline-block" class='refLineaColor2 small'></div>
+                                                <div style="display:inline-block" class="small">Sí cumple</div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div id="totalSi@r.aspecto.id" class="small pull-right"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-9">
+                                                <div style="display:inline-block" class='refLineaColor0 small'></div>
+                                                <div style="display:inline-block" class="small">No cumple</div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div id="totalNo@r.aspecto.id" class="small pull-right"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-9">
+                                                <div style="display:inline-block" class='refLineaColor1 small'></div>
+                                                <div style="display:inline-block" class="small">Parcialmente</div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div id="totalParcial@r.aspecto.id" class="small pull-right"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-9">
+                                                <div style="display:inline-block" class='refLineaColorNA small'></div>
+                                                <div style="display:inline-block" class="small">No aplica</div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div id="totalNA@r.aspecto.id" class="small pull-right"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 small"><hr></div>
+                                        </div>
+                                    }
 					  			}
 							</div>					  		
 				  		</div>

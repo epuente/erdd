@@ -592,9 +592,10 @@ System.out.println("Desde cancelarRecursoEvaluacion");
                 joRecurso.put("titulo", r.titulo);
                 if (r.calificacion!=null) {
                     joRecurso.put("cGral", r.calificacion.calificacion);
-                    if (r.calificacion.calificacionesAspectos!=null) {
+                    if (r.calificacionesAspectos!=null) {
                         JSONArray jaCalAspectos = new JSONArray();
-                        for (RecursoCalificacionAspecto rca : r.calificacion.calificacionesAspectos) {
+                        //for (RecursoCalificacionAspecto rca : r.calificacion.calificacionesAspectos) {
+                        for (RecursoCalificacionA rca : r.calificacionesAspectos) {
                             JSONObject joCalAspecto = new JSONObject();
                             joCalAspecto.put("aspectoId", rca.aspecto.id);
                             joCalAspecto.put("aspecto", rca.aspecto.descripcion);

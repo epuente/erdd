@@ -238,3 +238,5 @@ run 9091
 compile
 run 9091
 compile
+run 9091
+exit
