@@ -2,11 +2,7 @@ package models;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import com.avaje.ebean.annotation.CreatedTimestamp;
@@ -41,5 +37,5 @@ public class Evaluacion extends Model{
 	
 	@OneToOne (mappedBy="respuesta",  cascade=CascadeType.ALL)
 	public EvaluacionObservacion observacion;
-   
+
 }

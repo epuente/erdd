@@ -17,6 +17,7 @@
             </div>
         </div>
         <h3>Recursos Didáticos Digitales en PoliMedia</h3>
+        @views.html.flashes()
         <div class="row">
             <div class="col-lg-12">
                 <table class="table table-bordered table-striped datatable" id="tablaCatalogoRDDs" style="width: 100%">
@@ -25,9 +26,10 @@
                             <th>Id</th>
                             <th>Id Recurso</th>
                             <th>Recurso Título</th>
-                            <th>Calificacion</th>
+                            <th>Calificación</th>
                             <th>Habilitado</th>
-                            <th>Medios</th>
+                            <th>Tipo recurso</th>
+                            <th>Tipo medio</th>
                             <th>Ver recurso</th>
                             <th></th>
                         </tr>
@@ -65,8 +67,16 @@
                 {data: "recursoId"},
                 {data: "recursoTitulo"},
                 {data: "calificacion"},
-                {data: "habilitado", sortable: false},
-                {data: "tieneMedios",
+                {data: "habilitado", sortable: false,
+                    render: function(data, type, row, meta){
+                                if (data==true)
+                                    return "Si";
+                                else {
+                                    return "No";
+                                }
+                            }
+                },
+                {data: "tipoRecurso",
                         render: function(data, type, row, meta){
                             if (data==null)
                                 return "No especificado";
@@ -74,13 +84,34 @@
                                 return data;
                             }
                         }
-                    },
-                {data: "liga", sortable: false,
+                },
+                {data: "tipo",
                         render: function(data, type, row, meta){
                             if (data==null)
                                 return "No especificado";
                             else {
                                 return data;
+                            }
+                        }
+                },
+
+                {data: "verRecurso", sortable: false,
+                        render: function(data, type, row, meta){
+                            if (row.tipoId<=3){
+                                if (data==null)
+                                    return "No especificado";
+                                else {
+                                    return "<a href='"+data+"'>ver: "+data+"</a>";
+                                }
+                            }
+                            if (row.tipoId==4 || row.tipoId==5){
+                                if (data.length>0){
+                                    var cadena="";
+                                    data.forEach(function(a){
+                                        cadena+="<a href='/poliMedia/admin/verArchivo/"+a.id+"' target='_blank'>ver: "+a.nombre+"</a><br>";
+                                    });
+                                    return cadena;
+                                }
                             }
                         }
                 },

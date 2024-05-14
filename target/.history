@@ -234,3 +234,7 @@ reload
 compile
 run 9091
 exit
+run 9091
+compile
+run 9091
+compile

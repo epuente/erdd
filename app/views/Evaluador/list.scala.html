@@ -218,7 +218,7 @@
 	
 	$( document ).on( "click", "[data-identidad*='btnEdit']", function(e) {
 		e.preventDefault();
-		 var num = $(this).attr('name').substring(7); 
+		 var num = $(this).attr('data-identidad').substring(7);
 
 		 $("form").get(0).setAttribute("action",'/evaluador/'+num+'/edit');
 		 $("form").get(0).setAttribute("method","GET");

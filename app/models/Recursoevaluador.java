@@ -6,19 +6,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
+import classes.ColorConsola;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.annotation.CreatedTimestamp;
 import com.avaje.ebean.annotation.UpdatedTimestamp;
 
+import org.jboss.logging.Logger;
 import play.db.ebean.Model;
+import classes.ColorConsola;
 
 @Entity
 public class Recursoevaluador extends Model{
@@ -157,4 +154,41 @@ public class Recursoevaluador extends Model{
         System.out.println("calificacion "  +  (Math.round(c * 10.0) / 10.0) );
         return (float) (Math.round(c * 10.0) / 10.0);
     }
+
+
+    @PrePersist
+    @PreUpdate
+    public void pre(){
+        if ( this.estadoevaluacion.id == 5 ){
+            System.out.println("la evaluacion del aspecto "+  Aspecto.find.setId(this.aspecto.id).findUnique().descripcion+ " terminó"   );
+
+            System.out.println(ColorConsola.SET_BOLD_TEXT+ColorConsola.ANSI_YELLOW+"AAAAAAAQQQQUUUUII"  +ColorConsola.ANSI_RESET);
+            RecursoCalificacion rCal = new RecursoCalificacion();
+            //for (Recursoevaluador res : this.recursoevaluadores) {
+                int acum = 0;
+                int numNA = 0;
+                int nreactivosAspecto = 0;
+                nreactivosAspecto = this.evaluaciones.size();
+                System.out.println("\n\ncalMaxima " + nreactivosAspecto);
+                for (Evaluacion eva : this.evaluaciones) {
+                    if (eva.respuesta != -1) {
+                        acum += eva.respuesta;
+                    } else {
+                        numNA++;
+                    }
+                    System.out.println("acum " + acum);
+                    System.out.println("numNA " + numNA);
+                }
+                float cal = ((float) (acum * 25) / ((nreactivosAspecto - numNA) * 2));
+                System.out.println("cal " + cal);
+                RecursoCalificacionA rca = new RecursoCalificacionA();
+                rca.recurso = this.recurso;
+                rca.aspecto = this.aspecto;
+                // Se redondea a 1 decimal
+                rca.calificacion = (float) (Math.round(cal * 10.0) / 10.0);
+                System.out.println("rca.calificacion " + rca.calificacion);
+                rca.save();
+        }
+    }
+
 }

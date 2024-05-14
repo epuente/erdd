@@ -13,7 +13,7 @@
         </div>
 
         <h1>PoliMedia - edición</h1>
-        @form( CSRF(routes.CarruselController.save2()), 'role -> "form", 'id -> "frmPM", 'enctype -> "multipart/form-data", 'role->"form") {
+        @form( CSRF(routes.PoliMediaController.update(id)), 'role -> "form", 'id -> "frmPM", 'enctype -> "multipart/form-data", 'role->"form", 'autocomplete->"off") {
             <div class="row">
                 <div class="col-lg-12">
                     @poliMediaForm(forma, tipos)
@@ -21,8 +21,11 @@
             </div>
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-12 text-center">
-                        <input type="submit" value="Actualizar" class="btn btn-primary" >
+                    <div class="col-md-6 text-right">
+                        <input type="submit" value="Actualizar" class="btn btn-success"  style="width: 40rem;">
+                    </div>
+                    <div class="col-md-6 text-left">
+                        <a href="/poliMedia/admin/list" class="btn btn-primary" style="width: 40rem">Cancelar</a>
                     </div>
                 </div>
             </div>
@@ -32,42 +35,79 @@
 
     <script>
 
-        $(function(){
-            agregarArchivo();
+        $(document).ready(function() {
+            if (window.performance && window.performance.navigation.type === 2) {
+                // La página se ha cargado desde el botón "back"
+                location.reload(true); // Forzar la recarga de la página sin utilizar la caché del navegador
+            }
+            $("#frmPM")[0].reset();
+            leer();
+            agregarArchivoTipo(4);
+            agregarArchivoTipo(5);
         });
 
-        function agregarArchivo(){
-            console.log("desde agregarArchivo");
+        function leer(){
+            <!-- Contienen una url -->
+            $("[name='tipo.id'][value='@forma.get().tipo.id']").prop("checked", true);
+            $("[name='tipo.id']:checked").click();
+            if ( $("[name='tipo.id']:checked").val()=="2"){
+                $("[name='ligaMoodle']").val("@forma.get().polimediaUrl.url");
+            }
+            if ( $("[name='tipo.id']:checked").val()=="3"){
+                $("[name='ligaYouTube']").val("@forma.get().polimediaUrl.url");
+            }
+            <!-- Contienen n archivos -->
+            var tipo = $("[name='tipo.id']:checked").val();
+            if ( tipo=="4" ||  tipo=="5"){
+                var cadena="";
+                @for(a<-forma.get().archivos){
+                    cadena+="<div class='row'>";
+                    cadena+="    <div class='col-xs-11 col-sm-11 col-md-11 col-lg-11'>";
+                    cadena+="        <input type='hidden' name='archivos.id' value=@a.id>";
+                    cadena+="        <a href='@routes.PoliMediaController.verArchivo(a.id)' target='_blank'>@a.nombreArchivo</a>";
+                    cadena+="    </div>";
+                    cadena+="    <div class='col-xs-1 col-sm-1 col-md-1 col-lg-1'>";
+                    //cadena+="        <a href=''><i class='fa fa-trash' aria-hidden='true'></i></a>";
+                    cadena+='      <a href="javascript:void(0);" data-name="btnEliminaRenglon"><i class="fa fa-trash" aria-hidden="true"></i></a>';
 
-            var nrenglon = ($("#tablaArchivos div.row").length);
+                    cadena+="    </div>";
+                    cadena+="</div>";
+                }
+                if (tipo=="4")
+                    $("#tablaPDFs").append(cadena);
+                if (tipo=="5")
+                    $("#tablaArchivos").append(cadena);
+            }
+        }
+
+        function agregarArchivoTipo(tipo){
+            console.log("desde agregarArchivoTipo "+tipo);
+            var x;
+            var permitidos;
+            var nombreComp;
+            if (tipo==5){
+                    x = $("#tablaArchivos");
+                    permitidos="*.*";
+                    nombreComp = "fileGral";
+                }
+            if (tipo==4){
+                    x = $("#tablaPDFs");
+                    permitidos = "image/*, .pdf";
+                    nombreComp = "filePDF";
+                }
+            var nrenglon = $(x).find("div.row").length;
+            console.log(nrenglon)
             var arrString = [];
-            var
             renglon ='<div class="row">';
-            renglon+='  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
-            renglon+='      <div class="form-group clearfix">';
-            renglon+='          <div class="input">';
-            renglon+='             <div id="archId'+nrenglon+'" style="display:none"></div>';
-            renglon+='                 <input type="file" accept="*.*" id="contenido'+nrenglon+'" name="contenido.nombrearchivo'+nrenglon+'" required="required" class="form-control" multiple=false>';
-            renglon+='             <div id="na'+nrenglon+'" style="display:none"></div>';
-            renglon+='             <div class="help-block with-errors"></div>';
-            renglon+='          </div>';
-            renglon+='      </div>';
+            renglon+='  <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">';
+            renglon+='             <input type="file" accept="'+permitidos+'" id="contenido_'+tipo+'_'+nrenglon+'" name="'+nombreComp+'" class="form-control" multiple=false>';
             renglon+='  </div>';
-
-/*
-             renglon+='<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">';
-             renglon+= '<a href="javascript:eliminarArchivo("+row.id+")><i class="fa fa-trash" aria-hidden="true"></i></a>';
-             //renglon+=   '<input type="button" value="Quitar archivo" onclick="eliminarArchivo('+nrenglon+')" id="btnQuitarArchivo'+nrenglon+'">';
-             renglon+='</div>';
-*/
-
-             $('#tablaArchivos').append(renglon);
-             $("[name*='btnObservacion_documento.nombrearchivo"+((nrenglon)-0)+"']").hide();
-             $("[name*='btnObservacion_documento.tipodocumento"+((nrenglon)-0)+"']").hide();
-             $("select[name*='documento.tipodocumento']").css("font-size","85%");
-
-             $('#tablaArchivos div.row:even').css("background-color", "#f7f7f7");
-         }
+            renglon+='  <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">';
+            renglon+='      <a href="javascript:void(0);" data-name="btnEliminaRenglon"><i class="fa fa-trash" aria-hidden="true"></i></a>';
+            renglon+='  </div>';
+            $(x).append(renglon);
+            $(x).find('div.row:even').css("background-color", "#f7f7f7");
+        }
 
 
         $("[data-name='radioTipo']").on("click", function(){
@@ -95,22 +135,40 @@
                     break;
             }
         });
+
+
+        $(document).on("click","[data-name='btnEliminaRenglon']", function(){
+            $(this).closest("div.row").remove();
+        });
+
+        $("#btn2").click(function(){
+            var params = new FormData();
+            params.append('habilitado', $("#habilitado:checked").val());
+            params.append('tipo',  $("[name='tipo.id']:checked").val());
+            console.dir(params);
+
+             var jsonData=$("#frmPM").serializeArray().reduce(function(a, z) { a[z.name] = z.value; return a; }, {});
+             console.dir(jsonData)
+        });
+
+        $(document).on('change','input[type="file"]',validaTamArchivo);
+
+        function validaTamArchivo() {
+          var tam = this.files[0].size;
+          // 1 kb = 1024 b
+          // 1 mb = 1048576 b
+          // 5 mb = 5242880 b
+          if (tam > 5242880) {
+            swal("Archivo demasiado grande", "Los archivos deben pesar menos de 5 MB", "error");
+            $(this).val("");
+            $(this).html("");
+          }
+        }
+
+
     </script>
 }
 
+<script src="@routes.Assets.at("sweetalert2/sweetalert2.all.js")" type="text/javascript"></script>
 
-<!--
-<div class="row">
-    <div class="col-md-10">
-        <div class="form-group clearfix">
-            <div class="input input-group">
-                <div id="archId1" style="display:none"></div>
-                <input type="file" accept=".pdf" id="documento.nombrearchivo1" name="documento.nombrearchivo1" required="required" class="form-control">
-                <div id="na1" style="display:none"></div>
-                <div class="help-block with-errors"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2"><input type="button" value="Quitar archivo" onclick="eliminarArchivo(1)" id="btnQuitarArchivo1"></div>
-</div>
--->
+

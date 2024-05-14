@@ -25,11 +25,8 @@ public class Polimedia extends Model {
 
 
     @ManyToOne
-    @Column(nullable = false)
-    public Tipo tipo;
-
     @NotNull
-    public boolean tieneURL = false;
+    public Tipo tipo;
 
     @OneToMany(mappedBy = "polimedia", cascade = CascadeType.ALL)
     public List<PolimediaArchivo> archivos;

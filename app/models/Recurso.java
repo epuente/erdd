@@ -10,6 +10,7 @@ import com.avaje.ebean.annotation.CreatedTimestamp;
 import com.avaje.ebean.annotation.UpdatedTimestamp;
 
 import models.polimedia.Polimedia;
+import models.polimedia.Tipo;
 import org.springframework.format.annotation.DateTimeFormat;
 import play.db.ebean.*;
 import play.data.format.Formats;
@@ -168,8 +169,12 @@ public class Recurso extends Model {
     public ObservacionCancelacion observacioncancelacion;
 
 
-    @OneToOne(mappedBy="recurso", cascade=CascadeType.ALL)
+    @OneToOne(mappedBy="recurso", cascade=CascadeType.ALL, orphanRemoval = true)
     public RecursoCalificacion calificacion;
+
+
+    @OneToMany(mappedBy="recurso", cascade=CascadeType.ALL)
+    public List<RecursoCalificacionA> calificacionesAspectos;
 
     @OneToOne(mappedBy="recurso", cascade=CascadeType.ALL)
     public EncuestaRespuesta encuesta;
@@ -265,6 +270,7 @@ public class Recurso extends Model {
 
     // Este método es temporal, para calificar los recursos que ya estaban en la db
     public void Calificar(){
+        /*
         RecursoCalificacion rCal = new RecursoCalificacion();
         rCal.recurso = this;
         float calGeneral = 0;
@@ -300,6 +306,8 @@ public class Recurso extends Model {
             pm.save();
         }
         this.update();
+
+         */
     }
 
 
@@ -307,43 +315,54 @@ public class Recurso extends Model {
     public void preUpdate(){
         //Cuando el estado cambia a 10 (evaulación concluida) se califica, la calificación por aspecctos se guarda en
         // la tabla RecursoCalificacionAspecto y la calificacion general se guarda en RecursoCalificación
+        if (this.estado.id == 10) {
+            RecursoCalificacion rCal = new RecursoCalificacion();
+            rCal.recurso = this;
+            float calGeneral = 0;
 
-        RecursoCalificacion rCal = new RecursoCalificacion();
-        rCal.recurso = this;
-        float calGeneral = 0;
-        for (Recursoevaluador res :  this.recursoevaluadores  ){
-            int acum = 0;
-            int numNA = 0;
-            int nreactivosAspecto = 0;
-            nreactivosAspecto = res.evaluaciones.size();
-            System.out.println("\n\ncalMaxima "+nreactivosAspecto);
-            for  ( Evaluacion eva : res.evaluaciones){
-                if (eva.respuesta != -1){
-                    acum+=eva.respuesta;
-                } else {
-                    numNA++;
-                }
-                System.out.println("acum "+acum);
-                System.out.println("numNA "+numNA);
+            for ( RecursoCalificacionA rcAspecto: this.calificacionesAspectos){
+                calGeneral+=rcAspecto.calificacion;
             }
-            float cal = ((float) (acum * 25) / ((nreactivosAspecto - numNA) * 2) );
-            System.out.println("cal "+cal);
-            RecursoCalificacionAspecto rca = new RecursoCalificacionAspecto();
-            rca.recursocalificacion = rCal;
-            rca.aspecto = res.aspecto;
-            // Se redondea a 1 decimal
-            rca.calificacion = (float) (Math.round(cal * 10.0) / 10.0);
-            calGeneral+=rca.calificacion;
-            rCal.calificacionesAspectos.add(rca);
-        }
-        rCal.calificacion = calGeneral;
-        this.calificacion = rCal;
+            rCal.calificacion= calGeneral;
+            this.calificacion = rCal;
 
-        // Si la calificación general es igual o mayor a 96, se agrega el id del recurso a la tabla Polimedia
-        if (  this.calificacion.calificacion >= 96 ){
-            Polimedia pm = new Polimedia();
-            pm.recurso = this;
-            pm.save();
+            /*
+            for (Recursoevaluador res : this.recursoevaluadores) {
+                int acum = 0;
+                int numNA = 0;
+                int nreactivosAspecto = 0;
+                nreactivosAspecto = res.evaluaciones.size();
+                System.out.println("\n\ncalMaxima " + nreactivosAspecto);
+                for (Evaluacion eva : res.evaluaciones) {
+                    if (eva.respuesta != -1) {
+                        acum += eva.respuesta;
+                    } else {
+                        numNA++;
+                    }
+                    System.out.println("acum " + acum);
+                    System.out.println("numNA " + numNA);
+                }
+                float cal = ((float) (acum * 25) / ((nreactivosAspecto - numNA) * 2));
+                System.out.println("cal " + cal);
+                RecursoCalificacionAspecto rca = new RecursoCalificacionAspecto();
+                rca.recursocalificacion = rCal;
+                rca.aspecto = res.aspecto;
+                // Se redondea a 1 decimal
+                rca.calificacion = (float) (Math.round(cal * 10.0) / 10.0);
+                calGeneral += rca.calificacion;
+                rCal.calificacionesAspectos.add(rca);
+            }
+            rCal.calificacion = calGeneral;
+            this.calificacion = rCal;
+             */
+
+            // Si la calificación general es igual o mayor a 96, se agrega el id del recurso a la tabla Polimedia
+            if (this.calificacion.calificacion >= 96) {
+                Polimedia pm = new Polimedia();
+                pm.recurso = this;
+                pm.tipo = Tipo.find.ref(1L);
+                pm.save();
+            }
         }
     }
 }

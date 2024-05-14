@@ -402,5 +402,6 @@ GET     /poliMedia/admin/list                   controllers.PoliMediaController.
 GET     /ajaxListaPoliMediaDTSS                 controllers.PoliMediaController.ajaxListaPoliMediaDTSS()
 GET     /poliMedia/admin/edit/:id               controllers.PoliMediaController.edit(id:Long)
 POST    /poliMedia/admin/delete                 controllers.PoliMediaController.delete()
-
+POST    /poliMedia/admin/update/:id             controllers.PoliMediaController.update(id:Long)
+GET     /poliMedia/admin/verArchivo/:id         controllers.PoliMediaController.verArchivo(id:Long)
 GET     /calificarRecursos                      controllers.RecursoController.calificarRecursos()
