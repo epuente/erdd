@@ -30,10 +30,10 @@ public class Autorfuncion extends Model{
     @UpdatedTimestamp
     public Date auditlastupdate;    
     
-    public static Finder<Long,Autorfuncion> find = new Finder<Long,Autorfuncion>(Long.class, Autorfuncion.class);
+    public static Finder<Long,Autorfuncion> find = new Finder<>(Long.class, Autorfuncion.class);
     
     public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(Autorfuncion c: Autorfuncion.find.where().ne("id", 1L).orderBy("id").findList()) {
             options.put(c.id.toString(), c.descripcion);
         }

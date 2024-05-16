@@ -176,7 +176,7 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
                     }
                     else {
                         // Eliminar reactivo del instrumento
-                        EvaluacionTabla.find.where().eq("version.id", bbb.id).eq("reactivo.id", num).findList().forEach( g->g.delete());
+                        EvaluacionTabla.find.where().eq("version.id", bbb.id).eq("reactivo.id", num).findList().forEach(Model::delete);
                         System.out.println("Se eliminó el reactivo.id "+num+" del instrumento version "+bbb.id);
                     }
                 }
@@ -207,7 +207,7 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
                 System.out.println("e "+ e);
                 return ok(" No se puede eliminar");
             }
-        };
+        }
         flash("success","Se eliminó el reactivo de la versión.");
         return redirect("/evaluacionTablaEvaluacionList?v="+idVersion);
     }
@@ -230,8 +230,8 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
 //et.forEach(a->{System.out.print("  "+a.reactivo.id+" "+a.reactivo);});    	
 
 
-        TreeSet<Long>  snr = new TreeSet<Long>();
-        List<Long> ids = new ArrayList<Long>();
+        TreeSet<Long>  snr = new TreeSet<>();
+        List<Long> ids = new ArrayList<>();
         et.forEach(x->{
             // Ids reactivos
             snr.add(x.reactivo.id);
@@ -274,7 +274,7 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
         JSONObject json2 = new JSONObject();
         int filtrados = 0;
         int sinFiltro = 0;
-        Map<Integer, Integer> columnasOrdenables = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> columnasOrdenables = new HashMap<>();
         columnasOrdenables.put(0, 1);
         columnasOrdenables.put(1, 19);
         columnasOrdenables.put(2, 9);
@@ -323,8 +323,8 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
                     .findList();
 
         System.out.println("Registros en EvaluacionTabla: "+evts.size());
-        TreeSet<Long>  idsReactivos = new TreeSet<Long>();
-        TreeSet<Long>  idsEvaluacionTabla = new TreeSet<Long>();
+        TreeSet<Long>  idsReactivos = new TreeSet<>();
+        TreeSet<Long>  idsEvaluacionTabla = new TreeSet<>();
 
         System.out.println("40");
 
@@ -540,7 +540,7 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
     public static Result listaReactivos(Long idVersion){
         List<EvaluacionTablaReactivo> reactivos = null;
         List<EvaluacionTabla> idsR = EvaluacionTabla.find.where().eq("version.id", idVersion).findList();
-        Set<Long> setId = new HashSet<Long>();
+        Set<Long> setId = new HashSet<>();
         idsR.forEach(c->{
             setId.add(c.reactivo.id);
         });
@@ -1024,7 +1024,7 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
         JSONObject json2 = new JSONObject();
         int filtrados = 0;
         int sinFiltro = 0;
-        Map<Integer, Integer> columnasOrdenables = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> columnasOrdenables = new HashMap<>();
         columnasOrdenables.put(0, 1);   //
         columnasOrdenables.put(1, 2);   //
 

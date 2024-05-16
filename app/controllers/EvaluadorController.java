@@ -188,9 +188,13 @@ public class EvaluadorController extends ControladorSeguro{
         if (y.activo.id == 2  && y.activo.id == estadoActivoAnterior){
 	        mc.mensaje="Se le informa que su perfil como evaluador para el Sistema de Evaluación de Recursos Didácticos Digitales se ha modificado.<br><br>Su nombre de usuario es: "+y.usuario.usuario+" y su clave de acceso es: "+y.usuario.password+"<br><br>";
 	        mc.mensaje+="<br>Evaluará el(los) aspectos:<br>";
-	       
+
+            String aux1= "";
+            StringBuilder strBuilder1 = new StringBuilder(aux1);
 	        for (EvaluadorAspecto ea : y.evaluador.evaluadoraspectos)
-	        	mc.mensaje+=ea.aspecto.descripcion+"<br>";
+                strBuilder1.append(ea.aspecto.descripcion).append("<br>");
+            aux1 = strBuilder1.toString();
+            mc.mensaje+=aux1;
 	        mc.mensaje+="<br>";
 	        mc.mensaje+="Ingrese a la dirección https://"+urlSitio+"/login para conocer las solicitudes que le fueron asignadas para evaluar." ;
         } else {

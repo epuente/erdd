@@ -139,7 +139,7 @@ System.out.println("session().get('idAdmin') "+session().get("idAdmin"));
 System.out.println("p "+p.nombreCompleto());
 			u = Usuario.autenticar(   Usuario.find.where().eq("personal.id", p.id).findUnique().usuario  , password); 		
 		}
-		//Es evaluador?
+		//¿Es evaluador?
 		if(session().get("cvesRoles").contains("2 ")){
 System.out.println("2");
 			Evaluador e = Evaluador.find.byId( Long.parseLong(session().get("idEvaluador"))  );
@@ -148,7 +148,7 @@ System.out.println("2");
 			u = Usuario.autenticar( p.usuario.usuario, password);			
 		}		
 		
-		// Es coordinador?
+		// ¿Es coordinador?
 		if( play.mvc.Controller.session().get("cvesRoles").contains("3 ")){
 System.out.println("3");			
 System.out.println("password "+  password);
@@ -188,14 +188,14 @@ System.out.println("email "+email);
 			Personal p = Personal.elAdministrador();
 			u = Usuario.autenticar(   Usuario.find.where().eq("personal.id", p.id).findUnique().usuario  , password); 		
 		}
-		//Es evaluador?
+		//¿Es evaluador?
 		if(session().get("cvesRoles").contains("2 ")){
 			Evaluador e = Evaluador.find.byId( Long.parseLong(session().get("idEvaluador"))  );
 			Personal p =  e.personal;
 			
 			u = Usuario.autenticar( p.usuario.usuario, password);			
 		}		
-		// Es coordinador?
+		// ¿Es coordinador?
 		if( play.mvc.Controller.session().get("cvesRoles").contains("3 ")){
 			Personal p = Personal.elCoordinador();
 			u = Usuario.autenticar(   Usuario.find.where().eq("personal.id", p.id).findUnique().usuario  , password); 		
@@ -500,7 +500,7 @@ System.out.println("Renglon: "+row.getRowNum() +" de "+sheet.getLastRowNum()+" e
             	}
             }
             file.close();
-            System.out.println("fin de lectura");;
+            System.out.println("fin de lectura");
         } 
         catch (Exception e) 
         {

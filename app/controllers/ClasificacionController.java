@@ -212,8 +212,7 @@ System.out.println(c1+" - "+c2+" - "+c3);
 				System.out.println(  dato  );
 				losDatos.put(dato);
 			} catch (JSONException e) {
-				System.out.println("Ocurrio un error: "+e);
-				e.printStackTrace();
+				System.out.println("Ocurrio un error: "+e.getMessage()+"\n\n"+e.getCause());
 			}
     	}    
 System.out.println("retornano:"+losDatos.toString());    	

@@ -42,7 +42,7 @@ public class Global extends GlobalSettings {
 		System.out.print("...DB:"+DB.getDataSource$default$1());
 		System.out.print(" >>>>>> "+		DB.getConnection$default$1()  );
 		
-	};	
+	}
 	
 	
     public Promise<Result> onError(RequestHeader request, Throwable t) {

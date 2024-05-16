@@ -24,6 +24,7 @@ import models.Recurso;
 import models.Unidadacademica;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.db.ebean.Model;
 import play.db.ebean.Transactional;
 import play.mvc.Result;
 import views.html.Encuesta.*;
@@ -50,7 +51,7 @@ public class EncuestaController extends ControladorSeguroCoordinador{
 		//String direccionPuerto = direccion+":"+puerto;
 		DynamicForm df = form().bindFromRequest();
 		EncuestaRespuesta enResp = EncuestaRespuesta.find.byId(idEnc);
-		enResp.observaciones.forEach(d->d.delete());
+		enResp.observaciones.forEach(Model::delete);
 		List<EncuestaObservacion> eobs = new ArrayList<EncuestaObservacion>();
 		int numObservaciones = 0;
 		for(int w=1; w<=2;w++){

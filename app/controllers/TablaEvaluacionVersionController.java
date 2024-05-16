@@ -93,7 +93,7 @@ System.out.print("de "+etv.terminado+" a ");
 		etv.update();
 		etv.refresh();
 System.out.println(etv.terminado);		
-		JSONObject objeto = new JSONObject();    ;
+		JSONObject objeto = new JSONObject();
 		try {
 			objeto.put("terminado", etv.terminado);
 			objeto.put("registros", registros);

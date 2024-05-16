@@ -38,7 +38,7 @@ public class CalendarioController extends ControladorSeguroCoordinador {
 	public static Result eliminarFechaCalendario(String id) throws ParseException{
 		Calendario.find.byId( Long.parseLong(id)).delete();
 		return ok("oki");
-	};
+	}
 	
 	public static Result hoyMasDias(int ndias ){
 System.out.println("****************desde hoyMasDias");		

@@ -58,11 +58,11 @@ public class HistorialController extends ControladorDefault{
  		    
  		    });		
 
-		Collections.sort(listLog, new Comparator<Log>() {
-			@Override
-			public int compare(Log o1, Log o2) {				
-				return (o1.auditinsert.before(o2.auditinsert))?1:-1;
-			}
+		listLog.sort(new Comparator<Log>() {
+            @Override
+            public int compare(Log o1, Log o2) {
+                return (o1.auditinsert.before(o2.auditinsert)) ? 1 : -1;
+            }
         });
 		
 		JSONArray jArray = new JSONArray();

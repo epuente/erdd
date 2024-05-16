@@ -21,10 +21,10 @@
             </div>
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-6 text-right">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6  text-right">
                         <input type="submit" value="Actualizar" class="btn btn-success"  style="width: 40rem;">
                     </div>
-                    <div class="col-md-6 text-left">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">
                         <a href="/poliMedia/admin/list" class="btn btn-primary" style="width: 40rem">Cancelar</a>
                     </div>
                 </div>
@@ -78,6 +78,9 @@
                 if (tipo=="5")
                     $("#tablaArchivos").append(cadena);
             }
+
+            <!-- Carrusel -->
+
         }
 
         function agregarArchivoTipo(tipo){
@@ -165,6 +168,39 @@
           }
         }
 
+
+
+        /*
+        ### CHECAR https://stackoverflow.com/questions/39439760/preview-images-before-upload
+        */
+
+        $("#archCarrusel").on("change",function(){
+            console.log("archCarrusel.change");
+            imagesPreview(this, '#preview');
+        });
+
+         var imagesPreview = function(input, placeToInsertImagePreview) {
+                console.log("00001");
+                $(placeToInsertImagePreview).html("");
+                if (input.files) {
+                    console.log("00002");
+                    var filesAmount = input.files.length;
+                    console.log("tam archivo: "+filesAmount);
+                    for (i = 0; i < filesAmount; i++) {
+                        console.log("i="+i);
+                        var reader = new FileReader();
+                        reader.onload = function(event) {
+                            $($.parseHTML('<img>'))
+                                    .attr('src', event.target.result)
+                                    .attr('width', "400px").attr('height', "200px")
+                                    .attr('class', 'img-responsive')
+                                    .appendTo(placeToInsertImagePreview);
+                        }
+                        reader.readAsDataURL(input.files[i]);
+                    }
+                }
+
+            };
 
     </script>
 }

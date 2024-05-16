@@ -1,11 +1,7 @@
 package controllers;
 import static play.data.Form.form;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.persistence.PersistenceException;
@@ -290,7 +286,7 @@ for (Map.Entry<String, String> entry : otro.entrySet())
     	o.campo="dirigidoa.id[]";
     } else
     	o.campo =entry.getKey().substring(12);
-    o.observacion = entry.getValue().replace("\n", "").replace("\r", "");;
+    o.observacion = entry.getValue().replace("\n", "").replace("\r", "");
     r.observaciones.add(o);	    
 }
 System.out.println("---------------------------------------");
@@ -329,10 +325,10 @@ System.out.println("---------------------------------------");
 			if (a.autorfuncion.id == 1L){
 System.out.println(a.nombre);				
 System.out.println(a.correo.email);				
-				mc.para =  Arrays.asList(a.correo.email);
+				mc.para = Collections.singletonList(a.correo.email);
 				mc.mensaje = "Estimado usuario:<br><br>";
 				mc.mensaje+="Su solicitud en línea del recurso con clave de control "+r.numcontrol+" ha sido revisada por la DEV";
-		    	if (otro.size() > 0){
+		    	if (!otro.isEmpty()){
 					mc.mensaje+=" y tiene "+otro.size()+" observaciones, las cuales deberá atender en un plazo máximo de 5 días hábiles; de lo contrario su solicitud se cancelará y deberá iniciar nuevamente el proceso.<br><br>Favor de ingresar a la dirección <a href='https://"+urlSitio+"'>https://"+urlSitio+"</a> y utilizando su clave de control acceda a su solicitud para revisar y atender las observaciones que se realizaron. ";			
 		    	} else {
 		    		mc.mensaje+=", favor de enviar el oficio de solicitud dirigido al director de la DEV y los documentos originales de su solicitud.";
@@ -420,7 +416,7 @@ System.out.println("desde cancelar... "+df);
 		
 		miCorreo mc = new miCorreo();
 		
-		mc.para =  Arrays.asList(r.getResponsable().correo.email);
+		mc.para = Collections.singletonList(r.getResponsable().correo.email);
 		mc.asunto = "Se ha cancelado el recurso "+r.numcontrol;
 		mc.mensaje ="Se determinó que ............ por tanto ha sido cancelado";
 		mc.run();

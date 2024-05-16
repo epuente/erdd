@@ -32,7 +32,7 @@ public class Areaconocimiento extends Model {
     public Date auditlastupdate;
     
 
-    public static Finder<Long,Areaconocimiento> find = new Finder<Long,Areaconocimiento>(Long.class, Areaconocimiento.class);     
+    public static Finder<Long,Areaconocimiento> find = new Finder<>(Long.class, Areaconocimiento.class);
 
     public static Page<Areaconocimiento> page(int page, int pageSize, String sortBy, String order, String filter) {
         return 
@@ -46,7 +46,7 @@ public class Areaconocimiento extends Model {
     
     
     public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(Areaconocimiento c: Areaconocimiento.find.orderBy("id").findList()) {
             options.put(c.id.toString(), c.descripcion);
         }

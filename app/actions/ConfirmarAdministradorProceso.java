@@ -22,10 +22,10 @@ System.out.println("desde ConfirmarAdministradorProceso "+ctx.request().path()+"
 
 			// Time en la sesion del usuario			
 			String previousTick = play.mvc.Controller.session("userTime");
-			if (previousTick != null && !previousTick.equals("")) {
-			    long previousT = Long.valueOf(previousTick);
+			if (previousTick != null && !previousTick.isEmpty()) {
+			    long previousT = Long.parseLong(previousTick);
 			    long currentT = new Date().getTime();
-			    long timeout = Long.valueOf(Play.application().configuration().getString("sessionTimeout")) * 1000 * 60;
+			    long timeout = Long.parseLong(Play.application().configuration().getString("sessionTimeout")) * 1000 * 60;
 			    if ((currentT - previousT) > timeout) {
 			        // session expired
 			        play.mvc.Controller.session().clear();

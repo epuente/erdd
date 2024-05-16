@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import actions.miCorreo;
@@ -83,7 +84,7 @@ System.out.println("desde ProrrogaController.save  "+df);
 		 // Enviar correo al evaluador indicándole que se le ha otorgado prórroga
     		
 			miCorreo mc = new miCorreo();
-			mc.para = Arrays.asList( re.evaluador.personal.correo  );
+			mc.para = Collections.singletonList(re.evaluador.personal.correo);
 
 			
 			mc.asunto="Otorgamiento de prórroga para el recurso "+re.recurso.numcontrol; 
@@ -110,7 +111,7 @@ System.out.println("Desde ProrrogaController.delete......................");
 		 EvaluacionProrroga.find.byId(idPro).delete();
 		 flash("success", "Se eliminó la prórroga");
 		 return  redirect(routes.ProrrogaController.list(0,"titulo","asc","","titulo", -1));
-	 };
+	 }
 	 
 	 
 

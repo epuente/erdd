@@ -37,7 +37,7 @@ public class WPMCarruselController extends ControladorDefault {
                 .findList();
 
         List<PolimediaCarrusel> cs = auxcs.stream()
-                .filter(f-> f.estaVigente())
+                .filter(PolimediaCarrusel::estaVigente)
                 .collect(Collectors.toList());
         return ok ( views.html.WebPoliMedia.carrusel.render(cs) );
     }

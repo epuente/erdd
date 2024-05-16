@@ -22,7 +22,7 @@ System.out.println("desde ConfirmarAdministrador "+ctx.request().path()+"  "+new
 
 			// Time en la sesion del usuario			
 			String previousTick = play.mvc.Controller.session("userTime");
-			if (previousTick != null && !previousTick.equals("")) {
+			if (previousTick != null && !previousTick.isEmpty()) {
 			    long previousT = Long.valueOf(previousTick);
 			    long currentT = new Date().getTime();
 			    long timeout = Long.valueOf(Play.application().configuration().getString("sessionTimeout")) * 1000 * 60;

@@ -15,6 +15,7 @@ import models.*;
 
 import play.data.DynamicForm;
 import play.data.Form;
+import play.db.ebean.Model;
 import play.db.ebean.Transactional;
 import play.mvc.Result;
 import views.html.EvaluacionEvaluador.*;
@@ -38,13 +39,6 @@ public class EvaluacionEvaluadorController extends ControladorSeguroEvaluador{
           //  	.ne("recursoevaluadores.recurso.estado.id", 100)
 				.in("recursoevaluadores.estadoevaluacion.id",  Arrays.asList(1,2,3,4,5))
 				.eq("recursoevaluadores.evaluador.id", play.mvc.Controller.session("idEvaluador") ).setOrderBy("titulo, clasificacion.tiporecurso.descripcion, recursoevaluadores.aspecto.descripcion").findList();
-
-
-/*		
-r.forEach(x->{
-	System.out.println("     "+x.id+"  "+x.titulo+"  ");
-});
-*/
 		return ok( listRecursoevaluador.render(r) );
     }
 
@@ -98,14 +92,11 @@ r.forEach(x->{
                 )
                 );
     }
-    
 
-    
     
     public static Result create(Long id, Long idAspecto){
 		String mensajes ="";
 		Recursoevaluador re = Recursoevaluador.find.where().eq("recurso.id", id).eq("aspecto.id", idAspecto).eq("evaluador.id", session("idEvaluador")).findUnique();
-		//EvaluadorAspecto.find.where().eq("evaluador.id", session("idEvaluador")).findList();
 
 		if (re.evaluador.personal.activo.id==1){
 			return ok ("Esta acción no esta permitida para una cuenta de evaluador inactiva.");
@@ -138,21 +129,6 @@ r.forEach(x->{
 				}
 			});
 
-             /*
-			List<EvaluacionTabla> evTab = EvaluacionTabla.find.where()
-    				.eq("version.id",VersionReciente)
-    				.eq("aspecto.id", idAspecto)
-    				.eq("criterio1.id", c.criterio1.id)
-    				.eq("criterio2.id", c.criterio2.id)
-    				.eq("criterio3.id",  cc3.id)
-
-    				//.eq("tiposrecursos.criterio3ejemplo.tiporecurso    .criterio3ejemplo.tiporecurso.id",  6 )
-    				
-    				.orderBy("aspecto.id")
-    				.findList();
-			*/
-
-
 			System.out.println("criterios: "+c.criterio1.id+"  "+c.criterio2.id+"  "+c.criterio3.id+"    (cc3.id)"+cc3.id );
 			System.out.println("aspecto: "+idAspecto );
 			System.out.println("tipo de recurso: "+re.recurso.clasificacion.tiporecurso.id +" - "+re.recurso.clasificacion.tiporecurso.descripcion);
@@ -168,13 +144,6 @@ r.forEach(x->{
 					.orderBy("reactivo.id")
 					.findIds();
 
-
-			System.out.println(" * * * * evTab2  (evaluacionTabla)"+qevTab2.size());
-
-
-			//evTab2.stream().filter(mf2->mf2.tiposrecursos.stream().filter(mf3->mf3.criterio3ejemplo.tiporecurso.id=6 ))
-
-
 			// Encontrar reg en ClasificadorCriterio3Ejemplo
 			List<ClasificadorCriterio3Ejemplo> idscc3 = ClasificadorCriterio3Ejemplo.find
 					.where().eq("criterio3.id", c.criterio3.id).eq("tiporecurso.id", c.tiporecurso.id)
@@ -186,44 +155,25 @@ r.forEach(x->{
 			});
 			System.out.println("bb: "+bb);
 
-            /*
-			 * select * from evaluacion_tabla_tipo_recurso
-			WHERE
-				evaluaciontabla_id in (
-					select id from evaluacion_tabla
-					WHERE
-					version_id = 1 and aspecto_id = 1 
-					and criterio1_id = 1 and criterio2_id =2 and criterio3_id=3
-				)
-			and criterio3ejemplo_id in (select criterio3ejemplo_id from clasificador_criterio3ejemplo where criterio3_id = 3 and tiporecurso_id = 5);
-			*/
-
-			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 			List<EvaluacionTablaTipoRecurso> x = EvaluacionTablaTipoRecurso.find
-//    					 	.fetch("evaluaciontabla")
-					// 	.fetch("evaluaciontabla.tiposrecursos")
 					.where()
 					.in("evaluaciontabla.id", qevTab2)
 					.in("tiporecurso.id",   c.tiporecurso.id )
 					.findList();
-System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 			System.out.println("x "+x.size());
 			List<Long> xIds = x.stream().map(m1->m1.evaluaciontabla.id).collect(Collectors.toList());
 
 			System.out.println("xIds: "+xIds);
-
 
 			List<EvaluacionTabla> evTab = EvaluacionTabla.find
 					.where().in("id", xIds)
 					.orderBy("reactivo.id")
 					.findList();
 
-
 			/* Determinar la fecha máxima, ya sea la inicial estipulada o la otorgada por prórrogas*/
 			Recurso r = re.recurso;
 			Date hoy = new Date();
 			Date fmaxima = r.evaluacionFecha.fechalimite;
-
 
 			for(EvaluacionProrroga efp : re.prorrogas ){
 				if (   efp.fecha.after(fmaxima)  ){
@@ -282,7 +232,7 @@ System.out.println("********************");
 		System.out.println(" evaluaciones: 	"+re.evaluaciones.size());
 
 		Recursoevaluador otro = Recursoevaluador.find.byId(re.id);
-		otro.evaluaciones.forEach(s->s.delete());
+		otro.evaluaciones.forEach(Model::delete);
 		System.out.println(" id:   			"+otro.id);
 		System.out.println(" aspecto: 		"+otro.aspecto.descripcion);
 		System.out.println(" evaluaciones: 	"+otro.evaluaciones.size());

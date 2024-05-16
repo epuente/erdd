@@ -81,7 +81,7 @@ public class PersonalController  extends ControladorSeguro{
 
     public static Result CtaAdminPMEdit() {
         UsuarioRol c = UsuarioRol.find.where().eq("rol.id", 4).findUnique();
-        Form<Personal> pForm = null;
+        Form<Personal> pForm;
         if (c!=null) {
             pForm = form(Personal.class).fill(
                     c.usuario.personal

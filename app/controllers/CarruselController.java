@@ -157,8 +157,7 @@ public class CarruselController extends ControladorDefault {
             }
 
         } catch (JSONException e) {
-            System.out.println("Ocurrio un error: " + e);
-            e.printStackTrace();
+            System.out.println("Ocurrio un error: " + e.getMessage()+"\n\n"+e.getCause());
         }
 //System.out.println("retorno "+json2.toString());
         return ok( json2.toString()  );
@@ -388,8 +387,8 @@ public class CarruselController extends ControladorDefault {
                 return ok( json2.toString()  );
             }
         } catch (JSONException e) {
-            System.out.println("Ocurrio un error: " + e);
-            e.printStackTrace();
+            System.out.println("Ocurrio un error: " + e.getMessage()+"\n\n"+e.getCause());
+
         }
 //System.out.println("retorno "+json2.toString());
         return ok( json2.toString()  );
@@ -400,7 +399,7 @@ public class CarruselController extends ControladorDefault {
     public static Result create2(){
         Logger.info("Desde CarruselController.create2");
         Form<PolimediaCarrusel> c = form(PolimediaCarrusel.class);
-        // List de los recursos que ya estan en polimediacarrusel
+        // List de los recursos que ya están en polimediacarrusel
         List<Long> enCarrusel = PolimediaCarrusel.find.all().stream().map(m->m.polimedia.recurso.id).collect(Collectors.toList());
         // List de los recursos que esten en polimedia
         List<Polimedia> polis = Polimedia.find
@@ -512,12 +511,10 @@ public class CarruselController extends ControladorDefault {
                     imagen.contenttype = contentType;
                 } catch (FileNotFoundException e) {
                     flash("error", "No fué posible agregar el registro, No se encontró el archivo.");
-                    System.out.println("Error " + e.toString());
-                    e.printStackTrace();
+                    System.out.println("Error " + e.getMessage()+"\n\n"+e.getCause());
                 } catch (IOException ioe) {
                     flash("error", "No fué posible agregar el registro, error de i/o.");
-                    System.out.println("Error " + ioe.toString());
-                    ioe.printStackTrace();
+                    System.out.println("Error " + ioe.getMessage()+"\n\n"+ioe.getCause());
                 }
             }
             pm.save();

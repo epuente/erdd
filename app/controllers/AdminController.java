@@ -24,7 +24,7 @@ public class AdminController extends ControladorSeguro {
 		response().setHeader("Expires", "0"); // Proxies.  
 		
 		
-		Map<String, Object> registros = new HashMap<String, Object>();
+		Map<String, Object> registros = new HashMap<>();
 
     	List<Recurso> todos = Recurso.find.all();
     	registros.put("rs", todos.size());

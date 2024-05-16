@@ -9,10 +9,7 @@ import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 
 import com.avaje.ebean.Expr;
@@ -32,6 +29,7 @@ import models.Recurso;
 import models.Recursoevaluador;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.db.ebean.Model;
 import play.mvc.Result;
 //import views.html.Recurso.list;
 import views.html.Recursoevaluador.*;
@@ -187,7 +185,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         String m7 = "<br><br>La fecha programada para la conclusión de su evaluación es el día " + cal.get(Calendar.DAY_OF_MONTH)+" de "+ months[cal.get(Calendar.MONTH)]+".";
 
         for(Recursoevaluador linea : Recursoevaluador.find.where().eq("recurso.id",r.id).in("evaluador.id", listaDestinatarios).findList()){
-            mc.para = Arrays.asList( linea.evaluador.personal.correo  );
+            mc.para = Collections.singletonList(linea.evaluador.personal.correo);
             mc.mensaje="Apreciable "+linea.evaluador.personal.nombreCompleto()+":<br><br>";
             cal.setTime(linea.recurso.auditinsert);
 
@@ -313,7 +311,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         miCorreo2 mc2 = new miCorreo2();
         mc2.asunto = "abcdef";
         mc2.mensaje= "12345";
-        mc2.para = Arrays.asList("epuente_72@yahoo.com");
+        mc2.para = Collections.singletonList("epuente_72@yahoo.com");
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
@@ -322,8 +320,8 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         mipdf.baos = outputStream;
         mipdf.generarReporteFinal("otro");
 
-        mc2.adjuntos = Arrays.asList(mipdf.baos);
-        mc2.nombresAdjuntos = Arrays.asList("Oficio X ");
+        mc2.adjuntos = Collections.singletonList(mipdf.baos);
+        mc2.nombresAdjuntos = Collections.singletonList("Oficio X ");
 
         mc2.run();
 
@@ -346,7 +344,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         nuevo.save();
         List<HistorialestadoEvaluacion> h = HistorialestadoEvaluacion.find.where().eq("recurso.id", registro.recurso.id).eq("recursoevaluador.id", registro.id).findList();
         if (h !=null)
-            h.forEach(t->t.delete());
+            h.forEach(Model::delete);
         registro.delete();
     }
 

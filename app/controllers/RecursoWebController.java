@@ -10,10 +10,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import org.json.JSONArray;
@@ -438,35 +435,34 @@ public class RecursoWebController extends ControladorDefault{
 		miCorreo mc = new miCorreo();
 		mc.asunto ="Se han atendido las observaciones a la solicitud "+r.numcontrol;
 		mc.mensaje="Las observaciones a la solicitud con clave de control "+r.numcontrol+" han sido atendidas por el usuario.";
-		mc.para = Arrays.asList(Personal.elCoordinador().correo);
+		mc.para = Collections.singletonList(Personal.elCoordinador().correo);
 		mc.run();
 
 		try{
 			if (items!= null){
-				for (int y = 0; y< items.size();y++){
-					if ( items.get(y).length() != 0 ){
-						String n = items.get(y);
-						System.out.println("Eliminando docto: "+ n);
-						Documento.find.byId( Long.valueOf(n)).delete();
-					}
-				}
+                for (String item : items) {
+                    if (!item.isEmpty()) {
+                        System.out.println("Eliminando docto: " + item);
+                        Documento.find.byId(Long.valueOf(item)).delete();
+                    }
+                }
 			}
 			if (observaItems!= null){
-				for (int y = 0; y< observaItems.size();y++){
-					if ( observaItems.get(y).length() != 0 ){
-						String ncampo = observaItems.get(y);
-						System.out.println("Eliminando obs docto: "+ ncampo);
-						Observacion ona = Observacion.searchByRecursoNombreCampo(r.id, ncampo);
-						System.out.println(ona);
-						if (ona != null)
-							ona.delete();
-						System.out.println("Eliminando obs docto: "+ ncampo);
-						Observacion otd = Observacion.searchByRecursoNombreCampo(r.id, ncampo);
-						System.out.println(otd);
-						if (otd != null)
-							otd.delete();
-					}
-				}
+                for (String observaItem : observaItems) {
+                    if (!observaItem.isEmpty()) {
+                        String ncampo = observaItem;
+                        System.out.println("Eliminando obs docto: " + ncampo);
+                        Observacion ona = Observacion.searchByRecursoNombreCampo(r.id, ncampo);
+                        System.out.println(ona);
+                        if (ona != null)
+                            ona.delete();
+                        System.out.println("Eliminando obs docto: " + ncampo);
+                        Observacion otd = Observacion.searchByRecursoNombreCampo(r.id, ncampo);
+                        System.out.println(otd);
+                        if (otd != null)
+                            otd.delete();
+                    }
+                }
 			}
 		}
 		catch (NumberFormatException e) {
@@ -595,7 +591,7 @@ public class RecursoWebController extends ControladorDefault{
 
 	public static Result Correo(){
 		miCorreo mc = new miCorreo();
-		mc.para = Arrays.asList(Personal.elCoordinador().correo);
+		mc.para = Collections.singletonList(Personal.elCoordinador().correo);
 		mc.mensaje="Este es un correo de prueba Se recibió correctamente!!!";
 		mc.asunto="Prueba Se recibió correctamente";
 		mc.run();

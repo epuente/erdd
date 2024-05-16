@@ -82,7 +82,7 @@ System.out.println("tam evaluacionTabla "+evt.size());
 		
 		
 		
-		//Tiene Observación general?
+		//¿Tiene Observación general?
 		EvaluacionObservacionGral aux2 = EvaluacionObservacionGral.find.where().eq("recursoevaluador.id", er.get(0).recursoevaluador.id).findUnique();
 System.out.println(" aux2: "+aux2);
 		if (aux2 != null){
@@ -147,7 +147,7 @@ System.out.println("numObserva:  "+numObserva);
 			r.update();
 			
 			// Enviar correo al autor responsable del recurso			
-	        List<String> listaDirecciones = new ArrayList<String>();	        
+	        List<String> listaDirecciones = new ArrayList<>();
 			for (RecursoAutor a : r.autores) {
 				if (a.autorfuncion.id == 1L){
 					listaDirecciones.add(a.correo.email); 

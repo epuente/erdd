@@ -35,10 +35,10 @@ public class Aspecto extends Model {
 
 
     
-    public static Model.Finder<Long,Aspecto> find = new Model.Finder<Long,Aspecto>(Long.class, Aspecto.class);    
+    public static Model.Finder<Long,Aspecto> find = new Model.Finder<>(Long.class, Aspecto.class);
     
     public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(Aspecto c: Aspecto.find.orderBy("descripcion").findList()) {
             options.put(c.id.toString(), c.descripcion);
         }

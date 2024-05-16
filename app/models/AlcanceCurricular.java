@@ -31,11 +31,11 @@ public class AlcanceCurricular extends Model{
     @UpdatedTimestamp
     public Date auditlastupdate;    
 
-    public static Finder<Long,AlcanceCurricular> find = new Finder<Long,AlcanceCurricular>(Long.class, AlcanceCurricular.class);     
+    public static Finder<Long,AlcanceCurricular> find = new Finder<>(Long.class, AlcanceCurricular.class);
 	
 	
     public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(AlcanceCurricular c: AlcanceCurricular.find.findList()) {
             options.put(c.id.toString(), c.descripcion);
         }

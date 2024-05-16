@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -162,9 +164,8 @@ public class PoliMediaController extends ControladorSeguroPM{
 
 
     public static Result edit(Long id){
-        Form<Polimedia> fpm = form(Polimedia.class).fill(
-                Polimedia.find.byId(id)
-        );
+        Form<Polimedia> fpm = form(Polimedia.class)
+                .fill(Polimedia.find.byId(id));
         List<Tipo> tipos = Tipo.find
                 .where()
                 .setOrderBy("id")
@@ -197,7 +198,7 @@ public class PoliMediaController extends ControladorSeguroPM{
             Logger.debug("\n\n\nDesde PoliMediaController.update");
             System.out.println("request().body(): "+request().body());
             Form<Polimedia> forma = form(Polimedia.class).bindFromRequest();
-            Polimedia pmObj = form(Polimedia.class).bindFromRequest().get();
+            Polimedia pmObj = forma.get();
             Long tipo = pmObj.tipo.id;
             String nombreComp = "";
             Logger.debug("--- 0100");
@@ -243,7 +244,7 @@ public class PoliMediaController extends ControladorSeguroPM{
                 for (PolimediaArchivo a : pmDB.archivos ){
                     Logger.debug("----x");
                     boolean aeliminar = true;
-                    Logger.debug("numeros:"+numeros);
+                    //Logger.debug("numeros:"+numeros);
                     if (numeros != null) {
                         for (long n : numeros) {
                             if (a.id == n)
@@ -372,6 +373,57 @@ public class PoliMediaController extends ControladorSeguroPM{
             pmNvo.habilitado = pmObj.habilitado;
             pmNvo.tipo = Tipo.find.byId(tipo);
             //pmNvo.update();
+
+            /* Carrusel*/
+            DateFormat formatter = null;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+
+            if (pmDB.carrusel==null)
+                pmNvo.carrusel = new PolimediaCarrusel();
+            else
+                pmNvo.carrusel = pmDB.carrusel;
+
+            pmNvo.carrusel.polimedia = pmNvo;
+            pmNvo.carrusel.posicion = Integer.parseInt(forma.field("carrusel.posicion").value());
+
+            Logger.debug("inicio "+forma.field("carrusel.inicio").value());
+            pmNvo.carrusel.inicio =  sdf.parse(forma.field("carrusel.inicio").value());
+            pmNvo.carrusel.fin =  sdf.parse(forma.field("carrusel.fin").value());
+
+            if (pmNvo.tipo.id <= 3)
+                pmNvo.carrusel.liga = pmNvo.polimediaUrl.url;
+            if (pmNvo.tipo.id >= 4)
+                pmNvo.carrusel.liga = pmNvo.archivos.get(0).nombreArchivo;
+            //PolimediaCarrusel pcr = PolimediaCarrusel.find.byId(pmDB.carrusel.id);
+            Http.MultipartFormData.FilePart fp = body.getFile("carrusel.imagen.contenido");
+            if (fp != null) {
+                if (pmDB.carrusel.imagen==null)
+                    pmNvo.carrusel.imagen = new PolimediaCarruselImagen();
+                else
+                    pmNvo.carrusel.imagen = pmDB.carrusel.imagen;
+                pmNvo.carrusel.imagen.polimediacarrusel = pmNvo.carrusel;
+                String fileName = fp.getFilename();
+                Logger.debug("filename nuevo: "+fileName);
+                //Logger.debug("filename Anterior: "+ pmDB.carrusel.nombreArchivo);
+                String contentType = fp.getContentType();
+                File file = fp.getFile();
+                try {
+                    Path p = Paths.get(file.getPath());
+                    byte[] byteFile = Files.readAllBytes(p);
+                    pmNvo.carrusel.nombreArchivo = fileName;
+                    pmNvo.carrusel.imagen.contenido =  byteFile;
+                    pmNvo.carrusel.imagen.contenttype = contentType;
+                } catch (FileNotFoundException e) {
+                    flash("error", "No fué posible agregar el registro, No se encontró el archivo.");
+                    System.out.println("Error "+e.toString());
+                } catch (IOException ioe){
+                    flash("error", "No fué posible agregar el registro, error de i/o.");
+                    System.out.println("Error "+ioe.toString());
+                }
+                //pmNvo.carrusel = cr;
+            }
+
             Ebean.update(pmNvo);
             retorno.put("estado", "actualizado");
             Ebean.commitTransaction();

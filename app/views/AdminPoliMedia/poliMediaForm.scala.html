@@ -73,7 +73,7 @@
                             options = Seq("true"->"Si","false"->"No"),
                             '_label -> "Habilitado",
                             '_error -> forma("habilitado").error.map(_.withMessage("Seleccione un valor para el campo 'Habilitado'")),
-                            '_help -> "Indique si el Recurso Didáctico Digital estará disponible para su consulta en línea (independientemente de la entrada en carrusel).",
+                            '_help -> "Indique si el Recurso Didáctico Digital estará disponible para su consulta en línea.",
                             '_class -> "myclassname"
                             )
                         </div>
@@ -230,6 +230,42 @@
 
 
 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Carrusel</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+                            <div class="row">
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                    @inputText(forma("carrusel.posicion"), '_label -> "Prioridad", '_help -> "", 'type -> "text", 'class->"form-control" )
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-7">
+                                    <div class="input">
+                                        <label for="carrusel.imagen.contenido" class="control-label">Archivo de imágen</label>
+                                        <input type="file" accept="image/*" id="archCarrusel" name="carrusel.imagen.contenido"  class="form-control" multiple=false >
+                                    </div>
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    @inputText(forma("carrusel.inicio"), '_label -> "Desde", '_help -> "", 'required->"required", 'class->"form-control", 'type->"date" )
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    @inputText(forma("carrusel.fin"), '_label -> "Desde", '_help -> "", 'required->"required", 'class->"form-control", 'type->"date" )
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                            <div id="preview"  class="" style="max-width:200px; max-height:200px;">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
