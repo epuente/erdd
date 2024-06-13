@@ -52,11 +52,15 @@ public class miCorreo extends Thread{
 			message.setSubject(this.asunto);
 			message.setText(this.mensaje);
 			message.setContent(this.mensaje, "text/html; charset=utf-8");
-			System.out.println("(miCorreo) Envio de correo a las "+new Date());
-			Transport.send(message);
+			//System.out.println("(miCorreo) Envio de correo a las "+new Date());
+            /////////////////////////////  SE COMENTA LA SIGUIENTE LINEA PUESTO QUE NO FUNCIONA EL MAIL SMTP DE MICROSOFT
+			//Transport.send(message);
+            /*
 			for(String p : para){
 				System.out.println("      Se envio correctamente a "+p);
 			}
+
+             */
 	  
 		} catch(MessagingException e){
 			System.out.println("error: "+e.getMessage());	

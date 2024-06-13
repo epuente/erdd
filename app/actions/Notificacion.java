@@ -69,8 +69,10 @@ public class Notificacion {
 		
 		try {
 			System.out.println("tópico: "+topic);
-			String response = FirebaseMessaging.getInstance().send(message);
-			System.out.println("    Se envió exitosamente la notificación: " + response);
+
+            ///////////////////////  LA SIGUIENTE LINEA SE COMENTA PUESTO QUE YA ESTA EN USO LA APLICACION MOVIL
+			// String response = FirebaseMessaging.getInstance().send(message);
+			//System.out.println("    Se envió exitosamente la notificación: " + response);
 		} catch (Exception e) {
 			System.out.println("ERROR, no fue posible enviar la notificación al celular.     "+e);
 		}	

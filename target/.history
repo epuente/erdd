@@ -246,3 +246,9 @@ compile
 sbt
 run 9091
 exit
+run 9091
+clean
+exit
+run 9091
+run 8085
+exit

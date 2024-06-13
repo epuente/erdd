@@ -4,7 +4,7 @@
 		module="erdd2024mayo-build"
 		revision="0.1-SNAPSHOT"
 		status="integration"
-		publication="20240506095127"
+		publication="20240521150250"
 		e:sbtVersion="0.13" e:scalaVersion="2.10"
 	>
 		<description>

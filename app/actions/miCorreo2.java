@@ -83,11 +83,20 @@ public class miCorreo2 extends Thread{
 	         mimeMultipart.addBodyPart(textBodyPart);
 	         mimeMultipart.addBodyPart(pdfBodyPart);  	        
              message.setContent(mimeMultipart);	         
-			
-			Transport.send(message);
+
+
+
+             /////////////////////////////  SE COMENTA LA SIGUIENTE LINEA PUESTO QUE NO FUNCIONA EL MAIL SMTP DE MICROSOFT
+
+
+			//Transport.send(message);
+
+
+            /*
 			for(String p : para){
 				System.out.println("      Se envio correctamente a "+p);
 			}
+             */
 	  
 		} catch(MessagingException e){
 			System.out.println("error: "+e.getMessage());	
