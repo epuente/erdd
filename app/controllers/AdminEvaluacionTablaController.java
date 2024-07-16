@@ -782,16 +782,16 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
             System.out.println("de json a objeto oki!!!");
 
 
-            EvaluacionTablaTipoRecurso evttr = EvaluacionTablaTipoRecurso.find.where()
+            List<EvaluacionTablaTipoRecurso> evttrs = EvaluacionTablaTipoRecurso.find.where()
                     .eq("evaluaciontabla.id", evt.id)
                     //.eq("criterio3ejemplo.id", c3ejemplo)
                     .eq("tiporecurso.id", tiporecurso)
-                    .findUnique();
+                    .findList();
 
-            if (evttr != null){
+            if (evttrs != null){
                 System.out.println("    ya existia ");
-                evttr.delete();
-
+                evttrs.forEach(Model::delete);
+                //evttr.delete();
             } else {
                 System.out.println("    es nuevo ");
                 if (borrado=="false"){
