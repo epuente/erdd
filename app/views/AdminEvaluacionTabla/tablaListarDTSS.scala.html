@@ -611,8 +611,8 @@ tiposrecursos:List[ClasificadorEjemplo]
 
 
 
-	// Cuando se seleccionan los checkboxes de criterios se graba o borra
-    $(document).on("click", "input:checkbox[name^='criterio_']", function(){
+	// Cuando se seleccionan los checkboxes de criterios (criterio3) se graba o borra
+    $(document).on("click", "input:checkbox[name^='criterio_']", function(c3){
     	nombre = $(this).prop("name");
         numeroReactivo =  nombre.substring( nombre.indexOf("_")+1,  nombre.indexOf("[]") );   
         criterios = $(this).val();
@@ -628,17 +628,35 @@ tiposrecursos:List[ClasificadorEjemplo]
 
     	if (!$(this).prop("checked")){
     		$("[name='tiporecurso_"+numeroReactivo+"_"+criterios+"[]']").prop("checked" ,  false );
-    	}
-        var o = new Object;   
+    	} else
+    	    $("[name='tiporecurso_"+numeroReactivo+"_"+criterios+"[]']").prop("checked" ,  true );
+
+
+        var o = new Object;
         o.version = {id: "@version.id"};
         o.reactivo = {"id": numeroReactivo };
         o.aspecto = {id: $("[name='aspecto"+numeroReactivo+"']:checked").val()};
-        o.criterio1 = {id:   criterios.split("_")[0]  };   
+        o.criterio1 = {id:   criterios.split("_")[0]  };
         o.criterio2 = {id:   criterios.split("_")[1]  };
         o.criterio3 = {id:   criterios.split("_")[2]  };
 		o.borrado = !$(this).prop("checked");
-		if (o.reactivo.id!=0)
-        	LlamadaAjaxGrabaInstrumentoCriterio(o);
+		console.log("o.reactivo.id "+o.reactivo.id)
+		if (o.reactivo.id!=0){
+		    console.log("enviado a LlamadaAjaxGrabaInstrumentoCriterio")
+		    console.dir(o)
+		    // Primero se graba/borra el criterio3
+        	var $aux1 = LlamadaAjaxGrabaInstrumentoCriterio(o);
+        	// Despues se graban/borran todos los tipos recursos que corresponden al criterio 3 en cuestion
+        	$.when($aux1).done(function(data){
+        	    console.log("se hizo LlamadaAjaxGrabaInstrumentoCriterio")
+                $("input[type='checkbox'][name='tiporecurso_"+numeroReactivo+"_"+criterios+"[]']").each(function(){
+                    console.log("aqui va "+$(this).val())
+                    //$(this).prop("checked", $(c3).prop("checked"));
+                    //$(this).trigger("click");
+                    registroTipoRecurso($(this));
+                });
+            });
+        }
     });
 
 
@@ -721,12 +739,17 @@ tiposrecursos:List[ClasificadorEjemplo]
 		
 
 	
-
+    // Cuando de hace click en los ejemplos de recursos (tiporecurso)
     $(document).on("click", "[name^='tiporecurso_'][name$='[]']", function(){
+        console.log("CLICK en tipo recurso "+$(this).val())
+
+        registroTipoRecurso($(this));
+
+        /*
     	if (  $(this).prop("checked") )
     	    $("[name='"+$(this).prop("name")+"']").closest(".form-group").removeClass("has-error");
     	
-    	
+
         valores = $(this).prop("name");
         
         numeroReactivo =  valores.split("_")[1];
@@ -745,11 +768,43 @@ tiposrecursos:List[ClasificadorEjemplo]
         //o.criterio3ejemplo = {id: $(this).val()}
         o.tiporecurso= {id: $(this).val()}
 		o.borrado = !$(this).prop("checked");
-		if (o.reactivo.id!=0)
-        	LlamadaAjaxGrabaInstrumentoTipoRecurso(o);    	
-    	
-    	
-    });	
+		if (o.reactivo.id!=0){
+		    console.log("tipo recurso enviado")
+		    console.dir(o)
+        	LlamadaAjaxGrabaInstrumentoTipoRecurso(o);
+        }
+        */
+    });
+
+    function registroTipoRecurso(cb){
+    	if (  $(cb).prop("checked") )
+    	    $("[name='"+$(cb).prop("name")+"']").closest(".form-group").removeClass("has-error");
+
+
+        valores = $(cb).prop("name");
+
+        numeroReactivo =  valores.split("_")[1];
+        c1 = valores.split("_")[2];
+        c2 = valores.split("_")[3];
+        c3 = valores.split("_")[4].substring(0,  valores.split("_")[4].length-2 );
+        console.log("reactivo: "+numeroReactivo)
+        console.log(c1+" "+c2+" "+c3)
+
+        var o = new Object;
+        o.version = {id: "@version.id"};
+        o.reactivo = {"id": numeroReactivo };
+        o.criterio1 = {id:   c1  };
+        o.criterio2 = {id:   c2  };
+        o.criterio3 = {id:   c3  };
+        //o.criterio3ejemplo = {id: $(cb).val()}
+        o.tiporecurso= {id: $(cb).val()}
+		o.borrado = !$(cb).prop("checked");
+		if (o.reactivo.id!=0){
+		    console.log("tipo recurso enviado")
+		    console.dir(o)
+        	LlamadaAjaxGrabaInstrumentoTipoRecurso(o);
+        }
+    }
 	
 	// Aplica los cambios para el nuevo reactivo
 	$("#frmModal2").submit(function(e){
@@ -1109,7 +1164,7 @@ alert("error hjk6");
             if (data.estado == "ok"){
                 
             } else {
-alert("error hjk6");
+                alert("error hjk6");
             }
             d.resolve(data);
         }).error(function(xhr, status, error) {

@@ -758,8 +758,9 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
                 .eq("criterio2.id", c2)
                 .eq("criterio3.id", c3)
                 .findUnique();
+
         System.out.println("posterior.......");
-        System.out.println("id EvaluacionTabla "+evt.id);
+//        System.out.println("id EvaluacionTabla "+evt.id);
 
         //Long tr = EvaluacionTablaTipoRecurso.find.where().eq("evaluaciontabla.id", evt.id).eq("tiporecurso.id", tiporecurso).findUnique().id;
 
@@ -774,6 +775,7 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
             }
         }
         System.out.println("se eliminó el nodo borrado");
+        System.out.println(json);
 
 
         try {
@@ -788,7 +790,12 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
                     .eq("tiporecurso.id", tiporecurso)
                     .findList();
 
-            if (evttrs != null){
+
+            System.out.println("id EvaluacionTabla "+evt.id);
+
+            System.out.println("EvaluacionTablaTipoRecurso "+evttrs.size());
+
+            if (evttrs.size()!=0){
                 System.out.println("    ya existia ");
                 evttrs.forEach(Model::delete);
                 //evttr.delete();

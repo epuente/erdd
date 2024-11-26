@@ -254,3 +254,51 @@ run 8085
 exit
 run 9000
 exit
+clean
+reload
+compile
+run 8085
+run 805
+run 8085
+exit
+run 8085
+clean
+dist
+clean
+reload
+dist
+exit
+run 8085
+clean
+reload
+compile
+run 8085
+clean
+reload
+dist
+run 80
+clean
+reload
+compile
+run 80
+run 8034
+run 
+reload
+compile
+run
+clean;reload;
+;clean;reload;
+clean
+reload
+compile
+run
+run 8083
+run 80
+run 8084
+clean
+dist
+clean
+dist
+run 8084
+run 8081
+exit

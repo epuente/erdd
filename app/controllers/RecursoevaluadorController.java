@@ -248,6 +248,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
             re = Recursoevaluador.find.where()
                     .not(Expr.in("recurso.estado.id", Arrays.asList(400, 401,402)))
                     .eq("estadoevaluacion.id", 3).findList();
+
         }
         //System.out.println("REcurso con todas sus evaluaciones por revisar: "+re.size());
         return ok(listarEvaluacionesPorRevisar.render(re, tipo));
@@ -287,6 +288,8 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
 
 
     public static Result reporteEvaluacion(Long id) throws DocumentException, MalformedURLException, IOException{
+
+        System.out.println("Desde RecursoEvaluadorController.reporteEvaluacion");
         ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
         miPdf mipdf = new miPdf(id);
         //  mipdf.id = id;

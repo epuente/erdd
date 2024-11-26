@@ -551,30 +551,55 @@ System.out.println("..............................entrando");
 
 	}
 
-	public static Result solicitarProrroga(Long idRe, Long idAspecto, Integer ndias){
+    //Recibe el id de Recurso, el id de Aspecto y el número de días
+	public static Result solicitarProrroga(Long idRecurso, Long idAspecto, Integer ndias){
 		Date fechainicial = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-System.out.println("**********************************************************");
-System.out.println("****  id "+idRe +"  idAspecto: "+ idAspecto+"    ndias: "+ndias);
-System.out.println("**********************************************************");
+        System.out.println("**********************************************************");
+        System.out.println("****  idRecurso "+idRecurso +"  idAspecto: "+ idAspecto+"    ndias: "+ndias+"    idEvaluador: "+session("idEvaluador"));
+        System.out.println("**********************************************************");
 		Calendar cal = Calendar.getInstance();
 		DateFormatSymbols dfs = new DateFormatSymbols();
 		String[] months = dfs.getMonths();
 
 		EvaluacionProrroga esp = new EvaluacionProrroga();
 
-		esp.recursoevaluador = Recursoevaluador.find.fetch("recurso").where().eq("id", idRe).eq("aspecto.id", idAspecto).eq("evaluador.id", session("idEvaluador")).findUnique();
+
+        Recurso r = Recurso.find.fetch("recursoevaluadores").setId(idRecurso).findUnique();
+        System.out.println("recurso r "+r);
+        esp.recursoevaluador = r.recursoevaluadores.stream().filter(f -> f.aspecto.id == idAspecto && f.evaluador.id == Long.parseLong(session("idEvaluador"))).findFirst().get();
+
+
+        /*
+		esp.recursoevaluador = Recursoevaluador.find
+                    .fetch("recurso")
+                    .where().eq("recurso.id", idRecurso)
+                        .eq("aspecto.id", idAspecto)
+                        .eq("evaluador.id", session("idEvaluador"))
+                    .findUnique();
+
+         */
 		esp.ndias =  ndias;
 		esp.autorizado = false;
 
+        System.out.println("idRe: "+idRecurso);
+        System.out.println("idAspecto: "+idAspecto);
+        System.out.println("idEvaluador: "+session("idEvaluador"));
+
+        System.out.println("uno: "+esp.recursoevaluador);
+
+        System.out.println(esp.recursoevaluador.prorrogas==null);
+        System.out.println(esp.recursoevaluador.prorrogas.size());
+
+
 		// Sin prorroga previa
-		if ( esp.recursoevaluador.prorrogas.size() == 0 )
-			fechainicial = esp.recursoevaluador.recurso.evaluacionFecha.fechalimite;
+		//if ( esp.recursoevaluador.prorrogas == null || esp.recursoevaluador.prorrogas.size() == 0 )
+		fechainicial = esp.recursoevaluador.recurso.evaluacionFecha.fechalimite;
 		// Con prorrogas anteriores
 		if ( esp.recursoevaluador.prorrogas.size() != 0 )
 			fechainicial = esp.recursoevaluador.prorrogas.stream().map(m->m.fecha).max(Date::compareTo).get();
 
-
+        System.out.println("fechainicial: "+fechainicial);
 		String este = CalendarioController.prueba(ndias, sdf.format(fechainicial));
 
 

@@ -431,7 +431,7 @@ System.out.println("desde cancelar... "+df);
 	
 	
 	public static Result revisar(Long id, Long aspecto){
-		System.out.println("desde REcursoController.revisar");
+		System.out.println("desde RecursoController.revisar");
 System.out.println("recibiendo "+id+",   "+aspecto);		
 	    Recurso r = Recurso.find.byId(id);	
 	    List<Recursoevaluador> re = Ebean.find(Recursoevaluador.class).fetch("recurso").where().eq("recurso.id",id).eq("aspecto.id", aspecto).findList();

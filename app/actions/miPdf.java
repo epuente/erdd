@@ -55,8 +55,8 @@ public class miPdf {
 
 
 	public void generarReporteFinal(String emisor) throws Exception {
-System.out.println("Generando PDF(reporte final)...");	
-System.out.println("...   "+this.id);
+        System.out.println("Generando PDF(reporte final)...");
+        System.out.println("...   "+this.id);
 		Recurso r = Recurso.find.byId(this.id);
 		this.setClaveControl(r.numcontrol);
 		
@@ -74,18 +74,20 @@ System.out.println("...   "+this.id);
         Document doc = new Document(PageSize.LETTER, 40,40,90,40);
         PdfWriter docWriter;
         docWriter = PdfWriter.getInstance(doc, this.baos);
-        
+
+        //Encabezado del reporte pdf
         MyFooter auxPie = new MyFooter();
         auxPie.emisor = emisor;
-        auxPie.titulo = "Reporte de Evaluación Técnico Pedagógica";        
+        auxPie.titulo = "Reporte de Evaluación Técnico Pedagógica";
         docWriter.setPageEvent(auxPie);
         
         doc.addTitle("Reporte de Evaluación Técnico Pedagógica");
         doc.addCreationDate();
-        doc.addCreator("SEMDD");
+        doc.addCreator("SERDD");
         
         Font fontbold = FontFactory.getFont("Cournier-bold", 10, Font.BOLD);
         Font fontCuerpo = FontFactory.getFont("Cournier",9);
+        Font fontLMS = FontFactory.getFont("Cournier",7);
         
         PdfPTable tablaInicial = new PdfPTable(6); 	
         tablaInicial.setWidthPercentage(100);
@@ -329,7 +331,7 @@ doc.add(tabla6);
         
         celda = new PdfPCell(celdaInicial);
         // Por si se encuentra en una url en línea
-        celda.setPhrase(new Phrase("Internet/LMS", fontCuerpo));
+        celda.setPhrase(new Phrase("Internet/LMS", fontLMS));
         celda.setColspan(1);
         tablaFe.addCell(celda);
         celda = new PdfPCell(celdaInicial);

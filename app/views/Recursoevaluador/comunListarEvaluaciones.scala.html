@@ -33,9 +33,12 @@
 						<td rowspan="1">@r.evaluador.personal.nombreCompleto</td>
 					}
 					<td rowspan="1">@r.recurso.getResponsable().nombreCompleto()</td>
-					<td rowspan="1">
+					<td rowspan="1" style="font-size:small">
 						@r.recurso.evaluacionFecha.fechalimite.format("dd/MM/yyyy")
-					</td>					
+                        @for(x<-r.prorrogas){
+                            <br>Prorroga al @x.fecha.format("dd/MM/yyyy")
+                        }
+					</td>
 					<td rowspan="1">					
 						@if(r.estadoevaluacion.id==1L || r.estadoevaluacion.id == 2L){
 							@r.aspecto.descripcion / @r.evaluador.personal.nombreCompleto

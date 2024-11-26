@@ -1,0 +1,17 @@
+La creación de pdf es una libreria ajena a play, hace uso de archivos de imágen que no puede referenciar
+despues de hacer el deploy, por tanto; en la carpeta donde se hace el deploy hay que manualmente crear
+las carpetas 'public' y dentro de esta la carpeta 'images'
+y desntro de images copiar los archivos   ipn-escudo.jpg y LogoDEVReporte.png
+
+
+Ejemplo: el deploy se hizo en ~/pruebasServer/erdd/dist/erdd-1.0.2-SNAPSHOT
+
+├── public
+│   └── images
+│       ├── ipn-escudo.jpg
+│       └── LogoDEVReporte.png
+
+
+
+
+

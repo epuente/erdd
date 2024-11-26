@@ -5,122 +5,184 @@
 @implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) } 
 
 @main{
-<div style="background-color: white; padding: 10px;">
+    <!-- Modal -->
+    <form style="background-color: white;" id="frmModal">
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalTitle"></h4>
+                    </div>
+                    <div class="modal-body" id="modalBody">
+                    </div>
+                    <div class="modal-footer">
+                        <div class="modalPie"> </div>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger" id="btnModalSolCancelacion">Solicitar la cancelación del recurso.</button>
+                        <button type="button" class="btn btn-primary" id="btnModalSolProrroga">Solicitar prórroga.</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div style="background-color: white; padding: 10px;">
 
-	<h3>Todas mis asignaciones</h3>
-	@flashes()
-	<div class="table-responsive">
-		<table class="table table-bordered table-strpped">
-			<thead>
-				<tr>
-					<th>Título</th>
-					<th>Clave control</th>
-					<th>Tipo recurso</th>
-					<th>Fecha límite para evaluar</th>
-					<th>Aspecto / estado</th>
-				</tr>
-			</thead>
-			<tbody>
-				@for(r <- recurso ){
-				<tr>
-					<td><a
-						href="@routes.EvaluacionEvaluadorController.verDetalle(r.id)">
-							@r.titulo </a></td>
-					<td>@r.numcontrol</td>
-					<td>@if(r.clasificacion.tiporecurso !=null){@r.clasificacion.tiporecurso.descripcion}</td>
-					<td>
-					   @r.evaluacionFecha.fechalimite.format("dd/MM/YYYY")
-					   @for(reva<-r.recursoevaluadores){
-					       @for(pr<-reva.prorrogas){
-					           @if(pr.autorizado==true){
-					               <br>@pr.fecha.format("dd/MM/YYYY") prórroga<br>
-					           }
-					       }
-					   }
-					</td>
-					<td>
-						<div style="display: table; width: 100%">
+        <h3>Todas mis asignaciones</h3>
+        @flashes()
+        <div class="table-responsive">
+            <table class="table table-bordered table-stripped">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Clave control</th>
+                        <th>Tipo recurso</th>
+                        <th>Fecha límite para evaluar</th>
+                        <th>Aspecto / estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(r <- recurso ){
+                    <tr>
+                        <td><a
+                            href="@routes.EvaluacionEvaluadorController.verDetalle(r.id)">
+                                @r.titulo </a></td>
+                        <td>@r.numcontrol</td>
+                        <td>@if(r.clasificacion.tiporecurso !=null){@r.clasificacion.tiporecurso.descripcion}</td>
+                        <td>
+                           @r.evaluacionFecha.fechalimite.format("dd/MM/YYYY")
+                           @for(reva<-r.recursoevaluadores){
+                               @for(pr<-reva.prorrogas){
+                                   @if(pr.autorizado==true){
+                                       <br>@pr.fecha.format("dd/MM/YYYY") prórroga<br>
+                                   }
+                               }
+                           }
+                        </td>
+                        <td>
+                            <div style="display: table; width: 100%">
 
-                            @System.out.println("* * * *")
-							@for(re <- r.recursoevaluadores){
-							 <div style="display: table-row;">
-                                <div style="display:table-cell;">@re.aspecto.descripcion</div>
-                                <div style="display:table-cell;">@re.estadoevaluacion.descripcion</div>
-                                <div style="display:table-cell;">
-                                    <!-- // No esta en solicitudes de cancelación ni en cancelados -->
-                                    @if(   r.estado.id != 400 && r.estado.id != 401  && r.estado.id != 402){
-                                        <!-- Esta en tiempo y sin oficio de valoración y sin solicitudes de prórroga y (en estado evaluacion 1 o estado evaluacion 2)-->
-                                        @if(!re.fueraDeTiempo && r.estado.id!=110 && re.prorrogas.isEmpty && (re.estadoevaluacion.id == 1L || re.estadoevaluacion.id == 2L)){
-                                            @if(re.estadoevaluacion.id == 1L){
-                                                @if(re.evaluador.personal.activo.id == 1){
-                                                    Su cuenta esta deshabilitada para evaluar.
-                                                }else{
-                                                    <a class="btn btn-primary btn-block" href="/evCreate?id=@r.id&idAspecto=@re.aspecto.id" role="button">Iniciar evaluación</a>
-                                                }
-                                            }
-                                            @if(re.estadoevaluacion.id == 2L){
-                                                @if(re.evaluador.personal.activo.id == 1){
-                                                    Su cuenta esta deshabilitada para evaluar.
-                                                }else{ 
-                                                    <a class="btn btn-primary btn-block"  href="/evEdit?id=@r.id&idAspecto=@re.aspecto.id" role="button">Continuar evaluación</a>
-                                                }
-                                            }
-                                        }
-                                        <!-- Si esta fuera de tiempo y sin oficio de valoración y sin solicitudes de prórroga -->
-                                        @if(re.fueraDeTiempo && r.estado.id!=110 && re.prorrogas.isEmpty && r.estado.id<10  && re.estadoevaluacion.id<5){
-	                                        @form(CSRF(routes.EvaluacionEvaluadorController.solicitarProrroga(re.id, re.aspecto.id, 10)), 'rol->"form") {   
-	                                            <input type="submit" class="btn btn-warning" value="Solicitar prórroga">
-	                                        }                                        
-                                        }
-                                        <!-- Si esta fuera de tiempo y sin oficio de valoración y con prórroga vencida -->
-                                        @if(re.fueraDeTiempo && r.estado.id!=110 && !re.prorrogas.isEmpty && r.estado.id<10  && re.estadoevaluacion.id<5){
-                                           @form(CSRF(routes.EvaluacionEvaluadorController.solicitarProrroga(re.id, re.aspecto.id, 10)), 'rol->"form") {
-                                                <input type="submit" class="btn btn-warning" value="Solicitar prórroga">
-                                           }
-                                        }
-
-
-                                        @System.out.println(re.fueraDeTiempo+" .  "+r.estado.id+" . "+re.prorrogas.isEmpty)
-                                        <!-- Si no esta fuera de tiempo y sin oficio de valoración y con solicitudes de prórroga sin autorizar-->
-                                        @if(!re.fueraDeTiempo && r.estado.id!=110 && !re.prorrogas.isEmpty){                                        
-                                            @if(re.prorrogas.last.autorizado == false){
-                                                Con solicitud de prórroga pendiente por aceptar
-                                            }
-                                        }
-                                        
-                                        <!-- Si no esta fuera de tiempo y sin oficio de valoración y con solicitudes de prórroga autorizarada-->
-                                        @if(!re.fueraDeTiempo && r.estado.id!=110 && !re.prorrogas.isEmpty){                                        
-                                            @if(re.prorrogas.last.autorizado == true){
-                                                @if(re.estadoevaluacion.id==1L){
+                                @System.out.println("* * * *")
+                                @for(re <- r.recursoevaluadores){
+                                 <div style="display: table-row;">
+                                    <div style="display:table-cell;">@re.aspecto.descripcion</div>
+                                    <div style="display:table-cell;">@re.estadoevaluacion.descripcion</div>
+                                    <div style="display:table-cell;">
+                                        <!-- // No esta en solicitudes de cancelación ni en cancelados -->
+                                        @if(   r.estado.id != 400 && r.estado.id != 401  && r.estado.id != 402){
+                                            <!-- Esta en tiempo y sin oficio de valoración y sin solicitudes de prórroga y (en estado evaluacion 1 o estado evaluacion 2)-->
+                                            @if(!re.fueraDeTiempo && r.estado.id!=110 && re.prorrogas.isEmpty && (re.estadoevaluacion.id == 1L || re.estadoevaluacion.id == 2L)){
+                                                @if(re.estadoevaluacion.id == 1L){
                                                     @if(re.evaluador.personal.activo.id == 1){
                                                         Su cuenta esta deshabilitada para evaluar.
-                                                    }else{ 
+                                                    }else{
                                                         <a class="btn btn-primary btn-block" href="/evCreate?id=@r.id&idAspecto=@re.aspecto.id" role="button">Iniciar evaluación</a>
                                                     }
                                                 }
-                                                @if(re.estadoevaluacion.id==2L){
+                                                @if(re.estadoevaluacion.id == 2L){
                                                     @if(re.evaluador.personal.activo.id == 1){
                                                         Su cuenta esta deshabilitada para evaluar.
-                                                    }else{ 
+                                                    }else{
                                                         <a class="btn btn-primary btn-block"  href="/evEdit?id=@r.id&idAspecto=@re.aspecto.id" role="button">Continuar evaluación</a>
                                                     }
-                                                }                                                    
+                                                }
                                             }
-                                        }                                        
-                                    }
-                                </div>							 
-							 </div>
-							}
-						</div>
-					</td>
-				</tr>
-				}
-			</tbody>
-		</table>
-	</div>
+                                            <!-- Si esta fuera de tiempo y sin oficio de valoración y sin solicitudes de prórroga -->
+                                            @if(re.fueraDeTiempo && r.estado.id!=110 && re.prorrogas.isEmpty && r.estado.id<10  && re.estadoevaluacion.id<5){
+                                                @form(CSRF(routes.EvaluacionEvaluadorController.solicitarProrroga(re.recurso.id, re.aspecto.id, 10)), 'rol->"form") {
+                                                    <input type="button" class="btn btn-warning" value="Solicitar prórroga" data-boton="btnSolPro" data-recurso="@re.recurso.id" data-aspecto="@re.aspecto.id">
+                                                }
+                                            }
+                                            <!-- Si esta fuera de tiempo y sin oficio de valoración y con prórroga vencida -->
+                                            @if(re.fueraDeTiempo && r.estado.id!=110 && !re.prorrogas.isEmpty && r.estado.id<10  && re.estadoevaluacion.id<5){
+                                               @form(CSRF(routes.EvaluacionEvaluadorController.solicitarProrroga(re.id, re.aspecto.id, 10)), 'rol->"form") {
+                                                    <input type="button" class="btn btn-warning" value="Solicitar prórroga" data-boton="btnSolPro">
+                                               }
+                                            }
 
 
-</div>
+                                            @System.out.println(re.fueraDeTiempo+" .  "+r.estado.id+" . "+re.prorrogas.isEmpty)
+                                            <!-- Si no esta fuera de tiempo y sin oficio de valoración y con solicitudes de prórroga sin autorizar-->
+                                            @if(!re.fueraDeTiempo && r.estado.id!=110 && !re.prorrogas.isEmpty){
+                                                @if(re.prorrogas.last.autorizado == false){
+                                                    Con solicitud de prórroga pendiente por aceptar
+                                                }
+                                            }
+
+                                            <!-- Si no esta fuera de tiempo y sin oficio de valoración y con solicitudes de prórroga autorizarada-->
+                                            @if(!re.fueraDeTiempo && r.estado.id!=110 && !re.prorrogas.isEmpty){
+                                                @if(re.prorrogas.last.autorizado == true){
+                                                    @if(re.estadoevaluacion.id==1L){
+                                                        @if(re.evaluador.personal.activo.id == 1){
+                                                            Su cuenta esta deshabilitada para evaluar.
+                                                        }else{
+                                                            <a class="btn btn-primary btn-block" href="/evCreate?id=@r.id&idAspecto=@re.aspecto.id" role="button">Iniciar evaluación</a>
+                                                        }
+                                                    }
+                                                    @if(re.estadoevaluacion.id==2L){
+                                                        @if(re.evaluador.personal.activo.id == 1){
+                                                            Su cuenta esta deshabilitada para evaluar.
+                                                        }else{
+                                                            <a class="btn btn-primary btn-block"  href="/evEdit?id=@r.id&idAspecto=@re.aspecto.id" role="button">Continuar evaluación</a>
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                 </div>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+    <script>
+        $("[data-boton='btnSolPro']").click(function(){
+            // Abrir modal
+            $("#myModalTitle").html("Solicitud de prórroga");
+            $("#modalBody").html("<table class='table'><tr><td>Número de días adicionales</td><td><input type='text' name='ndias' id='ndias' size='3' class='form-control' required></td></tr></table>");
+            $("#btnModalSolCancelacion").hide();
+
+            $("#btnModalSolProrroga").attr("data-recurso",  $(this).data("recurso")  );
+            $("#btnModalSolProrroga").attr("data-aspecto",  $(this).data("aspecto")  );
+
+            $("#btnModalSolProrroga").show();
+            $("#myModal").modal('show');
+        });
+
+
+        $(document).off("click", "#btnModalSolProrroga");
+        $(document).on("click",  "#btnModalSolProrroga", function(){
+            var x = jsRoutes.controllers.EvaluacionEvaluadorController.solicitarProrroga();
+            var ruta = x.url.substr(0, x.url.substr(1).indexOf("/")+1);
+            var idRecurso = $(this).data("recurso");
+            var idAspecto = $(this).data("aspecto");
+            var nDias = $("#ndias").val();
+            console.log("........."+ruta+"/"+idRecurso+"/"+idAspecto+"/"+nDias)
+            $("#frmModal").attr("action", ruta+"/"+idRecurso+"/"+idAspecto+"/"+nDias);
+            $("#frmModal").attr("method","POST");
+            $("#frmModal").append('@CSRF.formField');
+            $("#frmModal").submit();
+
+            @*
+            console.log(ruta+"/@re.recurso.id/@re.aspecto.id/"+aux)
+            $("#frmModal").attr("action", ruta+"/@re.recurso.id/@re.aspecto.id/"+aux);
+            $("#frmModal").attr("method","POST");
+
+            $("#frmModal").append('@CSRF.formField');
+
+            $("#frmModal").submit();
+            *@
+
+        });
+    </script>
 }
 
 

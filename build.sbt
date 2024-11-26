@@ -2,7 +2,7 @@ import sbt.compiler.ComponentCompiler.javaVersion
 
 name := """erdd"""
 
-version := "0.0.1-SNAPSHOT"
+version := "1.0.2-SNAPSHOT"
 
 scalaVersion := "2.11.4"
 
@@ -39,7 +39,7 @@ libraryDependencies += filters
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
-play.PlayImport.PlayKeys.playDefaultPort := 8080
+play.PlayImport.PlayKeys.playDefaultPort := 80
 
 
 

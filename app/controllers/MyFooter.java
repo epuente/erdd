@@ -44,10 +44,13 @@ public class MyFooter implements PdfPageEvent {
 	public void onEndPage(PdfWriter writer, Document document) {
         PdfContentByte cb = writer.getDirectContent();
 
+
+
         Image imgUPEV = null;
 		try {
 			imgUPEV = Image.getInstance("public/images/LogoDEVReporte.png");
 		} catch (BadElementException | IOException  e) {
+            System.out.println("(controllers.MyFooter.java) Error con el archivo public/images/LogoDEVReporte.png");
 			e.printStackTrace();
 		}
 
@@ -56,10 +59,13 @@ public class MyFooter implements PdfPageEvent {
 			escudoPoli = Image.getInstance(    "public/images/escudoPoli.png");
 			//escudoPoli = Image.getInstance(    routes.Assets.at("/public/images/escudoPoli.png").toString());
 		} catch (BadElementException e1) {
+            System.out.println("(controllers.MyFooter.java) Error con el archivo public/images/escudoPoli.png");
 			e1.printStackTrace();
 		} catch (MalformedURLException e1) {
+            System.out.println("(controllers.MyFooter.java) Error MalformedURLException");
 			e1.printStackTrace();
 		} catch (IOException e1) {
+            System.out.println("(controllers.MyFooter.java) Error IOException (linea 68)");
 			e1.printStackTrace();
 		}
 
@@ -67,10 +73,13 @@ public class MyFooter implements PdfPageEvent {
 			escudoPoli = Image.getInstance("public/images/ipn-escudo.jpg");
 			//escudoPoli = Image.getInstance(routes.Assets.at("public/images/ipn-escudo.jpg").toString());
 		} catch (BadElementException e) {
+            System.out.println("(controllers.MyFooter.java) Error BadElementException");
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
+            System.out.println("(controllers.MyFooter.java) Error MalformedURLException");
             System.out.println("Error -- "+e.getMessage()+"\n"+e.getCause());
         } catch (IOException ioe) {
+            System.out.println("(controllers.MyFooter.java) Error IOException (linea 82)");
             System.out.println("Error -- "+ioe.getMessage()+"\n"+ioe.getCause());
 		}
         assert escudoPoli != null;
@@ -78,7 +87,7 @@ public class MyFooter implements PdfPageEvent {
         assert imgUPEV != null;
         imgUPEV.scaleToFit(80, 52);
 		//doc.add(imgUPEV);        
-        
+
         
         PdfPTable tablaEnc = new PdfPTable(new float[]{ 1, 3, 1 });		        
         tablaEnc.setWidthPercentage(100);
@@ -154,7 +163,7 @@ public class MyFooter implements PdfPageEvent {
                 try {
                     watermark_image = Image.getInstance("public/images/watermark3.jpg");
                 } catch (BadElementException | IOException e) {
-                    System.out.println("Error Excepción de basd element-- " + e.getMessage() + "\n" + e.getCause());
+                    System.out.println("Error Excepción de bad element-- " + e.getMessage() + "\n" + e.getCause());
                 }
                 assert watermark_image != null;
                 watermark_image.setAbsolutePosition(0, 100);

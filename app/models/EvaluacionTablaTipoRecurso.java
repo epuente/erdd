@@ -39,11 +39,6 @@ public class EvaluacionTablaTipoRecurso extends Model{
 	@ManyToOne
 	public ClasificadorCriterio3Ejemplo criterio3ejemplo;
 	*/
-	
-	
-	
-	
-	
 
 	
 	@ManyToOne

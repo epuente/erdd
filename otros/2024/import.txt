@@ -7,5 +7,9 @@ CREA INSERTS
 mysqldump -u erdd -p erdd --ignore-table=erdd.play_evolutions --no-tablespaces --complete-insert --no-create-db --no-create-info  --routines=false --skip-triggers > ~/dumps/erdd_inserts_20240325.sql
 
 
+Para cambiar de erdd_test2 a erdd_test4
+sed -i 's/erdd_test2/erdd_test4/g' ~/dumps/erdd_test2_soloInserts_20241125.sql
+
+
 SE RESTAURA CON
-mysql -u erdd -p erdd_dev < ~/dumps/erdd_inserts_20240325.sql
+mysql -u erdd -p erdd_test4 < ~/dumps/erdd_test2_soloInserts_20241125.sql

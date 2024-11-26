@@ -30,7 +30,7 @@ else
     git branch -M main
     git add *
     git commit -m "$1"
-    if  [[ -z $(git remote) ]]; then
+    if [[ -z $(git remote) ]]; then
       git remote add origin https://github.com/epuente/erdd.git
     fi
     git push
