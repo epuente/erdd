@@ -49,8 +49,11 @@ public class Recurso extends Model {
 	@Constraints.Required
     @ManyToOne
     public Unidadacademica unidadacademica;
-    
-    
+
+
+    @ManyToOne
+    public CoberturaContenido coberturacontenido;
+
     @ManyToOne
     public AlcanceCurricular alcancecurricular;
     
@@ -66,7 +69,12 @@ public class Recurso extends Model {
     @NotNull
     @Constraints.Required
     @Size(max=80)
-    public String programaacad;    
+    public String programaacad;
+
+    @NotNull
+    @Constraints.Required
+    @Size(max=80)
+    public String unidadaprendizaje;
     
     @NotNull
 	@Constraints.Required

@@ -26,9 +26,12 @@
 			</td>			
 		</tr>
 		<tr>
-			<td colspan="3>
-				<div class="etiqueta">Programa Académico:</div><div class="contenido">@recurso.programaacad</div>
-			</td>	
+			<td>
+				<div class="etiqueta">Programa Académico/Carrera:</div><div class="contenido">@recurso.programaacad</div>
+			</td>
+            <td colspan="2">
+                <div class="etiqueta">Unidad de Aprendizaje:</div><div class="contenido">@recurso.unidadaprendizaje</div>
+            </td>
 			<td>
 				<div class="etiqueta">Modalidad</div><div class="contenido">@{ if (recurso.modalidad != null)recurso.modalidad.descripcion}</div>
 			</td>
@@ -39,9 +42,9 @@
 			</td>
 			
 			<td>
-				<div class="etiqueta">Alcance Curricular</div>
-				<div class="contenido">@if(recurso.alcancecurricular!=null){
-					 	 @recurso.alcancecurricular.descripcion@if(recurso.alcancecurricular.id ==99){: @recurso.alcancecurricularotro}
+				<div class="etiqueta">Cobertura de contenidos</div>
+				<div class="contenido">@if(recurso.coberturacontenido!=null){
+					 	 @recurso.coberturacontenido.descripcion
 					  }
 				</div>
 			</td>
@@ -87,26 +90,6 @@
 			<td colspan="6">
 				<div class="etiqueta">Sinópsis</div><div class="contenido">@recurso.sinopsis</div>
 			</td>		
-		</tr>
-		<tr>
-			<td colspan=6>
-				<table class="table table-bordered tablaReporte" id="tablaPalabras">
-					<thead>
-						<tr>
-							<td  colspan=5 class="etiqueta">Palabras clave</td>
-						</tr>	
-					</thead>			
-					<tbody>
-						<tr>
-							@for(pc <- recurso.palabrasclave) {
-								<td>
-									<div class="contenido">@pc.descripcion</div>
-								</td>				
-							}
-						</tr>
-					</tbody>
-				</table>
-			</td>
 		</tr>
 		<tr>
 			<td colspan=6>

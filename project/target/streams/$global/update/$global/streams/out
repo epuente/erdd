@@ -1,4 +1,4 @@
-[info] Updating {file:/home/eduardo/playFramework/erdd202411/project/}erdd202411-build...
+[info] Updating {file:/home/eduardo/erddTempo3/erdd202411/project/}erdd202411-build...
 [debug] :: resolving dependencies :: default#erdd202411-build;0.1-SNAPSHOT
 [debug] 	confs: [compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool]
 [debug] 	validate = true
@@ -15480,19 +15480,19 @@
 [debug] 	[NOT REQUIRED] org.scala-sbt#apply-macro;0.13.7!apply-macro.jar
 [debug] 	[NOT REQUIRED] org.scala-lang#jline;2.10.4!jline.jar
 [debug] 	[NOT REQUIRED] org.fusesource.jansi#jansi;1.4!jansi.jar
-[debug] :: resolution report :: resolve 5818ms :: artifacts dl 57ms
-[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT compile produced in /home/eduardo/playFramework/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-compile.xml
-[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT runtime produced in /home/eduardo/playFramework/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-runtime.xml
-[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT test produced in /home/eduardo/playFramework/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-test.xml
-[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT provided produced in /home/eduardo/playFramework/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-provided.xml
-[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT optional produced in /home/eduardo/playFramework/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-optional.xml
-[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT compile-internal produced in /home/eduardo/playFramework/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-compile-internal.xml
-[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT runtime-internal produced in /home/eduardo/playFramework/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-runtime-internal.xml
-[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT test-internal produced in /home/eduardo/playFramework/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-test-internal.xml
-[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT plugin produced in /home/eduardo/playFramework/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-plugin.xml
-[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT sources produced in /home/eduardo/playFramework/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-sources.xml
-[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT docs produced in /home/eduardo/playFramework/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-docs.xml
-[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT pom produced in /home/eduardo/playFramework/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-pom.xml
-[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT scala-tool produced in /home/eduardo/playFramework/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-scala-tool.xml
-[debug] 	resolve done (5818ms resolve - 57ms download)
+[debug] :: resolution report :: resolve 5318ms :: artifacts dl 79ms
+[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT compile produced in /home/eduardo/erddTempo3/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-compile.xml
+[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT runtime produced in /home/eduardo/erddTempo3/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-runtime.xml
+[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT test produced in /home/eduardo/erddTempo3/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-test.xml
+[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT provided produced in /home/eduardo/erddTempo3/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-provided.xml
+[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT optional produced in /home/eduardo/erddTempo3/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-optional.xml
+[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT compile-internal produced in /home/eduardo/erddTempo3/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-compile-internal.xml
+[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT runtime-internal produced in /home/eduardo/erddTempo3/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-runtime-internal.xml
+[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT test-internal produced in /home/eduardo/erddTempo3/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-test-internal.xml
+[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT plugin produced in /home/eduardo/erddTempo3/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-plugin.xml
+[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT sources produced in /home/eduardo/erddTempo3/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-sources.xml
+[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT docs produced in /home/eduardo/erddTempo3/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-docs.xml
+[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT pom produced in /home/eduardo/erddTempo3/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-pom.xml
+[debug] 	report for default#erdd202411-build;0.1-SNAPSHOT scala-tool produced in /home/eduardo/erddTempo3/erdd202411/project/target/resolution-cache/reports/default-erdd202411-build-scala-tool.xml
+[debug] 	resolve done (5318ms resolve - 79ms download)
 [info] Done updating.

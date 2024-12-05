@@ -72,7 +72,8 @@
 	}	
 	
 	
-	var preValidar = function(){		
+	var preValidar = function(){
+	    alert("Desde recursos.js prevalidar");
 		$("#divNumControl").removeClass("error");
 		if (  ($('#niveleducativo_id').val()).length == 0  ){	
 			$('#campo_niveleducativo').find(".clearfix").addClass("error");
@@ -139,15 +140,14 @@
 	}
 	
 
-	
-	function requeridos2(){
-		console.log("entrando en requeridos2")
+    function requeridos2(){
+		console.log("entrando en requeridos2...................")
 		var errores = 0;
 		var valor;
 		var mensajesError = "";
 		$(".clearfix").removeClass("error");
 		$( ".requerido" ).each(function( i, e ) {
-			var idcampo = e.id.substring(3);			
+			var idcampo = e.id.substring(3);
 			var campo = $("#"+idcampo);
 			if (campo.prop('class') == 'buttonset'){
 				idcampo = idcampo.substring(0, idcampo.length-3 );
@@ -155,47 +155,40 @@
 			} else
 				valor = campo.val();
 			if (valor==0 || valor == undefined){
-				$(e).find(".clearfix").addClass("error");			
+				$(e).find(".clearfix").addClass("error");
 				mensajesError+="";
 			} else
 				$(e).find(".clearfix").removeClass("error");
-		});	
-		
+		});
+
+		// Valida Título
+		alert($("#titulo").val())
+		alert(!$("#titulo").val())
+
+		mensajesError += !$("#titulo").val()?"Escriba el título del recurso.<br>":"";
+		mensajesError += !$("#niveleducativo_id").val()?"Seleccione un nivel educativo.<br>":"";
+		mensajesError += !$("#areaconocimiento_id").val()?"Seleccione el área de conocimiento.<br>":"";
+		mensajesError += !$("#unidadacademica_id").val()?"Seleccione la unidad académica.<br>":"";
+		mensajesError += !$("#programaacad").val()?"Escriba el programa académico / carrera.<br>":"";
+		mensajesError += !$("#unidadaprendizaje").val()?"Escriba la unidad de aprendizaje.<br>":"";
+
+
+
 		//Valida que se seleccione modalidad
 		if ($("input[name='modalidad.id']:checked").length ==0){
-			mensajesError = mensajesError + "Debe especificarse la modalidad.<br>";
+			mensajesError += "Debe especificarse la modalidad.<br>";
 		} else {
 			$("#reqmodalidad_id").find(".clearfix").removeClass("error");
-		}		
-		
-		
+		}
+
+
 		//A quien va dirigido?
 		if( $("input[type='checkbox'][name='dirigidoa.id[]']:checked").length == 0){
 			$("#dirigidoa_id_1").closest(".form-group").addClass("error");
 			mensajesError+="Indique a quién va dirigido el recurso.<br>";
-		}		
-		
-		// Tablas relacionadas Palabras
-		if ($('#tablaPalabras').find('tbody').find('tr').length < 5 ){
-			$('#tablaPalabras').parent().addClass("error");
-			mensajesError+="Se requieren al menos 5 palabras clave.<br>";
-		} else{
-			$('#tablaPalabras').parent().removeClass("error");
 		}
-		//Revisar que las palabras no sean nulas
-		pnulas = 0;	
-		$("input[name*='palabra.descripcion']").each(function(i,e){
-			if (!e.value){
-				pnulas++;
-			}
-		});
-		if (pnulas!=0){
-			$('#tablaPalabras').parent().addClass("error");
-			mensajesError+="Hay "+pnulas+" palabras clave vacias.<br>";
-		} else
-			$('#tablaPalabras').parent().removeClass("error");
-				
-		
+
+
 		// Tablas relacionadas Autores
 		if ($('#tableAutor div.row').length < 1 ){
 			$('#tableAutor').addClass("clearfix error");
@@ -220,7 +213,7 @@
 						mensajesError+="Falta el nombre del autor.<br>";
 					} else {
 						$("[name='autor.nombre"+num+"']").parent().removeClass("error").removeClass("has-error");
-					}				
+					}
 					if ( $("[name='autor.paterno"+num+"']").val().length==0  ){
 						$("[name='autor.paterno"+num+"']").parent().removeClass("has-success").addClass("has-error");
 						$("[name='autor.paterno"+num+"']").attr("readonly",false);
@@ -238,7 +231,7 @@
 						mensajesError+="Falta el apellido materno del autor.<br>";
 					} else {
 						$("[name='autor.materno"+num+"']").parent().removeClass("error").removeClass("has-error");
-					}					
+					}
 				} else {
 					$("[name='autor.autorfuncion"+num+"']").parent().removeClass("error");
 					// Revisa que por lo menos este seleccionado el autor de contenidos responsable
@@ -253,8 +246,8 @@
 							mensajesError+="El autor responsable debe proporcionar su nombre.<br>";
 						} else {
 							$("[name='autor.nombre"+num+"']").parent().removeClass("error").removeClass("has-error");
-						}	
-						
+						}
+
 						if ( $("[name='autor.paterno"+num+"']").val().length==0  ){
 							$("[name='autor.paterno"+num+"']").parent().removeClass("has-success").addClass("has-error");
 							$("[name='autor.paterno"+num+"']").attr("readonly",false);
@@ -272,26 +265,26 @@
 							mensajesError+="El autor responsable debe proporcionar su apellido materno.<br>";
 						} else {
 							$("[name='autor.materno"+num+"']").parent().removeClass("error").removeClass("has-error")
-						}						
+						}
 						if ($("[name='autor.correo0']").val().length==0  ){
 							$("[name='autor.correo0']").parent().removeClass("has-success").addClass("has-error");
 							$("[name='autor.correo0']").attr("readonly",false);
 							$("[name='autor.correo0']").prop("disabled",false);
 							$("[name='autor.correo0']").parent().addClass("error");
 							mensajesError+="El autor responsable debe proporcionar su email.<br>";
-						} else {							
+						} else {
 							// Verificar que se cumpla con el formato de email
 							if ( $("#correo0ClassWithErrors ul li").html() == undefined ){
 								$("[name='autor.correo0']").parent().removeClass("error").removeClass("has-error")
 							} else {
-							
+
 								//if ($( "#correo0ClassWithErrors ul li").html().length != 0 ){
 									$("[name='autor.correo0']").parent().addClass("error");
 									mensajesError+="El correo del autor debe corresponder al formato de email.<br>";
-								//}			
+								//}
 							}
 						}
-						
+
 						if ($("[name='autor.telefono0']").val().length==0  ){
 							$("[name='autor.telefono0']").parent().removeClass("has-success").addClass("has-error");
 							$("[name='autor.telefono0']").attr("readonly",false);
@@ -301,11 +294,11 @@
 						} else{
 							// Verificar que se cumpla con el formato de teléfono
 							if ($( "#telefono0ClassWithErrors ul li").html() == undefined ){
-								$("[name='autor.telefono0']").parent().removeClass("error").removeClass("has-error")		
+								$("[name='autor.telefono0']").parent().removeClass("error").removeClass("has-error")
 							} else {
 								$("[name='autor.telefono0']").parent().addClass("error");
-								mensajesError+="El teléfono del autor debe contener 5 o 10 dígitos.<br>";								
-							}						
+								mensajesError+="El teléfono del autor debe contener 5 o 10 dígitos.<br>";
+							}
 						}
 					} else {
 						if ( $("[name='autor.nombre"+num+"']").val().length==0  ){
@@ -315,35 +308,35 @@
 							mensajesError+="Falta el nombre del autor.<br>";
 						} else {
 							$("[name='autor.nombre"+num+"']").parent().removeClass("has-error").removeClass("error");
-						}				
+						}
 						if ( $("[name='autor.paterno"+num+"']").val().length==0  ){
 							$("[name='autor.paterno"+num+"']").parent().removeClass("has-success").addClass("has-error");
 							$("[name='autor.patern["+num+"']").attr("readonly",false);
 							$("[name='autor.paterno"+num+"']").prop("disabled",false);
 							mensajesError+="Falta el apellido del autor.<br>";
-						}		
+						}
 						if ($(this).val() == 9){
-							var num =        $(this).attr("name").substring("autor.autorfuncion".length);	
+							var num =        $(this).attr("name").substring("autor.autorfuncion".length);
 							if (  $("[name='autor.otroTipoAutoria"+num+"']").val().length==0 ){
 								$("[name='autor.otroTipoAutoria"+num+"']").parent().addClass("error");
 								mensajesError+="Falta especificar el otro tipo de autoría.<br>";
 							} else
 								$("[name='autor.otroTipoAutoria"+num+"']").parent().removeClass("error");
-						}						
+						}
 					}
 				}
 			});
 			if (autorResponsable == 0){
-				$('#tablaAutores').parent().addClass("error");				
+				$('#tablaAutores').parent().addClass("error");
 				mensajesError+="Debe especificar al autor responsable.<br>";
 			} else
 				$('#tablaAutores').parent().removeClass("error");
 		}
-		
+
 		// Tablas Relacionadas: Documentos
 
-		$("div[id*='na']").each(function(){			
-			if ( $(this).html().length == 0  ){				
+		$("div[id*='na']").each(function(){
+			if ( $(this).html().length == 0  ){
 				$(this).parent().addClass("error");
 				mensajesError+="No ha agregado archivo.<br>";
 			} else
@@ -355,16 +348,16 @@
 				if ($(this).val().length == 0){
 					$(this).parent().addClass("error");
 					mensajesError+="Debe especificar el tipo de documento.<br>";
-				} else 
+				} else
 					$(this).parent().removeClass("error");
 			}
 		});
-		
+
 		//Se deben incluir tipoarchivo 6, 3, 2, 4, 5
 
 		console.log($("select[name^='documento.tipodocumento'] option:selected").length)
 		var tipos = [];
-		
+
 		$("select[name^='documento.tipodocumento'] option:selected").each(function(e){
 			//console.log("...", $(this).val() )
 			tipos.push($(this).val());
@@ -372,11 +365,11 @@
 
 		var tiposObligatorios = ["2","3","4","5","6"];
 		//arrayContainsArray busca en 'tipos' que tenga todos los elementos de 'tiposObligatorios'
-		var correcto = arrayContainsArray(tipos, tiposObligatorios); 
-		
+		var correcto = arrayContainsArray(tipos, tiposObligatorios);
+
 		console.log("correcto: ",correcto)
-		
-		
+
+
 		if (correcto==false){
 			console.log("HAY ERRORES EN LOS DOCUMENTOS")
 			mensajesError+="Debe incluir los tipos de documentos obligatorios.<br>";
@@ -387,22 +380,28 @@
 			$(".row .tablaIndicacionesDoctos2").css("color","black");
 			$('.row .tablaIndicacionesDoctos2').removeClass("error");
 		}
-		
-		
+
+
+		//return false;
+
+
+
+
 		if (   $("div[id*='na']:empty").length !=0  )
 			mensajesError+="Debe agregar al menos un archivo.<br>";
-		
-		//Si se opta por otro formato de entrega, especificar cual	
-		if ( formatoentrega_id_3.checked ){		
+
+		//Si se opta por otro formato de entrega, especificar cual
+		/*
+		if ( formatoentrega_id_3.checked ){
 			if (!$('#formatoentregaotro').val()){
 				$('#formatoentregaotro').parent().parent().addClass("error");
 				mensajesError+="Debe indicar cual es el tipo de formato de entrega.<br>";
 			} else
 				$('#formatoentregaotro').parent().parent().removeClass("error");
 		}
-		
+        */
 
-		
+
 		//Si se opta por otro alcance curricular, especificar cual
         if ( $("#alcancecurricular_id option:selected").val() == 99 ){
             if (!$('#alcancecurricularotro').val()){
@@ -411,25 +410,25 @@
             } else
                 $('#alcancecurricularotro').parent().parent().removeClass("error");
         }
-		
 
-		// Verificar que la fecha de elaboración sea menor a la fecha actual		
+
+		// Verificar que la fecha de elaboración sea menor a la fecha actual
 		if (validaFechaElaboracion(  $('#elaboracion').val()  ) == false){
 			$('#elaboracion').parent().parent().addClass("error");
 			mensajesError+="La fecha de elaboración del recurso debe ser anterior a la fecha de hoy.<br>";
 		}
 
-		
+
 		//Valida el campo de la versión anterior (si aplica)
 		if ( $("#version_id_2").is(':checked'))
 		{
 			if ( $("input[type='radio'][name='extra1']:checked").length==0 ){
 				$("#divVersion").find(".form-group").addClass("error");
-				mensajesError+="Especifique si recuerda la clave de control del recurso que va a actualizar.<br>";		
-			} else {			
+				mensajesError+="Especifique si recuerda la clave de control del recurso que va a actualizar.<br>";
+			} else {
 				if (  $("#extra1_S").is(":checked")) {
 					if ($("#versionanterior_recursoanterior_id").val().length == 0  ){
-				
+
 						$("#divNumControl").addClass("error");
 						mensajesError+="Escriba la clave de control de la evaluación que se esta actualizando.<br>";
 					} else {
@@ -440,21 +439,33 @@
 					}
 				}
 				if ( $("#extra1_N").is(":checked")){
-					$("#versionanterior_recursoanterior_id").val(""); 
+					$("#versionanterior_recursoanterior_id").val("");
 				}
 			}
 		}
-		
-		// VAlida que no se sobrepase 600 caracteres la sinopsis
-		if ($("#sinopsis").val().length >= 600){
+
+        //  Valida que se haya escrito una sinópsis
+        if (!$("#sinopsis").val()){
+            mensajesError += "Debe escribir La sinopsis del recurso.<br>";
+        }
+
+		// VAlida que no se sobrepase 1200 caracteres la sinopsis
+		if ($("#sinopsis").val().length >= 1200){
 			$("#sinopsis").parent().find(".help-block").html('<ul class="list-unstyled"><li>Este campo ha excedido los 600 caracteres</li></ul>');
 			$("#sinopsis").parent().parent().addClass("has-error");
-			$("#sinopsis").parent().parent().addClass("error");	
-			mensajesError = mensajesError + "La sinopsis no debe exceder los 600 caracteres.<br>";
+			$("#sinopsis").parent().parent().addClass("error");
+			mensajesError = mensajesError + "La sinopsis no debe exceder los 1000 caracteres.<br>";
 		}
         console.log("   mensajesError: ",mensajesError);
+        alert("   mensajesError: "+mensajesError);
 		return mensajesError;
-	}	
+	}
+
+
+
+
+
+
 	
 	
 	
