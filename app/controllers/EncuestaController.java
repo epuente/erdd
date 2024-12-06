@@ -101,8 +101,8 @@ System.out.println("id "+idEnc);
 						
 			
 			try {
-				//mc.enviar();
-				mc.run();
+				mc.enviar();
+				//mc.run();
 			} catch (Exception e) {
 				System.out.println("Ocurrio un error: "+e);
 				e.printStackTrace();
@@ -147,7 +147,8 @@ System.out.println("id "+idEnc);
 	
 	public static void enviarOficioValoracion(OficioValoracion ofv){
 		RecursoAutor responsable = ofv.recurso.getResponsable();
-		miCorreo2 mc = new miCorreo2();
+		//miCorreo2 mc = new miCorreo2();
+        miCorreo mc = new miCorreo();
 		mc.asunto = "Oficio de valoración del recurso "+ofv.recurso.titulo;
 		mc.mensaje = "Estimado(a)"+ responsable.nombreCompleto() +", le agradecemos la encuesta que contestó, para nosotros es iportante .......\nLe enviamos el oficio de valoración ........";
 		
@@ -168,13 +169,11 @@ System.out.println("id "+idEnc);
 		
 		try {
 			//mc.enviar();
-			mc.run();
+			mc.enviar();
 			
 			// Enviar notificacion al celular
 	    	Notificacion n = new Notificacion();
-	    	n.enviar(ofv.recurso.numcontrol, "ERDD", mc.mensaje);        
-			
-			
+	    	n.enviar(ofv.recurso.numcontrol, "ERDD", mc.mensaje);
 		} catch (Exception e) {
 			System.out.println("Ocurrio un error: "+e);
 			e.printStackTrace();

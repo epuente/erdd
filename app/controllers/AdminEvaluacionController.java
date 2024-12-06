@@ -153,7 +153,8 @@ System.out.println("numObserva:  "+numObserva);
 					listaDirecciones.add(a.correo.email); 
 				}
 			}
-			miCorreo2 mc = new miCorreo2();
+			//miCorreo2 mc = new miCorreo2();
+            miCorreo mc = new miCorreo();
 	        mc.asunto = "Evaluación del recurso "+r.titulo+" completada satisfactoriamente";
 	        mc.para = listaDirecciones;
 			mc.mensaje = "Apreciable docente:\n\n";
@@ -175,7 +176,7 @@ System.out.println("numObserva:  "+numObserva);
 	        mc.adjuntos = Collections.singletonList(mipdf.baos);
 	        mc.nombresAdjuntos = Collections.singletonList("Reporte de Evaluación Técnico Pedagógica del recurso " + r.numcontrol);
 			//mc.enviar();
-	        mc.run();
+	        mc.enviar();
 			
 			// Enviar notificacion al celular 
 	    	Notificacion n = new Notificacion();
@@ -195,8 +196,8 @@ System.out.println("numObserva:  "+numObserva);
 			}
 			Calendar cal = Calendar.getInstance();
 			mc.mensaje+="<br><br><br>"+cal.get(Calendar.DAY_OF_MONTH)+" de "+months[cal.get(Calendar.MONTH)]+" de "+cal.get(Calendar.YEAR)+", " + cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)+".";
-	        //mc.enviar();
-			mc.run();
+	        mc.enviar();
+			//mc.run();
 	        
 			// Enviar notificacion al celular 
 	    	Notificacion n = new Notificacion();

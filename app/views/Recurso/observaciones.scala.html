@@ -110,11 +110,11 @@ recurso: Recurso)
 		
 		
 		//Fecha elaboracion
-	//	var fe ="@recursoForm.field("elaboracion").value()"; 
+		var fe ="@recursoForm.field("elaboracion").value()";
 		
 		
 		//console.log("fe:"+fe)
-		//$('#elaboracion').datepicker('update', moment(fe,"YYYY-MM-DD").format("DD/MM/YYYY")  );			
+		//$('#elaboracion').datepicker('update', moment(fe,"YYYY-MM-DD").format("DD/MM/YYYY")  );
 		
 		$("[name*='observacion_']").keyup();
 	
@@ -242,11 +242,7 @@ recurso: Recurso)
 				} 
 			}	
 				
-			if (formatoentrega_id_3 != null)
-				if (formatoentrega_id_3.checked == false)
-					$('#formatoentregaotro').parent().hide();
-				else
-					$('#formatoentregaotro').parent().show();
+
 				
 			$("#ligaAgregarOtroAutor, #btnQuitarAutor").hide();	
 			
@@ -425,12 +421,7 @@ recurso: Recurso)
 				} 
 			}	
 			
-			// Formato	
-			if (formatoentrega_id_3.checked == false)
-				$('#formatoentregaotro').parent().hide();
-			else
-				$('#formatoentregaotro').parent().show();
-			
+
 
 			@if(recurso.versionanterior == null ){				
 			} else {

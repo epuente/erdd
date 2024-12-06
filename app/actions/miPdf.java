@@ -318,10 +318,7 @@ doc.add(tabla6);
 	        } else {
 	        	celda.setPhrase(new Phrase("  ", fontCuerpo));
 	        }
-	        if ( (r.formatoentrega.id == 3 && f.id == r.formatoentrega.id) && (!r.formatoentregaotro.isEmpty())){
-	        	celda.setPhrase(new Phrase("X  "+r.formatoentregaotro, fontCuerpo));
-	        	celda.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        }
+
 	        celda.setColspan(1);
 	        tablaFe.addCell(celda);
         	celda.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -764,7 +761,7 @@ doc.add(tabla13);
 	        	celda.setColspan(1);	tabla.addCell(celda);			        	
 	        }
 
-
+            /*
 	        PdfPTable tablaPC = new PdfPTable(5);		        
 	        tablaPC.setSpacingBefore(20);
 	        tablaPC.setWidthPercentage(100);		        
@@ -780,6 +777,8 @@ doc.add(tabla13);
 	        }		        
 	        celda.setBorderColor(BaseColor.LIGHT_GRAY);
 	        tablaPC.completeRow();
+
+             */
 	        
 	        PdfPTable tablaAut = new PdfPTable(6);	
 	        tablaAut.setWidthPercentage(100);
@@ -859,7 +858,7 @@ doc.add(tabla13);
 	        
 	        
 	        doc.add(tabla);
-	        doc.add(tablaPC);
+	        //doc.add(tablaPC);
 	        doc.add(tablaAut);
 	        doc.add(tablaOa);
 	        

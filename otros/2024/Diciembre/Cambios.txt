@@ -1,0 +1,19 @@
+
+sudo mysql -u root -p
+
+CREATE DATABASE erdd_test5 DEFAULT CHARACTER SET latin1;
+grant all on erdd_test5.* to erdd@localhost;
+grant super on *.* to erdd@localhost;
+
+Se exporta con:
+mysqldump -u erdd -p erdd_test4 --ignore-table=erdd_dev.play_evolutions  --routines=true --no-tablespaces > ~/dumps/erdd_test4_completo_20241206.sql
+
+
+Si el export anterior hace referencia a erdd_test4, cambiarlo por erdd_test5 con:
+sed -i 's/erdd_test4/erdd_test5/g' ~/dumps/erdd_test4_completo_20241205.sql
+
+Se importa con:
+mysql -u erdd -p erdd_test5 < ~/dumps/erdd_test4_completo_20241205.sql
+
+
+

@@ -96,8 +96,8 @@ public class EvaluadorController extends ControladorSeguro{
         mc.mensaje+=losAspectos;
         mc.mensaje+="<br>";
         mc.mensaje+="Ingrese a la dirección https://"+urlSitio+"/login para conocer las solicitudes que le fueron asignadas para evaluar." ;
-       // mc.enviar();
-        mc.run();
+        mc.enviar();
+        //mc.run();
         
         
 		// Enviar notificacion al celular del coordinador (administrador e2) que el administrador (e1) dio de alta a un evaluador.
@@ -207,8 +207,8 @@ public class EvaluadorController extends ControladorSeguro{
 	        	mc.mensaje+="Esto significa que su cuenta al sistema como evaluador se encuentra activa y que podrá evaluar recursos.";
         	}        	
         }
-        //mc.enviar();
-        mc.run();
+        mc.enviar();
+        //mc.run();
 		return GO_HOME;    	
     } 
  

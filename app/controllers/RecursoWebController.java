@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import actions.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,9 +23,6 @@ import com.avaje.ebean.text.json.JsonContext;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.itextpdf.text.DocumentException;
 
-import actions.Notificacion;
-import actions.miCorreo;
-import actions.miPdf;
 import akka.actor.ActorRef;
 import akka.actor.Cancellable;
 import akka.actor.Props;
@@ -55,7 +53,6 @@ import play.data.Form;
 import play.libs.Akka;
 import play.libs.F.Callback0;
 import play.libs.Json;
-import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
 import scala.concurrent.duration.Duration;
@@ -68,6 +65,11 @@ import views.html.Recurso.observaciones;
 import views.html.Recurso.editMasterForm;
 import views.html.Recurso.recibidoMaster;
 import views.html.Recurso.actualizadoMaster;
+
+import javax.mail.*;
+import javax.mail.internet.*;
+import java.util.Properties;
+import java.util.stream.Collectors;
 
 public class RecursoWebController extends ControladorDefault{
 
@@ -221,6 +223,7 @@ public class RecursoWebController extends ControladorDefault{
 		}
 
 		System.out.println("***  Se agregó el historial de estados");
+        r.auditinsert = new Date();
 		r.save();
 
 
@@ -244,45 +247,47 @@ public class RecursoWebController extends ControladorDefault{
 				listaDirecciones.add( aux );
 			}
 		}
-		CorreoSalida mc = new CorreoSalida();
-		mc.asunto = "Solicitud de ETPRDD";
-		mc.para = listaDirecciones;
-		mc.mensaje ="Estimado usuario:<br><br>";
-		mc.mensaje+="Su solicitud de evaluación de Recurso Didáctico Digital se recibió correctamente.<br>En caso de existir observaciones sobre la información y/o documentos registrados, recibirá una notificación por correo electrónico para realizar las modificaciones conducentes, en un plazo máximo de 72 horas. En caso de no recibirla, por favor comuníquese a la Ext. 57405.<br><br>";
-		mc.mensaje+="La clave de control para el seguimiento de su solicitud es:<br><br>";
-		mc.mensaje+="<big>"+r.numcontrol+"</big>";
-		mc.mensaje+="<br>("+r.ncLetras()+")<br><br>";
-		mc.mensaje+="Ingrese a la dirección <a href='https://"+urlSitio+"'>https://"+urlSitio+"</a> y utilizando su clave de control realice su seguimiento.";
-		mc.recurso = r;
-		mc.estado = r.estado;
-		mc.enviar();
+		CorreoSalida cs = new CorreoSalida();
+		cs.asunto = "Solicitud de ETPRDD (correo al Docente)";
+		cs.para = listaDirecciones;
+        cs.mensaje = "Estimado usuario:<br><br>"+
+		        "Su solicitud de evaluación de Recurso Didáctico Digital se recibió correctamente.<br>En caso de existir observaciones sobre la información y/o documentos registrados, recibirá una notificación por correo electrónico para realizar las modificaciones conducentes, en un plazo máximo de 72 horas. En caso de no recibirla, por favor comuníquese a la Ext. 57405.<br><br>"+
+		        "La clave de control para el seguimiento de su solicitud es:<br><br>"+
+                "<big>"+r.numcontrol+"</big>"+
+                "<br>("+r.ncLetras()+")<br><br>"+
+                "Ingrese a la dirección <a href='https://"+urlSitio+"'>https://"+urlSitio+"</a> y utilizando su clave de control realice su seguimiento.";
+		cs.recurso = r;
+		cs.estado = r.estado;
+		cs.enviar2();
+
+
+
 
 		// Enviar notificacion al celular (docente)
 		Notificacion n = new Notificacion();
 		n.enviar(r.numcontrol, "ERDD", "Su solicitud de evaluación de Recurso Didáctico Digital se recibió correctamente");
 
-		//Envio de correo al administrador
+		//Envío de correo al coordinador de ERDD
 		List<CorreoSalidaPara> listaDirecciones2 = new ArrayList<CorreoSalidaPara>();
-		CorreoSalida mc2 = new CorreoSalida();
-		mc2.asunto = "Solicitud de ETPRDD";
-		mc2.mensaje="Ha ingresado una nueva solicitud de Recurso con la clave de control: "+r.numcontrol+"<br><br>";
-		mc2.mensaje+="Para revisarla, por favor ingrese al Sistema de Evaluación de Recursos Didácticos Digitales: ";
-		mc2.mensaje+="<a href='https://"+urlSitio+"/login'>https://"+urlSitio+"/login</a>";
+		CorreoSalida cs2 = new CorreoSalida();
+		cs2.asunto = "Solicitud de ETPRDD (correo al coordinador del proceso)";
+		cs2.mensaje="Ha ingresado una nueva solicitud de Recurso con la clave de control: "+r.numcontrol+"<br><br>";
+		cs2.mensaje+="Para revisarla, por favor ingrese al Sistema de Evaluación de Recursos Didácticos Digitales: ";
+		cs2.mensaje+="<a href='https://"+urlSitio+"/login'>https://"+urlSitio+"/login</a>";
 
 
 		CorreoSalidaPara aux2 = new CorreoSalidaPara();
 		aux2.para = Personal.elCoordinador().correo;
 		listaDirecciones2.add(aux2);
-		mc2.para = listaDirecciones2;
-		mc2.recurso = r;
-		mc2.estado = r.estado;
-		mc2.enviar();
+		cs2.para = listaDirecciones2;
+		cs2.recurso = r;
+		cs2.estado = r.estado;
+		cs2.enviar2();
+
 
 		// Enviar notificacion al celular del coordinador(administrador e2)
 		Notificacion n2 = new Notificacion();
-		n2.enviar("fbErddAdmin", "ERDD", mc2.mensaje);
-
-
+		n2.enviar("fbErddAdmin", "ERDD", cs2.mensaje);
 		return redirect("/solRecibida/"+r.numcontrol);
 	}
 
@@ -436,7 +441,8 @@ public class RecursoWebController extends ControladorDefault{
 		mc.asunto ="Se han atendido las observaciones a la solicitud "+r.numcontrol;
 		mc.mensaje="Las observaciones a la solicitud con clave de control "+r.numcontrol+" han sido atendidas por el usuario.";
 		mc.para = Collections.singletonList(Personal.elCoordinador().correo);
-		mc.run();
+		//mc.start();
+        mc.enviar();
 
 		try{
 			if (items!= null){
@@ -588,14 +594,30 @@ public class RecursoWebController extends ControladorDefault{
 
 
 
-
-	public static Result Correo(){
+    // Esta es un prueba de correo
+	public static Result Correo() throws MessagingException {
+        System.out.println("Desde RecursowebController.Correo");
 		miCorreo mc = new miCorreo();
-		mc.para = Collections.singletonList(Personal.elCoordinador().correo);
+
+        List<String> lista = new ArrayList<>();
+
+        lista.add("epuente_72@yahoo.com");
+		mc.para =lista;
+        mc.asunto="Prueba Se recibió correctamente";
 		mc.mensaje="Este es un correo de prueba Se recibió correctamente!!!";
-		mc.asunto="Prueba Se recibió correctamente";
-		mc.run();
-		return ok(views.html.correoEnviado.render("correo ok") );
+
+        //mc.start();
+		mc.enviar();
+
+        while (mc.isAlive()){
+            System.out.println("correo vivo !!!!");
+        }
+
+        System.out.println("enviado? "+mc.enviado);
+        if (!mc.enviado)
+            System.out.println("error "+mc.mensajeError);
+
+		return ok(views.html.correoEnviado.render("correo oki") );
 	}
 
 

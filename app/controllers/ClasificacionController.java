@@ -99,13 +99,13 @@ System.out.println(" *  00010");
 			mc.asunto="Cancelación del recurso "+r.numcontrol +" - "+r.titulo;
 			mc.mensaje ="Estimado(a): "+r.getResponsable().nombreCompleto()+".<br><br>";
 			mc.mensaje +="Se determinó que la solicitud que usted presentó sea cancelada debido que su clasificación...";
-			//mc.enviar();
-			mc.run();
+			mc.enviar();
+			//mc.run();
 			
 			mc.para = Collections.singletonList(Personal.elCoordinador().correo);
 			mc.mensaje = "Se ha cancelado la solicitud "+r.numcontrol +" - "+ r.titulo +" durante el proceso de clasificación";
-			//mc.enviar();
-			mc.run();
+			mc.enviar();
+			//mc.run();
 			
 			
 			// Enviar notificacion al celular (docente)

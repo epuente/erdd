@@ -1,0 +1,59 @@
+El siguiente query genera el código para crear los triggers de cada tabla.
+
+
+SELECT
+	'DELIMITER //'
+UNION
+SELECT
+		concat('CREATE TRIGGER ',table_name
+			,'_BEFORE_INSERT'
+			,' BEFORE INSERT ON ',table_name,' FOR EACH ROW BEGIN  if (new.auditinsert is null) then     set new.auditinsert = current_timestamp();   end if; END//')
+FROM information_schema.tables
+where table_schema = 'erdd_test5' and table_name!='recurso' and table_name!='play_evolutions'
+UNION
+SELECT
+		concat('CREATE TRIGGER ',table_name
+		,'_BEFORE_UPDATE',' BEFORE UPDATE ON ',table_name,' FOR EACH ROW BEGIN  set new.auditlastupdate = current_timestamp(); END;;')
+FROM information_schema.tables
+where table_schema = 'erdd_tes5' and table_name!='play_evolutions'
+UNION
+SELECT
+	'DELIMITER ;';
+
+
+
+
+
+DELIMITER //
+CREATE DEFINER=`erdd`@`localhost` TRIGGER `recurso_BEFORE_INSERT` BEFORE INSERT ON `recurso` FOR EACH ROW BEGIN
+    DECLARE auxNC VARCHAR(255);
+    DECLARE existe BOOLEAN;
+    ciclo:
+        REPEAT
+            SET auxNC = CONV(FLOOR(RAND() * 99999999999999), 20, 36);
+            SELECT COUNT(numcontrol) INTO existe FROM recurso WHERE numcontrol = auxNC;
+        UNTIL existe = 0
+        END REPEAT ciclo;
+    SET new.numcontrol = auxNC;
+    IF new.auditinsert IS NULL THEN
+        SET new.auditinsert = CURRENT_TIMESTAMP();
+    END IF;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE DEFINER=`erdd`@`localhost` TRIGGER `recurso_AFTER_INSERT` AFTER INSERT ON `recurso` FOR EACH ROW BEGIN
+insert into historialestado values (null, new.id, new.estado_id, null,now());
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE DEFINER=`erdd`@`localhost` TRIGGER `recurso_BEFORE_UPDATE` BEFORE UPDATE ON `recurso` FOR EACH ROW BEGIN  set new.auditlastupdate = current_timestamp(); END //
+DELIMITER ;
+
+DELIMITER //
+CREATE DEFINER=`erdd`@`localhost` TRIGGER `recurso_AFTER_UPDATE` AFTER UPDATE ON `recurso` FOR EACH ROW BEGIN
+insert into historialestado values (null, new.id, new.estado_id, null,now());
+END//
+DELIMITER ;
+

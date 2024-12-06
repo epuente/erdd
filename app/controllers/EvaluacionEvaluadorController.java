@@ -279,8 +279,8 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 			Calendar cal = Calendar.getInstance();
 
 			mc.mensaje+="<br><br><br>"+cal.get(Calendar.DAY_OF_MONTH)+" de "+months[cal.get(Calendar.MONTH)]+" de "+cal.get(Calendar.YEAR)+", " + cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)+".";
-			//mc.enviar();
-			mc.run();
+			mc.enviar();
+			//mc.run();
 
 			//Enviar notificación al docente indicando que se terminó la evaluacion del aspecto de su recurso
 			Notificacion n = new Notificacion();
@@ -298,8 +298,8 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 
 
 			mc.mensaje+="<br><br><br>"+cal.get(Calendar.DAY_OF_MONTH)+" de "+months[cal.get(Calendar.MONTH)]+" de "+cal.get(Calendar.YEAR)+", " + cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)+".";
-			//mc.enviar();
-			mc.run();
+			mc.enviar();
+			//mc.run();
 		} else {
 
 			otro.estadoevaluacion = EstadoEvaluacion.find.byId(2L);
@@ -323,8 +323,8 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 			Calendar cal = Calendar.getInstance();
 
 			mc.mensaje+="<br><br><br>"+cal.get(Calendar.DAY_OF_MONTH)+" de "+months[cal.get(Calendar.MONTH)]+" de "+cal.get(Calendar.YEAR)+", " + cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)+".";
-			//mc.enviar();
-			mc.run();
+			mc.enviar();
+			//mc.run();
 
 			//Enviar correo al administrador indicando que es evaluación parcial
 			mc.para = Collections.singletonList(Personal.elCoordinador().correo);
@@ -336,8 +336,8 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 
 
 			mc.mensaje+="<br><br><br>"+cal.get(Calendar.DAY_OF_MONTH)+" de "+months[cal.get(Calendar.MONTH)]+" de "+cal.get(Calendar.YEAR)+", " + cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)+".";
-			//mc.enviar();
-			mc.run();
+			mc.enviar();
+			//mc.run();
 
 			//Enviar notificación al docente indicando sobre la evaluación parcial
 			Notificacion n = new Notificacion();
@@ -632,7 +632,8 @@ System.out.println("............................");
 
 
 		mc.mensaje+="<br><br><br>"+cal.get(Calendar.DAY_OF_MONTH)+" de "+months[cal.get(Calendar.MONTH)]+" de "+cal.get(Calendar.YEAR)+", " + cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)+".";
-		mc.run();
+		//mc.run();
+        mc.enviar();
 
 
 		return redirect("/evList");

@@ -1,0 +1,32 @@
+create table cobertura_contenido (
+  id                        bigint auto_increment not null,
+  descripcion               varchar(255),
+  auditinsert               datetime not null,
+  auditlastupdate           datetime not null,
+  constraint pk_cobertura_contenido primary key (id));
+
+INSERT INTO cobertura_contenido (id, descripcion, auditinsert, auditlastupdate) VALUES(1, 'Unidad de aprendizaje', '2024-12-03 00:00:00', '2024-12-03 00:00:00');
+INSERT INTO cobertura_contenido (id, descripcion, auditinsert, auditlastupdate) VALUES(2, 'Una Unidad temática/Módulo', '2024-12-03 00:00:00', '2024-12-03 00:00:00');
+INSERT INTO cobertura_contenido (id, descripcion, auditinsert, auditlastupdate) VALUES(3, 'Dos Unidades temáticas/Módulos', '2024-12-03 00:00:00', '2024-12-03 00:00:00');
+
+alter table recurso add column unidadaprendizaje varchar(80);
+
+alter table recurso add column coberturacontenido_id bigint;
+
+alter table recurso add constraint fk_recurso_coberturacontenido_73 foreign key (coberturacontenido_id) references cobertura_contenido (id) on delete restrict on update restrict;
+create index ix_recurso_coberturacontenido_73 on recurso (coberturacontenido_id);
+
+
+update recurso set formatoentrega_id = 1 where formatoentrega_id = 3;
+update recurso set formatoentrega_id = 2 where formatoentrega_id = 4;
+
+update formatoentrega set descripcion ="URL" where id = 1;
+update formatoentrega set descripcion ="USB" where id = 2;
+delete from formatoentrega WHERE id = 3;
+
+alter table recurso modify column sinopsis varchar(1200);
+alter table correo_autor modify column telefono varchar(10);
+
+ALTER TABLE recurso DROP CONSTRAINT fk_recurso_alcancecurricular_73;
+
+alter table recurso drop column alcancecurricular_id;

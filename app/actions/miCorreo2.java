@@ -41,13 +41,13 @@ public class miCorreo2 extends Thread{
 		properties.setProperty("mail.smtp.host", host);
 		
 		
-		properties.setProperty("mail.smtp.port", "587"); //TLS Port
+		properties.setProperty("mail.smtp.port", cc.puerto); //TLS Port
 		properties.setProperty("mail.smtp.auth", "true");
 		properties.setProperty("mail.smtp.starttls.enable", "true");		
 		
 		Authenticator auth = new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(cc.cuenta, "ctaPoli5");
+				return new PasswordAuthentication(cc.cuenta, cc.contrasenia);
 			}
 		};
 		Session session = Session.getInstance(properties, auth);		
@@ -89,15 +89,11 @@ public class miCorreo2 extends Thread{
              /////////////////////////////  SE COMENTA LA SIGUIENTE LINEA PUESTO QUE NO FUNCIONA EL MAIL SMTP DE MICROSOFT
 
 
-			//Transport.send(message);
-
-
-            /*
+			Transport.send(message);
 			for(String p : para){
-				System.out.println("      Se envio correctamente a "+p);
+				System.out.println("      Se envió correctamente a "+p);
 			}
-             */
-	  
+
 		} catch(MessagingException e){
 			System.out.println("error: "+e.getMessage());	
 	

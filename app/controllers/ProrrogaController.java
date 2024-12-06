@@ -94,8 +94,8 @@ System.out.println("desde ProrrogaController.save  "+df);
 			
 
 			mc.mensaje+="<br><br><br>"+cal2.get(Calendar.DAY_OF_MONTH)+" de "+months[cal2.get(Calendar.MONTH)]+" de "+cal2.get(Calendar.YEAR)+", " + cal2.get(Calendar.HOUR_OF_DAY)+":"+cal2.get(Calendar.MINUTE)+".";				
-			//mc.enviar();
-			mc.run();
+			mc.enviar();
+			//mc.run();
 		return  redirect(routes.ProrrogaController.list(0,"titulo","asc","","titulo",-1));	
     	
     }

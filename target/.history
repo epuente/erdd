@@ -22,3 +22,27 @@ clean
 reload
 compile
 exit
+sbt
+run 9090
+compile
+run 9090
+compile
+run 9090
+clean
+reload
+compile
+run 9090
+clean
+reload
+compile
+run 9090
+clean
+reload
+compile
+run 9090
+clean
+reload
+compile
+run 9090
+compile
+exit

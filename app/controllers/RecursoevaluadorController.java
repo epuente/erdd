@@ -18,15 +18,7 @@ import com.itextpdf.text.DocumentException;
 import actions.miCorreo;
 import actions.miCorreo2;
 import actions.miPdf;
-import models.Aspecto;
-import models.Calendario;
-import models.Estado;
-import models.EstadoEvaluacion;
-import models.EvaluacionFecha;
-import models.Evaluador;
-import models.HistorialestadoEvaluacion;
-import models.Recurso;
-import models.Recursoevaluador;
+import models.*;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.ebean.Model;
@@ -192,7 +184,8 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
 
             String m2 = cal.get(Calendar.DAY_OF_MONTH)+" de "+ months[cal.get(Calendar.MONTH)];
             mc.mensaje += m1+m2+m3+m4+listaEvaluadores+m6+enWeb+credenciales+m7+"<br><br>El Departamento de Investigación e Innovación agradece de antemano su colaboración en este proceso.";
-            mc.run();
+            //mc.run();
+            mc.enviar();
         }
 
 
@@ -311,7 +304,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
 
     public static Result pruebaCorreo() throws Exception{
         System.out.println("****************************************************************************************************");
-        miCorreo2 mc2 = new miCorreo2();
+        miCorreo mc2 = new miCorreo();
         mc2.asunto = "abcdef";
         mc2.mensaje= "12345";
         mc2.para = Collections.singletonList("epuente_72@yahoo.com");
@@ -323,15 +316,52 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         mipdf.baos = outputStream;
         mipdf.generarReporteFinal("otro");
 
-        mc2.adjuntos = Collections.singletonList(mipdf.baos);
-        mc2.nombresAdjuntos = Collections.singletonList("Oficio X ");
+        //mc2.adjuntos = Collections.singletonList(mipdf.baos);
+        //mc2.nombresAdjuntos = Collections.singletonList("Oficio X ");
 
-        mc2.run();
+        mc2.enviar();
 
 
 
         return ok ("Se envió");
     }
+
+    public static Result pruebaCorreoSalida(){
+        List<Recurso> rs = new ArrayList<>();
+
+        Recurso r = new Recurso();
+        RecursoAutor ra = new RecursoAutor();
+
+        ra.correo = new CorreoAutor();
+        //ra.correo.email="epuente_72@yahoo.com";
+        ra.correo.autor=new RecursoAutor();
+        ra.correo.autor.nombre="yo";
+        ra.correo.autor.paterno="soy";
+        ra.correo.autor.materno="él";
+        ra.correo.autor.autorfuncion = new Autorfuncion();
+        ra.correo.autor.autorfuncion.id=1L;
+        r.autores.add(ra);
+
+
+        List<CorreoSalidaPara> listaDirecciones = new ArrayList<CorreoSalidaPara>();
+        for (RecursoAutor a : r.autores) {
+                CorreoSalidaPara aux = new CorreoSalidaPara();
+                aux.para = "epuente_72@yahoo.com";
+                listaDirecciones.add( aux );
+        }
+        CorreoSalida cs = new CorreoSalida();
+        cs.asunto = "Prueba de correo";
+        cs.para = listaDirecciones;
+        cs.mensaje ="Estimado usuario:<br><br>";
+        cs.mensaje+="Su solicitud de evaluación de Recurso Didáctico Digital se recibió correctamente.<br>En caso de existir observaciones sobre la información y/o documentos registrados, recibirá una notificación por correo electrónico para realizar las modificaciones conducentes, en un plazo máximo de 72 horas. En caso de no recibirla, por favor comuníquese a la Ext. 57405.<br><br>";
+        cs.mensaje+="La clave de control para el seguimiento de su solicitud es:<br><br>";
+        cs.recurso = r;
+        cs.estado = new Estado();
+        cs.estado.id=402L;
+        cs.enviar2();
+        return ok();
+    }
+
 
 
     @Transactional

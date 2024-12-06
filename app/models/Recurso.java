@@ -54,11 +54,6 @@ public class Recurso extends Model {
     @ManyToOne
     public CoberturaContenido coberturacontenido;
 
-    @ManyToOne
-    public AlcanceCurricular alcancecurricular;
-    
-    @Size(max=120)
-    public String alcancecurricularotro;    
 
     @NotNull
     @Constraints.Required

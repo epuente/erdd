@@ -334,7 +334,8 @@ System.out.println(a.correo.email);
 		    		mc.mensaje+=", favor de enviar el oficio de solicitud dirigido al director de la DEV y los documentos originales de su solicitud.";
 		    	}
 			}
-			mc.run();      
+			//mc.run();
+            mc.enviar();
 			
 			// Enviar notificacion al celular
 	    	Notificacion n = new Notificacion();
@@ -419,7 +420,8 @@ System.out.println("desde cancelar... "+df);
 		mc.para = Collections.singletonList(r.getResponsable().correo.email);
 		mc.asunto = "Se ha cancelado el recurso "+r.numcontrol;
 		mc.mensaje ="Se determinó que ............ por tanto ha sido cancelado";
-		mc.run();
+		//mc.run();
+        mc.enviar();
 		// Enviar notificacion al celular
     	Notificacion n = new Notificacion();
     	n.enviar(r.numcontrol, "ERDD", mc.mensaje);        

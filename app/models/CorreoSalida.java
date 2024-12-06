@@ -1,6 +1,7 @@
 package models;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -19,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 
+import actions.miCorreo;
 import com.avaje.ebean.annotation.CreatedTimestamp;
 import com.avaje.ebean.annotation.UpdatedTimestamp;
 
@@ -65,7 +67,7 @@ public class CorreoSalida extends Model{
 	public static Finder<Long,CorreoSalida> find = new Finder<Long,CorreoSalida>(Long.class, CorreoSalida.class);
 
 
-
+    /*
 	public void enviar()  {
 		Ctacorreo cc =Ctacorreo.find.byId(1L);
 		host = cc.hostname;
@@ -106,5 +108,36 @@ public class CorreoSalida extends Model{
 		System.out.println("mensaje "+this.mensaje);
 		this.save();
 	}
+    */
+    public void enviar2(){
+        miCorreo mc = new miCorreo();
+        mc.asunto = this.asunto;
+        //mc.mensaje = this.mensaje.substring(0, 5);
+        mc.mensaje = this.mensaje;
+        List<String> listaDestinatarios = new java.util.ArrayList<>(Collections.emptyList());
+
+
+        for(CorreoSalidaPara destino :para){
+            if (destino!= null)
+                listaDestinatarios.add(destino.para);
+        }
+        mc.para = listaDestinatarios;
+        mc.enviar();
+        //mc.start();
+        if (mc.enviado){
+            this.enviado = true;
+            this.mensajeoperacion="Se envió correctamente";
+        }
+        if (!mc.enviado){
+            this.enviado = false;
+            this.mensajeoperacion=mc.mensajeError;
+        }
+
+        System.out.println("mensaje "+this.mensaje);
+        this.save();
+
+
+    }
+
 
 }
