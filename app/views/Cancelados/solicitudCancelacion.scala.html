@@ -3,7 +3,7 @@
   <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/>
 
 @main{
-	<div style="background-color: white; padding: 10px; height: 100%">
+	<div style="background-color: white; padding: 10px;">
 			<div class="row">
 				<div class="col-lg-12">
 					<ol class="breadcrumb">
@@ -69,12 +69,12 @@
 						<div class="row">
 							<div class="col-md-6">
 								@form(CSRF(routes.RecursoController.cancelarRecursoEvaluacion(sc.id)), 'id->"frmSolicitudCancelar") {
-									<td><a class="btn btn-danger btn-block center-block" href="#" role="button" id="btnCancelar">Aceptar solicitud de cancelación, cancelar recurso</a></td>
+									<td><a class="btn btn-danger btn-block center-block" href="#" role="button" id="btnCancelar" style="width:80%">Aceptar solicitud de cancelación, cancelar recurso</a></td>
 								}							
 							</div>
 							<div class="col-md-6">
 								@form(CSRF(routes.RecursoController.reactivarRecursoEvaluacion(sc.id)), 'id->"frmSolicitudReactivar") {
-									<td><a class="btn btn-success btn-block center-block" href="#" role="button" id="btnReactivar">Revocar solicitud de cancelación, reactivar recurso</a></td>
+									<td><a class="btn btn-success btn-block center-block" href="#" role="button" id="btnReactivar" style="width:80%">Revocar solicitud de cancelación, reactivar recurso</a></td>
 								}							
 							</div>							
 						</div>

@@ -302,7 +302,7 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 			mc.para = Collections.singletonList(Personal.elCoordinador().correo);
 
 			mc.asunto="El evaluador "+ Personal.find.byId(Evaluador.find.byId( Long.parseLong(session("idEvaluador"))).personal.id   ).nombreCompleto();
-			mc.asunto+=" ha terminado la evaluación del recurso con clave de control "+otro.recurso.numcontrol;
+			mc.asunto+=" ha terminado la evaluación del aspecto "+otro.aspecto.descripcion+" del recurso con clave de control "+otro.recurso.numcontrol;
 			mc.mensaje="Apreciable "+Personal.elAdministrador().nombreCompleto()+", administrador(a) del sistema de evaluación de recursos didácticos digitales:<br><br>";
 			mc.mensaje+="Se le informa que la evaluación del aspecto "+otro.aspecto.descripcion+" del recurso didáctico digital '"+otro.recurso.titulo+"' con número de folio "+otro.recurso.oficio.folio+", ha finalizado.";
 
@@ -346,7 +346,7 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
             CorreoSalida cs2 = new CorreoSalida(mc, otro.recurso);
             cs2.save();
 
-			//Enviar correo al administrador indicando que es evaluación parcial
+			//Enviar correo al coordinador indicando que es evaluación parcial
 			mc.para = Collections.singletonList(Personal.elCoordinador().correo);
 
 			mc.asunto="El evaluador "+ Personal.find.byId(Evaluador.find.byId( Long.parseLong(session("idEvaluador"))).personal.id   ).nombreCompleto();

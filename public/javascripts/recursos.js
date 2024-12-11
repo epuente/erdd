@@ -73,7 +73,6 @@
 	
 	
 	var preValidar = function(){
-	    alert("Desde recursos.js prevalidar");
 		$("#divNumControl").removeClass("error");
 		if (  ($('#niveleducativo_id').val()).length == 0  ){	
 			$('#campo_niveleducativo').find(".clearfix").addClass("error");
@@ -161,10 +160,7 @@
 				$(e).find(".clearfix").removeClass("error");
 		});
 
-		// Valida Título
-		alert($("#titulo").val())
-		alert(!$("#titulo").val())
-
+		// Validaciones
 		mensajesError += !$("#titulo").val()?"Escriba el título del recurso.<br>":"";
 		mensajesError += !$("#niveleducativo_id").val()?"Seleccione un nivel educativo.<br>":"";
 		mensajesError += !$("#areaconocimiento_id").val()?"Seleccione el área de conocimiento.<br>":"";
@@ -457,7 +453,7 @@
 			mensajesError = mensajesError + "La sinopsis no debe exceder los 1000 caracteres.<br>";
 		}
         console.log("   mensajesError: ",mensajesError);
-        alert("   mensajesError: "+mensajesError);
+        //alert("   mensajesError: "+mensajesError);
 		return mensajesError;
 	}
 

@@ -29,25 +29,14 @@
 		</div>
 	</div>
 }
-<div id="log"></div>
+
 
 <script type="text/javascript">
+    $(function() {
+        $(".btn:contains('Evaluación')").hide();
+        if (@tipo == 0)
+            combinarCeldas( $('#tabla') );
 
-$(function() {	
-
-	
-	$(".btn:contains('Evaluación')").hide();
-	if (@tipo == 0)
-		combinarCeldas( $('#tabla') );
-	
-	$(".container-fluid").show();
-	
-	
-});
-
-$( window ).resize(function() {
-	  $( "#log" ).append( "<div>Handler for .resize() called.</div>" );
-	});
-
-
+        $(".container-fluid").show();
+    });
 </script>

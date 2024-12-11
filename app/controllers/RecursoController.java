@@ -523,6 +523,23 @@ System.out.println("---------------------------------------");
 		sc.aceptada = true;
 		sc.fechaAceptacion = new Date();
 		sc.update();
+
+        // Se envía correo a los evaluadores del recurso cancelado para notificarles de la cancelación
+        if ( !r.recursoevaluadores.isEmpty()) {
+
+            List<String> listaDirecciones = new ArrayList<>();
+            for (Recursoevaluador re: r.recursoevaluadores){
+                listaDirecciones.add(re.evaluador.personal.correo);
+            }
+            miCorreo mc = new miCorreo();
+            mc.para = listaDirecciones;
+            mc.asunto = "Cancelación del recurso " + r.numcontrol;
+            mc.mensaje = "Se ha cancelado el recurso con número de control <strong>" + r.numcontrol + "</strong><br><br>Motivo de cancelación: <strong>" + sc.motivoCancelacion + "</strong>";
+            mc.enviar();
+
+            CorreoSalida cs = new CorreoSalida(mc, r);
+            cs.save();
+        }
 		flash("success","Se canceló el recurso "+sc.recurso.numcontrol);
 		return redirect ("/solicitudCanceladoList");		
 	}
@@ -544,7 +561,20 @@ System.out.println("---------------------------------------");
 		sc.recurso.estado = sc.recursoestadoanterior;
 		sc.update(id);
 		sc.recurso.update();
-		
+
+        // Se envía correo al solictante de la cancelación para indicarle que no se aceptó la solicitud de cancelación
+        if (!r.recursoevaluadores.isEmpty()) {
+            miCorreo mc = new miCorreo();
+            mc.para = Collections.singletonList(sc.evaluador.personal.correo);
+            mc.asunto = "Solicitud de cancelación para el recurso " + r.numcontrol;
+            mc.mensaje = "El coordinador determinó que no es procedente la solicitud de cancelación del recurso con número de control <strong>" + r.numcontrol + "</strong><br><br>Motivo de cancelación: <strong>" + sc.motivoCancelacion + "</strong>";
+            mc.enviar();
+
+            CorreoSalida cs = new CorreoSalida(mc, r);
+            cs.save();
+        }
+
+
 		//return ok("oki".toString());
 		flash("success","Se reactivó el recurso "+sc.recurso.numcontrol);
 		return redirect ("/solicitudCanceladoList");

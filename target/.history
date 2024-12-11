@@ -71,3 +71,14 @@ reload
 compile
 run 8085
 exit
+run 8085
+com,p
+compile
+run 8085
+clean
+reload
+clean
+dist
+clean
+dist
+exit

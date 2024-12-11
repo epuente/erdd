@@ -155,11 +155,6 @@ $(document).ready(function() {
 			}
 			$('#calendar').fullCalendar('unselect');
 		},
-		@*
-	    eventMouseover: function( event, jsEvent, view ) { 
-	    	alert("id:"+event.id+"\ntitle:"+event.title+"\ntipo:"+event.tipo+"\ncolor:"+event.eventColor+"desde: "+moment(event.start).format('DD/MM/YYYY HH:mm')+"\nhasta:"+moment(event.end).format('DD/MM/YYYY  HH:mm'));
-	    },
-	    *@
 	    eventDrop: function(eventData, delta, revertFunc) {
 	        if (confirm(eventData.title + " se moverá a " + eventData.start.format()+"\n\n¿Continuar?")) {
 				$.ajax({

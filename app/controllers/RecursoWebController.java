@@ -596,6 +596,7 @@ public class RecursoWebController extends ControladorDefault{
 		mc.mensaje="Este es un correo de prueba.<br>Se recibió <strong>correctamente</strong>!!!";
         mc.mensaje+="<br><br><br><small>Enviado a las "+sdf.format(new Date())+"</small>";
 
+
         //mc.start();
 		mc.enviar();
 

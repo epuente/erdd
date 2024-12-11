@@ -44,35 +44,35 @@
 							@r.aspecto.descripcion / @r.evaluador.personal.nombreCompleto
 						}					
 						@if(r.estadoevaluacion.id==3L){
-							<a href="/revisar/@r.recurso.id/@r.aspecto.id" role="button" class="btn btn-primary btn-block center-block" style="width: 90%">Revisar</a>
+							<a href="/revisar/@r.recurso.id/@r.aspecto.id" role="button" class="btn btn-primary btn-block center-block" style="width: 90%; font-size: small;">Revisar</a>
 						}
 						@if(r.estadoevaluacion.id==4L){
-							<a href="/revisar/@r.recurso.id/@r.aspecto.id" role="button" class="btn btn-primary btn-block center-block" style="width: 90%">Observaciones</a>
+							<a href="/revisar/@r.recurso.id/@r.aspecto.id" role="button" class="btn btn-primary btn-block center-block" style="width: 90%; font-size: small;">Observaciones</a>
 						}
 						@if(r.estadoevaluacion.id==5L && tipo == 1){
-							<a href='@routes.RecursoevaluadorController.evaluada(r.id, "1")' role="button" class="btn btn-primary btn-block center-block" style="width: 90%">Ev. @r.aspecto.descripcion</a>						
+							<a href='@routes.RecursoevaluadorController.evaluada(r.id, "1")' role="button" class="btn btn-primary btn-block center-block" style="width: 90%; font-size: small; ">Ev. @r.aspecto.descripcion</a>
 						}
 						@if( (r.recurso.estado.id == 10 || r.recurso.estado.id == 11 || r.recurso.estado.id == 110 || r.recurso.estado.id== 12)  && tipo == 0){
-							<a href='@routes.RecursoevaluadorController.evaluadas(r.recurso.id)' role="button" class="btn btn-primary btn-block center-block" style="width: 90%">Evaluaciones</a>
+							<a href='@routes.RecursoevaluadorController.evaluadas(r.recurso.id)' role="button" class="btn btn-primary btn-block center-block" style="width: 90%; font-size: small;">Evaluaciones</a>
 						}
 						@if(r.recurso.estado.id == 100){
 							@if(r.estadoevaluacion.id == 5){
-								<a href='@routes.RecursoevaluadorController.evaluada(r.id)' role="button" class="btn btn-primary btn-block center-block" style="width: 90%">Ev. @r.aspecto.descripcion</a>
+								<a href='@routes.RecursoevaluadorController.evaluada(r.id)' role="button" class="btn btn-primary btn-block center-block" style="width: 90%; font-size: small;">Ev. @r.aspecto.descripcion</a>
 							}
 						}
 					</td>
 					@if(  ( scala.List(10, 11, 12, 110).exists { x => x== r.recurso.estado.id })    && tipo == 0){
                         <td rowspan="1">
-                            <a href="/admin/reporteEvaluacion/@r.recurso.id" role="button" class="btn btn-primary btn-block center-block" style="width: 90%" target="_blank">Reporte de evaluación</a>
+                            <a href="/admin/reporteEvaluacion/@r.recurso.id" role="button" class="btn btn-primary btn-block center-block" style="width: 90%; font-size: small;" target="_blank">Reporte de evaluación</a>
                         </td>
 						 @if(r.recurso.oficiovaloracion == null){
 							<td rowspan="1">
-								<a href="@routes.OficioValoracionController.create(r.recurso.id)" role="button" class="btn btn-primary btn-block center-block" style="width: 90%">Asignar oficio de valoración</a>
+								<a href="@routes.OficioValoracionController.create(r.recurso.id)" role="button" class="btn btn-primary btn-block center-block" style="width: 90%; font-size: small;">Asignar oficio de valoración</a>
 							</td>						 
 						 
 						 } else {
 							<td rowspan="1">
-								<a href="@routes.OficioValoracionController.create(r.recurso.id)" role="button" class="btn btn-primary btn-block center-block" style="width: 90%">Editar Oficio de valoración</a>
+								<a href="@routes.OficioValoracionController.create(r.recurso.id)" role="button" class="btn btn-primary btn-block center-block" style="width: 90%; font-size: small;">Editar Oficio de valoración</a>
 							</td>						 
 						 }
 

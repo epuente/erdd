@@ -16,8 +16,7 @@ public class Encabezados  extends Action.Simple {
         String y = x.generateSafeToken();
         play.mvc.Controller.session("nonce", y);
         Config conf = ConfigFactory.load();
-        String url = "http://148.204.111.41:8080	";
-        url = conf.getString("urlProduccion");
+        String url = conf.getString("urlSitio");
 
 
         //ctx.response().setHeader("Set-Cookie", String.format("%s; %s", "PLAY_SESSION", "SameSite=Strict"));

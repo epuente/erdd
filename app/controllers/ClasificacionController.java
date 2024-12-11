@@ -5,6 +5,7 @@ import static play.data.Form.form;
 import java.util.Collections;
 import java.util.List;
 
+import models.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,17 +14,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import actions.Notificacion;
 import actions.miCorreo;
-import models.Clasificacion;
-import models.ClasificadorCancelable;
-import models.ClasificadorCriterio2;
-import models.ClasificadorCriterio3;
-import models.ClasificadorEjemplo;
-import models.ClasificadorNoevaluable;
-import models.ClasificadorTiporecurso;
-import models.Estado;
-import models.Personal;
-import models.Recurso;
-import models.clasificacionObservacion;
 import play.data.Form;
 import play.mvc.Result;
 import views.html.Clasificacion.*;
@@ -38,7 +28,7 @@ public class ClasificacionController extends ControladorSeguroCoordinador {
 	
     public static Result list(){    	
     	List<Recurso>  r = Recurso.find.where().eq("estado.id", 5L).findList();
-System.out.println("tamaño r : "+r.size());    	
+        System.out.println("tamaño r : "+r.size());
     	return ok(list.render(r ));    	
     }
     
@@ -73,38 +63,43 @@ System.out.println("tamaño r : "+r.size());
         r.clasificacion = c;
         r.estado = Estado.find.byId(5L);
         
-System.out.println("recibidos   "+c.criterio1.id+"   "+c.criterio2.id+"    "+c.criterio3.id+"     tr:"+c.tiporecurso.id);        
+        System.out.println("recibidos   "+c.criterio1.id+"   "+c.criterio2.id+"    "+c.criterio3.id+"     tr:"+c.tiporecurso.id);
         
 		///ClasificadorCriterio3 cc3 = ClasificadorCriterio3.find.byId(  c.criterio3.catalogo.id);        
 
 
 		//Es cancelable?
-System.out.println(" *  00000");		
+        System.out.println(" *  00000");
         List<ClasificadorCancelable> cancela = ClasificadorCancelable.find.where()
         		.eq("criterio1.id", c.criterio1.id)
         		.eq("criterio2.id", c.criterio2.id)
         		.eq("criterio3.id", c.criterio3.id).findList();
         		//.eq("criterio3.id", cc3.id).findList();
-System.out.println(" *  00010");        
+        System.out.println(" *  00010");
         if (  cancela.isEmpty()  ){
 			System.out.println("No es cancelable");
 			r.clasificacion.observacion = null;        	
         	
         } else {
         	System.out.println("cancelable");	        	
-			// Enviar correo al autor y al administrador indicando que se cancela la solicitud
+			// Enviar correo al autor responsable para indicarle que se cancela la solicitud
 			miCorreo mc = new miCorreo();
 			mc.para = Collections.singletonList(r.getResponsable().correo.email);
 			mc.asunto="Cancelación del recurso "+r.numcontrol +" - "+r.titulo;
 			mc.mensaje ="Estimado(a): "+r.getResponsable().nombreCompleto()+".<br><br>";
-			mc.mensaje +="Se determinó que la solicitud que usted presentó sea cancelada debido que su clasificación...";
+			mc.mensaje +="Se determinó que la solicitud de rdd que usted presentó sea cancelada debido que su clasificación...";
 			mc.enviar();
-			//mc.run();
-			
+
+            CorreoSalida cs = new CorreoSalida(mc, r);
+            cs.save();
+
+            // Enviar correo al coordinador
 			mc.para = Collections.singletonList(Personal.elCoordinador().correo);
 			mc.mensaje = "Se ha cancelado la solicitud "+r.numcontrol +" - "+ r.titulo +" durante el proceso de clasificación";
 			mc.enviar();
-			//mc.run();
+
+            CorreoSalida cs2 = new CorreoSalida(mc, r);
+            cs2.save();
 			
 			
 			// Enviar notificacion al celular (docente)
@@ -113,8 +108,7 @@ System.out.println(" *  00010");
 			
 
 			if (cForm.field("observacion.observacion").value().length() != 0){
-				clasificacionObservacion co = new clasificacionObservacion();	
-
+				clasificacionObservacion co = new clasificacionObservacion();
 				co.observacion = cForm.field("observacion.observacion").value();
 				co.clasificacion = r.clasificacion; 
 				r.clasificacion.observacion = co;  				
@@ -129,27 +123,7 @@ System.out.println(" *  00010");
         
         flash("success", "Se asignó la clasificación del recurso '"+r.titulo+"'");
         return redirect ("/oficios");        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-	}
+    }
 	
 	
     public static Result edit(Long id) {
@@ -169,9 +143,9 @@ System.out.println(" *  00010");
     }	
     
     public static Result update(Long id) {
-System.out.println("entrando a update....");    	
+        System.out.println("entrando a update....");
         Form<Clasificacion> cForm = form(Clasificacion.class).bindFromRequest();
-System.out.println(cForm);        
+        System.out.println(cForm);
         if(cForm.hasErrors()) {
         	flash("warning","No se pudo actualizar");
             return badRequest(edit.render(id, cForm, 
@@ -191,10 +165,8 @@ System.out.println(cForm);
     
     
     public static Result ejemplos(Long c1, Long c2, Long c3){
-System.out.println(c1+" - "+c2+" - "+c3);    
-		
+        System.out.println(c1+" - "+c2+" - "+c3);
 		JSONArray losDatos = new JSONArray();
-		
     	List<ClasificadorEjemplo> ejemplos = ClasificadorEjemplo.find.where()
     			.eq("criterio1.id", c1)
     			.eq("criterio2.id", c2)
@@ -214,7 +186,7 @@ System.out.println(c1+" - "+c2+" - "+c3);
 				System.out.println("Ocurrio un error: "+e.getMessage()+"\n\n"+e.getCause());
 			}
     	}    
-System.out.println("retornano:"+losDatos.toString());    	
+        System.out.println("retornano:"+losDatos.toString());
 		return ok ( losDatos.toString() );
     }
 
