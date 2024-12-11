@@ -49,7 +49,7 @@ public class EvaluacionTablaTipoRecurso extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 
 	
-	public static Model.Finder<Long,EvaluacionTablaTipoRecurso> find = new Model.Finder<Long,EvaluacionTablaTipoRecurso>(Long.class, EvaluacionTablaTipoRecurso.class);	
+	public static Model.Finder<Long,EvaluacionTablaTipoRecurso> find = new Model.Finder<>(Long.class, EvaluacionTablaTipoRecurso.class);
 	
 
 }

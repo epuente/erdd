@@ -1,8 +1,8 @@
 package controllers;
 
+import static play.Play.application;
 import static play.data.Form.form;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,7 +40,8 @@ public class EvaluadorController extends ControladorSeguro{
 	}	
 	
 	public static Result save(){
-		String urlSitio= play.Play.application().configuration().getString("urlSitio");
+		String urlSitio= application().configuration().getString("urlSitio");
+        urlSitio = application().isDev()?"http://"+urlSitio:"https://"+urlSitio;
 		//String puerto = Play.application().configuration().getString("http.port");
 		//String direccionPuerto = direccion+":"+puerto;
         DynamicForm formaGral = form().bindFromRequest();        
@@ -95,7 +96,7 @@ public class EvaluadorController extends ControladorSeguro{
         }
         mc.mensaje+=losAspectos;
         mc.mensaje+="<br>";
-        mc.mensaje+="Ingrese a la dirección https://"+urlSitio+"/login para conocer las solicitudes que le fueron asignadas para evaluar." ;
+        mc.mensaje+="Ingrese a la dirección "+urlSitio+"/login para conocer las solicitudes que le fueron asignadas para evaluar.<br><br>Acceso <a href='"+urlSitio+"/login'>Login</a>" ;
         mc.enviar();
         //mc.run();
         
@@ -140,7 +141,8 @@ public class EvaluadorController extends ControladorSeguro{
 
 
     public static Result update2(Long id){
-    	String urlSitio= play.Play.application().configuration().getString("urlSitio");
+    	String urlSitio= application().configuration().getString("urlSitio");
+        urlSitio = application().isDev()?"http://"+urlSitio:"https://"+urlSitio;
 		//String puerto = Play.application().configuration().getString("http.port");
 		//String direccionPuerto = direccion+":"+puerto;
     	DynamicForm requestData = form().bindFromRequest();
@@ -196,7 +198,7 @@ public class EvaluadorController extends ControladorSeguro{
             aux1 = strBuilder1.toString();
             mc.mensaje+=aux1;
 	        mc.mensaje+="<br>";
-	        mc.mensaje+="Ingrese a la dirección https://"+urlSitio+"/login para conocer las solicitudes que le fueron asignadas para evaluar." ;
+	        mc.mensaje+="Ingrese a la dirección "+urlSitio+"/login para conocer las solicitudes que le fueron asignadas para evaluar.<br><br>Acceso <a href='"+urlSitio+"/login'>Login</a>" ;
         } else {
         	if (y.activo.id == 1){
 	        	mc.mensaje="Se ha modificado su estado de 'Activo' a 'Inactivo'.<br>";
@@ -204,7 +206,7 @@ public class EvaluadorController extends ControladorSeguro{
         	}
         	if (y.activo.id == 2){
 	        	mc.mensaje="Se ha modificado su estado de 'Inactivo' a 'Activo'.<br>";
-	        	mc.mensaje+="Esto significa que su cuenta al sistema como evaluador se encuentra activa y que podrá evaluar recursos.";
+	        	mc.mensaje+="Esto significa que su cuenta al sistema como evaluador se encuentra activa y que podrá evaluar recursos.  <br><br>Acceso <a href='"+urlSitio+"/login'>Login</a>";
         	}        	
         }
         mc.enviar();

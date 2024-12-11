@@ -26,10 +26,10 @@ public class ClasificadorTiporecurso extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 	
 	
-	public static Finder<Long,ClasificadorTiporecurso> find = new Finder<Long,ClasificadorTiporecurso>(Long.class, ClasificadorTiporecurso.class);	
+	public static Finder<Long,ClasificadorTiporecurso> find = new Finder<>(Long.class, ClasificadorTiporecurso.class);
 
     public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         //for(ClasificadorTiporecurso c: ClasificadorTiporecurso.find.orderBy("descripcion").findList()) {        
         for(ClasificadorEjemplo c: ClasificadorEjemplo.find.where().ne("criterio1.id", 2).findList()   ) {
             options.put(c.tiporecurso.id.toString(), c.tiporecurso.descripcion);

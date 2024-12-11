@@ -49,6 +49,6 @@ public class CorreoAutor extends Model{
 
     
     
-    public static Finder<Long,CorreoAutor> find = new Finder<Long,CorreoAutor>(Long.class, CorreoAutor.class);
+    public static Finder<Long,CorreoAutor> find = new Finder<>(Long.class, CorreoAutor.class);
     
 }

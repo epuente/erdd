@@ -23,7 +23,7 @@ import views.html.EvaluacionEvaluador.*;
 
 public class EvaluacionEvaluadorController extends ControladorSeguroEvaluador{
 
-	public static Result index(){
+    public static Result index(){
 		return redirect (routes.EvaluacionEvaluadorController.resumen());
 	}
 
@@ -43,7 +43,7 @@ public class EvaluacionEvaluadorController extends ControladorSeguroEvaluador{
     }
 
 	public static Result resumen(){
-		List<Long> edos = new ArrayList<Long>();
+		List<Long> edos = new ArrayList<>();
 		edos.add(6L); edos.add(7L);  edos.add(8L); edos.add(9L);
 		edos.add(10L); edos.add(100L); edos.add(110L); edos.add(400L); edos.add(402L);
 
@@ -95,6 +95,7 @@ public class EvaluacionEvaluadorController extends ControladorSeguroEvaluador{
 
     
     public static Result create(Long id, Long idAspecto){
+        System.out.println("Desde EvaluacionEvaluadorController.create");
 		String mensajes ="";
 		Recursoevaluador re = Recursoevaluador.find.where().eq("recurso.id", id).eq("aspecto.id", idAspecto).eq("evaluador.id", session("idEvaluador")).findUnique();
 
@@ -149,11 +150,14 @@ public class EvaluacionEvaluadorController extends ControladorSeguroEvaluador{
 					.where().eq("criterio3.id", c.criterio3.id).eq("tiporecurso.id", c.tiporecurso.id)
 					.findList();
 			System.out.println("idscc3 "+idscc3.size());
+            /*
 			ArrayList<Long> bb = new ArrayList<>();
 			idscc3.forEach(x->{
 				//bb.add(x.criterio3);
 			});
 			System.out.println("bb: "+bb);
+
+             */
 
 			List<EvaluacionTablaTipoRecurso> x = EvaluacionTablaTipoRecurso.find
 					.where()
@@ -280,6 +284,12 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 
 			mc.mensaje+="<br><br><br>"+cal.get(Calendar.DAY_OF_MONTH)+" de "+months[cal.get(Calendar.MONTH)]+" de "+cal.get(Calendar.YEAR)+", " + cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)+".";
 			mc.enviar();
+
+            CorreoSalida cs2 = new CorreoSalida(mc, otro.recurso);
+            cs2.save();
+
+
+
 			//mc.run();
 
 			//Enviar notificación al docente indicando que se terminó la evaluacion del aspecto de su recurso
@@ -300,6 +310,13 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 			mc.mensaje+="<br><br><br>"+cal.get(Calendar.DAY_OF_MONTH)+" de "+months[cal.get(Calendar.MONTH)]+" de "+cal.get(Calendar.YEAR)+", " + cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)+".";
 			mc.enviar();
 			//mc.run();
+
+
+            CorreoSalida cs3 = new CorreoSalida(mc, otro.recurso);
+            cs3.save();
+
+
+
 		} else {
 
 			otro.estadoevaluacion = EstadoEvaluacion.find.byId(2L);
@@ -326,6 +343,9 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 			mc.enviar();
 			//mc.run();
 
+            CorreoSalida cs2 = new CorreoSalida(mc, otro.recurso);
+            cs2.save();
+
 			//Enviar correo al administrador indicando que es evaluación parcial
 			mc.para = Collections.singletonList(Personal.elCoordinador().correo);
 
@@ -338,6 +358,9 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 			mc.mensaje+="<br><br><br>"+cal.get(Calendar.DAY_OF_MONTH)+" de "+months[cal.get(Calendar.MONTH)]+" de "+cal.get(Calendar.YEAR)+", " + cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)+".";
 			mc.enviar();
 			//mc.run();
+
+            CorreoSalida cs3 = new CorreoSalida(mc, otro.recurso);
+            cs3.save();
 
 			//Enviar notificación al docente indicando sobre la evaluación parcial
 			Notificacion n = new Notificacion();
@@ -477,7 +500,7 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 				.eq("tiposrecursos.tiporecurso.id", recurso.clasificacion.tiporecurso.id)
 				.orderBy("reactivo.id")
 				.findList();
-		List<EvaluacionObservacion> eo = new ArrayList<EvaluacionObservacion>();
+		List<EvaluacionObservacion> eo = new ArrayList<>();
 		for( Evaluacion auxER : er  ){
 			EvaluacionObservacion auxEO = EvaluacionObservacion.find.where().eq("respuesta.id",auxER.id).findUnique();
 			if ( auxEO != null  ){
@@ -525,7 +548,7 @@ System.out.println(entry.getKey() + "/" + entry.getValue());
 			}
 			// Actualizar observación de la observación general
 			if (entry.getKey().contentEquals("observacionGral")){
-System.out.println("..............................entrando");
+                System.out.println("..............................entrando");
 				EvaluacionObservacionGral eog = EvaluacionObservacionGral.find.where().eq("recursoevaluador.id", re.id).findUnique();
 				if (eog != null){
 					eog.observacion = entry.getValue();
@@ -536,6 +559,18 @@ System.out.println("..............................entrando");
 
 		re.estadoevaluacion = EstadoEvaluacion.find.byId(3L);
 		re.update();
+
+        miCorreo mc = new miCorreo();
+        mc.mensaje = "El evaluador ha atendido las observaciones realizadas.";
+        //mc.para = Collections.singletonList(Personal.find.byId(Evaluador.find.byId(Long.parseLong(session("idEvaluador"))).personal.id).correo);
+        mc.para =  Collections.singletonList(Personal.elCoordinador().correo);
+        mc.asunto = "Observaciones atendidas del rdd "+r.numcontrol;
+        mc.enviar();
+
+        CorreoSalida cs = new CorreoSalida(mc, r);
+        cs.save();
+
+
 		/*
 		HistorialestadoEvaluacion hedoEv = new HistorialestadoEvaluacion();
 		hedoEv.estado = re.estadoevaluacion;

@@ -27,6 +27,6 @@ public class UsuarioRol extends Model {
 	@UpdatedTimestamp
 	public Date auditlastupdate;
 	 
-	 public static Model.Finder<Long,UsuarioRol> find = new Finder<Long,UsuarioRol>(Long.class, UsuarioRol.class);
+	 public static Model.Finder<Long,UsuarioRol> find = new Finder<>(Long.class, UsuarioRol.class);
 	
 }

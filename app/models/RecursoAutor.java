@@ -55,7 +55,7 @@ public class RecursoAutor extends Model{
     @OneToMany(mappedBy="autor", cascade=CascadeType.ALL)
     public List<RegistroAcceso> registrosaccesos;
     
-    public static Finder<Long,RecursoAutor> find = new Finder<Long,RecursoAutor>(Long.class, RecursoAutor.class);
+    public static Finder<Long,RecursoAutor> find = new Finder<>(Long.class, RecursoAutor.class);
     
     public static List<RecursoAutor> searchByRecurso(Long recurso){    	
     	return find.where("recurso_id ="+ recurso).findList();

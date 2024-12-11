@@ -27,6 +27,6 @@ public class Calendario extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 	
 	
-	public static Finder<Long,Calendario> find = new Finder<Long,Calendario>(Long.class, Calendario.class);
+	public static Finder<Long,Calendario> find = new Finder<>(Long.class, Calendario.class);
 
 }

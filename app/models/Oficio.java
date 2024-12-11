@@ -45,5 +45,5 @@ public class Oficio extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 
 	
-	public static Finder<Long,Oficio> find = new Finder<Long,Oficio>(Long.class, Oficio.class);	
+	public static Finder<Long,Oficio> find = new Finder<>(Long.class, Oficio.class);
 }

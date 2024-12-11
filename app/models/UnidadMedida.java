@@ -31,11 +31,11 @@ public class UnidadMedida extends Model{
 	@CreatedTimestamp
     public Date auditlastupdate;    
 
-    public static Finder<Long,UnidadMedida> find = new Finder<Long, UnidadMedida>(Long.class, UnidadMedida.class);
+    public static Finder<Long,UnidadMedida> find = new Finder<>(Long.class, UnidadMedida.class);
     
     
     public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(UnidadMedida c: UnidadMedida.find.findList()) {
             options.put(c.id.toString(), c.descripcion);
         }

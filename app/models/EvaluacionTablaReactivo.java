@@ -27,7 +27,7 @@ public class EvaluacionTablaReactivo extends Model {
 	@UpdatedTimestamp
     public Date auditlastupdate; 
     
-	public static Model.Finder<Long,EvaluacionTablaReactivo> find = new Model.Finder<Long,EvaluacionTablaReactivo>(Long.class, EvaluacionTablaReactivo.class);    
+	public static Model.Finder<Long,EvaluacionTablaReactivo> find = new Model.Finder<>(Long.class, EvaluacionTablaReactivo.class);
 	
     public static Page<EvaluacionTablaReactivo> page(int page, int pageSize, String sortBy, String order, String filter) {
         return 

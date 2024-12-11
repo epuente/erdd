@@ -19,7 +19,7 @@ public class VersionanteriorController extends ControladorSeguroCoordinador{
 	public static Result listaActualizaciones(){
 		// Seleccionar todos los recursos que sean 'obra nueva'
 		List<Recurso> obrasNuevas = Recurso.find.where().eq("version.id", 1L).findList();
-		List<Actualizacion> lac =  new ArrayList<Actualizacion>();
+		List<Actualizacion> lac = new ArrayList<>();
 		Actualizacion a = null;
 		
 		for (Recurso r: obrasNuevas){ 
@@ -29,7 +29,7 @@ public class VersionanteriorController extends ControladorSeguroCoordinador{
 			
 			a = new Actualizacion();
 			a.recurso =  Recurso.find.byId( r.id  );
-			a.actualizacion = new ArrayList<Recurso>();
+			a.actualizacion = new ArrayList<>();
 			while (masDatos){
 												
 				for(Versionanterior h : va){
@@ -67,7 +67,7 @@ System.out.println(id);
         Form<Versionanterior> vaForm = form(Versionanterior.class);
         
 		Recurso obraNueva = Recurso.find.where().eq("version.id", 1L).eq("id", id).findUnique();
-		List<Actualizacion> lac =  new ArrayList<Actualizacion>();
+		List<Actualizacion> lac = new ArrayList<>();
 		
 		Actualizacion a = null;
 		boolean masDatos;			
@@ -77,7 +77,7 @@ System.out.println(" tam::::  "+va.size());
 		
 		a = new Actualizacion();
 		a.recurso =  Recurso.find.byId( obraNueva.id  );
-		a.actualizacion = new ArrayList<Recurso>();
+		a.actualizacion = new ArrayList<>();
 		while (masDatos){
 											
 			for(Versionanterior h : va){

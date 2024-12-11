@@ -37,10 +37,10 @@ public class Palabraclave extends Model {
     public Date auditlastupdate;     
     
 
-    public static Finder<Long,Palabraclave> find = new Finder<Long,Palabraclave>(Long.class, Palabraclave.class);     
+    public static Finder<Long,Palabraclave> find = new Finder<>(Long.class, Palabraclave.class);
 
     public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(Palabraclave c: Palabraclave.find.orderBy("id").findList()) {
             options.put(c.id.toString(), c.descripcion);
         }

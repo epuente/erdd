@@ -38,6 +38,6 @@ public class Ctacorreo extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 	
 		
-	public static Finder<Long,Ctacorreo> find = new Finder<Long,Ctacorreo>(Long.class, Ctacorreo.class); 
+	public static Finder<Long,Ctacorreo> find = new Finder<>(Long.class, Ctacorreo.class);
 	
 }

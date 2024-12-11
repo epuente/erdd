@@ -62,7 +62,9 @@
 						}
 					</td>
 					@if(  ( scala.List(10, 11, 12, 110).exists { x => x== r.recurso.estado.id })    && tipo == 0){
-
+                        <td rowspan="1">
+                            <a href="/admin/reporteEvaluacion/@r.recurso.id" role="button" class="btn btn-primary btn-block center-block" style="width: 90%" target="_blank">Reporte de evaluación</a>
+                        </td>
 						 @if(r.recurso.oficiovaloracion == null){
 							<td rowspan="1">
 								<a href="@routes.OficioValoracionController.create(r.recurso.id)" role="button" class="btn btn-primary btn-block center-block" style="width: 90%">Asignar oficio de valoración</a>
@@ -73,9 +75,7 @@
 								<a href="@routes.OficioValoracionController.create(r.recurso.id)" role="button" class="btn btn-primary btn-block center-block" style="width: 90%">Editar Oficio de valoración</a>
 							</td>						 
 						 }
-						<td rowspan="1">
-							<a href="/admin/reporteEvaluacion/@r.recurso.id" role="button" class="btn btn-primary btn-block center-block" style="width: 90%" target="_blank">Reporte de evaluación</a>
-						</td>
+
 						 
 					}
 					

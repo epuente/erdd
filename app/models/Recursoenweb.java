@@ -41,6 +41,6 @@ public class Recursoenweb extends Model{
 
 
     
-    public static Finder<Long,Recursoenweb> find = new Finder<Long,Recursoenweb>(Long.class, Recursoenweb.class);    
+    public static Finder<Long,Recursoenweb> find = new Finder<>(Long.class, Recursoenweb.class);
 	
 }

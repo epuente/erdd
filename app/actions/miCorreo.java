@@ -1,6 +1,7 @@
 package actions;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -26,46 +27,54 @@ public class miCorreo extends Thread{
 	public String asunto;
 	public String mensaje;
 	private String host;
+    private String puerto;
 	private String de;
     public boolean enviado = false;
     public String mensajeError;
     public List<ByteArrayOutputStream> adjuntos;
     public List<String> nombresAdjuntos;
-	
+
+
 	public void enviar(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy kk:mm:ss");
 		Ctacorreo cc =Ctacorreo.find.byId(1L);
 		host = cc.hostname;
-		de = cc.cuenta;		
-		Properties properties = System.getProperties();    
+        puerto = cc.puerto;
+		de = cc.cuenta;
+		Properties properties = System.getProperties();
 		properties.setProperty("mail.smtp.host", host);
-		
-		properties.setProperty("mail.smtp.port", "587"); //TLS Port
+
+		properties.setProperty("mail.smtp.port", puerto); //TLS Port
 		properties.setProperty("mail.smtp.auth", "true");
-		properties.setProperty("mail.smtp.starttls.enable", "true");	
-		
+		properties.setProperty("mail.smtp.starttls.enable", "true");
+
+        properties.put("mail.smtp.ssl.trust", "*");
+        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
+
+
 		Authenticator auth = new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(cc.cuenta, cc.contrasenia);
 			}
 		};
-		Session session = Session.getInstance(properties, auth);		
+		Session session = Session.getInstance(properties, auth);
 		//Session session = Session.getDefaultInstance(properties);
-		
+
 		MimeMessage message = new MimeMessage(session);
-		try{
-			message.setFrom(new InternetAddress(this.de));
-			for(String destino :para){
-				if (destino!= null)
-					if (!destino.isEmpty())
-						message.addRecipient(Message.RecipientType.TO, new InternetAddress(destino));	
-			}
-			message.setSubject(this.asunto+" [Prueba del sistema]");
-			message.setText(this.mensaje);
-			message.setContent(this.mensaje, "text/html; charset=utf-8");
-			//System.out.println("(miCorreo) Envio de correo a las "+new Date());
+		try {
+            message.setFrom(new InternetAddress(this.de));
+            for (String destino : para) {
+                if (destino != null)
+                    if (!destino.isEmpty())
+                        message.addRecipient(Message.RecipientType.TO, new InternetAddress(destino));
+            }
+            message.setSubject(this.asunto + " [Prueba del sistema]");
+            message.setText(this.mensaje);
+            message.setContent(this.mensaje, "text/html; charset=utf-8");
+            //System.out.println("(miCorreo) Envio de correo a las "+new Date());
 
             // Attach
-            if (this.adjuntos!=null) {
+            if (this.adjuntos != null) {
                 MimeBodyPart textBodyPart = new MimeBodyPart();
                 textBodyPart.setText(this.mensaje);
                 ByteArrayOutputStream outputStream = this.adjuntos.get(0);
@@ -84,24 +93,20 @@ public class miCorreo extends Thread{
             }
             // Termina attach
 
-
-            /////////////////////////////  SE COMENTA LA SIGUIENTE LINEA PUESTO QUE NO FUNCIONA EL MAIL SMTP DE MICROSOFT
-			try {
+            try {
                 Transport.send(message);
                 this.enviado = true;
-            } catch (Exception e){
-                System.out.println("Ocucció un excepción "+e);
-                this.mensajeError = e.getMessage();
+            } catch (MessagingException e) {
+                System.out.println("Excepción de Messaging: " + e.getMessage());
+            }
+            for (String p : para) {
+                System.out.println("      Se envió correctamente a " + p+" a las "+   sdf.format(new Date()));
             }
 
-			for(String p : para){
-				System.out.println("      Se envió correctamente a "+p);
-			}
-
-		} catch(MessagingException e){
-			System.out.println("error: "+e.getMessage());	
-	
-		}
+        }catch (Exception e){
+            System.out.println("Ocurrió uns excepción "+e);
+            this.mensajeError = e.getMessage();
+        }
 	}
 	
 	@Override

@@ -60,7 +60,7 @@ public class EncuestaRespuesta extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 
     
-    public static Model.Finder<Long,EncuestaRespuesta> find = new Model.Finder<Long,EncuestaRespuesta>(Long.class, EncuestaRespuesta.class); 	
+    public static Model.Finder<Long,EncuestaRespuesta> find = new Model.Finder<>(Long.class, EncuestaRespuesta.class);
 
     @OneToMany (mappedBy="encuesta", cascade=CascadeType.ALL)	
     public List<EncuestaObservacion> observaciones; 

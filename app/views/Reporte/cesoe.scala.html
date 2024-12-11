@@ -38,7 +38,10 @@
 		
 			
 			<td>
-				<div class="etiqueta">Duración</div><div class="contenido">@(recurso.duracion+" "+recurso.unidadmedida.descripcion) </div>
+				<div class="etiqueta">Duración</div>
+                @if(recurso.unidadmedida!=null){
+                    <div class="contenido">@(recurso.duracion+" "+recurso.unidadmedida.descripcion) </div>
+                }
 			</td>
 			
 			<td>

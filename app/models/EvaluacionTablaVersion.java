@@ -32,7 +32,7 @@ public class EvaluacionTablaVersion extends Model {
 	@UpdatedTimestamp
     public Date auditlastupdate; 
 
-	public static Model.Finder<Long,EvaluacionTablaVersion> find = new Model.Finder<Long,EvaluacionTablaVersion>(Long.class, EvaluacionTablaVersion.class);
+	public static Model.Finder<Long,EvaluacionTablaVersion> find = new Model.Finder<>(Long.class, EvaluacionTablaVersion.class);
 	
 	@PrivateOwned
 	@OneToMany(mappedBy="version", cascade=CascadeType.ALL)	

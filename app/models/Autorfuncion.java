@@ -41,7 +41,7 @@ public class Autorfuncion extends Model{
     }        
 
     public static Map<String, Boolean> mapeo(Recurso recurso) {
-        Map<String, Boolean> mapeo = new TreeMap<String, Boolean>();
+        Map<String, Boolean> mapeo = new TreeMap<>();
         List <Autorfuncion> afAll = Autorfuncion.find.all();
         for (Autorfuncion af : afAll) {
           mapeo.put(af.descripcion,  true);

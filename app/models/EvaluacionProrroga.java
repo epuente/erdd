@@ -38,7 +38,7 @@ public class EvaluacionProrroga extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate;
 	
-	public static Finder<Long,EvaluacionProrroga> find = new Finder<Long,EvaluacionProrroga>(Long.class, EvaluacionProrroga.class);
+	public static Finder<Long,EvaluacionProrroga> find = new Finder<>(Long.class, EvaluacionProrroga.class);
 
 	
     public static Page<Recursoevaluador> page(int page, int pageSize, String sortBy, String order, String filter, String campoFiltro, int rdioSolicitud) {

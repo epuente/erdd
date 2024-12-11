@@ -30,7 +30,7 @@ public class Version extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 
     
-    public static Finder<Long,Version> find = new Finder<Long,Version>(Long.class, Version.class); 
+    public static Finder<Long,Version> find = new Finder<>(Long.class, Version.class);
     
     public static  List<Version> lista(){ return Version.find.select("id, descripcion").findList(); }
 
@@ -45,7 +45,7 @@ public class Version extends Model{
     }    
     
     public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(Version c: Version.find.orderBy("id").findList()) {
             options.put(c.id.toString(), c.descripcion);
         }

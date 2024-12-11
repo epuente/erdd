@@ -26,10 +26,10 @@ public class Rol extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 	
 	
-	public static Finder<Long,Rol> find = new Finder<Long,Rol>(Long.class, Rol.class);     	
+	public static Finder<Long,Rol> find = new Finder<>(Long.class, Rol.class);
 	
     public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(Rol c: Rol.find.orderBy("id").findList()) {
             options.put(c.id.toString(), c.descripcion);
         }

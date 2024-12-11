@@ -52,7 +52,7 @@ public class Personal extends Model{
     
     
     
-	public static Finder<Long,Personal> find = new Finder<Long,Personal>(Long.class, Personal.class);    
+	public static Finder<Long,Personal> find = new Finder<>(Long.class, Personal.class);
 	
 	public static List<Personal> losEvaluadores(){		
 		return Personal.find.where().isNotNull("evaluador").orderBy("paterno, materno, nombre").findList();

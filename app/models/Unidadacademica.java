@@ -34,7 +34,7 @@ public class Unidadacademica extends Model {
     public Date auditlastupdate; 	
     
     
-    public static Finder<Long,Unidadacademica> find = new Finder<Long,Unidadacademica>(Long.class, Unidadacademica.class);     
+    public static Finder<Long,Unidadacademica> find = new Finder<>(Long.class, Unidadacademica.class);
 
     public static Page<Unidadacademica> page(int page, int pageSize, String sortBy, String order, String filter) {
         return 
@@ -47,7 +47,7 @@ public class Unidadacademica extends Model {
     } 	
 
     public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(Unidadacademica c: Unidadacademica.find.orderBy("nombre").findList()) {
             options.put(c.id.toString(), c.nombre);
         }

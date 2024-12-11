@@ -9,8 +9,6 @@ import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.CreatedTimestamp;
 import com.avaje.ebean.annotation.UpdatedTimestamp;
 
-import models.polimedia.Polimedia;
-import models.polimedia.Tipo;
 import org.springframework.format.annotation.DateTimeFormat;
 import play.db.ebean.*;
 import play.data.format.Formats;
@@ -182,7 +180,7 @@ public class Recurso extends Model {
     @OneToOne(mappedBy="recurso", cascade=CascadeType.ALL)
     public EncuestaRespuesta encuesta;
     
-    public static Finder<Long,Recurso> find = new Finder<Long,Recurso>(Long.class, Recurso.class);
+    public static Finder<Long,Recurso> find = new Finder<>(Long.class, Recurso.class);
     
     public static Page<Recurso> page(int page, int pageSize, String sortBy, String order, String filter, String campoFiltro) {
         System.out.println("desde el modelo Recurso: ");
@@ -201,7 +199,7 @@ public class Recurso extends Model {
     }    
 
     public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(Recurso c: Recurso.find.orderBy("titulo").findList()) {
             options.put(c.id.toString(), c.titulo);
         }
@@ -209,7 +207,7 @@ public class Recurso extends Model {
     }     
 
     public static Map<String,String> optionsSoloActualizaciones() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         // Los recursos que son actualización, pero que no están en la tabla de Versionanterior
         List<Recurso> rs2 = Recurso.find.where().eq("version.id", 2L).eq("versionanterior", null).orderBy("numcontrol").findList();       
         for(Recurso c: rs2 ) {
@@ -302,12 +300,7 @@ public class Recurso extends Model {
         rCal.calificacion = calGeneral;
         this.calificacion = rCal;
 
-        // Si la calificación general es igual o mayor a 96, se agrega el id del recurso a la tabla Polimedia
-        if (  this.calificacion.calificacion >= 96 ){
-            Polimedia pm = new Polimedia();
-            pm.recurso = this;
-            pm.save();
-        }
+
         this.update();
 
          */
@@ -316,7 +309,7 @@ public class Recurso extends Model {
 
     @PreUpdate
     public void preUpdate(){
-        //Cuando el estado cambia a 10 (evaulación concluida) se califica, la calificación por aspecctos se guarda en
+        //Cuando el estado cambia a 10 (evaulación concluida) se califica, la calificación por aspectos se guarda en
         // la tabla RecursoCalificacionAspecto y la calificacion general se guarda en RecursoCalificación
         if (this.estado.id == 10) {
             RecursoCalificacion rCal = new RecursoCalificacion();
@@ -359,13 +352,8 @@ public class Recurso extends Model {
             this.calificacion = rCal;
              */
 
-            // Si la calificación general es igual o mayor a 96, se agrega el id del recurso a la tabla Polimedia
-            if (this.calificacion.calificacion >= 96) {
-                Polimedia pm = new Polimedia();
-                pm.recurso = this;
-                pm.tipo = Tipo.find.ref(1L);
-                pm.save();
-            }
+
+
         }
     }
 }

@@ -31,6 +31,6 @@ public class Historialestado extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 
 
-    public static Finder<Long,Historialestado> find = new Finder<Long,Historialestado>(Long.class, Historialestado.class);    
+    public static Finder<Long,Historialestado> find = new Finder<>(Long.class, Historialestado.class);
     
 }

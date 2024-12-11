@@ -2,7 +2,6 @@ package actions;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
 
 import com.itextpdf.text.BaseColor;
@@ -64,7 +63,7 @@ public class miPdf {
 		List<Formatoentrega> fe = Formatoentrega.lista();
 		List<Modalidad> modalidades = models.Modalidad.find.all();
 		List<Dirigidoa> dirigidoa =models.Dirigidoa.find.all();
-		ArrayList<Long> rdir = new ArrayList<Long>(); 
+		ArrayList<Long> rdir = new ArrayList<>();
 		recursoDirigidoa.find.where().eq("recurso.id", this.id).findList().forEach(z -> {
 			rdir.add(z.id);
 		});
@@ -617,7 +616,7 @@ doc.add(tabla13);
     }
 	
 	
-	public void generarSolicitudEvaluacion() throws DocumentException, MalformedURLException, IOException{
+	public void generarSolicitudEvaluacion() throws DocumentException{
 		System.out.println("Generando PDF   (solicitud de evaluación)...");
     	Recurso r = Recurso.find.byId(this.id);
 

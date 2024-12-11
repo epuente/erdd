@@ -37,11 +37,11 @@ public class ClasificadorCriterio3 extends Model{
 	@OneToMany (mappedBy="criterio3", cascade=CascadeType.ALL)
 	public List<ClasificadorCriterio3Ejemplo> ejemplos;
 	
-	public static play.db.ebean.Model.Finder<Long,ClasificadorCriterio3> find = new Finder<Long,ClasificadorCriterio3>(Long.class, ClasificadorCriterio3.class);
+	public static play.db.ebean.Model.Finder<Long,ClasificadorCriterio3> find = new Finder<>(Long.class, ClasificadorCriterio3.class);
 	
 	
     public static Map<String,String> options(Long c1) {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(ClasificadorCriterio3 c: ClasificadorCriterio3.find.where().eq("criterio1_id", 2L).orderBy("catalogo.descripcion").findList()) {
             options.put(c.id.toString(), c.catalogo.descripcion);
         }

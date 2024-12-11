@@ -32,6 +32,6 @@ public class ClasificadorNoevaluable extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 	
 	
-	public static Finder<Long,ClasificadorNoevaluable> find = new Finder<Long,ClasificadorNoevaluable>(Long.class, ClasificadorNoevaluable.class);	
+	public static Finder<Long,ClasificadorNoevaluable> find = new Finder<>(Long.class, ClasificadorNoevaluable.class);
 	
 }

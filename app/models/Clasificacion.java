@@ -45,7 +45,7 @@ public class Clasificacion extends Model{
 	@UpdatedTimestamp
 	public Date auditlastupdate;
 
-	public static Finder<Long,Clasificacion> find = new Finder<Long,Clasificacion>(Long.class, Clasificacion.class);
+	public static Finder<Long,Clasificacion> find = new Finder<>(Long.class, Clasificacion.class);
 	
 	public String nombreCompletoClasificacion(){
 		return this.criterio1.descripcion +" / "+ this.criterio2.descripcion +" / "+this.criterio3.catalogo.descripcion;

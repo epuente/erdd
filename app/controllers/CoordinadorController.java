@@ -18,13 +18,13 @@ public class CoordinadorController extends ControladorSeguroCoordinador {
 	
 	
     
-	public static Result index() throws UnknownHostException, SocketException{
+	public static Result index(){
 		response().setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 		response().setHeader("Pragma", "no-cache"); // HTTP 1.0.
 		response().setHeader("Expires", "0"); // Proxies.  
 		
 		
-		Map<String, Object> registros = new HashMap<String, Object>();
+		Map<String, Object> registros = new HashMap<>();
 
     	List<Recurso> todos = Recurso.find.all();
     	registros.put("rs", todos.size());

@@ -46,3 +46,28 @@ compile
 run 9090
 compile
 exit
+compile
+run 9090
+compile
+run 9090
+clean
+reload
+compile
+clean
+dist
+run 80
+run 8085
+compile
+clean
+reload
+compile
+clean
+reload
+compile
+clean
+compile
+clean
+reload
+compile
+run 8085
+exit

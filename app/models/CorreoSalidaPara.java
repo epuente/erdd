@@ -32,5 +32,5 @@ public class CorreoSalidaPara extends Model{
     public Date auditlastupdate; 
     
     
-    public static Finder<Long,CorreoSalidaPara> find = new Finder<Long,CorreoSalidaPara>(Long.class, CorreoSalidaPara.class);    
+    public static Finder<Long,CorreoSalidaPara> find = new Finder<>(Long.class, CorreoSalidaPara.class);
 }

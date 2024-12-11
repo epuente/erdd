@@ -26,5 +26,5 @@ public class EncuestaReactivo extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 
     
-    public static Model.Finder<Long,EncuestaReactivo> find = new Model.Finder<Long,EncuestaReactivo>(Long.class, EncuestaReactivo.class);     
+    public static Model.Finder<Long,EncuestaReactivo> find = new Model.Finder<>(Long.class, EncuestaReactivo.class);
 }

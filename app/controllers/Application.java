@@ -12,6 +12,8 @@ import com.avaje.ebean.Ebean;
 import play.Routes;
 import play.mvc.*;
 import play.data.*;
+
+import static play.Play.application;
 import static play.data.Form.*;
 import views.html.*;
 import models.*;
@@ -34,7 +36,8 @@ public class Application extends ControladorDefault {
     
     public static Result login(){
     	session().clear();
-    	String urlSitio = play.Play.application().configuration().getString("urlSitio");
+    	String urlSitio = application().configuration().getString("urlSitio");
+        urlSitio = (application().isDev()?"http://":"https://")+urlSitio;
 		//String puerto = Play.application().configuration().getString("http.port");
 		//String direccionPuerto = direccion+":"+puerto;
     	System.out.println("dirección :"+urlSitio);

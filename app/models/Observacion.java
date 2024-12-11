@@ -37,7 +37,7 @@ public class Observacion extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 
 
-    public static Finder<Long,Observacion> find = new Finder<Long,Observacion>(Long.class, Observacion.class);    
+    public static Finder<Long,Observacion> find = new Finder<>(Long.class, Observacion.class);
 
     public static List<Observacion> searchByRecurso(Long recurso){
         return find.where().eq("recurso_id",recurso).findList();

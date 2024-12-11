@@ -32,6 +32,6 @@ public class ClasificadorCancelable extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 	
 	
-	public static Finder<Long,ClasificadorCancelable> find = new Finder<Long,ClasificadorCancelable>(Long.class, ClasificadorCancelable.class);
+	public static Finder<Long,ClasificadorCancelable> find = new Finder<>(Long.class, ClasificadorCancelable.class);
 	
 }

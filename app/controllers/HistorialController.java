@@ -3,7 +3,6 @@ package controllers;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import org.json.JSONArray;
@@ -15,7 +14,6 @@ import models.HistorialestadoEncuesta;
 import models.HistorialestadoEvaluacion;
 import models.Log;
 import models.Historialestado;
-import play.mvc.Controller;
 import play.mvc.Result;
 //import views.html.Historial.log2;
 
@@ -23,7 +21,7 @@ public class HistorialController extends ControladorDefault{
 	
 	public static Result ajaxActualizaLog(Integer nitems){
 		System.out.println("desde HistorialController.ajaxActualizaLog");
-		List<Log> listLog = new ArrayList<Log>();		
+		List<Log> listLog = new ArrayList<>();
 		List<Historialestado> he = Historialestado.find.select("id, recurso, estado, auditinsert").orderBy("auditinsert desc").setMaxRows(nitems).findList();
 		he.forEach(e ->{
 			Log nl = new Log();
@@ -58,12 +56,7 @@ public class HistorialController extends ControladorDefault{
  		    
  		    });		
 
-		listLog.sort(new Comparator<Log>() {
-            @Override
-            public int compare(Log o1, Log o2) {
-                return (o1.auditinsert.before(o2.auditinsert)) ? 1 : -1;
-            }
-        });
+		listLog.sort((o1, o2) -> (o1.auditinsert.before(o2.auditinsert)) ? 1 : -1);
 		
 		JSONArray jArray = new JSONArray();
 		if (nitems > listLog.size())

@@ -46,8 +46,6 @@ public class DocumentoController extends ControladorSeguro {
 				 d.nombrearchivo = fileName;
 				 d.contenttype = contentType;
 				 d.contenido =  byteFile;
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
 			} catch (IOException ioe){
 				ioe.printStackTrace();
 			}		    

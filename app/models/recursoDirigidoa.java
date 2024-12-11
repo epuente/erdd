@@ -32,5 +32,5 @@ public class recursoDirigidoa extends Model{
     
     
     
-    public static Finder<Long,recursoDirigidoa> find = new Finder<Long,recursoDirigidoa>(Long.class, recursoDirigidoa.class);      
+    public static Finder<Long,recursoDirigidoa> find = new Finder<>(Long.class, recursoDirigidoa.class);
 }

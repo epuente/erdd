@@ -32,7 +32,7 @@ public class Versionanterior extends Model {
 	@UpdatedTimestamp
     public Date auditlastupdate; 
 
-	public static Finder<Long,Versionanterior> find = new Finder<Long,Versionanterior>(Long.class, Versionanterior.class);
+	public static Finder<Long,Versionanterior> find = new Finder<>(Long.class, Versionanterior.class);
 	
  	
 	

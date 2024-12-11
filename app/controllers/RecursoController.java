@@ -1,4 +1,5 @@
 package controllers;
+import static play.Play.application;
 import static play.data.Form.form;
 
 import java.util.*;
@@ -7,7 +8,6 @@ import java.util.stream.Collectors;
 import javax.persistence.PersistenceException;
 import com.avaje.ebean.Ebean;
 import models.*;
-import models.polimedia.Polimedia;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,9 +29,8 @@ public class RecursoController extends ControladorSeguroCoordinador {
    
 	
     public static Result list(int page, String sortBy, String order, String filter, String cf) {		
-System.out.println("page:"+page+"  sortBy:"+sortBy+"   order:"+order+"  Filter:"+filter+"       campoFiltro:"+cf);
-		
-		
+        System.out.println("page:"+page+"  sortBy:"+sortBy+"   order:"+order+"  Filter:"+filter+"       campoFiltro:"+cf);
+
 		response().setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 		response().setHeader("Pragma", "no-cache"); // HTTP 1.0.
 		response().setHeader("Expires", "0"); // Proxies.
@@ -43,7 +42,7 @@ System.out.println("page:"+page+"  sortBy:"+sortBy+"   order:"+order+"  Filter:"
     }
     
     public static Result ajaxListTabla(int page, String sortBy, String order, String filter, String cf) {		
-System.out.println("page:"+page+"  sortBy:"+sortBy+"   order:"+order+"  Filter:"+filter+"       campoFiltro:"+cf);
+        System.out.println("page:"+page+"  sortBy:"+sortBy+"   order:"+order+"  Filter:"+filter+"       campoFiltro:"+cf);
 		response().setHeader(CACHE_CONTROL, "no-cache");
     	return ok(
     	ajaxListTabla.render(
@@ -53,9 +52,7 @@ System.out.println("page:"+page+"  sortBy:"+sortBy+"   order:"+order+"  Filter:"
          );        
     }
     
-    
-    
-    
+
     public static Result edit(Long id) {
     	System.out.println("Desde REcursoController.edit");
         Form<Recurso> recursoForm = form(Recurso.class).fill(
@@ -72,7 +69,7 @@ System.out.println("page:"+page+"  sortBy:"+sortBy+"   order:"+order+"  Filter:"
 	        String t = r.titulo;
 	        r.delete();
 	        flash("success", "El recurso '"+t+"' ha sido eliminado");
-System.out.println("************* Seliminó el recurso '"+t+"'");	        
+            System.out.println("************* Seliminó el recurso '"+t+"'");
 	        
 	    } catch (PersistenceException pe) {	   	 
 		   	 System.out.println("***************************"+pe+"\n"+pe.getCause());
@@ -88,8 +85,6 @@ System.out.println("************* Seliminó el recurso '"+t+"'");
     public static Result ajaxDelete(Long id) {
     	try{
     		System.out.println("desde ajaxDelete");
-
-
 			System.out.println(" CorreoSalida ");
 			CorreoSalida.find.fetch("para").where().eq("recurso.id",id).findList().forEach(d->{
 				d.para.forEach(Model::delete);
@@ -140,16 +135,6 @@ System.out.println("************* Seliminó el recurso '"+t+"'");
                     .where().eq("recurso.id", id)
                     .findList().forEach(Model::delete);
 
-
-            System.out.println(" Polimedia");
-            Ebean.find(Polimedia.class)
-                    .fetch("carrusel")
-                    .fetch("carrusel.imagen")
-                    .where().eq("recurso.id", id)
-                    .findList().forEach(Model::delete);
-
-             //   Ebean.delete(pm);
-              //  System.out.println("Se eliminó de polimedia");
 
 
             System.out.println("... inicia");
@@ -248,7 +233,8 @@ System.out.println("************* Seliminó el recurso '"+t+"'");
     
     
     public static Result observacionessave(){
-    	String urlSitio= play.Play.application().configuration().getString("urlSitio");
+    	String urlSitio= application().configuration().getString("urlSitio");
+        urlSitio = application().isDev()?"http://"+urlSitio:"https://"+urlSitio;
 		//String puerto = Play.application().configuration().getString("http.port");
 		//String direccionPuerto = urlSitio+":"+puerto;
 		DynamicForm requestData = form().bindFromRequest();
@@ -323,19 +309,26 @@ System.out.println("---------------------------------------");
         mc.asunto = "ERDD";
 		for (RecursoAutor a : r.autores) {
 			if (a.autorfuncion.id == 1L){
-System.out.println(a.nombre);				
-System.out.println(a.correo.email);				
+                System.out.println(a.nombre);
+                System.out.println(a.correo.email);
 				mc.para = Collections.singletonList(a.correo.email);
 				mc.mensaje = "Estimado usuario:<br><br>";
 				mc.mensaje+="Su solicitud en línea del recurso con clave de control "+r.numcontrol+" ha sido revisada por la DEV";
 		    	if (!otro.isEmpty()){
-					mc.mensaje+=" y tiene "+otro.size()+" observaciones, las cuales deberá atender en un plazo máximo de 5 días hábiles; de lo contrario su solicitud se cancelará y deberá iniciar nuevamente el proceso.<br><br>Favor de ingresar a la dirección <a href='https://"+urlSitio+"'>https://"+urlSitio+"</a> y utilizando su clave de control acceda a su solicitud para revisar y atender las observaciones que se realizaron. ";			
+					mc.mensaje+=" y tiene "+otro.size()+" observaciones, las cuales deberá atender en un plazo máximo de 5 días hábiles; de lo contrario su solicitud se cancelará y deberá iniciar nuevamente el proceso.<br><br>Favor de ingresar a la dirección <a href=\""+urlSitio+"/seguimiento/"+r.numcontrol+" \">"+urlSitio+"/seguimiento/"+r.numcontrol+"</a> para revisar y atender las observaciones que se realizaron. ";
 		    	} else {
 		    		mc.mensaje+=", favor de enviar el oficio de solicitud dirigido al director de la DEV y los documentos originales de su solicitud.";
 		    	}
+
+                mc.mensaje+="<br><br>Ingrese a: <a href=\""+urlSitio+"/seguimiento/"+r.numcontrol+" \">"+urlSitio+"/seguimiento/"+r.numcontrol+"</a>.";
 			}
 			//mc.run();
+            System.out.println(mc.mensaje);
             mc.enviar();
+            if (mc.enviado)
+                System.out.println("correo OK");
+            else
+                System.out.println("Error en el envío del correo");
 			
 			// Enviar notificacion al celular
 	    	Notificacion n = new Notificacion();
@@ -349,8 +342,6 @@ System.out.println(a.correo.email);
         else {
         	return redirect("/recursos/reObservarList");
         }
-        
-		 
     }
 
     
@@ -376,7 +367,6 @@ System.out.println(a.correo.email);
 	}    
 
 	public static Result verOficioValoracion(Long id) {
-		//OficioValoracion ov = OficioValoracion.searchByRecurso(3L);
 		OficioValoracion ov = OficioValoracion.find.byId(id);
 		response().setContentType(ov.contenttype);		 
 		return ok (ov.contenido);
@@ -392,7 +382,7 @@ System.out.println(a.correo.email);
 	public  static Result cambio(Long id, String observacion){
 		DynamicForm df =  DynamicForm.form().bindFromRequest();	
 		
-System.out.println("desde cancelar... "+df);		
+        System.out.println("desde cancelar... "+df);
 		Recurso r = Recurso.find.byId(id);
 		r.estado = Estado.find.byId(401L);
 		r.observacioncancelacion = new ObservacionCancelacion();
@@ -434,62 +424,55 @@ System.out.println("desde cancelar... "+df);
 	
 	public static Result revisar(Long id, Long aspecto){
 		System.out.println("desde RecursoController.revisar");
-System.out.println("recibiendo "+id+",   "+aspecto);		
+        System.out.println("recibiendo "+id+",   "+aspecto);
 	    Recurso r = Recurso.find.byId(id);	
 	    List<Recursoevaluador> re = Ebean.find(Recursoevaluador.class).fetch("recurso").where().eq("recurso.id",id).eq("aspecto.id", aspecto).findList();
 	    List<Object> auxIds = Recursoevaluador.find.where().eq("recurso.id", id).eq("aspecto.id", aspecto).findIds();
-	    
 
-	    
-	    
-	    
-System.out.print("auxIds: ");	    
-auxIds.forEach(d->System.out.println("    "+ d));	    
-	    
-System.out.println("r: "+r);	    
-		List<Evaluacion> er = Evaluacion.find.where().in("recursoevaluador.id", auxIds).findList();
-		
-System.out.println("respuestas: "+er.size());		
-//System.out.println(er.get(0).evaluaciontabla.version.id+"    "+aspecto);
+        System.out.print("auxIds: ");
+        auxIds.forEach(d->System.out.println("    "+ d));
 
-List<Long> auxIds2 = er.stream().map(m1->m1.evaluaciontabla.id).collect(Collectors.toList());
-System.out.println(" auxIds2   ");
-	auxIds2.forEach(d->System.out.println("    "+d));
+        System.out.println("r: "+r);
+                List<Evaluacion> er = Evaluacion.find.where().in("recursoevaluador.id", auxIds).findList();
+
+        System.out.println("respuestas: "+er.size());
+        //System.out.println(er.get(0).evaluaciontabla.version.id+"    "+aspecto);
+
+        List<Long> auxIds2 = er.stream().map(m1->m1.evaluaciontabla.id).collect(Collectors.toList());
+        System.out.println(" auxIds2   ");
+            auxIds2.forEach(d->System.out.println("    "+d));
+
+        System.out.println("c1:"+r.clasificacion.criterio1.id);
+        System.out.println("c2:"+r.clasificacion.criterio2.id);
+        System.out.println("c3:"+r.clasificacion.criterio3.id);
+        Long cc3 = ClasificadorCriterio3.find.byId(r.clasificacion.criterio3.id).catalogo.id ;
+        System.out.println("c3 c3:"+ cc3  );
+
+        System.out.println("antes del antes");
+              List<EvaluacionTablaTipoRecurso> x = EvaluacionTablaTipoRecurso.find
+                      .where()
+                        .eq("evaluaciontabla.version.id",er.get(0).evaluaciontabla.version.id)
+                        .eq("evaluaciontabla.aspecto.id", aspecto)
+                        .eq("evaluaciontabla.criterio1.id", r.clasificacion.criterio1.id)
+                        .eq("evaluaciontabla.criterio2.id", r.clasificacion.criterio2.id)
+                        .eq("evaluaciontabla.criterio3.id", r.clasificacion.criterio3.id)
+                      .eq("tiporecurso.id",   cc3 )
+                      .findList();
 
 
+        System.out.println("x "+x.size());
 
-System.out.println("c1:"+r.clasificacion.criterio1.id);
-System.out.println("c2:"+r.clasificacion.criterio2.id);
-System.out.println("c3:"+r.clasificacion.criterio3.id);
-Long cc3 = ClasificadorCriterio3.find.byId(r.clasificacion.criterio3.id).catalogo.id ;
-System.out.println("c3 c3:"+ cc3  );
-		
 
-System.out.println("antes del antes");
-	  List<EvaluacionTablaTipoRecurso> x = EvaluacionTablaTipoRecurso.find
-			  .where()
-				.eq("evaluaciontabla.version.id",er.get(0).evaluaciontabla.version.id)
-				.eq("evaluaciontabla.aspecto.id", aspecto)
-				.eq("evaluaciontabla.criterio1.id", r.clasificacion.criterio1.id)
-				.eq("evaluaciontabla.criterio2.id", r.clasificacion.criterio2.id)			  
-				.eq("evaluaciontabla.criterio3.id", r.clasificacion.criterio3.id)
-			  .eq("tiporecurso.id",   cc3 )
-			  .findList();
-	  
-	  
-System.out.println("x "+x.size());	  
-	  
-	  
-	  List<Long> xIds = x.stream().map(m1->m1.evaluaciontabla.id).collect(Collectors.toList());
-	    
-System.out.print("xIds "+xIds.size());	    
-xIds.forEach(d->System.out.println("    "+ d));		  
+              List<Long> xIds = x.stream().map(m1->m1.evaluaciontabla.id).collect(Collectors.toList());
+
+        System.out.print("xIds "+xIds.size());
+        xIds.forEach(d->System.out.println("    "+ d));
 		List<EvaluacionTabla> evt = Ebean.find(EvaluacionTabla.class).where()
 				.in("id", auxIds2   )
 				.orderBy("aspecto.id")
 				.orderBy("reactivo.id")
 				.findList();		
-		List<EvaluacionObservacion> eo = new ArrayList<EvaluacionObservacion>();
+		List<EvaluacionObservacion> eo = new ArrayList<>();
 		
 		for( Evaluacion auxER : er  ){		
 			EvaluacionObservacion auxEO = EvaluacionObservacion.find.where().eq("respuesta.id",auxER.id).findUnique();			
@@ -532,7 +515,7 @@ xIds.forEach(d->System.out.println("    "+ d));
 	
 	
 	public static Result cancelarRecursoEvaluacion(Long idSocitituCancelacion){
-System.out.println("Desde cancelarRecursoEvaluacion");				
+        System.out.println("Desde cancelarRecursoEvaluacion");
 		SolicitudCancelacion sc = SolicitudCancelacion.find.byId(idSocitituCancelacion);
 		Recurso r = Recurso.find.byId(sc.recurso.id);		
 		r.estado = Estado.find.byId(402L);
@@ -540,7 +523,6 @@ System.out.println("Desde cancelarRecursoEvaluacion");
 		sc.aceptada = true;
 		sc.fechaAceptacion = new Date();
 		sc.update();
-	//	return ok("oki".toString());	
 		flash("success","Se canceló el recurso "+sc.recurso.numcontrol);
 		return redirect ("/solicitudCanceladoList");		
 	}
@@ -605,22 +587,13 @@ System.out.println("Desde cancelarRecursoEvaluacion");
                 }
                 jaRecurso.put(joRecurso);
             }
-
-
-
             recursos.forEach(Recurso::Calificar);
-
-
-
             joRetorno.put("recursos", jaRecurso);
         }catch (JSONException je){
             System.out.println("Error de jason "+je.getCause());
         }
-
         return ok (joRetorno.toString());
-
     }
-	
 }
 
 

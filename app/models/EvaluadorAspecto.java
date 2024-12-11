@@ -41,10 +41,10 @@ public class EvaluadorAspecto extends Model {
 
 
 	
-	public static Finder<Long,EvaluadorAspecto> find = new Finder<Long,EvaluadorAspecto>(Long.class, EvaluadorAspecto.class); 
+	public static Finder<Long,EvaluadorAspecto> find = new Finder<>(Long.class, EvaluadorAspecto.class);
 
     public static Map<String,String> optionsAspecto( Long numAspecto) {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(EvaluadorAspecto c: EvaluadorAspecto.find.where().eq("aspecto.id", numAspecto).findList()) {
             options.put(c.evaluador.id.toString(), c.evaluador.personal.nombreCompleto());
         }
@@ -53,7 +53,7 @@ public class EvaluadorAspecto extends Model {
     
 
     public static Map<String,String> optionsAspectoActivo( Long numAspecto) {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(EvaluadorAspecto c: EvaluadorAspecto.find.where().eq("aspecto.id", numAspecto).eq("evaluador.personal.activo.id", 2).findList()) {
             options.put(c.evaluador.id.toString(), c.evaluador.personal.nombreCompleto());
         }

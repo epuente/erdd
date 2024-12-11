@@ -1,16 +1,15 @@
 package controllers;
 
+import static play.Play.application;
 import static play.data.Form.form;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import actions.Notificacion;
 import actions.miCorreo;
-import actions.miCorreo2;
 import models.RecursoAutor;
 import models.EncuestaObservacion;
 import models.EncuestaReactivo;
@@ -46,13 +45,14 @@ public class EncuestaController extends ControladorSeguroCoordinador{
 	
 	@Transactional
 	public static Result agregarObservaciones(Long idEnc){
-		String urlSitio= play.Play.application().configuration().getString("urlSitio");
+		String urlSitio= application().configuration().getString("urlSitio");
+        urlSitio = application().isDev()?"http://"+urlSitio:"https://"+urlSitio;
 		//String puerto = Play.application().configuration().getString("http.port");
 		//String direccionPuerto = direccion+":"+puerto;
 		DynamicForm df = form().bindFromRequest();
 		EncuestaRespuesta enResp = EncuestaRespuesta.find.byId(idEnc);
 		enResp.observaciones.forEach(Model::delete);
-		List<EncuestaObservacion> eobs = new ArrayList<EncuestaObservacion>();
+		List<EncuestaObservacion> eobs = new ArrayList<>();
 		int numObservaciones = 0;
 		for(int w=1; w<=2;w++){
 			for(int x=1; x<=5;x++){
@@ -91,8 +91,8 @@ System.out.println("id "+idEnc);
 			RecursoAutor responsable = enResp.recurso.getResponsable();
 			miCorreo mc = new miCorreo();
 			mc.asunto = "Observaciones a la encuesta correspondiente al recurso "+enResp.recurso.titulo;
-			mc.mensaje = "Estimado(a)"+ responsable.nombreCompleto() +", la encuesta realizada por usted tiene algunas observaciones .....";
-			mc.mensaje += "<br>Ingrese a <a href=https://'"+urlSitio+"'>Atender observaciones</a>";
+			mc.mensaje = "Estimado(a) "+ responsable.nombreCompleto() +", la encuesta realizada por usted tiene algunas observaciones .....";
+			mc.mensaje += "<br>Ingrese a <a href='"+urlSitio+"/seguimiento/"+enResp.recurso.numcontrol+"'>Atender observaciones</a>";
 			mc.para = Collections.singletonList(responsable.correo.email);
 
 			// Enviar notificacion al celular
@@ -150,7 +150,7 @@ System.out.println("id "+idEnc);
 		//miCorreo2 mc = new miCorreo2();
         miCorreo mc = new miCorreo();
 		mc.asunto = "Oficio de valoración del recurso "+ofv.recurso.titulo;
-		mc.mensaje = "Estimado(a)"+ responsable.nombreCompleto() +", le agradecemos la encuesta que contestó, para nosotros es iportante .......\nLe enviamos el oficio de valoración ........";
+		mc.mensaje = "Estimado(a) "+ responsable.nombreCompleto() +", le agradecemos la encuesta que contestó, para nosotros es iportante .......\nLe enviamos el oficio de valoración ........";
 		
 		mc.para = Collections.singletonList(responsable.correo.email);
 		

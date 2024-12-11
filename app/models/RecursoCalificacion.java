@@ -7,7 +7,6 @@ import play.db.ebean.Model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class RecursoCalificacion extends Model {

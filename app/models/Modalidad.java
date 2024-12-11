@@ -28,7 +28,7 @@ public class Modalidad extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 
     
-    public static Finder<Long,Modalidad> find = new Finder<Long,Modalidad>(Long.class, Modalidad.class);     
+    public static Finder<Long,Modalidad> find = new Finder<>(Long.class, Modalidad.class);
 
     public static Page<Modalidad> page(int page, int pageSize, String sortBy, String order, String filter) {
         return 
@@ -41,7 +41,7 @@ public class Modalidad extends Model{
     }    
     
     public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(Modalidad c: Modalidad.find.orderBy("id").findList()) {
             options.put(c.id.toString(), c.descripcion);
         }

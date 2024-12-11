@@ -1,18 +1,8 @@
 package models;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -64,7 +54,27 @@ public class CorreoSalida extends Model{
 	@UpdatedTimestamp
 	public Date auditlastupdate;
 
-	public static Finder<Long,CorreoSalida> find = new Finder<Long,CorreoSalida>(Long.class, CorreoSalida.class);
+	public static Finder<Long,CorreoSalida> find = new Finder<>(Long.class, CorreoSalida.class);
+
+    public CorreoSalida() {
+    }
+
+    public CorreoSalida(miCorreo mc, Recurso r) {
+        List<CorreoSalidaPara> listaDirecciones = new ArrayList<>();
+        for (String aux : mc.para){
+            CorreoSalidaPara csp = new CorreoSalidaPara();
+            csp.para = aux;
+            listaDirecciones.add(csp);
+        }
+
+        para = listaDirecciones;
+        recurso = r;
+        estado = r.estado;
+        asunto = mc.asunto;
+        mensaje = mc.mensaje;
+        enviado = mc.enviado;
+        mensajeoperacion = mc.enviado?"Se envió correctamente...":mc.mensajeError+"...";
+    }
 
 
     /*

@@ -28,7 +28,7 @@ public class ClasificadorCatalogoCriterio3 extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 
 	
-	public static play.db.ebean.Model.Finder<Long,ClasificadorCatalogoCriterio3> find = new Finder<Long,ClasificadorCatalogoCriterio3>(Long.class, ClasificadorCatalogoCriterio3.class);
+	public static play.db.ebean.Model.Finder<Long,ClasificadorCatalogoCriterio3> find = new Finder<>(Long.class, ClasificadorCatalogoCriterio3.class);
 	
 	
 	

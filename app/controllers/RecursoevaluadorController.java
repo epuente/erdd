@@ -16,7 +16,6 @@ import com.avaje.ebean.Expr;
 import com.avaje.ebean.annotation.Transactional;
 import com.itextpdf.text.DocumentException;
 import actions.miCorreo;
-import actions.miCorreo2;
 import actions.miPdf;
 import models.*;
 import play.data.DynamicForm;
@@ -29,7 +28,7 @@ import views.html.Recursoevaluador.*;
 public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
 
     public static Result asignarEvaluadoresList(){
-        List<Long> edos = new ArrayList<Long>();
+        List<Long> edos = new ArrayList<>();
         edos.add(6L);
         edos.add(7L);
         edos.add(8L);
@@ -89,7 +88,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         }
 
 
-        List<Long> listaDestinatarios = new ArrayList<Long>();
+        List<Long> listaDestinatarios = new ArrayList<>();
         int numeroEvaluadores = 0;
         for(long d = 1L; d<=4L;d++){
             Recursoevaluador actual = Recursoevaluador.find.where().eq("recurso.id", id).eq("aspecto.id", d).findUnique();
@@ -140,7 +139,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         miCorreo mc = new miCorreo();
         mc.asunto = "Asignación de recurso a evaluar";
         String m1 = "Se le informa que el día ";
-        String m3 = " fue asignado(a) como evaluador(a) del recurso didáctico digital '"+r.titulo+"', con número de folio "+r.oficio.folio+" y clasificado como "+r.clasificacion.criterio2.descripcion+" de tipo "+r.clasificacion.criterio3.catalogo.descripcion+".";
+        String m3 = " fue asignado(a) como evaluador(a) del recurso didáctico digital '"+r.titulo+"', con número de folio "+r.oficio.folio+" y clasificado como "+r.clasificacion.criterio2.descripcion+" de tipo "+r.clasificacion.criterio3.catalogo.descripcion+".";
 
         String m4 = "<br><br>El equipo de evaluación está integrado por:<br><br>";
         StringBuilder listaEvaluadores = new StringBuilder();
@@ -151,30 +150,26 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
 
         for(Recursoevaluador linea : r.recursoevaluadores){
             listaEvaluadores.append((u++)).append(". ").append(linea.evaluador.personal.nombreCompleto()).append(" (evaluador del aspecto: ").append(linea.aspecto.descripcion).append(").<br>");
-
         }
         listaEvaluadores.append("<br><br>");
 
         String m6="";
         if (r.formatoentregaotro.isEmpty()){
-            m6 = "El formato de entrega fue en "+r.formatoentrega.descripcion+", el cual será entregado de forma personal. ";
+            m6 = "El formato de entrega fue en "+r.formatoentrega.descripcion+", el cual será entregado de forma personal.";
         } else {
             m6 = "El formato de entrega fue en "+r.formatoentregaotro;
         }
 
-
         if ( !r.url.isEmpty() ){
-            enWeb = "<br>Podrá consultar el contenido en línea, a través del explorador Mozilla, en la siguiente dirección:<br>"+r.url+"<br>";
+            enWeb = "<br>Podrá consultar el contenido en línea a través de un explorador en la siguiente dirección:<br>"+r.url+"<br>";
             if ( r.recursosenweb.isEmpty() ){
                 credenciales = "<br>No se requieren datos de acceso ya que está abierto.<br><br>";
             } else {
                 credenciales = "<br>Los datos para ingresar son:<br>Usuario:"+r.recursosenweb.get(0).usuario+"<br>Clave de acceso:"+r.recursosenweb.get(0).password+"<br><br>";
             }
         }
-
-
         cal.setTime(r.evaluacionFecha.fechalimite);
-        String m7 = "<br><br>La fecha programada para la conclusión de su evaluación es el día " + cal.get(Calendar.DAY_OF_MONTH)+" de "+ months[cal.get(Calendar.MONTH)]+".";
+        String m7 = "<br><br>La fecha límite para la conclusión de su evaluación es el día " + cal.get(Calendar.DAY_OF_MONTH)+" de "+ months[cal.get(Calendar.MONTH)]+" del año "+cal.get(Calendar.YEAR)+".";
 
         for(Recursoevaluador linea : Recursoevaluador.find.where().eq("recurso.id",r.id).in("evaluador.id", listaDestinatarios).findList()){
             mc.para = Collections.singletonList(linea.evaluador.personal.correo);
@@ -186,15 +181,13 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
             mc.mensaje += m1+m2+m3+m4+listaEvaluadores+m6+enWeb+credenciales+m7+"<br><br>El Departamento de Investigación e Innovación agradece de antemano su colaboración en este proceso.";
             //mc.run();
             mc.enviar();
+
+            CorreoSalida cs = new CorreoSalida(mc, r);
+            cs.save();
+
         }
-
-
         flash("success","Se asignaron evaluadores al recurso '"+r.titulo+"'");
         return redirect(routes.ClasificacionController.list());
-        /* ************************************************************************************************************************************ */
-
-
-
     }
 
     public static Result mostrarEvaluadores(Long id) {
@@ -279,8 +272,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
     }
 
 
-
-    public static Result reporteEvaluacion(Long id) throws DocumentException, MalformedURLException, IOException{
+    public static Result reporteEvaluacion(Long id) {
 
         System.out.println("Desde RecursoEvaluadorController.reporteEvaluacion");
         ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
@@ -295,11 +287,6 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         response().setContentType("application/pdf");
         return ok (  mipdf.baos.toByteArray() );
     }
-
-
-
-
-
 
 
     public static Result pruebaCorreo() throws Exception{
@@ -320,46 +307,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         //mc2.nombresAdjuntos = Collections.singletonList("Oficio X ");
 
         mc2.enviar();
-
-
-
         return ok ("Se envió");
-    }
-
-    public static Result pruebaCorreoSalida(){
-        List<Recurso> rs = new ArrayList<>();
-
-        Recurso r = new Recurso();
-        RecursoAutor ra = new RecursoAutor();
-
-        ra.correo = new CorreoAutor();
-        //ra.correo.email="epuente_72@yahoo.com";
-        ra.correo.autor=new RecursoAutor();
-        ra.correo.autor.nombre="yo";
-        ra.correo.autor.paterno="soy";
-        ra.correo.autor.materno="él";
-        ra.correo.autor.autorfuncion = new Autorfuncion();
-        ra.correo.autor.autorfuncion.id=1L;
-        r.autores.add(ra);
-
-
-        List<CorreoSalidaPara> listaDirecciones = new ArrayList<CorreoSalidaPara>();
-        for (RecursoAutor a : r.autores) {
-                CorreoSalidaPara aux = new CorreoSalidaPara();
-                aux.para = "epuente_72@yahoo.com";
-                listaDirecciones.add( aux );
-        }
-        CorreoSalida cs = new CorreoSalida();
-        cs.asunto = "Prueba de correo";
-        cs.para = listaDirecciones;
-        cs.mensaje ="Estimado usuario:<br><br>";
-        cs.mensaje+="Su solicitud de evaluación de Recurso Didáctico Digital se recibió correctamente.<br>En caso de existir observaciones sobre la información y/o documentos registrados, recibirá una notificación por correo electrónico para realizar las modificaciones conducentes, en un plazo máximo de 72 horas. En caso de no recibirla, por favor comuníquese a la Ext. 57405.<br><br>";
-        cs.mensaje+="La clave de control para el seguimiento de su solicitud es:<br><br>";
-        cs.recurso = r;
-        cs.estado = new Estado();
-        cs.estado.id=402L;
-        cs.enviar2();
-        return ok();
     }
 
 

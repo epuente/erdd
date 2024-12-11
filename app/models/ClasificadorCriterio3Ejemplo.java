@@ -31,6 +31,6 @@ public class ClasificadorCriterio3Ejemplo extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 
 	
-	public static Finder<Long,ClasificadorCriterio3Ejemplo> find = new Finder<Long,ClasificadorCriterio3Ejemplo>(Long.class, ClasificadorCriterio3Ejemplo.class);
+	public static Finder<Long,ClasificadorCriterio3Ejemplo> find = new Finder<>(Long.class, ClasificadorCriterio3Ejemplo.class);
 		
 }

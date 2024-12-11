@@ -8,12 +8,10 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import classes.ColorConsola;
 import com.avaje.ebean.Page;
 import com.avaje.ebean.annotation.CreatedTimestamp;
 import com.avaje.ebean.annotation.UpdatedTimestamp;
 
-import org.jboss.logging.Logger;
 import play.db.ebean.Model;
 import classes.ColorConsola;
 
@@ -53,7 +51,7 @@ public class Recursoevaluador extends Model{
     public EvaluacionObservacionGral observacionEvaluacion;
 
 
-    public static   Model.Finder<Long,Recursoevaluador> find = new Model.Finder<Long,Recursoevaluador>(Long.class, Recursoevaluador.class);
+    public static   Model.Finder<Long,Recursoevaluador> find = new Model.Finder<>(Long.class, Recursoevaluador.class);
 
 
     public static Page<Recursoevaluador> page(int page, int pageSize, String sortBy, String order, String filter, String campoFiltro) {

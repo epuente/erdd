@@ -1,15 +1,16 @@
 package controllers;
 
+import static play.Play.application;
 import static play.data.Form.form;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -66,10 +67,7 @@ import views.html.Recurso.editMasterForm;
 import views.html.Recurso.recibidoMaster;
 import views.html.Recurso.actualizadoMaster;
 
-import javax.mail.*;
-import javax.mail.internet.*;
-import java.util.Properties;
-import java.util.stream.Collectors;
+import play.api.Application;
 
 public class RecursoWebController extends ControladorDefault{
 
@@ -93,7 +91,8 @@ public class RecursoWebController extends ControladorDefault{
 
 	@play.db.ebean.Transactional
 	public static Result mastersave() {
-		String urlSitio= play.Play.application().configuration().getString("urlSitio");
+		String urlSitio= application().configuration().getString("urlSitio");
+        urlSitio = application().isDev()?"http://"+urlSitio:"https://"+urlSitio;
 		//String puerto = Play.application().configuration().getString("http.port");
 		//String direccionPuerto = direccion+":"+puerto;
 		Form<Recurso> recursoForm = form(Recurso.class).bindFromRequest();
@@ -239,28 +238,26 @@ public class RecursoWebController extends ControladorDefault{
 
 
 		// Envio de correo a autores
-		List<CorreoSalidaPara> listaDirecciones = new ArrayList<CorreoSalidaPara>();
+		List<String> listaDirecciones = new ArrayList<>();
 		for (RecursoAutor a : r.autores) {
 			if (a.autorfuncion.id == 1L){
-				CorreoSalidaPara aux = new CorreoSalidaPara();
-				aux.para = a.correo.email;
-				listaDirecciones.add( aux );
+				listaDirecciones.add( a.correo.email );
 			}
 		}
-		CorreoSalida cs = new CorreoSalida();
-		cs.asunto = "Solicitud de ETPRDD (correo al Docente)";
-		cs.para = listaDirecciones;
-        cs.mensaje = "Estimado usuario:<br><br>"+
+		miCorreo mc = new miCorreo();
+		mc.asunto = "Solicitud de ETPRDD (correo al Docente)";
+		mc.para = listaDirecciones;
+        mc.mensaje = "Estimado usuario:<br><br>"+
 		        "Su solicitud de evaluación de Recurso Didáctico Digital se recibió correctamente.<br>En caso de existir observaciones sobre la información y/o documentos registrados, recibirá una notificación por correo electrónico para realizar las modificaciones conducentes, en un plazo máximo de 72 horas. En caso de no recibirla, por favor comuníquese a la Ext. 57405.<br><br>"+
 		        "La clave de control para el seguimiento de su solicitud es:<br><br>"+
                 "<big>"+r.numcontrol+"</big>"+
                 "<br>("+r.ncLetras()+")<br><br>"+
-                "Ingrese a la dirección <a href='https://"+urlSitio+"'>https://"+urlSitio+"</a> y utilizando su clave de control realice su seguimiento.";
-		cs.recurso = r;
-		cs.estado = r.estado;
-		cs.enviar2();
+                "Ingrese a la dirección <a href='"+urlSitio+"'>"+urlSitio+"</a> y utilizando su clave de control realice su seguimiento.<br><br>"+
+                "O ingrese directamente <a href='"+urlSitio+"/seguimiento/"+r.numcontrol+"'>Aqui</a>  ";
+        mc.enviar();
 
-
+        CorreoSalida cs = new CorreoSalida(mc, r);
+        cs.save();
 
 
 		// Enviar notificacion al celular (docente)
@@ -268,26 +265,20 @@ public class RecursoWebController extends ControladorDefault{
 		n.enviar(r.numcontrol, "ERDD", "Su solicitud de evaluación de Recurso Didáctico Digital se recibió correctamente");
 
 		//Envío de correo al coordinador de ERDD
-		List<CorreoSalidaPara> listaDirecciones2 = new ArrayList<CorreoSalidaPara>();
-		CorreoSalida cs2 = new CorreoSalida();
-		cs2.asunto = "Solicitud de ETPRDD (correo al coordinador del proceso)";
-		cs2.mensaje="Ha ingresado una nueva solicitud de Recurso con la clave de control: "+r.numcontrol+"<br><br>";
-		cs2.mensaje+="Para revisarla, por favor ingrese al Sistema de Evaluación de Recursos Didácticos Digitales: ";
-		cs2.mensaje+="<a href='https://"+urlSitio+"/login'>https://"+urlSitio+"/login</a>";
+		mc.asunto = "Solicitud de ETPRDD (correo al coordinador del proceso)";
+		mc.mensaje="Ha ingresado una nueva solicitud de Recurso con la clave de control: "+r.numcontrol+"<br><br>";
+		mc.mensaje+="Para revisarla, por favor ingrese al Sistema de Evaluación de Recursos Didácticos Digitales: ";
+		mc.mensaje+="<a href='"+urlSitio+"/login'>"+urlSitio+"/login</a>";
+        mc.para =  Collections.singletonList(Personal.elCoordinador().correo);
+        mc.enviar();
 
-
-		CorreoSalidaPara aux2 = new CorreoSalidaPara();
-		aux2.para = Personal.elCoordinador().correo;
-		listaDirecciones2.add(aux2);
-		cs2.para = listaDirecciones2;
-		cs2.recurso = r;
-		cs2.estado = r.estado;
-		cs2.enviar2();
+		CorreoSalida aux2 = new CorreoSalida(mc, r);
+        aux2.save();
 
 
 		// Enviar notificacion al celular del coordinador(administrador e2)
 		Notificacion n2 = new Notificacion();
-		n2.enviar("fbErddAdmin", "ERDD", cs2.mensaje);
+		n2.enviar("fbErddAdmin", "ERDD", mc.mensaje);
 		return redirect("/solRecibida/"+r.numcontrol);
 	}
 
@@ -337,7 +328,7 @@ public class RecursoWebController extends ControladorDefault{
 
 
 
-	public static Result imprimirSolicitudAceptada()throws DocumentException, IOException, IOException{
+	public static Result imprimirSolicitudAceptada()throws DocumentException, IOException{
 		ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
 		miPdf mipdf = new miPdf(Long.parseLong(session("idRecurso")));
 		//mipdf.id = Long.parseLong(session("idRecurso"));
@@ -456,14 +447,13 @@ public class RecursoWebController extends ControladorDefault{
 			if (observaItems!= null){
                 for (String observaItem : observaItems) {
                     if (!observaItem.isEmpty()) {
-                        String ncampo = observaItem;
-                        System.out.println("Eliminando obs docto: " + ncampo);
-                        Observacion ona = Observacion.searchByRecursoNombreCampo(r.id, ncampo);
+                        System.out.println("Eliminando obs docto: " + observaItem);
+                        Observacion ona = Observacion.searchByRecursoNombreCampo(r.id, observaItem);
                         System.out.println(ona);
                         if (ona != null)
                             ona.delete();
-                        System.out.println("Eliminando obs docto: " + ncampo);
-                        Observacion otd = Observacion.searchByRecursoNombreCampo(r.id, ncampo);
+                        System.out.println("Eliminando obs docto: " + observaItem);
+                        Observacion otd = Observacion.searchByRecursoNombreCampo(r.id, observaItem);
                         System.out.println(otd);
                         if (otd != null)
                             otd.delete();
@@ -595,16 +585,16 @@ public class RecursoWebController extends ControladorDefault{
 
 
     // Esta es un prueba de correo
-	public static Result Correo() throws MessagingException {
+	public static Result Correo() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy kk:mm:ss");
         System.out.println("Desde RecursowebController.Correo");
 		miCorreo mc = new miCorreo();
-
         List<String> lista = new ArrayList<>();
-
         lista.add("epuente_72@yahoo.com");
 		mc.para =lista;
-        mc.asunto="Prueba Se recibió correctamente";
-		mc.mensaje="Este es un correo de prueba Se recibió correctamente!!!";
+        mc.asunto="Prueba. Se recibió correctamente";
+		mc.mensaje="Este es un correo de prueba.<br>Se recibió <strong>correctamente</strong>!!!";
+        mc.mensaje+="<br><br><br><small>Enviado a las "+sdf.format(new Date())+"</small>";
 
         //mc.start();
 		mc.enviar();
@@ -614,16 +604,18 @@ public class RecursoWebController extends ControladorDefault{
         }
 
         System.out.println("enviado? "+mc.enviado);
-        if (!mc.enviado)
-            System.out.println("error "+mc.mensajeError);
-
-		return ok(views.html.correoEnviado.render("correo oki") );
+        if (!mc.enviado) {
+            System.out.println("error " + mc.mensajeError);
+            return ok(views.html.correoEnviado.render("No se pudo enviar el correo") );
+        } else {
+            return ok(views.html.correoEnviado.render("correo oki"));
+        }
 	}
 
 
 
 	// REPORTE PDF con objeto miPdf
-	public static Result reporteEvaluacion() throws DocumentException, MalformedURLException, IOException{
+	public static Result reporteEvaluacion(){
 		System.out.println("Desde REcursoWebController.reporteEvaluscion2");
 
 		Recurso r = Recurso.find.byId(Long.parseLong(session("idRecurso")));
@@ -812,7 +804,7 @@ public class RecursoWebController extends ControladorDefault{
 		return ok(     result.toString()     );
 	}
 
-	public static Result WSAjaxImprimirSolicitudAceptada(Long idRecurso)throws DocumentException, IOException, IOException{
+	public static Result WSAjaxImprimirSolicitudAceptada(Long idRecurso)throws DocumentException, IOException{
 		ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
 		miPdf mipdf = new miPdf(idRecurso);
 		//mipdf.id = idRecurso;
@@ -861,7 +853,7 @@ public class RecursoWebController extends ControladorDefault{
 
 				in.onClose(new Callback0() {
 					@Override
-					public void invoke() throws Throwable {
+					public void invoke() {
 						cancellable.cancel();
 						System.out.println("websocket cerrado ");
 					}
@@ -942,6 +934,22 @@ public class RecursoWebController extends ControladorDefault{
 
 
 
+    public static Result seguimiento(String nc){
+        Recurso recurso = models.Recurso.find.where().eq("numcontrol", nc).findUnique();
+        if (recurso != null) {
+            session("idRecurso", recurso.id.toString());
+            Long rid = recurso.id;
+            Form<Recurso> recursoForm = form(Recurso.class).fill(
+                    Recurso.find.byId(rid)
+            );
+
+            for (Historialestado he : recurso.historialestados) {
+                System.out.println(he.id + " " + he.estado + " " + he.estado.descripcion);
+            }
+            return ok(views.html.Historial.index.render(recurso));
+        } else
+            return ok(views.html.errores.noExisteRecurso.render());
+    }
 
 
 

@@ -43,7 +43,7 @@ public class SolicitudCancelacion extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 
     
-    public static Finder<Long,SolicitudCancelacion> find = new Finder<Long,SolicitudCancelacion>(Long.class, SolicitudCancelacion.class);     
+    public static Finder<Long,SolicitudCancelacion> find = new Finder<>(Long.class, SolicitudCancelacion.class);
 	
 
 }

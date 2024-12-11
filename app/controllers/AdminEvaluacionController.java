@@ -9,22 +9,12 @@ import com.avaje.ebean.annotation.Transactional;
 
 import actions.Notificacion;
 import actions.miCorreo;
-import actions.miCorreo2;
 import actions.miPdf;
-import models.RecursoAutor;
-import models.ClasificadorCriterio3;
-import models.Estado;
-import models.EstadoEvaluacion;
-import models.EvaluacionObservacion;
-import models.EvaluacionObservacionGral;
-import models.EvaluacionObservacionObservacionGral;
-import models.Evaluacion;
-import models.EvaluacionTabla;
-import models.HistorialestadoEvaluacion;
-import models.Recurso;
-import models.Recursoevaluador;
+import models.*;
 import play.data.DynamicForm;
 import play.mvc.Result;
+
+import static play.Play.application;
 
 
 public class AdminEvaluacionController extends ControladorSeguroCoordinador {
@@ -35,7 +25,8 @@ public class AdminEvaluacionController extends ControladorSeguroCoordinador {
 		DateFormatSymbols dfs = new DateFormatSymbols();
 		String[] months = dfs.getMonths();
 		int numObserva = 0;
-		String urlSitio= play.Play.application().configuration().getString("urlSitio");
+		String urlSitio= application().configuration().getString("urlSitio");
+        urlSitio = (application().isDev()?"http://":"https://") + urlSitio;
 	//	String puerto = Play.application().configuration().getString("http.port");
 		//String direccionPuerto = direccion+":"+puerto;
         System.out.println("AdminEvaluacionController.saveObservaciones");
@@ -132,10 +123,18 @@ System.out.println("no");
 		// ¿todas las evaluaciones terminadas para el recurso?
 		
 		boolean terminadosTodos = true;
+
+        List<Recursoevaluador> x = Recursoevaluador.find
+                .where()
+                    .eq("recurso.id", id)
+                    .eq("estadoevaluacion.id", 5)
+                .findList();
+        terminadosTodos = x.size()==4;
+        /*
 		for (Recursoevaluador x :  Recursoevaluador.find.where().eq("recurso.id", id).findList() ){
 			terminadosTodos &= (x.estadoevaluacion.id == 5L);
 		}
-		
+		*/
 		
 		
 		
@@ -161,7 +160,7 @@ System.out.println("numObserva:  "+numObserva);
 			mc.mensaje +="La evaluación del recurso '"+r.titulo+"' ha finalizado. Adjunto a este correo encontrará el reporte con sus resultados.\n";
 			mc.mensaje +="Si desea que le hagamos llegar dentro de las próximas 48 horas la copia del oficio de respuesta que se envía de manera formal a su unidad académica, sólo responda, por favor, la encuesta de satisfacción dando clic en el siguiente vínculo.\n\n";
 			//mc.mensaje +="Responder encuesta <a href='http://"+direccionPuerto+"'>Responder encuesta</a> \n\n\n";
-			mc.mensaje +="Responder encuesta <a href='https://"+urlSitio+"'>Responder encuesta</a> \n\n\n";
+			mc.mensaje +="Responder encuesta <a href='"+urlSitio+"'>Responder encuesta</a> \n\n\n";
 			mc.mensaje +="Si tiene alguna duda o comentario, estamos a sus órdenes a través del correo electrónico evaluardd@ipn.mx y en la extensión 57405.";
 			
 	        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -189,7 +188,8 @@ System.out.println("numObserva:  "+numObserva);
 			mc.para = Collections.singletonList(er.get(0).recursoevaluador.evaluador.personal.correo);
 			if (numObserva!=0){
 				mc.asunto ="Observaciones al recurso "+r.numcontrol;
-				mc.mensaje="El administrador hizo "+numObserva+" observaciones al aspecto "+re.aspecto.descripcion+" referentes al recurso con clave de control "+r.numcontrol+". Sírvase atenderlas.";
+				mc.mensaje="El administrador hizo "+numObserva+" "+(numObserva>1?"observaciones":"observación");
+                mc.mensaje+=" al aspecto "+re.aspecto.descripcion+" referentes al recurso con clave de control "+r.numcontrol+". Sírvase atenderlas.";
 			} else {
 				mc.mensaje="El administrador ha aprobado la evaluación del recurso "+re.recurso.numcontrol;
 				mc.asunto="Aprobado el recurso "+re.recurso.numcontrol;
@@ -198,6 +198,13 @@ System.out.println("numObserva:  "+numObserva);
 			mc.mensaje+="<br><br><br>"+cal.get(Calendar.DAY_OF_MONTH)+" de "+months[cal.get(Calendar.MONTH)]+" de "+cal.get(Calendar.YEAR)+", " + cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)+".";
 	        mc.enviar();
 			//mc.run();
+
+
+            CorreoSalida cs2 = new CorreoSalida(mc, r);
+
+            cs2.save();
+
+
 	        
 			// Enviar notificacion al celular 
 	    	Notificacion n = new Notificacion();

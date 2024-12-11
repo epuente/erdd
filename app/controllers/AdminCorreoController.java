@@ -1,22 +1,13 @@
 package controllers;
 
 
-import com.avaje.ebean.Page;
-import com.fasterxml.jackson.databind.JsonNode;
-import models.Ctacorreo;
 import org.apache.commons.codec.binary.Base64;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import play.data.Form;
 import play.mvc.Result;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.util.List;
 
-import static play.data.Form.form;
 import static play.mvc.Results.ok;
 
 

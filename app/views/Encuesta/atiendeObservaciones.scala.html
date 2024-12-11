@@ -252,7 +252,6 @@
 		$("[name='respuesta1[]']").prop("disabled", true);	
 		/// LEER OBSERVACIONES
 		@for(observa<-observaciones){
-alert("@observa.respuesta"+"   "+"@observa.descripcion");			
 			$("[name='observacion_@observa.respuesta']").val("El administrador hizo la siguiente observación: @observa.descripcion");
 			$("[name='observacion_@observa.respuesta']").css({"background-color":"#FFFDDD",
 					"-webkit-box-sizing": "border-box",

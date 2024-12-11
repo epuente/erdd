@@ -31,10 +31,10 @@ public class Tipodocumento extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 	
 	
-    public static play.db.ebean.Model.Finder<Long,Tipodocumento> find = new Finder<Long,Tipodocumento>(Long.class, Tipodocumento.class); 
+    public static play.db.ebean.Model.Finder<Long,Tipodocumento> find = new Finder<>(Long.class, Tipodocumento.class);
 	
     public static Map<String,String> optionsActivas() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(Tipodocumento c: Tipodocumento.find.where().ne("estado.id", 1).orderBy("descripcion").findList()) {
             options.put(c.id.toString(), c.descripcion);
         }

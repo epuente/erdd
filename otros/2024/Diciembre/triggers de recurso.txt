@@ -1,30 +1,41 @@
-El siguiente query genera el código para crear los triggers de cada tabla.
-
+* El siguiente query genera el código para crear los triggers de cada tabla.
 
 SELECT
 	'DELIMITER //'
 UNION
 SELECT
-		concat('CREATE TRIGGER ',table_name
-			,'_BEFORE_INSERT'
-			,' BEFORE INSERT ON ',table_name,' FOR EACH ROW BEGIN  if (new.auditinsert is null) then     set new.auditinsert = current_timestamp();   end if; END//')
-FROM information_schema.tables
-where table_schema = 'erdd_test5' and table_name!='recurso' and table_name!='play_evolutions'
+        concat('DROP TRIGGER IF EXISTS ',table_name,'_BEFORE_INSERT;//')
+        FROM information_schema.tables
+        where table_schema = 'erdd_test5' and table_name!='play_evolutions'
+UNION
+SELECT
+        concat('DROP TRIGGER IF EXISTS ',table_name,'_BEFORE_UPDATE;//')
+        FROM information_schema.tables
+        where table_schema = 'erdd_test5' and table_name!='play_evolutions'
 UNION
 SELECT
 		concat('CREATE TRIGGER ',table_name
-		,'_BEFORE_UPDATE',' BEFORE UPDATE ON ',table_name,' FOR EACH ROW BEGIN  set new.auditlastupdate = current_timestamp(); END;;')
-FROM information_schema.tables
-where table_schema = 'erdd_tes5' and table_name!='play_evolutions'
+			,'_BEFORE_INSERT'
+			,' BEFORE INSERT ON ',table_name,' FOR EACH ROW BEGIN  if (new.auditinsert is null) then     set new.auditinsert =  current_timestamp();   end if; END//')
+        FROM information_schema.tables
+        where table_schema = 'erdd_test5' and table_name!='play_evolutions'
+UNION
+SELECT
+		concat('CREATE TRIGGER ',table_name
+            ,'_BEFORE_UPDATE'
+            ,' BEFORE UPDATE ON ',table_name,' FOR EACH ROW BEGIN  set new.auditlastupdate = current_timestamp(); END//')
+        FROM information_schema.tables
+        where table_schema = 'erdd_test5' and table_name!='play_evolutions'
 UNION
 SELECT
 	'DELIMITER ;';
 
 
 
-
+* Los siguientes son para la tabla recurso
 
 DELIMITER //
+DROP TRIGGER IF EXISTS recurso_BEFORE_INSERT;//
 CREATE DEFINER=`erdd`@`localhost` TRIGGER `recurso_BEFORE_INSERT` BEFORE INSERT ON `recurso` FOR EACH ROW BEGIN
     DECLARE auxNC VARCHAR(255);
     DECLARE existe BOOLEAN;
@@ -42,16 +53,19 @@ END //
 DELIMITER ;
 
 DELIMITER //
+DROP TRIGGER IF EXISTS recurso_AFTER_INSERT;//
 CREATE DEFINER=`erdd`@`localhost` TRIGGER `recurso_AFTER_INSERT` AFTER INSERT ON `recurso` FOR EACH ROW BEGIN
 insert into historialestado values (null, new.id, new.estado_id, null,now());
 END//
 DELIMITER ;
 
 DELIMITER //
+DROP TRIGGER IF EXISTS recurso_BEFORE_UPDATE;//
 CREATE DEFINER=`erdd`@`localhost` TRIGGER `recurso_BEFORE_UPDATE` BEFORE UPDATE ON `recurso` FOR EACH ROW BEGIN  set new.auditlastupdate = current_timestamp(); END //
 DELIMITER ;
 
 DELIMITER //
+DROP TRIGGER IF EXISTS recurso_AFTER_UPDATE;//
 CREATE DEFINER=`erdd`@`localhost` TRIGGER `recurso_AFTER_UPDATE` AFTER UPDATE ON `recurso` FOR EACH ROW BEGIN
 insert into historialestado values (null, new.id, new.estado_id, null,now());
 END//

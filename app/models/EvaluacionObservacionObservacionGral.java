@@ -31,6 +31,6 @@ public class EvaluacionObservacionObservacionGral extends Model {
 	@UpdatedTimestamp
     public Date auditlastupdate; 	
 
-    public static Finder<Long,EvaluacionObservacionObservacionGral> find = new Finder<Long,EvaluacionObservacionObservacionGral>(Long.class, EvaluacionObservacionObservacionGral.class); 
+    public static Finder<Long,EvaluacionObservacionObservacionGral> find = new Finder<>(Long.class, EvaluacionObservacionObservacionGral.class);
 }
  

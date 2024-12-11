@@ -30,10 +30,10 @@ public class EstadoActivo extends Model{
     public Date auditlastupdate; 
     
     
-    public static Finder<Long,EstadoActivo> find = new Finder<Long,EstadoActivo>(Long.class, EstadoActivo.class);     
+    public static Finder<Long,EstadoActivo> find = new Finder<>(Long.class, EstadoActivo.class);
 
     public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(EstadoActivo c: EstadoActivo.find.orderBy("id").findList()) {
             options.put(c.id.toString(), c.descripcion);
         }

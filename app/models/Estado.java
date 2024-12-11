@@ -30,7 +30,7 @@ public class Estado extends Model {
 	@UpdatedTimestamp
     public Date auditlastupdate;   
 
-    public static Finder<Long,Estado> find = new Finder<Long,Estado>(Long.class, Estado.class);     
+    public static Finder<Long,Estado> find = new Finder<>(Long.class, Estado.class);
 
     public static Page<Estado> page(int page, int pageSize, String sortBy, String order, String filter) {
         return 
@@ -43,7 +43,7 @@ public class Estado extends Model {
     }    
     
     public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(Estado c: Estado.find.orderBy("descripcion").findList()) {
             options.put(c.id.toString(), c.descripcion);
         }

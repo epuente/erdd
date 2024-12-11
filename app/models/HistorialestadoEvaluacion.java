@@ -37,6 +37,6 @@ public class HistorialestadoEvaluacion extends Model{
     public Date auditlastupdate; 
     
     
-    public static Finder<Long,HistorialestadoEvaluacion> find = new Finder<Long,HistorialestadoEvaluacion>(Long.class, HistorialestadoEvaluacion.class);    
+    public static Finder<Long,HistorialestadoEvaluacion> find = new Finder<>(Long.class, HistorialestadoEvaluacion.class);
 
 }

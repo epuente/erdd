@@ -62,8 +62,7 @@ System.out.println("................................  "+r.oficiovaloracion);
         r.oficiovaloracion .numero = df.get("oficiovaloracion.numero");
        DateFormat formatter = null;
        formatter = new SimpleDateFormat("yyyy-MM-dd");
-	   Date fechaOficio = (Date) formatter.parse(df.get("oficiovaloracion.fechaoficio"));
-	   r.oficiovaloracion .fechaoficio = fechaOficio;
+        r.oficiovaloracion .fechaoficio = (Date) formatter.parse(df.get("oficiovaloracion.fechaoficio"));
 		//Graba los documentos   
 		MultipartFormData body = request().body().asMultipartFormData();
 			FilePart fp = body.getFile("oficiovaloracion.contenido");

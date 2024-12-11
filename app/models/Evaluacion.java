@@ -33,7 +33,7 @@ public class Evaluacion extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate;  
 
-    public static Finder<Long,Evaluacion> find = new Finder<Long,Evaluacion>(Long.class, Evaluacion.class);  	
+    public static Finder<Long,Evaluacion> find = new Finder<>(Long.class, Evaluacion.class);
 	
 	@OneToOne (mappedBy="respuesta",  cascade=CascadeType.ALL)
 	public EvaluacionObservacion observacion;

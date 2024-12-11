@@ -32,7 +32,7 @@ public class EvaluacionFecha extends Model{
 	
 
 	
-	public static Finder<Long,EvaluacionFecha> find = new Finder<Long,EvaluacionFecha>(Long.class, EvaluacionFecha.class);
+	public static Finder<Long,EvaluacionFecha> find = new Finder<>(Long.class, EvaluacionFecha.class);
 		
 	
 	

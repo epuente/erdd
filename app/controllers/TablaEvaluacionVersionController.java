@@ -39,7 +39,7 @@ System.out.println(df);
 			int VersionReciente = sqlRow.getInteger("v");
 
 System.out.println(VersionReciente);  		
-			etvr.version = new Long(VersionReciente+1);
+			etvr.version = (long) (VersionReciente + 1);
 			etvr.terminado = "N";
 			etvr.save();
 		//	etvr.refresh();

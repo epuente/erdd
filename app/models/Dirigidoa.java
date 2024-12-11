@@ -28,10 +28,10 @@ public class Dirigidoa extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 
     
-    public static Finder<Long,Dirigidoa> find = new Finder<Long,Dirigidoa>(Long.class, Dirigidoa.class);  
+    public static Finder<Long,Dirigidoa> find = new Finder<>(Long.class, Dirigidoa.class);
 
     public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(Dirigidoa c: Dirigidoa.find.orderBy("id").findList()) {
             options.put(c.id.toString(), c.descripcion);
         }

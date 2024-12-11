@@ -41,7 +41,7 @@ public class Usuario extends Model {
     @OneToMany(mappedBy="usuario", cascade=CascadeType.ALL)
     public List<RegistroAcceso> registrosaccesos;
 
-	public static Model.Finder<String,Usuario> find = new Model.Finder<String,Usuario>(String.class, Usuario.class);
+	public static Model.Finder<String,Usuario> find = new Model.Finder<>(String.class, Usuario.class);
 	
 	public static Usuario autenticar(String usuario, String password) {		
         return find.where().eq("usuario", usuario)

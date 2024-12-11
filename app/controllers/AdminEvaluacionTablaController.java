@@ -638,15 +638,6 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
             }
             System.out.println("002");
 
-        } catch (JsonParseException e) {
-            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
-            e.getMessage();
-        } catch (JsonMappingException e) {
-            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
-            e.getMessage();
-        } catch (IOException e) {
-            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
-            e.getMessage();
         } catch ( Exception e){
             System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
             e.getMessage();
@@ -815,13 +806,7 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
             System.out.println("005");
             //Quitar nodo 'id'
 
-        } catch (JsonParseException e) {
-            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
-            e.getMessage();
         } catch (JsonMappingException e) {
-            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
-            e.getMessage();
-        } catch (IOException e) {
             System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
             e.getMessage();
         } catch ( Exception e){

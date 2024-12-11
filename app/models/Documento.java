@@ -46,7 +46,7 @@ public class Documento extends Model {
 	
     
     
-    public static Finder<Long,Documento> find = new Finder<Long,Documento>(Long.class, Documento.class);
+    public static Finder<Long,Documento> find = new Finder<>(Long.class, Documento.class);
     
     public static List<Documento> searchByRecurso(Long recurso){
     	

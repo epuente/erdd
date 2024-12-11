@@ -26,8 +26,7 @@ public class CalendarioController extends ControladorSeguroCoordinador {
 			c = Calendario.find.byId(Long.parseLong(id));
 		}
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = formatter.parse(desde);
-		c.desde = date;
+        c.desde = formatter.parse(desde);
 		c.hasta = formatter.parse(hasta);
 		c.descripcion = titulo;
 		c.save();
@@ -35,7 +34,7 @@ public class CalendarioController extends ControladorSeguroCoordinador {
 		return ok(c.id.toString());		
 	}
 	
-	public static Result eliminarFechaCalendario(String id) throws ParseException{
+	public static Result eliminarFechaCalendario(String id) {
 		Calendario.find.byId( Long.parseLong(id)).delete();
 		return ok("oki");
 	}
@@ -50,15 +49,13 @@ System.out.println("****************desde hoyMasDias");
 		ini.set(Calendar.MILLISECOND, 0);
 		
 		ini.add(Calendar.DAY_OF_YEAR, 1);
-		
-		Calendar calculado = ini;
 
-		int ndAplicados = 0;
+        int ndAplicados = 0;
 		
 		while ( ndAplicados < ndias  ){
-			calculado.add(Calendar.DAY_OF_YEAR, 1);
-			if (   (calculado.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY)  &&  (calculado.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) ){			
-				if ( diaHabil(calculado)){
+			ini.add(Calendar.DAY_OF_YEAR, 1);
+			if (   (ini.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY)  &&  (ini.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) ){
+				if ( diaHabil(ini)){
 				ndAplicados++;
 				}
 			}
@@ -66,16 +63,16 @@ System.out.println("****************desde hoyMasDias");
 	
 		
 System.out.println("*********************************aplicados: "+ndAplicados);
-System.out.println("*********************************calculado: "+calculado.getTime());
+System.out.println("*********************************calculado: "+ ini.getTime());
 
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		
-		return ok(formato.format(calculado.getTime()));
+		return ok(formato.format(ini.getTime()));
 		
 	} 
 	
 	
-	public static Result fechaMasDias(int ndias, String fecha ) throws ParseException{
+	public static Result fechaMasDias(int ndias, String fecha ) {
 	
 		return ok( prueba(ndias, fecha)  );
 		

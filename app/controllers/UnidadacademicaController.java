@@ -156,7 +156,7 @@ System.out.println("**** ua: "+ua);
 		JSONObject json2 = new JSONObject();		
 		int filtrados = 0;
 		int sinFiltro = 0;
-		Map<Integer, Integer> columnasOrdenables = new HashMap<Integer, Integer>();
+		Map<Integer, Integer> columnasOrdenables = new HashMap<>();
 		columnasOrdenables.put(0, 1);
 		columnasOrdenables.put(1, 19);
 		columnasOrdenables.put(2, 9);

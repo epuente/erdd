@@ -2,21 +2,18 @@ package controllers;
 
 import static play.data.Form.form;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import models.EncuestaReactivo;
-import models.EncuestaRespuesta;
-import models.EstadoEncuesta;
-import models.HistorialestadoEncuesta;
-import models.Niveleducativo;
-import models.Recurso;
-import models.Unidadacademica;
+import actions.miCorreo;
+import models.*;
 import play.data.DynamicForm;
 import play.data.Form;
-import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.Encuesta.*;
+
+import javax.management.remote.rmi.RMIConnection;
 
 public class EncuestaWebController extends ControladorDefault{
 	
@@ -52,7 +49,7 @@ System.out.println( df  );
 		Recurso recurso = Recurso.find.byId( Long.parseLong(session("idRecurso")));
 		EncuestaRespuesta er = new EncuestaRespuesta();
 
-		java.util.Vector<String> v1 = new java.util.Vector<String>(); 
+		java.util.Vector<String> v1 = new java.util.Vector<>();
 		Map<String, String> formData = df.data();
 System.out.println(		formData.keySet());
 
@@ -68,7 +65,7 @@ System.out.println(		formData.keySet());
 			}
 			if (k.compareTo("respuesta1txt")==0)
 				er.respuesta1txt = formData.get(k);
-System.out.println(		k  +"  "+formData.get(k)  );
+            System.out.println(		k  +"  "+formData.get(k)  );
 			if (k.compareTo("respuesta2") == 0)
 				er.respuesta2 = formData.get(k);
 			if (k.compareTo("respuesta2txt") == 0)
@@ -85,7 +82,7 @@ System.out.println(		k  +"  "+formData.get(k)  );
 				er.respuesta5txt = formData.get(k);			
 		}
 		er.respuesta1 = v1.toString();
-System.out.println(v1.toString());
+        System.out.println(v1.toString());
 		er.estado = EstadoEncuesta.find.byId(1L);
 		er.recurso =  recurso;
 		er.save();
@@ -107,6 +104,17 @@ System.out.println(v1.toString());
         encuesta.save();
         */
      //   return redirect("/encuestaRecibida");
+
+        // Envia correo al coordinador indicandole que el autor envió la encuesta;
+        miCorreo mc = new miCorreo();
+        mc.para =  Collections.singletonList(Personal.elCoordinador().correo);
+        mc.asunto = "Encuesta recibida del rdd "+recurso.numcontrol;
+        mc.mensaje ="El autor del rdd "+recurso.numcontrol+" ha enviado la encuesta.";
+        mc.enviar();
+
+        CorreoSalida cs = new CorreoSalida(mc, recurso);
+        cs.save();
+
 		flash("success", "Se envió la encuesta.");
 		return redirect ("/recursowebAn");
 	}
@@ -169,7 +177,7 @@ System.out.println( df  );
 		Recurso recurso = Recurso.find.byId( Long.parseLong(session("idRecurso")));
 		EncuestaRespuesta er = recurso.encuesta;
 
-		java.util.Vector<String> v1 = new java.util.Vector<String>(); 
+		java.util.Vector<String> v1 = new java.util.Vector<>();
 		Map<String, String> formData = df.data();
 System.out.println(		formData.keySet());
 

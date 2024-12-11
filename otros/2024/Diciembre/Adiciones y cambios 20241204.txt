@@ -30,3 +30,5 @@ alter table correo_autor modify column telefono varchar(10);
 ALTER TABLE recurso DROP CONSTRAINT fk_recurso_alcancecurricular_73;
 
 alter table recurso drop column alcancecurricular_id;
+
+alter table correo_salida modify column mensaje varchar(2000);

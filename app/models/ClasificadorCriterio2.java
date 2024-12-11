@@ -34,10 +34,10 @@ public class ClasificadorCriterio2 extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 
 	
-	public static play.db.ebean.Model.Finder<Long,ClasificadorCriterio2> find = new Finder<Long,ClasificadorCriterio2>(Long.class, ClasificadorCriterio2.class);
+	public static play.db.ebean.Model.Finder<Long,ClasificadorCriterio2> find = new Finder<>(Long.class, ClasificadorCriterio2.class);
 	
     public static Map<String,String> options(Long c1) {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(ClasificadorCriterio2 c: ClasificadorCriterio2.find.where().eq("criterio1_id", 2L).orderBy("descripcion").findList()) {
             options.put(c.id.toString(), c.descripcion);
         }

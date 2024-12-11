@@ -32,7 +32,7 @@ public class Formatoentrega extends Model {
 	@UpdatedTimestamp
     public Date auditlastupdate; 
     
-    public static Finder<Long,Formatoentrega> find = new Finder<Long,Formatoentrega>(Long.class, Formatoentrega.class);     
+    public static Finder<Long,Formatoentrega> find = new Finder<>(Long.class, Formatoentrega.class);
 
     public static  List<Formatoentrega> lista(){
     	return Formatoentrega.find.select("id, descripcion").findList();  
@@ -49,7 +49,7 @@ public class Formatoentrega extends Model {
     }    
     
     public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(Formatoentrega c: Formatoentrega.find.orderBy("id").findList()) {
             options.put(c.id.toString(), c.descripcion);
         }

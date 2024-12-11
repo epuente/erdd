@@ -30,7 +30,7 @@ public class Niveleducativo extends Model {
 	@UpdatedTimestamp
     public Date auditlastupdate;   
 
-    public static Finder<Long,Niveleducativo> find = new Finder<Long,Niveleducativo>(Long.class, Niveleducativo.class);     
+    public static Finder<Long,Niveleducativo> find = new Finder<>(Long.class, Niveleducativo.class);
 
     public static Page<Niveleducativo> page(int page, int pageSize, String sortBy, String order, String filter) {
         return 
@@ -43,7 +43,7 @@ public class Niveleducativo extends Model {
     }    
     
     public static Map<String,String> options() {
-        LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+        LinkedHashMap<String,String> options = new LinkedHashMap<>();
         for(Niveleducativo c: Niveleducativo.find.orderBy("descripcion").orderBy("id").findList()) {
             options.put(c.id.toString(), c.descripcion);
         }

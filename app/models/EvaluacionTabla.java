@@ -50,7 +50,7 @@ public class EvaluacionTabla extends Model{
 	@UpdatedTimestamp
     public Date auditlastupdate; 
 
-	public static Model.Finder<Long,EvaluacionTabla> find = new Model.Finder<Long,EvaluacionTabla>(Long.class, EvaluacionTabla.class);
+	public static Model.Finder<Long,EvaluacionTabla> find = new Model.Finder<>(Long.class, EvaluacionTabla.class);
 	
     public static List<EvaluacionTabla> searchByVersionReactivo(Long idVersion, Long idReactivo){
         return find.where().eq("version.id",idVersion).eq("reactivo.id", idReactivo).findList();
@@ -58,13 +58,12 @@ public class EvaluacionTabla extends Model{
     
     public static List<EvaluacionTabla> searchByAspecto(Long idRecursoEvaluador){
     	  List<Evaluacion> er = Evaluacion.find.where().eq("recursoevaluador.id", idRecursoEvaluador).findList();
-		 ArrayList<Long> arrIds = new ArrayList<Long>();
+		 ArrayList<Long> arrIds = new ArrayList<>();
 		 for ( Evaluacion a : er){ 
 			 arrIds.add(a.evaluaciontabla.id);
 		 }
     	//Encontrar los criterios de la evaluacion que realizó
-    	List<EvaluacionTabla> evt = EvaluacionTabla.find.where().idIn(arrIds).findList();
-        return evt;
+        return EvaluacionTabla.find.where().idIn(arrIds).findList();
     }      
     
     
