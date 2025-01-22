@@ -1,0 +1,38 @@
+@(forma:Form[Ctacorreo])
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
+
+<fieldset>
+    <div class="row">
+        <div class="col-sm-3">
+            @inputText(forma("hostname"), '_label -> "Nombre del host", '_help -> "", 'size->"35px", 'placeHolder->"P. ej. correo.ipn.mx", 'class->"form-control", 'required->"required")
+        </div>
+        <div class="col-sm-3">
+            @inputText(forma("puerto"), '_label -> "Puerto", '_help -> "", 'placeHolder->"P. ej. 587", 'class->"form-control", 'required->"required")
+        </div>
+        <div class="col-sm-3">
+            @inputText(forma("cuenta"), '_label -> "Cuenta de correo", '_help -> "", 'size->"35px", 'placeHolder->"P. ej. jlopez@ipn.mx", 'class->"form-control", 'required->"required")
+        </div>
+        <div class="col-sm-3">
+            @inputText(forma("contrasenia"), '_label -> "Contraseña", '_help -> "", 'size->"35px", 'class->"form-control", 'required->"required", 'type->"password")
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <label for="activo1">Activo</label>
+            <div class="radio">
+                <label><input type="radio" name="activo" id="activo1" value="true" checked>Si</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input type="radio" name="activo" id="activo2" value="false">No</label>
+            </div>
+
+
+        </div>
+        @*
+        <div class="col-sm-4">
+            @inputText(forma("prioridad"), '_label -> "Prioridad", '_help -> "", 'size->"35px", 'class->"form-control")
+        </div>
+        *@
+    </div>
+</fieldset>

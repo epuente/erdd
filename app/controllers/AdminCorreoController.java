@@ -1,6 +1,7 @@
 package controllers;
 
-
+import classes.Encriptacion;
+import classes.Encriptacion2;
 import org.apache.commons.codec.binary.Base64;
 import play.mvc.Result;
 
@@ -10,28 +11,17 @@ import javax.crypto.spec.SecretKeySpec;
 
 import static play.mvc.Results.ok;
 
-
 public class AdminCorreoController {
-	
+	//private static final String key = "aesEncryptionKey";
+	//private static final String initVector = "encryptionIntVec";
 
-	
+    private static final String key = "estaEsLaClave151";
+    private static final String initVector = "encriptacionInit";
 
-	
-
-    
-    
-
-    
-    
-
-
-
-
-
-	private static final String key = "aesEncryptionKey";
-	private static final String initVector = "encryptionIntVec";
 	public static String encrypt(String value) {
 		try {
+            System.out.println("longitud key: "+key.length());
+            System.out.println("longitud initVector: "+initVector.length());
 			IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
 			SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
 
@@ -67,15 +57,22 @@ public class AdminCorreoController {
 
 
 
-	public static Result pruebaEncrypt(){
-		String originalString = "password";
-		System.out.println("Original String to encrypt - " + originalString);
-		String encryptedString = encrypt(originalString);
-		System.out.println("Encrypted String - " + encryptedString);
-		String decryptedString = decrypt(encryptedString);
-		System.out.println("After decryption - " + decryptedString);
-		return ok("OK");
-	}
+    public static Result pruebaEncrypt2(){
+        Encriptacion2 e2 = new Encriptacion2("Doce");
+
+        System.out.println("Original String to encrypt - " + e2.cadena);
+        String encryptedString = e2.encrypt();
+        System.out.println("Encrypted String - " + encryptedString);
+
+        String decryptedString = e2.decrypt();
+        System.out.println("After decryption - " + decryptedString);
+
+
+
+
+
+        return ok("ok2");
+    }
 	
 }
 

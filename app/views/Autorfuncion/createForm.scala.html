@@ -16,12 +16,13 @@
 					</ol>			
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-lg-12">
-	  	          <h3>Agregar tipo de autoría</h3>
-		        </div>
-			</div>
-			<div class="row">    
+            <div class="elContenido">
+                <div class="row">
+                    <div class="col-lg-12">
+                      <h3>Agregar tipo de autoría</h3>
+                    </div>
+                </div>
+                <div class="row">
     			<div class="col-lg-12">
 				    @form(CSRF(routes.AutorfuncionController.save()), 'class->"form-inline", 'id->"frmCreate") {
 					  <div class="form-group">
@@ -34,7 +35,8 @@
 			            <a href="@routes.AutorfuncionController.list()" class="btn btn-default">Cancelar</a> 
 			        </div>			        
 				 </div>
-		 </div>       
+		 </div>
+            </div>
     </div>
     
     

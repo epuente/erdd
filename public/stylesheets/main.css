@@ -62,23 +62,6 @@ pie {
 	margin-right: auto;
 }
 
-.encabezadoTabla {background-color: #C0C0C0; color: white;}
-
-
-div.container4 {
-    height: 10em;
-    position: relative }
-div.container4 p {
-    margin: 0;
-    background: yellow;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%) }
-
-
-
 form .clearfix{margin-bottom:18px;zoom:1;}form .clearfix:before,form .clearfix:after{display:table;content:"";zoom:1;*display:inline;}
 form .clearfix:after{clear:both;}
 
@@ -146,7 +129,16 @@ form div.clearfix.error .input-prepend span.add-on,form div.clearfix.error .inpu
 	padding-right: 15px;
 }
 
+.elContenido {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1400px;
+}
 
+/*Agrega margen despues del label de los checkboxes o radios*/
+input[type="checkbox"] + label, input[type="radio"] + label {
+  margin-right: 15px;
+}
 
 
 /**
@@ -204,9 +196,6 @@ body {
 .anima1 { animation-delay:0.1s; -moz-animation-delay:0.1s; -webkit-animation-delay:0.1s; }
 .anima2 { animation-delay:0.2s; -moz-animation-delay:0.2s; -webkit-animation-delay:0.2s; }
 .anima3 { animation-delay:0.3s; -moz-animation-delay:0.3s; -webkit-animation-delay:0.3s; }
-
-
-
 
 
 .badge-notify{

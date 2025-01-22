@@ -32,6 +32,9 @@ public class Evaluador extends Model{
 	@NotNull
 	@OneToMany (mappedBy="evaluador", cascade=CascadeType.ALL)	
 	public List<EvaluadorAspecto> evaluadoraspectos;
+
+    @OneToOne (mappedBy = "evaluador", cascade=CascadeType.ALL)
+    public EvaluadorFirma firma;
     
     public static play.db.ebean.Model.Finder<Long,Evaluador> find = new Finder<>(Long.class, Evaluador.class);
     

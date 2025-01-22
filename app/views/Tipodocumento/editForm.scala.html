@@ -18,29 +18,25 @@
 					</ol>			
 				</div>
 			</div>
-			<div class="row">
+
+            <div class="elContenido">
+			    <div class="row">
 				<div class="col-sm-12">    
 				    <h3>Editar tipo de documento</h3>
        			</div>
 			</div>       			
-			
-
-			
-				<div style="vertical-align: middle;"> 
+				    <div style="vertical-align: middle;">
 					@form(CSRF(routes.TipodocumentoController.update(id)), 'class->"form-inline5", 'id->"frmEdit"  ) {
 						@tipodocumentoForm(tdForm)
 					    <button type="submit" class="btn btn-primary">Actualizar</button>
 					}
 				</div>
 
-				 @form(CSRF(routes.TipodocumentoController.delete(id)), 'class -> "topRight", 'id->"frmDelete") {
-						<input type="submit" value="Eliminar" class="btn btn-danger">
-						<a href="@routes.TipodocumentoController.list()" class="btn btn-default">Cancelar</a>
- 					}
-
-
-
-
+                     @form(CSRF(routes.TipodocumentoController.delete(id)), 'class -> "topRight", 'id->"frmDelete") {
+                            <input type="submit" value="Eliminar" class="btn btn-danger">
+                            <a href="@routes.TipodocumentoController.list()" class="btn btn-default">Cancelar</a>
+                        }
+            </div>
     </div>
 }
 @comunCatalogosJS("Edit", "tipo de documento")

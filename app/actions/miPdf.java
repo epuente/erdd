@@ -4,19 +4,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import controllers.MyFooter;
+import controllers.routes;
 import models.Aspecto;
 import models.RecursoAutor;
 import models.Dirigidoa;
@@ -515,6 +508,15 @@ System.out.println("admin");
 		        celda.setPhrase(new Phrase("", fontCuerpo)  );
 		        celda.setColspan(2);		        
 		        tabla11.addCell(celda);
+
+                /* Imágenes de firmas*/
+                /*
+                String url =  "http://148.204.111.41:8089/reporte/verFirma/1";
+                Image firma = null;
+                firma = Image.getInstance(url);
+
+                 */
+
 	        }
         } else {
 System.out.println("otro");        	

@@ -3,6 +3,11 @@ package controllers;
 import static play.Play.application;
 import static play.data.Form.form;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,16 +15,10 @@ import javax.persistence.PersistenceException;
 
 import actions.Notificacion;
 import actions.miCorreo;
-import models.Evaluador;
-import models.EvaluadorAspecto;
-import models.Personal;
-import models.Aspecto;
-import models.EstadoActivo;
-import models.Rol;
-import models.Usuario;
-import models.UsuarioRol;
+import models.*;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.mvc.Http;
 import play.mvc.Result;
 import views.html.Evaluador.*;
 
@@ -77,7 +76,31 @@ public class EvaluadorController extends ControladorSeguro{
 						ea.evaluador = p.evaluador;
 					  	ea.aspecto = aux;					  	
 			        	p.evaluador.evaluadoraspectos.add(ea);
-			        //	ea.save();
+
+                        // Imagen de la firma escaneada del evaluador
+                        Http.MultipartFormData body = request().body().asMultipartFormData();
+                        Http.MultipartFormData.FilePart fp = body.getFile("imagenfirma");
+                        System.out.println("......+++"+fp);
+                        if (fp != null) {
+                            String fileName = fp.getFilename();
+                            String contentType = fp.getContentType();
+                            File file = fp.getFile();
+                            System.out.println("....archivo.." + file + "    tamaño   " + file.length() + "   contentype:  " + contentType);
+                            try {
+                                Path path = Paths.get(file.getPath());
+                                byte[] byteFile = Files.readAllBytes(path);
+                                //EvaluadorFirma evf = new EvaluadorFirma();
+                                p.evaluador.firma = new EvaluadorFirma();
+                                p.evaluador.firma.evaluador = p.evaluador;
+                                p.evaluador.firma.nombrearchivo = fileName;
+                                p.evaluador.firma.contenttype = contentType;
+                                p.evaluador.firma.contenido = byteFile;
+                            } catch (IOException ioe) {
+                                ioe.printStackTrace();
+                            }
+                        }
+
+                            //	ea.save();
 			        }
 				}
         	}        	
@@ -119,13 +142,22 @@ public class EvaluadorController extends ControladorSeguro{
 	
     public static Result delete(Long id) {
     	try{
+            /*
+            Evaluador evaluador = models.Evaluador.find.where().eq("personal.id", id).findUnique();
+            if (evaluador!=null) {
+                if (evaluador.firma!=null)
+                    evaluador.firma.delete();
+            }
+
+             */
+
     		Personal p = Personal.find.byId(id);
     		p.delete();	        
-    		flash("success", "Se eliminó el evaluador.");
+    		flash("success", "Se eliminó el evaluador " +p.nombreCompleto()+".");
 	    } catch (PersistenceException pe) {	   	 
 		   	 System.out.println("***************************"+pe+"\n"+pe.getCause());
 		   	 if (   pe.getCause().toString().contains("IntegrityConstraint")){
-		   		 flash("error", "No se puede eliminar puesto que ya hay evaluaciones realizadas, edite y establezca el evaluador como 'inactivo'.");	
+		   		 flash("error", "No se puede eliminar al evaluador, lo mas probable es que ya hay evaluaciones realizadas, edite y establezca el evaluador como 'inactivo'.");
 		   	 }
 	    }
 	    return GO_HOME;	

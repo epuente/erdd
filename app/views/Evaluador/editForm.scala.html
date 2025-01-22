@@ -3,17 +3,35 @@
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
 
 @main {
+    <style>
+        .table>tbody>tr>td{
+            border-top: none;
+        }
+    </style>
+
 	<div class="container-fluid">
-	    <h1>Editar evaluador</h1>
-	    @form(CSRF(routes.EvaluadorController.update2(id)), 'id->"frmEvaluador") {
-	        <fieldset>
-	           	@evaluadorForm(pForm, p)
-	        </fieldset>
-	    }
-	    <div class="actions">
-	        <input type="submit" value="Actualizar" class="btn primary btn-primary" onclick="javascript:preValidar()">  
-	        <a href="@routes.EvaluadorController.list()" class="btn btn-default">Cancelar</a> 
-	    </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li><a href="/evaluadores">Evaluadores</a></li>
+                    <li class="active">Editar</li>
+                </ol>
+            </div>
+        </div>
+        <div class="elContenido">
+            <h1>Editar evaluador</h1>
+            @form(CSRF(routes.EvaluadorController.update2(id)), 'id->"frmEvaluador") {
+                <fieldset>
+                    <div class="sinBordes">
+                        @evaluadorForm(pForm, p)
+                    </div>
+                </fieldset>
+            }
+            <div class="actions">
+                <input type="submit" value="Actualizar" class="btn primary btn-primary" onclick="javascript:preValidar()">
+                <a href="@routes.EvaluadorController.list()" class="btn btn-default">Cancelar</a>
+            </div>
+        </div>
     </div>    
 }
 
@@ -25,7 +43,7 @@
 		$(".observacion").hide();
 		$("[name*='btnObservacion_']").hide();
 		$("[name='aspecto[]']").attr("data-error","Seleccione el o los aspectos");
-		$("#usuario_usuario, #usuario_password").attr("data-error","Sólo letras y números, sin acéntos, espacios ni caracteres especiales.");
+		$("#usuario_usuario, #usuario_password").attr("data-error","Solo letras y números, sin acéntos, espacios ni caracteres especiales.");
 				
 		leer();
 	});

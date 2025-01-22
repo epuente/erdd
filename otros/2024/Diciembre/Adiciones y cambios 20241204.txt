@@ -1,3 +1,5 @@
+sudo mysql -u root -p
+
 create table cobertura_contenido (
   id                        bigint auto_increment not null,
   descripcion               varchar(255),
@@ -32,3 +34,6 @@ ALTER TABLE recurso DROP CONSTRAINT fk_recurso_alcancecurricular_73;
 alter table recurso drop column alcancecurricular_id;
 
 alter table correo_salida modify column mensaje varchar(2000);
+
+alter table ctacorreo add column activo tinyint(1);
+alter table ctacorreo add column prioridad tinyint(1);

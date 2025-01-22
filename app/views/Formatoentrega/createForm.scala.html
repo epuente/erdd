@@ -11,30 +11,32 @@
 				<div class="col-lg-12">
 					<ol class="breadcrumb">
 					  <li>Catálogos</li>
-					  <li><a href="/unidadacademica">Formatos de entrega</a></li>
+					  <li><a href="/formatosentrega">Formatos de entrega</a></li>
 					  <li class="active">Agregar</li>
 					</ol>			
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-lg-12">
-	  	          <h3>Agregar formato de entrega</h3>
-		        </div>
-			</div>
-			<div class="row">    
-    			<div class="col-lg-12">
-				    @form(CSRF(routes.FormatoentregaController.save()), 'class->"form-inline", 'id->"frmCreate") {
-					  <div class="form-group">
-				            @inputText(feForm("descripcion"), 'labelAlterna -> "Descripción", '_help -> "", 'required->"required", 'size->"40em")
-    						<input type="submit" value="Agregar" class="btn btn-primary">				            
-				       </div>
-				     
-			        }
-			        <div class="actions">			            
-			            <a href="@routes.FormatoentregaController.list()" class="btn btn-default">Cancelar</a> 
-			        </div>			        
-				 </div>
-		 </div>       
+            <div class="elContenido">
+                <div class="row">
+                    <div class="col-lg-12">
+                      <h3>Agregar formato de entrega</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        @form(CSRF(routes.FormatoentregaController.save()), 'class->"form-inline", 'id->"frmCreate") {
+                          <div class="form-group">
+                                @inputText(feForm("descripcion"), 'labelAlterna -> "Descripción", '_help -> "", 'required->"required", 'size->"40em")
+                                <input type="submit" value="Agregar" class="btn btn-primary">
+                           </div>
+
+                        }
+                        <div class="actions">
+                            <a href="@routes.FormatoentregaController.list()" class="btn btn-default">Cancelar</a>
+                        </div>
+                     </div>
+             </div>
+            </div>
     </div>
     
     

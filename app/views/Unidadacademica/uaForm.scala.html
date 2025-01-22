@@ -1,0 +1,29 @@
+@(forma2: Form[Unidadacademica])
+
+@import helper._
+
+
+<fieldset>
+    <div class="row">
+        <div class="col-sm-6">
+            @inputText(forma2("nombre"), '_label -> "Nombre", '_help -> "", 'required->"required", 'size->"50em")
+        </div>
+        <div class="col-sm-6">
+            @inputCheckboxGroup(
+            forma2("nivel"),
+            options = options(models.Niveleducativo.options),
+            '_label -> "Nivel")
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            @inputCheckboxGroup(
+            forma2("area"),
+            options = options(models.Areaconocimiento.options),
+            '_label -> "Área del conocimiento"
+            )
+        </div>
+
+    </div>
+
+</fieldset>

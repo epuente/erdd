@@ -2,6 +2,7 @@ package controllers;
 
 import models.*;
 import play.mvc.Result;
+import views.html.accesoNoAutorizado;
 
 public class ReporteController extends ControladorSeguroCoordinador{
 	
@@ -15,7 +16,21 @@ public class ReporteController extends ControladorSeguroCoordinador{
 System.out.println("***");
 		return ok("jajajaj");
 		
-	}	
-	
-	
+	}
+
+
+    public static Result verFirma(Long id) {
+        System.out.println("    id evaluador:"+id);
+
+        Evaluador e = Evaluador.find.setId(id).findUnique();
+        EvaluadorFirma ef = e.firma;
+
+                response().setContentType(ef.contenttype);
+                System.out.println("Visualizando firma del evaluador");
+                return ok (ef.contenido);
+    }
+
+
+
+
 }

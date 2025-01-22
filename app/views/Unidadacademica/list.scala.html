@@ -38,23 +38,24 @@
 		        </div>
 		    }    
 		    
-		    
-		    @if(currentPage.getTotalRowCount == 0) {
-		        <div class="well">
-		            <em>No hay unidades académicas.</em>
-		        </div>
-		    } else {
-                <table class="table table-bordered table-striped datatable" id="tablaCatalogoUA" style="width: 100%">               
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Nivel educativo</th>
-                            <th>Área del conocimiento</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                </table> 		        
-		    }
+		    <div class="elContenido">
+                @if(currentPage.getTotalRowCount == 0) {
+                    <div class="well">
+                        <em>No hay unidades académicas.</em>
+                    </div>
+                } else {
+                    <table class="table table-bordered table-striped datatable" id="tablaCatalogoUA">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Nivel educativo</th>
+                                <th>Área del conocimiento</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                }
+            </div>
     </div>
 }
 

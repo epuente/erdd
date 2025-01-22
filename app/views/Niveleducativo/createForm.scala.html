@@ -9,12 +9,13 @@
 				<div class="col-lg-12">
 					<ol class="breadcrumb">
 					  <li>Catálogos</li>
-					  <li><a href="/nivelList">Nivel Educativo</a></li>
+					  <li><a href="/nivelList">Niveles Educativos</a></li>
 					  <li class="active">Agregar</li>
 					</ol>			
 				</div>
 			</div>
-			<div class="row">
+            <div class="elContenido">
+			    <div class="row">
 				<div class="col-lg-12">    
 					<h3>Agregar Nivel Educativo</h3>    				
 				    @form(routes.NiveleducativoController.save(), 'class->"form-inline", 'id->"frmCreate") {
@@ -27,6 +28,7 @@
 				    <a href="@routes.NiveleducativoController.listDT()" class="btn btn-default">Cancelar</a>
 				</div>
 			</div>
+            </div>
     </div>    
 }
 @comunCatalogosJS("Create","Nivel Educativo")

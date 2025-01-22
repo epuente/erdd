@@ -15,43 +15,44 @@
 					</ol>			
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-lg-12">    
-				    <h3>Editar Unidad Académica</h3>
-					<div style="vertical-align: middle;"> 
-						@form(CSRF(routes.UnidadacademicaController.update(id)), 'class->"form-inline", 'id->"frmEdit"  ) {
-						  <div class="form-group">
-					    		@inputText(unidadacademicaForm("nombre"), 'labelAlterna->"Nombre", '_help -> "", 'size->"80px", 'required->"required")
-						  </div>
-						  <br>
-                            <div class="form-group">
-                              @inputCheckboxGroup(
-                                 unidadacademicaForm("nivel"),
-                                 options = options(models.Niveleducativo.options),                              
-                                 '_label -> null                                                                                 
-                              )
-                           </div>
-                           <br><br>
-                            <div class="form-group">
-                              @inputCheckboxGroup(
-                                 unidadacademicaForm("area"),
-                                 options = options(models.Areaconocimiento.options),                              
-                                 '_label -> null                                                                                 
-                              )
-                           </div>                              
-                           <br><br>						  
-						  <button type="submit" class="btn btn-primary">Actualizar</button>
-						}
-					</div>
-
-				 @form(CSRF(routes.UnidadacademicaController.delete(id)), 'class -> "topRight", 'id->"frmDelete") {
-						<input type="submit" value="Eliminar" class="btn btn-danger">
-						<a href="@routes.UnidadacademicaController.list()" class="btn btn-default">Cancelar</a>
- 					}
-
-
-    			</div>
-			</div>
+            <div class="elContenido">
+			    <div class="row">
+                    <div class="col-lg-12">
+                        <h3>Editar Unidad Académica</h3>
+                        <div style="vertical-align: middle;">
+                            @form(CSRF(routes.UnidadacademicaController.update(id)), 'class->"form-inline", 'id->"frmEdit"  ) {
+                              <div class="form-group">
+                                    @inputText(unidadacademicaForm("nombre"), 'labelAlterna->"Nombre", '_help -> "", 'size->"80px", 'required->"required")
+                              </div>
+                              <br>
+                                <div class="form-group">
+                                  @inputCheckboxGroup(
+                                     unidadacademicaForm("nivel"),
+                                     options = options(models.Niveleducativo.options),
+                                     '_label -> null
+                                  )
+                               </div>
+                               <br><br>
+                                <div class="form-group">
+                                  @inputCheckboxGroup(
+                                     unidadacademicaForm("area"),
+                                     options = options(models.Areaconocimiento.options),
+                                     '_label -> null
+                                  )
+                                </div>
+                                <br>
+                                <div class="actions" style="text-align:center">
+                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                </div>
+                            }
+                            @form(CSRF(routes.UnidadacademicaController.delete(id)), 'class -> "topRight", 'id->"frmDelete") {
+                            <input type="submit" value="Eliminar" class="btn btn-danger">
+                            <a href="@routes.UnidadacademicaController.list()" class="btn btn-default">Cancelar</a>
+                            }
+                        </div>
+                    </div>
+			    </div>
+            </div>
     </div>
 }
 @comunCatalogosJS("Edit", "Unidad académica")

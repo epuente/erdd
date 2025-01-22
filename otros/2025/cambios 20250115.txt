@@ -1,0 +1,79 @@
+create table evaluador_firma (
+id                        bigint auto_increment not null,
+evaluador_id              bigint,
+contenido                 longblob,
+auditinsert               datetime not null,
+auditlastupdate           datetime not null,
+constraint pk_evaluador_firma primary key (id))
+;
+
+
+alter table evaluador_firma add constraint fk_evaluador_firma_evaluador_49 foreign key (evaluador_id) references evaluador (id) on delete restrict on update restrict;
+create index ix_evaluador_firma_evaluador_49 on evaluador_firma (evaluador_id);
+
+Ejecutar la aplicación para que genere las tablas;
+
+Truncar todas las tablas;
+
+Tomar la info de db anterior y pasarla a la nueva (erdd_test7)
+
+    Exportar solo los inserts:
+    mysqldump -u erdd -p erdd_test6 --ignore-table=erdd_test6.play_evolutions  --ignore-table=erdd_test6.carrusel  --ignore-table=erdd_test6.polimedia  --ignore-table=erdd_test6.polimedia_archivo  --ignore-table=erdd_test6.polimedia_carrusel --ignore-table=erdd_test6.polimedia_carrusel_imagen --ignore-table=erdd_test6.polimedia_url  --ignore-table=erdd_test6.tipo  --no-create-info --skip-triggers --skip-extended-insert --complete-insert> ~/dumps/erdd_test6_soloInserts_20250116.sql
+
+Con un editor:
+    Eliminar 'alcancecurricularotro' del archivo erdd_test6_soloInserts_20250116.sql y borrar el valor correspondiente (el octavo valor en la lista de values). Renombrar el archivo a erdd_test6_soloInserts_20250116Modificado.sql
+
+    El campo unidadaprendizaje (penultimo de la lista de values) no puede ser nulo. Modificar en el archivo.
+
+    Eliminar inserts para tabla `tipo`
+
+Restaurar la DB.
+mysql -u erdd -p erdd_test7 < ~/dumps/erdd_test6_soloInserts_20250116Modificado.sql
+
+
+en application.conf
+evolutionplugin=disabled
+
+
+
+Desde una conola mysql:
+ALTER TABLE evaluador_firma ADD COLUMN contenttype varchar(255) AFTER contenido;
+ALTER TABLE evaluador_firma ADD COLUMN nombrearchivo varchar(255) after evaluador_id;
+
+
+Al parecer el framework si maneja apropiadamente los campos audit_insert y audit_update, se redujo el script de triggers:
+
+sudo mysql -u root -p
+use erdd_test7
+
+DELIMITER ;;
+CREATE TRIGGER recurso_BEFORE_INSERT BEFORE INSERT ON recurso
+FOR EACH ROW
+BEGIN
+    DECLARE auxNC VARCHAR(255);
+    DECLARE existe BOOLEAN;
+    ciclo:
+        REPEAT
+            SET auxNC = CONV(FLOOR(RAND() * 99999999999999), 20, 36);
+            SELECT COUNT(numcontrol) INTO existe FROM recurso WHERE numcontrol = auxNC;
+        UNTIL existe = 0
+        END REPEAT ciclo;
+    SET new.numcontrol = auxNC;
+END;;
+DELIMITER ;
+
+
+DELIMITER ;;
+CREATE TRIGGER recurso_AFTER_INSERT AFTER INSERT ON recurso FOR EACH ROW BEGIN
+	insert into historialestado values (null, new.id, new.estado_id, null,now());
+END;;
+DELIMITER ;
+
+
+DELIMITER ;;
+CREATE TRIGGER recurso_AFTER_UPDATE AFTER UPDATE ON recurso FOR EACH ROW BEGIN
+	insert into historialestado values (null, new.id, new.estado_id, null,now());
+END;;
+DELIMITER ;
+
+

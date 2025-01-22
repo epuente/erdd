@@ -565,7 +565,7 @@ public class RecursoWebController extends ControladorDefault{
 //			System.out.println(  session("cvesRoles").equalsIgnoreCase("1 ") ||  session("cvesRoles").equalsIgnoreCase("2 ") || session("cvesRoles").equalsIgnoreCase("3 "));
 			//Es coordinador de proceso ERDD
 			if (  session("cvesRoles").equalsIgnoreCase("1 ") ||  session("cvesRoles").equalsIgnoreCase("2 ") || session("cvesRoles").equalsIgnoreCase("3 ")  ) {
-				System.out.println("Evaluador, Admin o Coordinador visualisando docto");
+				System.out.println("Evaluador, Admin o Coordinador visualizando docto");
 				Documento d = Documento.find.byId( id );
 				response().setContentType(d.contenttype);
 				return ok (d.contenido);

@@ -155,6 +155,7 @@ GET    /documento/verOficioValoracion/:id         controllers.RecursoController.
 
 GET    /reporte/cesoe/:id            controllers.ReporteController.cesoe(id:Long)
 GET    /reporte/solicitudFirma/:id   controllers.ReporteController.solicitudFirma(id:Long)
+GET    /reporte/verFirma/:id         controllers.ReporteController.verFirma(id:Long)
 
 GET    /evaluadores             controllers.EvaluadorController.list()
 GET    /evaluador/new           controllers.EvaluadorController.create()
@@ -163,8 +164,12 @@ POST   /evaluador/:id/delete    controllers.EvaluadorController.delete(id:Long)
 GET    /evaluador/:id/edit      controllers.EvaluadorController.edit(id:Long)
 POST   /evaluador/:id/update    controllers.EvaluadorController.update2(id:Long)
 
-GET    /ctaCorreo               controllers.CtacorreoController.edit(id:Long ?= 1) 
-POST   /ctaCorreo/:id/update    controllers.CtacorreoController.update(id:Long)
+GET    /ctaCorreo               controllers.CtacorreoController.list()
+GET    /ctaCorreo/create        controllers.CtacorreoController.create()
+POST   /ctaCorreo               controllers.CtacorreoController.save()
+GET    /ctaCorreo/edit/:id      controllers.CtacorreoController.edit(id:Long)
+POST   /ctaCorreo/:id/update2   controllers.CtacorreoController.update2(id:Long)
+POST   /ctaCorreo/:id/delete    controllers.CtacorreoController.delete(id:Long)
 
 GET    /ctaAdminEdit            controllers.PersonalController.AdminEdit() 
 POST   /ctaAdminEdit/update     controllers.PersonalController.AdminUpdate()
@@ -373,12 +378,14 @@ GET		/WSAjaxImprimirReporteETP/:idRecurso		controllers.RecursoWebController.WSAj
 
 #GET  	/WebSocket									controllers.RecursoWebController.socket()
 
-GET     /pingWs                     controllers.RecursoWebController.pingWs()
+GET     /pingWs                                     controllers.RecursoWebController.pingWs()
 
-GET     /socket                     controllers.RecursoWebController.socket()
-GET     /enviarSocket                     controllers.RecursoWebController.enviarSocket()
+GET     /socket                                     controllers.RecursoWebController.socket()
+GET     /enviarSocket                               controllers.RecursoWebController.enviarSocket()
 
-GET     /verOficioE/:id					controllers.EvaluacionEvaluadorController.verOficioE(id:Long)
-GET     /verOficioValoracionE/:id		controllers.EvaluacionEvaluadorController.verOficioValoracionE(id:Long)
+GET     /verOficioE/:id					            controllers.EvaluacionEvaluadorController.verOficioE(id:Long)
+GET     /verOficioValoracionE/:id		            controllers.EvaluacionEvaluadorController.verOficioValoracionE(id:Long)
 
-GET     /calificarRecursos                      controllers.RecursoController.calificarRecursos()
+GET     /calificarRecursos                          controllers.RecursoController.calificarRecursos()
+
+GET     /pruebaEncrypt2                             controllers.AdminCorreoController.pruebaEncrypt2()

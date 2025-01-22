@@ -16,26 +16,26 @@
 					</ol>			
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-lg-12">    
-				    <h3>Editar tipo de autoría</h3>
-					<div style="vertical-align: middle;"> 
-						@form(CSRF(routes.AutorfuncionController.update(id)), 'class->"form-inline", 'id->"frmEdit"  ) {
-						  <div class="form-group">
-					    		@inputText(afForm("descripcion"), 'labelAlterna->"Descripcion", '_help -> "", 'size->"90px", 'required->"required")
-						  </div>
-						  <button type="submit" class="btn btn-primary">Actualizar</button>
-						}
-					</div>
+            <div class="elContenido">
+			    <div class="row">
+                    <div class="col-lg-12">
+                        <h3>Editar tipo de autoría</h3>
+                        <div style="vertical-align: middle;">
+                            @form(CSRF(routes.AutorfuncionController.update(id)), 'class->"form-inline", 'id->"frmEdit"  ) {
+                              <div class="form-group">
+                                    @inputText(afForm("descripcion"), 'labelAlterna->"Descripción", '_help -> "", 'size->"90px", 'required->"required")
+                              </div>
+                              <button type="submit" class="btn btn-primary">Actualizar</button>
+                            }
+                        </div>
 
-				 @form(CSRF(routes.AutorfuncionController.delete(id)), 'class -> "topRight", 'id->"frmDelete") {
-						<input type="submit" value="Eliminar" class="btn btn-danger">
-						<a href="@routes.AutorfuncionController.list()" class="btn btn-default">Cancelar</a>
- 					}
-
-
-    			</div>
-			</div>
+                     @form(CSRF(routes.AutorfuncionController.delete(id)), 'class -> "topRight", 'id->"frmDelete") {
+                            <input type="submit" value="Eliminar" class="btn btn-danger">
+                            <a href="@routes.AutorfuncionController.list()" class="btn btn-default">Cancelar</a>
+                     }
+                    </div>
+			    </div>
+            </div>
     </div>
 }
-@comunCatalogosJS("Edit", "tipo de autoría")
+

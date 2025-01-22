@@ -1,0 +1,79 @@
+@(forma: Form[Ctacorreo])
+
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
+<style>
+    .center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+@main {
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li><a href="@routes.CtacorreoController.list">Correo electrónico</a></li>
+                    <li class="active">Agregar</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>Agregar cuenta de correo de salida del sistema ERDD</h3>
+                @if(flash.containsKey("success")) {
+                    <div class="alert alert-success" role="alert">
+                        @flash.get("success")
+                    </div>
+                }
+                <div class="elContenido">
+                    @form(CSRF(routes.CtacorreoController.save())) {
+                        @CtacorreoForm(forma)
+                        <div class="actions" style="text-align:center">
+                            <input type="submit" value="Agregar cuenta" class="btn btn-primary">
+                            <a href="@routes.AdminController.index()" class="btn btn-default">Cancelar</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function(){
+            $("#contrasenia").parent().removeClass("input").addClass("input-group");
+            $("#contrasenia").parent().append("<span class=\"input-group-addon\" id=\"basic-addon2\"><a id=\"imgContrasena\"  data-activo=\"false\" href=\"javascript:void(0);\"><i class=\"fa fa-eye\" aria-hidden=\"true\"></i></a></span>");
+
+
+            if ("@forma.field("activo").value()" == "true")
+                $("#activo1").attr("checked", true);
+            else
+                $("#activo2").attr("checked", true);
+
+        });
+
+
+        $(document).on("click","#imgContrasena",function (e) {
+            e.preventDefault();
+              console.log("click")
+              var control = $(this);
+              var estatus = control.data('activo');
+              var image = control.find('img');
+              var i = control.find('i');
+
+              console.log(estatus)
+              if (estatus == false) {
+                control.data('activo', true);
+                $("#contrasenia").attr('type', 'text');
+
+                $(i).removeClass("fa-eye");
+                $(i).addClass("fa-eye-slash");
+
+              } else {
+                $("#contrasenia").attr('type', 'password');
+                control.data('activo', false);
+                $(i).addClass("fa-eye");
+                $(i).removeClass("fa-eye-slash");
+              }
+        });
+    </script>
+}

@@ -1,84 +1,38 @@
-clean
-reload
-clean
-reload
+run 8085
+run 8089
 compile
-clean
-reload
+run 8089
 compile
-run 8086
-exit
-run 8086
 run 8089
 clean
 reload
 compile
-run 9090
-clean
-reload
-compile
-run 9090
-clean
-reload
-compile
+run 8089
 exit
-sbt
-run 9090
-compile
-run 9090
-compile
-run 9090
+run 8089
 clean
 reload
 compile
-run 9090
-clean
-reload
-compile
-run 9090
-clean
-reload
-compile
-run 9090
-clean
-reload
-compile
-run 9090
-compile
+run 8089
 exit
-compile
-run 9090
-compile
-run 9090
 clean
 reload
 compile
-clean
-dist
-run 80
-run 8085
+run 8089
 compile
-clean
-reload
-compile
-clean
-reload
-compile
-clean
-compile
-clean
-reload
-compile
-run 8085
+run 8089
 exit
-run 8085
-com,p
-compile
-run 8085
+run 8089
 clean
 reload
-clean
-dist
-clean
-dist
+compile
+run 8089
+compile
+run 8089
+exit
+run 8089
+exit
+run 8089
+exit
+run 8089
 exit

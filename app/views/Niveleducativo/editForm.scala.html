@@ -9,12 +9,13 @@
 				<div class="col-lg-12">
 					<ol class="breadcrumb">
 					  <li>Catálogos</li>
-					  <li><a href="/nivelList">Nivel Educativo</a></li>
+					  <li><a href="/nivelList">Niveles Educativos</a></li>
 					  <li class="active">Editar</li>
 					</ol>			
 				</div>
 			</div>
-			<div class="row">
+            <div class="elContenido">
+			    <div class="row">
 				<div class="col-lg-12">    
     				<h3>Editar Nivel Educativo</h3>    				
 				    @form(CSRF(routes.NiveleducativoController.update(id)), 'class->"form-inline", 'id->"frmEdit") {				        
@@ -29,6 +30,7 @@
 	 				}				    
 			    </div>
 		    </div>
+            </div>
     </div>
     
 }

@@ -16,25 +16,27 @@
 					</ol>			
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-lg-12">
-	  	          <h3>Agregar Dirigido a</h3>
-		        </div>
-			</div>
-			<div class="row">    
-    			<div class="col-lg-12">
-				    @form(CSRF(routes.DirigidoaController.save()), 'class->"form-inline", 'id->"frmCreate") {
-					  <div class="form-group">
-				            @inputText(daForm("descripcion"), 'labelAlterna -> "Descripción", '_help -> "", 'required->"required", 'size->"90em")
-    						<input type="submit" value="Agregar" class="btn btn-primary">				            
-				       </div>
-				     
-			        }
-			        <div class="actions">			            
-			            <a href="@routes.DirigidoaController.list()" class="btn btn-default">Cancelar</a> 
-			        </div>			        
-				 </div>
-		 </div>       
+            <div class="elContenido">
+                <div class="row">
+                    <div class="col-lg-12">
+                      <h3>Agregar Dirigido a</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        @form(CSRF(routes.DirigidoaController.save()), 'class->"form-inline", 'id->"frmCreate") {
+                          <div class="form-group">
+                                @inputText(daForm("descripcion"), 'labelAlterna -> "Descripción", '_help -> "", 'required->"required", 'size->"90em")
+                                <input type="submit" value="Agregar" class="btn btn-primary">
+                           </div>
+
+                        }
+                        <div class="actions">
+                            <a href="@routes.DirigidoaController.list()" class="btn btn-default">Cancelar</a>
+                        </div>
+                     </div>
+             </div>
+            </div>
     </div>
     
     

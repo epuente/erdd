@@ -4,7 +4,7 @@
 <section id="personalForm">
 
 	        <fieldset>
-		        <table class="table">
+		        <table class="table table-condensed">
 		        	<tr>
 		        		<td colspan=1  class="requerido">
 		        			<div class="form-group">
@@ -17,18 +17,36 @@
 		        		<td colspan=1  class="requerido">
 		        			@inputText(personalForm("materno"), '_label -> "Materno", 'required->"required", 'class->"form-control", 'pattern->"[A-Za-záéíóúñÁÉÍÓÚÑ ]*", 'placeholder->"Materno")
 	        			</td>
+                            <td  colspan="1" rowspan="4" style="width:300px; border: 1px solid #e6e4e4; padding: 10px; text-align: center; margin: 0 auto;">
+                            <div id="seccionImagenFirma" class="d-flex justify-content-center d-flex align-items-center">
+                                <div class="">
+                                    <div id="previewImaFirma">
+                                        <div id="imaFirmaContenido"></div>
+                                    </div>
+                                </div>
+                                <div id="archImagenFirmaActual">
+                                </div>
+                                <div class="">
+                                    <button class="btn  btn-link" id="btnCargarImaFirma">
+                                        <i class="fa fa-upload" aria-hidden="true"></i> <span id="tipoImaFirma" >Seleccionar archivo</span>
+                                    </button>
+                                </div>
 
-	        			
-		        		<td colspan=1  class="requerido">
- 		        			@inputText(personalForm("correo"), '_label -> "Correo", 'required->"required", 'class->"form-control",  'placeholder->"email del evaluador", 'type->"email") 
-	        			</td>
-	        			
+                                <input class="form-control hidden" type="file" id="archImaFirma" name="imagenfirma" accept="image/*">
+                                <div class="text-muted small" style="margin-top:20px;">
+                                    Resolución recomendada: 300 x 300 pixeles
+                                </div>
+                            </div>
+                        </td>
 					</tr>
 					<tr>
+                        <td colspan=1  class="requerido">
+                            @inputText(personalForm("correo"), '_label -> "Correo", 'required->"required", 'class->"form-control",  'placeholder->"email del evaluador", 'type->"email")
+                        </td>
 						<td colspan=1  class="requerido">
 							@inputText(personalForm("usuario.usuario"), '_label -> "Nombre de usuario", 'required->"required", 'class->"form-control", 'pattern->"[A-Za-z0-9]*", 'placeholder->"Nombre de usuario (sin caracteres especiales)" )
 						</td>
-						<td colspan=3  class="requerido">
+						<td colspan=1  class="requerido">
 							@inputPassword(personalForm("usuario.password"), '_label -> "Clave de acceso", 'required->"required", 'class->"form-control", 'pattern->"[A-Za-z0-9]*", 'placeholder->"Clave de acceso (sin caracteres especiales)")							
 						</td>
 					</tr>
@@ -39,22 +57,19 @@
 					</tr>
 					
 					<tr>
-						<td colspan="4" class="requerido">
+						<td colspan="1" class="requerido">
 							@inputRadioGroup(
 								personalForm("activo.id"),
 								options = options(models.EstadoActivo.options), 'required->"required"
 							)								
 						</td>
-					</tr>
-					
-					<tr>
-		        		<td  class="requerido" colspan="7">
-						     @inputCheckboxGroup(
-						         personalForm("aspecto"),
-						         options = options(models.Aspecto.options),						         
-						         '_label -> null						         										         
-						      )
-	            		</td>
+                        <td  class="requerido" colspan="2">
+                            @inputCheckboxGroup(
+                            personalForm("aspecto"),
+                            options = options(models.Aspecto.options),
+                            '_label -> null
+                            )
+                        </td>
 		        	</tr>	        	
 		        </table>
 	        </fieldset>        

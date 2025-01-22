@@ -28,9 +28,12 @@ public class Ctacorreo extends Model{
 	
 
 	public String cuenta;
-	
 
 	public String contrasenia;
+
+    public Boolean activo;
+
+    public  int prioridad;
 	
 
 	@CreatedTimestamp
