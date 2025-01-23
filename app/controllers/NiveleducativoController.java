@@ -6,7 +6,7 @@ import javax.persistence.PersistenceException;
 import models.Niveleducativo;
 import play.data.Form;
 import play.mvc.*;
-import views.html.Niveleducativo.*;
+import views.html.catalogos.Niveleducativo.*;
 
 public class NiveleducativoController extends ControladorSeguro {
 	

@@ -9,7 +9,7 @@ import javax.persistence.PersistenceException;
 import models.Tipodocumento;
 import play.data.Form;
 import play.mvc.Result;
-import views.html.Tipodocumento.*;
+import views.html.catalogos.Tipodocumento.*;
 
 public class TipodocumentoController extends ControladorSeguro{
 
@@ -23,7 +23,7 @@ public class TipodocumentoController extends ControladorSeguro{
 
 	public static Result create(){
 		Form<Tipodocumento> aForm =	form(Tipodocumento.class);	
-		return ok( views.html.Tipodocumento.createForm.render(aForm)  );	
+		return ok( createForm.render(aForm)  );
 	}
 	
     public static Result delete(Long id) {
@@ -44,7 +44,7 @@ public class TipodocumentoController extends ControladorSeguro{
     
     public static Result save() {
         Form<Tipodocumento> afForm = form(Tipodocumento.class).bindFromRequest();
-System.out.println(afForm);        
+        System.out.println(afForm);
 
         if(afForm.hasErrors()) {
             return badRequest(createForm.render(afForm));
@@ -59,8 +59,6 @@ System.out.println(afForm);
         Form<Tipodocumento> aForm = form(Tipodocumento.class).fill(
             Tipodocumento.find.byId(id)
         );
-        
-        
         Tipodocumento tdoc = Tipodocumento.find.byId(id);
         System.out.println(tdoc.estado.descripcion);
       //  return ok (editForm.render(id, TipoDocumentoForm.fill(tdoc)));

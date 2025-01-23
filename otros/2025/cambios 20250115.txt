@@ -36,7 +36,7 @@ evolutionplugin=disabled
 
 
 
-Desde una conola mysql:
+Desde una consola mysql:
 ALTER TABLE evaluador_firma ADD COLUMN contenttype varchar(255) AFTER contenido;
 ALTER TABLE evaluador_firma ADD COLUMN nombrearchivo varchar(255) after evaluador_id;
 

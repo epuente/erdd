@@ -20,14 +20,14 @@
         </div>
         <div class="elContenido">
             <h1>Editar evaluador</h1>
-            @form(CSRF(routes.EvaluadorController.update2(id)), 'id->"frmEvaluador") {
+            @form(CSRF(routes.EvaluadorController.update2(id)), 'id->"frmEvaluador", 'enctype -> "multipart/form-data") {
                 <fieldset>
                     <div class="sinBordes">
                         @evaluadorForm(pForm, p)
                     </div>
                 </fieldset>
             }
-            <div class="actions">
+            <div class="actions" style="text-align:center">
                 <input type="submit" value="Actualizar" class="btn primary btn-primary" onclick="javascript:preValidar()">
                 <a href="@routes.EvaluadorController.list()" class="btn btn-default">Cancelar</a>
             </div>
@@ -61,13 +61,27 @@
 			$('#aspecto_@ea.aspecto.id').prop('checked',true);
 		}
 
+		@if(p.evaluador.firma!=null){
+		    $("#previewImaFirma").append('<img src="@routes.EvaluadorController.verFirma(p.evaluador.id)">');
+		}
+
 	}
 	
 	function preValidar(){
-	    alert("Desde ")
 		$("#frmEvaluador").submit();
 	}
-	
+
+
+    $("input[name='correo']").on("blur", function(){
+		var email = $(this).val();
+		if (email.length>0){
+		    buscaMail(email,@id);
+        }
+    });
 	
 	
 </script>
+<script src="@routes.Assets.at("javascripts/validator.min.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("javascripts/upload.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("javascripts/async.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("javascripts/evaluador.js")" type="text/javascript"></script>

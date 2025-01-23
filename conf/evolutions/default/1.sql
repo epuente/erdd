@@ -623,6 +623,16 @@ create table registro_acceso (
   constraint pk_registro_acceso primary key (id))
 ;
 
+create table reporte_logo (
+  id                        bigint auto_increment not null,
+  nombrearchivo             varchar(255),
+  contenttype               varchar(255),
+  contenido                 longblob,
+  auditinsert               datetime not null,
+  auditlastupdate           datetime not null,
+  constraint pk_reporte_logo primary key (id))
+;
+
 create table rol (
   id                        bigint auto_increment not null,
   descripcion               varchar(255) not null,
@@ -1071,6 +1081,8 @@ drop table recursoenweb;
 drop table recursoevaluador;
 
 drop table registro_acceso;
+
+drop table reporte_logo;
 
 drop table rol;
 

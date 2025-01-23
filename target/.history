@@ -36,3 +36,16 @@ run 8089
 exit
 run 8089
 exit
+run 8089
+reload
+run 8089
+compile
+run 8089
+exit
+run 8089
+reload
+compile
+reload
+compile
+run 8089
+exit

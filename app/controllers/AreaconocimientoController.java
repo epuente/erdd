@@ -6,7 +6,7 @@ import javax.persistence.PersistenceException;
 import models.Areaconocimiento;
 import play.data.Form;
 import play.mvc.*;
-import views.html.Areaconocimiento.*;
+import views.html.catalogos.Areaconocimiento.*;
 
 public class AreaconocimientoController extends ControladorSeguro {
 	

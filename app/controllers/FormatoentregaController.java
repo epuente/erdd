@@ -10,7 +10,7 @@ import javax.persistence.PersistenceException;
 import models.Formatoentrega;
 import play.data.Form;
 import play.mvc.Result;
-import views.html.Formatoentrega.*;
+import views.html.catalogos.Formatoentrega.*;
 
 @Entity
 public class FormatoentregaController extends ControladorSeguro{
@@ -24,7 +24,7 @@ public class FormatoentregaController extends ControladorSeguro{
 
 	public static Result create(){
 		Form<Formatoentrega> aForm =	form(Formatoentrega.class);	
-		return ok( views.html.Formatoentrega.createForm.render(aForm)  );	
+		return ok( createForm.render(aForm)  );
 	}
 	
     public static Result delete(Long id) {

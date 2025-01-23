@@ -9,7 +9,7 @@ import javax.persistence.PersistenceException;
 import models.Autorfuncion;
 import play.data.Form;
 import play.mvc.Result;
-import views.html.Autorfuncion.*;
+import views.html.catalogos.Autorfuncion.*;
 
 
 public class AutorfuncionController  extends ControladorSeguro{

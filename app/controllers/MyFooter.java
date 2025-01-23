@@ -19,6 +19,8 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEvent;
 import com.itextpdf.text.pdf.PdfWriter;
+import models.ReporteLogo;
+import play.api.mvc.Call;
 
 public class MyFooter implements PdfPageEvent {
 	Font ffont = new Font(Font.FontFamily.UNDEFINED, 5, Font.ITALIC);	
@@ -43,23 +45,22 @@ public class MyFooter implements PdfPageEvent {
 	@Override
 	public void onEndPage(PdfWriter writer, Document document) {
         PdfContentByte cb = writer.getDirectContent();
-
-
-
         Image imgUPEV = null;
 		try {
-			imgUPEV = Image.getInstance("public/images/LogoDEVReporte.png");
+			//imgUPEV = Image.getInstance("public/images/LogoDEVReporte.png");
+            imgUPEV = Image.getInstance(ReporteLogo.find.byId(1L).contenido);
 		} catch (BadElementException | IOException  e) {
-            System.out.println("(controllers.MyFooter.java) Error con el archivo public/images/LogoDEVReporte.png");
+            System.out.println("(controllers.MyFooter.java) Error con el archivo LogoDEVReporte.png");
 			e.printStackTrace();
 		}
 
         Image escudoPoli = null;
+        /*
 		try {
-			escudoPoli = Image.getInstance(    "public/images/escudoPoli.png");
-			//escudoPoli = Image.getInstance(    routes.Assets.at("/public/images/escudoPoli.png").toString());
+			//escudoPoli = Image.getInstance(    "public/images/escudoPoli.png");
+            escudoPoli = Image.getInstance(ReporteLogo.find.byId(2L).contenido);
 		} catch (BadElementException e1) {
-            System.out.println("(controllers.MyFooter.java) Error con el archivo public/images/escudoPoli.png");
+            System.out.println("(controllers.MyFooter.java) Error con el archivo escudoPoli.png");
 			e1.printStackTrace();
 		} catch (MalformedURLException e1) {
             System.out.println("(controllers.MyFooter.java) Error MalformedURLException");
@@ -68,10 +69,11 @@ public class MyFooter implements PdfPageEvent {
             System.out.println("(controllers.MyFooter.java) Error IOException (linea 68)");
 			e1.printStackTrace();
 		}
+        */
 
 		try {
-			escudoPoli = Image.getInstance("public/images/ipn-escudo.jpg");
-			//escudoPoli = Image.getInstance(routes.Assets.at("public/images/ipn-escudo.jpg").toString());
+			//escudoPoli = Image.getInstance("public/images/ipn-escudo.jpg");
+            escudoPoli = Image.getInstance(ReporteLogo.find.byId(2L).contenido);
 		} catch (BadElementException e) {
             System.out.println("(controllers.MyFooter.java) Error BadElementException");
 			e.printStackTrace();
@@ -161,7 +163,8 @@ public class MyFooter implements PdfPageEvent {
                 PdfContentByte cb = writer.getDirectContent();
                 Image watermark_image = null;
                 try {
-                    watermark_image = Image.getInstance("public/images/watermark3.jpg");
+                    //watermark_image = Image.getInstance("public/images/watermark3.jpg");
+                    watermark_image = Image.getInstance(ReporteLogo.find.byId(3L).contenido);
                 } catch (BadElementException | IOException e) {
                     System.out.println("Error Excepción de bad element-- " + e.getMessage() + "\n" + e.getCause());
                 }

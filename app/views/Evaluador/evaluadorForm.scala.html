@@ -17,10 +17,11 @@
 		        		<td colspan=1  class="requerido">
 		        			@inputText(personalForm("materno"), '_label -> "Materno", 'required->"required", 'class->"form-control", 'pattern->"[A-Za-záéíóúñÁÉÍÓÚÑ ]*", 'placeholder->"Materno")
 	        			</td>
-                            <td  colspan="1" rowspan="4" style="width:300px; border: 1px solid #e6e4e4; padding: 10px; text-align: center; margin: 0 auto;">
-                            <div id="seccionImagenFirma" class="d-flex justify-content-center d-flex align-items-center">
+                        <td colspan="1" rowspan="4" style="width:300px; border: 1px solid #e6e4e4; padding: 10px; text-align: center; margin: 0 auto;">
+                            <label for="seccionImagenFirma" class="control-label">Firma del evaluador</label>
+                            <div id="seccionImagenFirma" name="seccionImagenFirma" class="d-flex justify-content-center d-flex align-items-center">
                                 <div class="">
-                                    <div id="previewImaFirma">
+                                    <div id="previewImaFirma" style="height:300px;">
                                         <div id="imaFirmaContenido"></div>
                                     </div>
                                 </div>

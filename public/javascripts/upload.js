@@ -48,3 +48,9 @@ var imagesPreview = function(input, placeToInsertImagePreview) {
 
     }
 }
+
+// Cuando se le da click para subir archivo
+$("#btnCargarImaFirma").click(function(e){
+    e.preventDefault();
+    $("[name='imagenfirma']").click();
+});

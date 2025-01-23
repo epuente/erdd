@@ -46,7 +46,7 @@
                     <div class="sinBordes">
 					    @evaluadorForm(e,null)
                     </div>
-				    <div class="form-group">
+				    <div class="form-group" style="text-align:center">
 				        <input type="submit" value="Agregar" class="btn btn-primary" >  
 				        <a href="@routes.EvaluadorController.list()" class="btn btn-default">Cancelar</a> 
 				    </div>
@@ -66,7 +66,7 @@
 		$("input[type='email']").attr("data-error","No es la estructura de un email.");
 		
 		
-		$("[name='correo']").attr("data-remote","/validarExistenciaEmail");
+		//$("[name='correo']").attr("data-remote","/vem");
 		$("[name='correo']").attr("data-remote-error","Ya esta registrado este email.");
 		
 		
@@ -117,15 +117,21 @@
 	
 
 	
-	$("input[name='correo']").on("blur", function(){
+	$("input[name='correo5']").on("blur", function(){
 		var email = $(this).val();
 		if (email.length>0){
-			var aux = "/validarExistenciaEmail/"+email;		
+			var aux = "/validarExistenciaEmail";
+			aux="/existeMail";
 			$.ajax({
-				  url: aux,
-				  async: false
-				}).done(function(data) {		
-					if (data!="0"){				
+                  url: aux,
+                  async: true,
+                  method: "post",
+                  data: JSON.stringify( {email:email}),
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json"
+				}).done(function(data) {
+				    console.dir(data)
+					if (data.existe=="si"){
 						$("input[name='correo']").parent().parent().addClass("has-error");
 				  		$("input[name='correo']").parent().find("span.help-block").html('<ul class="list-unstyled"><li>El email ya esta registrado</li></ul>');
 				  		$("#frmEvaluador input[type='submit']").addClass("disabled");
@@ -141,12 +147,18 @@
 		}
 	});
 
-    $("#btnCargarImaFirma").click(function(e){
-        e.preventDefault();
-        console.log("Click en boton de carga")
-        $("[name='imagenfirma']").click();
+
+
+    $("input[name='correo']").on("blur", function(){
+		var email = $(this).val();
+		if (email.length>0){
+		    buscaMail(email,0);
+        }
     });
+
 
 </script>
 <script src="@routes.Assets.at("javascripts/validator.min.js")" type="text/javascript"></script>
 <script src="@routes.Assets.at("javascripts/upload.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("javascripts/async.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("javascripts/evaluador.js")" type="text/javascript"></script>

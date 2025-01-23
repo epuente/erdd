@@ -1,4 +1,4 @@
-@(niveles : List[Niveleducativo])
+@(areas:List[Areaconocimiento])
 @import helper._
 @main {
 <style nonce="@session.get("nonce")">
@@ -6,74 +6,74 @@
     background-color:#ffffcc !important;  
 }
 </style>
+
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("lib/datatables/css/dataTables.bootstrap.min.css")"/>
-	<div class="container-fluid"  >
+	<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-12">
 					<ol class="breadcrumb">
 					  <li>Catálogos</li>
-					  <li class="active">Niveles educativos</li>
+					  <li class="active">Áreas del conociumiento</li>
 					</ol>			
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-	  	          <h3>Niveles educativos  <a href="@routes.NiveleducativoController.create()" title="Agregar Nivel Educativo"><i class="fa fa-plus-circle text-success fa-lg" aria-hidden="true"></i></a></h3>
+	  	          <h3>Áreas del conocimiento  <a href="@routes.AreaconocimientoController.create()" title="Agregar Área del Conocimiento"><i class="fa fa-plus-circle text-success fa-lg" aria-hidden="true"></i></a></h3>
 		        </div>
-			</div>
-		
+			</div>    
+    
+
 		    @if(flash.containsKey("success")) {
 		        <div class="alert alert-success" role="alert">
-		            <strong>¡Correcto!</strong> El nivel educativo @flash.get("success")
+		            <strong>¡Correcto!</strong> El área de conocimiento @flash.get("success")
 		        </div>
 		    }
 		    @if(flash.containsKey("warning")) {
 		        <div class="alert alert-warning" role="alert">
-		            <strong>¡Precaución!</strong> El nivel educativo @flash.get("warning")
+		            <strong>¡Precaución!</strong> El área de conocimiento @flash.get("warning")
 		        </div>
 		    }    @if(flash.containsKey("error")) {
 		        <div class="alert alert-danger" role="alert">
-		            <strong>¡Error!</strong> El nivel educativo @flash.get("error")
+		            <strong>¡Error!</strong> El área de conocimiento @flash.get("error")
 		        </div>
 		    } 
 		
-            @if(niveles.size == 0) {              
-                <div class="well">
-                    <em>No hay niveles educativos registrados.</em>
-                </div>
-                
-            } else {
-		    
-
-                <table class="table table-bordered table-striped datatable" id="tablaCatalogoNiveles" style="width: 100%">               
+		    @if(areas.size == 0) {		        
+		        <div class="well">
+		            <em>No hay áreas del conocimiento registradas.</em>
+		        </div>
+		        
+		    } else {
+                <div class="elContenido">
+                    <table class="table table-bordered table-striped datatable" id="tablaCatalogoAreas" style="width: 100%">
                     <thead>
                         <tr>
-                            <th>Nivel educativo</th>
+                            <th>Área del conocimiento</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @for(n<-niveles){
+                        @for(n<-areas){
                             <tr>
-                                <td><a href="/nivel/@n.id">@n.descripcion</a></td>
+                                <td><a href="/areaconocimientos/@n.id">@n.descripcion</a></td>
                                 <td style="text-align: center;">
-                                    @form(CSRF(routes.NiveleducativoController.delete(n.id))) {
-                                      <input type="submit" value="Eliminar" name="btn@n.id" class="btn btn-danger btn-sm">
+                                    @form(CSRF(routes.AreaconocimientoController.delete(n.id))) {
+                                      <input type="submit" value="Eliminar" name="btn@n.id"class="btn btn-danger btn-sm">
                                     }                       
                                 </td>
                             </tr>
                         }
                     </tbody>
-                </table> 		        
-		        }
-     
-    </div>   
+                </table>
+                </div>
+		    }
+    </div>
+        
 }
-
-
 <script type="text/javascript">
     $(function(){
-        laTablaDTSS = $('#tablaCatalogoNiveles').DataTable( {
+        laTablaDTSS = $('#tablaCatalogoAreas').DataTable( {
             pageLength: 10,
             lengthMenu: [  [1,3, 5, 10, 25, 50, -1], [1,3, 5, 10, 25, 50, "Todos"]   ],    
             language: {
@@ -87,9 +87,9 @@
                 { width: "20%", targets: 1 }
               ],
             "initComplete": function(){
-                $("#tablaCatalogoUA_wrapper div.row div").removeClass("col-sm-6");
-                $("#tablaCatalogoUA_wrapper div.row div:eq(0)").addClass("col-sm-4");
-                $("#tablaCatalogoUA_wrapper div.row div:eq(2)").addClass("col-sm-8");
+                $("#tablaCatalogoAreas_wrapper div.row div").removeClass("col-sm-6");
+                $("#tablaCatalogoAreas_wrapper div.row div:eq(0)").addClass("col-sm-4");
+                $("#tablaCatalogoAreas_wrapper div.row div:eq(2)").addClass("col-sm-8");
                 $(".dataTables_filter").css("width","auto");  
                 $("input[type='search'].form-control.input-sm").keyup(function(){
                     if( $(this).val().length >0 ){
@@ -102,14 +102,14 @@
         } );        
     });
 
-    
     $( document ).on( "click", "[name*='btn']", function() {
         var num = $(this).attr('name').substring(3); 
-        if (confirm("¿Desea eliminar el nivel educativo?")){
+        if (confirm("¿Desea eliminar el área del conocimiento?")){
             
             $(this).parent().submit();
         }       
    });    
+    
 </script>
             
 <script src="@routes.Assets.at("lib/datatables/js/jquery.dataTables.min.js")" type="text/javascript"></script>
@@ -117,4 +117,4 @@
 
 <script src="@routes.Assets.at("mark.js/datatables.mark.min.js")"></script>
 <script src="@routes.Assets.at("mark.js/jquery.mark.min.js")"></script>
-
+            

@@ -293,6 +293,14 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         return ok (  mipdf.baos.toByteArray() );
          */
 
+        Recurso r = Recurso.find.byId(id);
+        if (r == null){
+            return ok( views.html.errores.noExisteRecurso.render());
+        }
+        if (r.estado.id < 10) {
+            return ok( views.html.errores.errorNoEvaluado.render());
+        }
+
         ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
         miPdf mipdf = new miPdf(id);
         mipdf.baos = baosPDF;
@@ -302,7 +310,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         // Aqui se pone el código de miPdf.generarReporteFinal
         System.out.println("Generando PDF(reporte final) ...");
         System.out.println("...   "+mipdf.id);
-        Recurso r = Recurso.find.byId(mipdf.id);
+
         mipdf.setClaveControl(r.numcontrol);
 
         List<Version> versiones = Version.lista();

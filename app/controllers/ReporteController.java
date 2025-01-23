@@ -19,15 +19,11 @@ System.out.println("***");
 	}
 
 
-    public static Result verFirma(Long id) {
-        System.out.println("    id evaluador:"+id);
-
-        Evaluador e = Evaluador.find.setId(id).findUnique();
-        EvaluadorFirma ef = e.firma;
-
-                response().setContentType(ef.contenttype);
-                System.out.println("Visualizando firma del evaluador");
-                return ok (ef.contenido);
+    public static Result verLogo(Long id){
+        ReporteLogo rl = ReporteLogo.find.byId(id);
+        response().setContentType(rl.contenttype);
+        System.out.println("Visualizando logo "+id);
+        return ok (rl.contenido);
     }
 
 

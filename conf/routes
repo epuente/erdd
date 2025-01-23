@@ -155,7 +155,7 @@ GET    /documento/verOficioValoracion/:id         controllers.RecursoController.
 
 GET    /reporte/cesoe/:id            controllers.ReporteController.cesoe(id:Long)
 GET    /reporte/solicitudFirma/:id   controllers.ReporteController.solicitudFirma(id:Long)
-GET    /reporte/verFirma/:id         controllers.ReporteController.verFirma(id:Long)
+GET    /reporte/logo/:id             controllers.ReporteController.verLogo(id:Long)
 
 GET    /evaluadores             controllers.EvaluadorController.list()
 GET    /evaluador/new           controllers.EvaluadorController.create()
@@ -163,6 +163,7 @@ POST   /evaluador               controllers.EvaluadorController.save()
 POST   /evaluador/:id/delete    controllers.EvaluadorController.delete(id:Long)
 GET    /evaluador/:id/edit      controllers.EvaluadorController.edit(id:Long)
 POST   /evaluador/:id/update    controllers.EvaluadorController.update2(id:Long)
+GET    /verFirma/:id            controllers.EvaluadorController.verFirma(id:Long)
 
 GET    /ctaCorreo               controllers.CtacorreoController.list()
 GET    /ctaCorreo/create        controllers.CtacorreoController.create()
@@ -338,8 +339,8 @@ GET		/pruebaCorreo2					controllers.RecursoevaluadorController.pruebaCorreo()
 
 
 GET     /leerXL4                      controllers.Application.leerXL4()
-GET		/validarExistenciaEmail  controllers.EvaluadorController.existeMail(correo:String ?="")
-GET		/validarExistenciaUserPass/:user/:pass	controllers.EvaluadorController.existeUserPass(user:String, pass:String)
+POST    /existeMail                         controllers.EvaluadorController.existeMail()
+#GET		/validarExistenciaUserPass/:user/:pass	controllers.EvaluadorController.existeUserPass(user:String, pass:String)
 
 GET		/crearOficioValoracion/:id			controllers.OficioValoracionController.create(id:Long)
 GET		/listarOficioValoracion				controllers.OficioValoracionController.list()

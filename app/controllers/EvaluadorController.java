@@ -15,7 +15,11 @@ import javax.persistence.PersistenceException;
 
 import actions.Notificacion;
 import actions.miCorreo;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.google.gson.JsonObject;
 import models.*;
+import org.json.JSONException;
+import org.json.JSONObject;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Http;
@@ -211,6 +215,31 @@ public class EvaluadorController extends ControladorSeguro{
 				}
         	}        	
     	}
+
+        // Imagen de la firma escaneada del evaluador
+        Http.MultipartFormData body = request().body().asMultipartFormData();
+        Http.MultipartFormData.FilePart fp = body.getFile("imagenfirma");
+        System.out.println("......+++"+fp);
+        if (fp != null) {
+            String fileName = fp.getFilename();
+            String contentType = fp.getContentType();
+            File file = fp.getFile();
+            System.out.println("....archivo.." + file + "    tamaño   " + file.length() + "   contentype:  " + contentType);
+            try {
+                Path path = Paths.get(file.getPath());
+                byte[] byteFile = Files.readAllBytes(path);
+                //EvaluadorFirma evf = new EvaluadorFirma();
+                if (y.evaluador.firma==null)
+                    y.evaluador.firma = new EvaluadorFirma();
+                y.evaluador.firma.evaluador = y.evaluador;
+                y.evaluador.firma.nombrearchivo = fileName;
+                y.evaluador.firma.contenttype = contentType;
+                y.evaluador.firma.contenido = byteFile;
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+        }
+
 		y.update();		
 		y.refresh();
         //Enviar correo al evaluador
@@ -245,27 +274,36 @@ public class EvaluadorController extends ControladorSeguro{
         //mc.run();
 		return GO_HOME;    	
     } 
- 
-    public static Result existeMail(String mail){
-    	int aux = Evaluador.find.fetch("personal").where().eq("personal.correo", mail).findRowCount();   	
-        System.out.println("\n\n\nexisteMail ("+mail+"): "+aux);
-		if (aux != 0){
-			return badRequest(); 
-		}
-		else {
-			return ok();
-		}
+
+
+    // Recibe el email a verificar y el id del Personal.
+    // En caso de que se trate de edición debe buscar los registros que coincidan con el email pero que no tengan el mismo id del personal que se esta editando.
+    // Regresa json indicando la existencia
+    public static Result existeMail() throws JSONException {
+        System.out.println("Desde EvaluadorController.existeMail");
+        JsonNode json = request().body().asJson();
+        JSONObject retorno = new JSONObject();
+        String email = json.get("email").asText();
+        long id = json.get("id").asLong();
+        int aux=0;
+        if (id==0)
+            aux = Evaluador.find.fetch("personal").where().eq("personal.correo", email).findRowCount();
+        if (id>0)
+            aux = Evaluador.find.fetch("personal").where().eq("personal.correo", email).ne("personal.id", id).findRowCount();
+        retorno.put("existe",  aux==0?"no":"si" );
+        return ok (retorno.toString());
     }
 
+    public static Result verFirma(Long id) {
+        System.out.println("    id evaluador:"+id);
 
-    public static Result existeUserPass(String user, String pass){
-    	int aux = Usuario.find.fetch("roles").where().eq("usuario",user).eq("password",pass).eq("roles.rol.id",2).findRowCount();   	
-        System.out.println("\n\n\nexisteUserPass ("+user+", "+pass+"): "+aux);
-		if (aux != 0)
-			return ok("1");
-		else
-			return ok("0");
-    }    
+        Evaluador e = Evaluador.find.setId(id).findUnique();
+        EvaluadorFirma ef = e.firma;
+
+        response().setContentType(ef.contenttype);
+        System.out.println("Visualizando firma del evaluador");
+        return ok (ef.contenido);
+    }
     
 }
 	

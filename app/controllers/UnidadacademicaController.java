@@ -21,7 +21,7 @@ import models.UnidadacademicaAreaconocimiento;
 import models.UnidadacademicaNiveleducativo;
 import play.data.Form;
 import play.mvc.*;
-import views.html.Unidadacademica.*;
+import views.html.catalogos.Unidadacademica.*;
 
 public class UnidadacademicaController extends ControladorSeguro {
 	
