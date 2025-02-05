@@ -15,6 +15,8 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import actions.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import models.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,27 +30,6 @@ import akka.actor.ActorRef;
 import akka.actor.Cancellable;
 import akka.actor.Props;
 import classes.RetornoWSRecurso;
-import models.RecursoAutor;
-import models.Autorfuncion;
-import models.CorreoAutor;
-import models.CorreoSalida;
-import models.CorreoSalidaPara;
-import models.Dirigidoa;
-import models.Documento;
-import models.Estado;
-import models.Historialestado;
-import models.Niveleducativo;
-import models.Observacion;
-import models.Palabraclave;
-import models.Personal;
-import models.Pinger;
-import models.Recurso;
-import models.Recursoenweb;
-import models.RegistroAcceso;
-import models.Tipodocumento;
-import models.Unidadacademica;
-import models.Versionanterior;
-import models.recursoDirigidoa;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Akka;
@@ -588,14 +569,25 @@ public class RecursoWebController extends ControladorDefault{
 	public static Result Correo() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy kk:mm:ss");
         System.out.println("Desde RecursowebController.Correo");
+
+        Ctacorreo cc =Ctacorreo.find.where().eq("activo", true).findUnique();
+
 		miCorreo mc = new miCorreo();
         List<String> lista = new ArrayList<>();
         lista.add("epuente_72@yahoo.com");
+        lista.add("epuente@ipn.mx");
+        lista.add("eduardo.puente72@gmail.com");
+        lista.add("epgu72@gmail.com");
+        //lista.add("aperezg@ipn.mx");
 		mc.para =lista;
         mc.asunto="Prueba. Se recibió correctamente";
-		mc.mensaje="Este es un correo de prueba.<br>Se recibió <strong>correctamente</strong>!!!";
-        mc.mensaje+="<br><br><br><small>Enviado a las "+sdf.format(new Date())+"</small>";
+		mc.mensaje="Este es un correo de prueba.<br>Se recibió <strong>correctamente</strong>!!!<br><br>";
 
+        mc.mensaje+="&emsp;Host: <strong>"+cc.hostname+"</strong><br>";
+        mc.mensaje+="&emsp;Cuenta: <strong>"+cc.cuenta+"</strong><br>";
+        mc.mensaje+="&emsp;Puerto: <strong>"+cc.puerto+"</strong><br>";
+
+        mc.mensaje+="<br><br><br><small>Enviado a las "+sdf.format(new Date())+"</small>";
 
         //mc.start();
 		mc.enviar();
@@ -605,7 +597,7 @@ public class RecursoWebController extends ControladorDefault{
         }
 
         System.out.println("enviado? "+mc.enviado);
-        if (!mc.enviado) {
+        if (mc.enviado==false) {
             System.out.println("error " + mc.mensajeError);
             return ok(views.html.correoEnviado.render("No se pudo enviar el correo") );
         } else {
@@ -613,7 +605,69 @@ public class RecursoWebController extends ControladorDefault{
         }
 	}
 
+    // Esta es un prueba de correo desde la admin de la CtaCorreo
+    public static Result Correo2() throws JSONException {
+        JsonNode json = request().body().asJson();
+        JSONObject retorno = new JSONObject();
+        retorno.put("estado","indefinido");
+        retorno.put("otro", "este es otro valor");
+        System.out.println( "parametros "+ json );
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy kk:mm:ss");
+        System.out.println("Desde RecursowebController.Correo2");
+
+        //Ctacorreo cc =Ctacorreo.find.where().eq("activo", true).findUnique();
+
+        miCorreo mc = new miCorreo();
+        mc.setHost(json.findValue("host").asText() );
+        mc.setPuerto(json.findValue("puerto").asText());
+        mc.setDe(json.findValue("de").asText());
+        mc.setContrasenia(json.findValue("contrasenia").asText());
+
+        List<String> lista = new ArrayList<>();
+        //lista.add("epuente_72@yahoo.com");
+        //lista.add("epuente@ipn.mx");
+        //lista.add("eduardo.puente72@gmail.com");
+        //lista.add("epgu72@gmail.com");
+
+        lista.add( json.findValue("para").asText()  );
+        //lista.add("aperezg@ipn.mx");
+        mc.para =lista;
+        mc.asunto="Prueba. Se recibió correctamente";
+        mc.mensaje="Este es un correo de prueba.<br>Se recibió <strong>correctamente</strong>!!!<br><br>";
+
+        mc.mensaje+="&emsp;Host: <strong>"+mc.getHost()+"</strong><br>";
+        mc.mensaje+="&emsp;Cuenta: <strong>"+mc.getDe()+"</strong><br>";
+        mc.mensaje+="&emsp;Puerto: <strong>"+mc.getPuerto()+"</strong><br>";
+
+        mc.mensaje+="<br><br><br><small>Enviado a las "+sdf.format(new Date())+"</small>";
+
+
+
+
+
+
+        //mc.start();
+        mc.enviar();
+
+        while (mc.isAlive()){
+            System.out.println("correo vivo !!!!");
+        }
+
+        System.out.println("enviado? "+mc.enviado);
+
+        if (mc.enviado == false) {
+            retorno.put("estado", "errorrrrr");
+            retorno.put("seEnvio", false);
+            System.out.println("error " + mc.mensajeError + "   " + retorno.toString());
+            return ok(retorno.toString());
+        } else {
+            retorno.put("estado", "enviado");
+            retorno.put("seEnvio", true);
+            System.out.println("ok " + "   " + retorno.toString());
+            return ok(retorno.toString());
+        }
+    }
 
 	// REPORTE PDF con objeto miPdf
 	public static Result reporteEvaluacion(){

@@ -20,14 +20,16 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-3">
             <label for="activo1">Activo</label>
             <div class="radio">
                 <label><input type="radio" name="activo" id="activo1" value="true" checked>Si</label>&nbsp;&nbsp;&nbsp;&nbsp;
                 <label><input type="radio" name="activo" id="activo2" value="false">No</label>
             </div>
-
-
+        </div>
+        <div class="col-sm-6">
+            <p>Puede realizar una prueba de envío de correo con los parámetros que ha especificado.</p>
+            <button type="button" class="btn btn-default" id="btnPruebaCorreo" data-toggle="modal" data-target="#modalCtaCorreo"><i class="fa fa-envelope-o" aria-hidden="true" style="margin-right:1rem;"   ></i> Prueba de correo</button>
         </div>
         @*
         <div class="col-sm-4">
@@ -36,3 +38,38 @@
         *@
     </div>
 </fieldset>
+
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalCtaCorreo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Prueba de correo</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Para asegurar el correcto funcionamiento del envío de correos del sistema se provee de esta prueba de correo.</p>
+                <br>
+                <div class="form-group">
+                    <label for="para">Para</label>
+                    <input type="email" class="form-control" id="para" name="para" placeholder="jperez@@elcorreo.com">
+                </div>
+                <div class="form-group">
+                    <div id="msgEnvio"></div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnEnviaCorreo">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>

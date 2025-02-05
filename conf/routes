@@ -201,6 +201,8 @@ POST      /tipodocumento/:id/update   controllers.TipodocumentoController.update
 
 
 GET    /pruebaCorreo            controllers.RecursoWebController.Correo()
+POST   /pruebaCorreo2           controllers.RecursoWebController.Correo2()
+
 
 GET			/asignarEvaluadores 			controllers.RecursoevaluadorController.asignarEvaluadoresList()
 GET			/asignarEvaluadores/:id			controllers.RecursoevaluadorController.asignarEvaluadoresCreate(id:Long)
@@ -390,3 +392,4 @@ GET     /verOficioValoracionE/:id		            controllers.EvaluacionEvaluadorCo
 GET     /calificarRecursos                          controllers.RecursoController.calificarRecursos()
 
 GET     /pruebaEncrypt2                             controllers.AdminCorreoController.pruebaEncrypt2()
+

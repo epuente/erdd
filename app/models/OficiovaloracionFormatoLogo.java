@@ -7,13 +7,17 @@ import play.db.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Entity
-public class ReporteLogo extends Model {
+public class OficiovaloracionFormatoLogo extends Model {
     private static final long serialVersionUID = 1L;
     @Id
     public Long id;
+
+    @ManyToOne
+    public OficiovaloracionFormato oficiovaloracionformato;
 
     public String nombrearchivo;
 
@@ -27,7 +31,6 @@ public class ReporteLogo extends Model {
     @UpdatedTimestamp
     public Date auditlastupdate;
 
-    public static Finder<Long,ReporteLogo> find = new Finder<>(Long.class, ReporteLogo.class);
+    public static Finder<Long, OficiovaloracionFormatoLogo> find = new Finder<>(Long.class, OficiovaloracionFormatoLogo.class);
+
 }
-
-

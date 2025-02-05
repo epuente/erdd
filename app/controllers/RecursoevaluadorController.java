@@ -920,7 +920,11 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         miCorreo mc2 = new miCorreo();
         mc2.asunto = "abcdef";
         mc2.mensaje= "12345";
-        mc2.para = Collections.singletonList("epuente_72@yahoo.com");
+        List<String> listaD = new ArrayList<String>();
+        listaD.add("epuente_72@yahoo.com");
+        //listaD.add("aperezg@ipn.mx");
+
+        mc2.para = listaD;
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 

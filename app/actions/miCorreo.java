@@ -19,16 +19,19 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
+import javax.persistence.Transient;
 
+import classes.Encriptacion2;
 import models.Ctacorreo;
 
 public class miCorreo extends Thread{
 	public List<String> para;
 	public String asunto;
 	public String mensaje;
-	private String host;
-    private String puerto;
-	private String de;
+	protected String host;
+    protected String puerto;
+	protected String de;
+    private String contrasenia;
     public boolean enviado = false;
     public String mensajeError;
     public List<ByteArrayOutputStream> adjuntos;
@@ -37,12 +40,32 @@ public class miCorreo extends Thread{
     private String fecha;
 
 
-	public void enviar(){
+    public miCorreo() {
+        Ctacorreo cc =Ctacorreo.find.where().eq("activo", true).findUnique();
+        if (cc!=null) {
+            host = cc.hostname;
+            puerto = cc.puerto;
+            de = cc.cuenta;
+            contrasenia = cc.contrasenia;
+            Encriptacion2 e2 = new Encriptacion2(contrasenia);
+            contrasenia = e2.decrypt();
+        }
+    }
+
+    public void enviar(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy kk:mm:ss");
-		Ctacorreo cc =Ctacorreo.find.byId(1L);
-		host = cc.hostname;
-        puerto = cc.puerto;
-		de = cc.cuenta;
+
+		//Ctacorreo cc =Ctacorreo.find.where().eq("activo", true).findUnique();
+		//host = cc.hostname;
+        //puerto = cc.puerto;
+		//de = cc.cuenta;
+
+
+
+
+        //Encriptacion2 e2 = new Encriptacion2(contrasenia);
+        //String textoPlano = e2.decrypt();
+
 		Properties properties = System.getProperties();
 		properties.setProperty("mail.smtp.host", host);
 
@@ -56,7 +79,7 @@ public class miCorreo extends Thread{
 
 		Authenticator auth = new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(cc.cuenta, cc.contrasenia);
+				return new PasswordAuthentication(de, contrasenia);
 			}
 		};
 		Session session = Session.getInstance(properties, auth);
@@ -96,16 +119,16 @@ public class miCorreo extends Thread{
             // Termina attach
 
             try {
+                System.out.println("Intentando envío desde "+this.de+"  "+this.host);
                 Transport.send(message);
                 fecha = sdf.format(new Date());
                 this.enviado = true;
+                for (String p : para) {
+                    System.out.println("      Se envió correctamente a " + p+" a las "+  fecha );
+                }
             } catch (MessagingException e) {
                 System.out.println("Excepción de Messaging: " + e.getMessage());
             }
-            for (String p : para) {
-                System.out.println("      Se envió correctamente a " + p+" a las "+  fecha );
-            }
-
         }catch (Exception e){
             System.out.println("Ocurrió uns excepción "+e);
             this.mensajeError = e.getMessage();
@@ -116,5 +139,38 @@ public class miCorreo extends Thread{
     public void run() {
         System.out.println("Con Thread ");
         this.enviar();
-    }	
+    }
+
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public String getPuerto() {
+        return puerto;
+    }
+
+    public void setPuerto(String puerto) {
+        this.puerto = puerto;
+    }
+
+    public String getDe() {
+        return de;
+    }
+
+    public void setDe(String de) {
+        this.de = de;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
 }

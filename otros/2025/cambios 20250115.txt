@@ -11,6 +11,17 @@ constraint pk_evaluador_firma primary key (id))
 alter table evaluador_firma add constraint fk_evaluador_firma_evaluador_49 foreign key (evaluador_id) references evaluador (id) on delete restrict on update restrict;
 create index ix_evaluador_firma_evaluador_49 on evaluador_firma (evaluador_id);
 
+
+create table reporte_logo (
+  id                        bigint auto_increment not null,
+  nombrearchivo             varchar(255),
+  contenttype               varchar(255),
+  contenido                 longblob,
+  auditinsert               datetime not null,
+  auditlastupdate           datetime not null,
+  constraint pk_reporte_logo primary key (id))
+;
+
 Ejecutar la aplicación para que genere las tablas;
 
 Truncar todas las tablas;

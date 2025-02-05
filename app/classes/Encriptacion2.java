@@ -41,8 +41,9 @@ public class Encriptacion2 {
 
 
     public String decrypt() {
+        if (cadena!=null)
         try {
-            System.out.println("Desencriptando");
+            System.out.println("Desencriptando "+cadena);
             IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
             SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
 

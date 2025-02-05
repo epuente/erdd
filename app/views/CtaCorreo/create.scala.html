@@ -29,9 +29,9 @@
                 <div class="elContenido">
                     @form(CSRF(routes.CtacorreoController.save())) {
                         @CtacorreoForm(forma)
-                        <div class="actions" style="text-align:center">
+                        <div class="actions" style="text-align:center; margin-top: 6rem;">
                             <input type="submit" value="Agregar cuenta" class="btn btn-primary">
-                            <a href="@routes.AdminController.index()" class="btn btn-default">Cancelar</a>
+                            <a href="@routes.CtacorreoController.list()" class="btn btn-default">Cancelar</a>
                         </div>
                     }
                 </div>
@@ -75,5 +75,37 @@
                 $(i).removeClass("fa-eye-slash");
               }
         });
+
+
+// Enviar correo de prueba
+        $("#btnEnviaCorreo").click(function(e){
+            e.preventDefault();
+            console.log("click btnEnviaCorreo")
+            $("#msgEnvio").text("Preparando envío de correo...");
+            var $x = LlamadaAjax(   "/pruebaCorreo2",
+                                    "POST",
+                                    JSON.stringify({
+                                        "para":$("#para").val(),
+                                        "mensaje": $("#taMensaje").val(),
+                                        "host": $("#hostname").val(),
+                                        "puerto": $("#puerto").val(),
+                                        "de": $("#cuenta").val(),
+                                        "contrasenia": $("#contrasenia").val()
+                                    })
+                                );
+            $.when($x).done(function(data){
+                console.dir(data)
+                console.dir(data.seEnvio)
+                console.dir(data.seEnvio==true)
+                console.dir(data.seEnvio==false)
+                if (data.seEnvio==true)
+                    $("#msgEnvio").html("Se envió con éxito el correo de prueba.<br>El correo ha salido del servidor y puede tardar algunos minutos para ser recibido en el servidor destino.");
+                if (data.seEnvio==false)
+                    $("#msgEnvio").text("No fue posible el envío del correo de prueba, revise los datos de la cuenta de salida.");
+            });
+
+        });
+
     </script>
 }
+<script src="@routes.Assets.at("javascripts/async.js")" type="text/javascript"></script>
