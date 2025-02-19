@@ -4,10 +4,7 @@ import com.avaje.ebean.annotation.CreatedTimestamp;
 import com.avaje.ebean.annotation.UpdatedTimestamp;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -16,7 +13,7 @@ public class OficiovaloracionFormatoLogo extends Model {
     @Id
     public Long id;
 
-    @ManyToOne
+    @OneToOne
     public OficiovaloracionFormato oficiovaloracionformato;
 
     public String nombrearchivo;

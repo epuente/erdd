@@ -1,0 +1,27 @@
+sudo mysql -u root
+
+
+CREATE DATABASE erdd_test8 DEFAULT CHARACTER SET latin1;
+CREATE USER 'erdd'@'localhost' IDENTIFIED BY 'dberdd2024';
+GRANT ALL PRIVILEGES ON erdd_test8.* TO 'erdd'@'localhost';
+grant super on erdd_test8.* to erdd@localhost;
+FLUSH PRIVILEGES;
+
+Exportar la db anterior
+------------------------
+mysqldump -u erdd -p erdd_test7 --ignore-table=erdd_test7.play_evolutions --no-create-info --skip-extended-insert --complete-insert> ~/dumps/erdd_test7_insertsTriggers_20250217.sql
+
+
+Correr la aplicación para que se creen las tablas.
+
+
+Importar a erdd_test8
+---------------------
+mysql -u erdd -p erdd_test8 < ~/dumps/erdd_test7_insertsTriggers_20250217.sql
+
+
+
+REVISAR LINEA 76461 de erdd_test7_insertsTriggers_20250217.sql marca ::   ERROR 1227 (42000) at line 76461: Access denied; you need (at least one of) the SYSTEM_USER privilege(s) for this operation        y esta relacionado   con la creacion de triggers
+
+
+

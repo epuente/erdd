@@ -9,7 +9,7 @@
 		extra-sbtVersion="0.13"
 		conf="compile"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool"
-		date="20250115120437"/>
+		date="20250217123227"/>
 	<dependencies>
 		<module organisation="com.typesafe.sbt" name="sbt-mocha">
 			<revision name="1.0.0" status="release" pubdate="20140529102332" resolver="sbt-chain" artresolver="sbt-chain" extra-scalaVersion="2.10" extra-sbtVersion="0.13" downloaded="false" searched="false" default="false" conf="compile, default(compile)" position="142">
@@ -265,12 +265,12 @@
 			</revision>
 		</module>
 		<module organisation="net.sourceforge.htmlunit" name="htmlunit">
-			<revision name="2.14" status="release" pubdate="20140217053412" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://htmlunit.sourceforge.net" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="107">
+			<revision name="2.14" status="release" pubdate="20140217053412" resolver="public" artresolver="public" homepage="http://htmlunit.sourceforge.net" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="107">
 				<license name="Apache License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
-				<metadata-artifact status="no" details="" size="7386" time="0" location="/home/eduardo/.ivy2/cache/net.sourceforge.htmlunit/htmlunit/ivy-2.14.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/net/sourceforge/htmlunit/htmlunit/2.14/htmlunit-2.14.pom"/>
+				<metadata-artifact status="successful" details="" size="36651" time="218" location="/home/eduardo/.ivy2/cache/net.sourceforge.htmlunit/htmlunit/ivy-2.14.xml" searched="true" original-local-location="/home/eduardo/.ivy2/cache/net.sourceforge.htmlunit/htmlunit/ivy-2.14.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/net/sourceforge/htmlunit/htmlunit/2.14/htmlunit-2.14.pom"/>
 				<caller organisation="com.typesafe" name="webdriver_2.10" conf="default, compile, runtime, master" rev="2.14" rev-constraint-default="2.14" rev-constraint-dynamic="2.14" callerrev="1.0.0"/>
 				<artifacts>
-					<artifact name="htmlunit" type="jar" ext="jar" status="no" details="" size="1441829" time="0" location="/home/eduardo/.ivy2/cache/net.sourceforge.htmlunit/htmlunit/jars/htmlunit-2.14.jar">
+					<artifact name="htmlunit" type="jar" ext="jar" status="successful" details="" size="1441829" time="500" location="/home/eduardo/.ivy2/cache/net.sourceforge.htmlunit/htmlunit/jars/htmlunit-2.14.jar">
 						<origin-location is-local="false" location="https://repo1.maven.org/maven2/net/sourceforge/htmlunit/htmlunit/2.14/htmlunit-2.14.jar"/>
 					</artifact>
 				</artifacts>
@@ -394,12 +394,12 @@
 			</revision>
 		</module>
 		<module organisation="net.sourceforge.htmlunit" name="htmlunit-core-js">
-			<revision name="2.14" status="release" pubdate="20140217003438" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://htmlunit.sourceforge.net" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="117">
+			<revision name="2.14" status="release" pubdate="20140217003438" resolver="public" artresolver="public" homepage="http://htmlunit.sourceforge.net" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="117">
 				<license name="Mozilla Public License version 2.0" url="http://www.mozilla.org/MPL/2.0/"/>
-				<metadata-artifact status="no" details="" size="2513" time="0" location="/home/eduardo/.ivy2/cache/net.sourceforge.htmlunit/htmlunit-core-js/ivy-2.14.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/net/sourceforge/htmlunit/htmlunit-core-js/2.14/htmlunit-core-js-2.14.pom"/>
+				<metadata-artifact status="successful" details="" size="1482" time="176" location="/home/eduardo/.ivy2/cache/net.sourceforge.htmlunit/htmlunit-core-js/ivy-2.14.xml" searched="true" original-local-location="/home/eduardo/.ivy2/cache/net.sourceforge.htmlunit/htmlunit-core-js/ivy-2.14.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/net/sourceforge/htmlunit/htmlunit-core-js/2.14/htmlunit-core-js-2.14.pom"/>
 				<caller organisation="net.sourceforge.htmlunit" name="htmlunit" conf="compile, runtime" rev="2.14" rev-constraint-default="2.14" rev-constraint-dynamic="2.14" callerrev="2.14"/>
 				<artifacts>
-					<artifact name="htmlunit-core-js" type="jar" ext="jar" status="no" details="" size="1025632" time="0" location="/home/eduardo/.ivy2/cache/net.sourceforge.htmlunit/htmlunit-core-js/jars/htmlunit-core-js-2.14.jar">
+					<artifact name="htmlunit-core-js" type="jar" ext="jar" status="successful" details="" size="1025632" time="275" location="/home/eduardo/.ivy2/cache/net.sourceforge.htmlunit/htmlunit-core-js/jars/htmlunit-core-js-2.14.jar">
 						<origin-location is-local="false" location="https://repo1.maven.org/maven2/net/sourceforge/htmlunit/htmlunit-core-js/2.14/htmlunit-core-js-2.14.jar"/>
 					</artifact>
 				</artifacts>
@@ -1840,7 +1840,7 @@
 			</revision>
 		</module>
 		<module organisation="org.scala-sbt" name="global-plugins">
-			<revision name="0.0" status="integration" pubdate="20250115120433" resolver="inter-project" artresolver="inter-project" extra-scalaVersion="2.10" extra-sbtVersion="0.13" downloaded="false" searched="false" default="false" conf="compile, default(compile)" position="0">
+			<revision name="0.0" status="integration" pubdate="20250217123226" resolver="inter-project" artresolver="inter-project" extra-scalaVersion="2.10" extra-sbtVersion="0.13" downloaded="false" searched="false" default="false" conf="compile, default(compile)" position="0">
 				<metadata-artifact status="failed" details="" size="0" time="0" searched="false"/>
 				<caller organisation="default" name="erdd20250115-build" conf="compile" rev="0.0" rev-constraint-default="0.0" rev-constraint-dynamic="0.0" callerrev="0.1-SNAPSHOT" extra-scalaVersion="2.10" extra-sbtVersion="0.13"/>
 				<artifacts>

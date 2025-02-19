@@ -6,3 +6,28 @@ run 8089
 exit
 run 8089
 exit
+run 8089
+clean
+dist
+exit
+clean
+reload
+dist
+exit
+run 9000
+dist
+clean
+diat
+dist
+clean
+compile
+clean
+dist
+run 9000
+run
+run 9000
+clean
+reload
+compile
+run 9000
+exit

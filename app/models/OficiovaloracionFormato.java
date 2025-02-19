@@ -33,7 +33,7 @@ public class OficiovaloracionFormato extends Model {
     @Size(max = 400)
     String remitente;
 
-    @OneToMany(mappedBy = "oficiovaloracionformato", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "oficiovaloracionformato", cascade = CascadeType.ALL)
     OficiovaloracionFormatoLogo logoPie;
 
     @CreatedTimestamp
