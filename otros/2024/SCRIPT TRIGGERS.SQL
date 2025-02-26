@@ -1,6 +1,13 @@
 // El siguiente query genera los comandos a ejecutar en consola para crear los triggers de TODAS LAS TABLAS DEL ESQUEMA
-// Se crean los triggers que actualizan los campos auditInsert y auditinsert y auditlastupdate de cada tabla en los eventos before_insert y before_update.
+// Se crean los triggers que actualizan los campos auditinsert y auditlastupdate de cada tabla en los eventos before_insert y before_update.
 // El resultado del siguiente query debe corrense de preferencia desde la consola de mysql (dbeaver da problemas)
+
+
+sudo mysql -u root
+
+use erdd_test8;
+
+
 SELECT
 	'DELIMITER ;;'
 UNION
@@ -9,13 +16,13 @@ SELECT
 			,'_BEFORE_INSERT'
 			,' BEFORE INSERT ON ',table_name,' FOR EACH ROW BEGIN  if (new.auditinsert is null) then     set new.auditinsert = current_timestamp();   end if; END;;')
 FROM information_schema.tables
-where table_schema = 'erdd_test' and table_name!='recurso'
+where table_schema = 'erdd_dev3' and table_name!='recurso'
 UNION
 SELECT
 		concat('CREATE TRIGGER ',table_name
 		,'_BEFORE_UPDATE',' BEFORE UPDATE ON ',table_name,' FOR EACH ROW BEGIN  set new.auditlastupdate = current_timestamp(); END;;')
 FROM information_schema.tables
-where table_schema = 'erdd_test'
+where table_schema = 'erdd_dev3'
 UNION
 SELECT
 	'DELIMITER ;';

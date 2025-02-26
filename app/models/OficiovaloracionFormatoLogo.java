@@ -30,4 +30,12 @@ public class OficiovaloracionFormatoLogo extends Model {
 
     public static Finder<Long, OficiovaloracionFormatoLogo> find = new Finder<>(Long.class, OficiovaloracionFormatoLogo.class);
 
+
+    public byte[] getContenido() {
+        return contenido;
+    }
+
+    public void setContenido(byte[] contenido) {
+        this.contenido = contenido;
+    }
 }

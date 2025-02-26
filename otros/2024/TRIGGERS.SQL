@@ -1,3 +1,7 @@
+sudo mysql -u root
+
+use erdd_test8;
+
 DELIMITER ;;
 CREATE TRIGGER alcance_curricular_BEFORE_INSERT BEFORE INSERT ON alcance_curricular FOR EACH ROW BEGIN  if (new.auditinsert is null) then     set new.auditinsert = current_timestamp();   end if; END;;
 CREATE TRIGGER areaconocimiento_BEFORE_INSERT BEFORE INSERT ON areaconocimiento FOR EACH ROW BEGIN  if (new.auditinsert is null) then     set new.auditinsert = current_timestamp();   end if; END;;

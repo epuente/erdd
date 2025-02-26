@@ -40,8 +40,8 @@ public class CorreoSalida extends Model{
 
 	public String asunto;
 
-	@Size(max=900)
-	@MaxLength(900)
+	@Size(max=5000)
+	@MaxLength(5000)
 	public String mensaje;
 
 	public List<ByteArrayOutputStream> adjuntos;

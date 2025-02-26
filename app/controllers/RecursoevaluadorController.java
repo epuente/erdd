@@ -4,7 +4,6 @@ import static play.data.Form.form;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -12,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 import com.avaje.ebean.Expr;
@@ -29,7 +29,10 @@ import play.data.Form;
 import play.db.ebean.Model;
 import play.mvc.Result;
 //import views.html.Recurso.list;
+import views.html.Evaluaciones.evaluada;
 import views.html.Recursoevaluador.*;
+import views.html.errores.errorNoEvaluado;
+import views.html.errores.noExisteRecurso;
 
 public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
 
@@ -295,10 +298,10 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
 
         Recurso r = Recurso.find.byId(id);
         if (r == null){
-            return ok( views.html.errores.noExisteRecurso.render());
+            return ok( noExisteRecurso.render());
         }
         if (r.estado.id < 10) {
-            return ok( views.html.errores.errorNoEvaluado.render());
+            return ok( errorNoEvaluado.render());
         }
 
         ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
@@ -315,8 +318,8 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
 
         List<Version> versiones = Version.lista();
         List<Formatoentrega> fe = Formatoentrega.lista();
-        List<Modalidad> modalidades = models.Modalidad.find.all();
-        List<Dirigidoa> dirigidoa =models.Dirigidoa.find.all();
+        List<Modalidad> modalidades = Modalidad.find.all();
+        List<Dirigidoa> dirigidoa = Dirigidoa.find.all();
         ArrayList<Long> rdir = new ArrayList<>();
         recursoDirigidoa.find.where().eq("recurso.id", mipdf.id).findList().forEach(z -> {
             //rdir.add(z.id);
@@ -342,6 +345,8 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         Font fontbold = FontFactory.getFont("Cournier-bold", 10, Font.BOLD);
         Font fontCuerpo = FontFactory.getFont("Cournier",9);
         Font fontLMS = FontFactory.getFont("Cournier",7);
+        Font fontSmall = FontFactory.getFont("Cournier",5);
+
 
         PdfPTable tablaInicial = new PdfPTable(6);
         tablaInicial.setWidthPercentage(100);
@@ -964,24 +969,471 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         if (idAspecto.isEmpty() || idAspecto.contentEquals("0")){
             System.out.println("............  cero");
             List<Recursoevaluador> t = Recursoevaluador.find.where().eq("recurso.id", idRe).findList();
-            return ok ( views.html.Evaluaciones.evaluada.render(t, idAspecto, t.get(0).recurso )  );
+            return ok ( evaluada.render(t, idAspecto, t.get(0).recurso )  );
         } else {
             System.out.println("............  NO cero");
             List<Recursoevaluador> aux = Recursoevaluador.find.where().eq("id",idRe).findList();
-            return ok ( views.html.Evaluaciones.evaluada.render(aux, idAspecto, aux.get(0).recurso)  );
+            return ok ( evaluada.render(aux, idAspecto, aux.get(0).recurso)  );
         }
     }
 
 
     public static Result evaluadas(Long idRecurso, String tipo){
         Recurso r = Recurso.find.byId(idRecurso);
-        return ok ( views.html.Evaluaciones.evaluada.render( r.recursoevaluadores, tipo, r)  );
+        return ok ( evaluada.render( r.recursoevaluadores, tipo, r)  );
     }
 
 
     public static Boolean concluida(){
         System.out.println('x');
         return (true);
+    }
+
+
+
+    public static Result pruebaOficioValoracion(){
+        System.out.println("Desde REcursoevaluadorController.pruebaOficioValoracion");
+        ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
+        long id =24;
+        miPdf mipdf = new miPdf(id);
+        mipdf.baos = baosPDF;
+
+        String emisor="formatoOV";
+
+        // Aqui se pone el código de miPdf.generarReporteFinal
+        System.out.println("Generando PDF(prueba) ...");
+        System.out.println("...   "+mipdf.id);
+
+        Recurso r = Recurso.find.byId(id);
+        mipdf.setClaveControl(r.numcontrol);
+
+        List<Version> versiones = Version.lista();
+        List<Formatoentrega> fe = Formatoentrega.lista();
+        List<Modalidad> modalidades = Modalidad.find.all();
+        List<Dirigidoa> dirigidoa = Dirigidoa.find.all();
+        ArrayList<Long> rdir = new ArrayList<>();
+        recursoDirigidoa.find.where().eq("recurso.id", mipdf.id).findList().forEach(z -> {
+            //rdir.add(z.id);
+            rdir.add(z.dirigidoa.id);
+        });
+
+        List<Aspecto> aspectos = Aspecto.find.all();
+        List<Recursoevaluador> re = r.recursoevaluadores;
+        Document doc = new Document(PageSize.LETTER, 40,40,90,40);
+        PdfWriter docWriter;
+        try {
+            docWriter = PdfWriter.getInstance(doc, mipdf.baos);
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        }
+
+        //Encabezado del reporte pdf
+        MyFooter auxPie = new MyFooter();
+        auxPie.emisor = emisor;
+        auxPie.titulo = "Reporte de Evaluación Técnico Pedagógica";
+        docWriter.setPageEvent(auxPie);
+
+        doc.addTitle("Reporte de Evaluación Técnico Pedagógica");
+        doc.addCreationDate();
+        doc.addCreator("SERDD");
+
+        Font fontbold = FontFactory.getFont("Cournier-bold", 10, Font.BOLD);
+        Font fontCuerpo = FontFactory.getFont("Cournier",9);
+        Font fontLMS = FontFactory.getFont("Cournier",7);
+
+        PdfPTable tablaInicial = new PdfPTable(6);
+        tablaInicial.setWidthPercentage(100);
+        tablaInicial.setSpacingBefore(5);
+        tablaInicial.setSpacingAfter(5);
+        PdfPCell celdaInicial = new PdfPCell();
+        celdaInicial.setPadding(5);
+        celdaInicial.setBorderColor(BaseColor.LIGHT_GRAY);
+
+
+        doc.open();
+        PdfPTable tabla = new PdfPTable(tablaInicial);
+        PdfPCell celda = new PdfPCell( celdaInicial  );
+        celda.setPhrase(new Phrase("Folio: "+r.oficio.folio, fontbold));
+        celda.setColspan(3);
+        celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celda.setBackgroundColor(BaseColor.LIGHT_GRAY);
+        celda.setBorder(Rectangle.NO_BORDER);
+        tabla.addCell(celda);
+
+        celda = new PdfPCell( new Phrase("Datos de identidad", fontbold)  );
+        celda.setPadding(5);
+        celda.setColspan(3);
+        celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        celda.setBackgroundColor(BaseColor.LIGHT_GRAY);
+        celda.setBorder(Rectangle.NO_BORDER);
+        tabla.addCell(celda);
+
+        try {
+            doc.add(tabla);
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        doc.close();
+
+        docWriter.close();
+
+
+        // Aqui termina
+        response().setContentType("application/pdf");
+        return ok (  mipdf.baos.toByteArray() );
+
+    }
+
+
+    public static Result pruebaPDFImagen() throws DocumentException {
+        System.out.println("Desde RecursoevaluadorController.pruebaPDFImage");
+        SimpleDateFormat sdf = new SimpleDateFormat("d 'de' MMMM 'de' yyyy");
+
+        ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
+        long id =24;
+        miPdf mipdf = new miPdf(id);
+        mipdf.baos = baosPDF;
+
+        String emisor="formatoOV";
+
+
+        System.out.println("Generando PDF(prueba) ...");
+        System.out.println("...   "+mipdf.id);
+
+        Recurso r = Recurso.find.byId(id);
+
+        OficiovaloracionFormato ovf = OficiovaloracionFormato.find
+                                        .byId(1L);
+
+
+        mipdf.setClaveControl(r.numcontrol);
+
+        List<Version> versiones = Version.lista();
+
+
+        List<Recursoevaluador> re = r.recursoevaluadores;
+        Document doc = new Document(PageSize.LETTER, 40,40,140,95);
+        PdfWriter docWriter;
+        try {
+            docWriter = PdfWriter.getInstance(doc, mipdf.baos);
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        }
+
+        Font fontboldTitulo = FontFactory.getFont("Cournier-bold", 14, Font.BOLD);
+        Font fontbold = FontFactory.getFont("Cournier-bold", 12, Font.BOLD);
+        Font fontCuerpo = FontFactory.getFont("Cournier",12);
+        Font fontLMS = FontFactory.getFont("Cournier",7);
+
+        //Encabezado del reporte pdf
+        PdfFondo auxPie = new PdfFondo();
+        auxPie.emisor = emisor;
+        auxPie.titulo = "Reporte de Evaluación Técnico Pedagógica";
+        docWriter.setPageEvent(auxPie);
+
+        doc.addTitle("Reporte de Evaluación Técnico Pedagógica");
+        doc.addCreationDate();
+        doc.addCreator("SERDD");
+
+
+
+
+
+
+        try {
+            PdfPTable tablaInicial = new PdfPTable(6);
+            tablaInicial.setWidthPercentage(100);
+            tablaInicial.setSpacingBefore(5);
+            tablaInicial.setSpacingAfter(-12);
+            PdfPCell celdaInicial = new PdfPCell();
+            //celdaInicial.setPaddingLeft(6f);
+            //celdaInicial.setBorderColor(BaseColor.LIGHT_GRAY);
+
+
+            doc.open();
+
+            //doc.add(new Phrase("jajajaj"));
+
+            PdfPTable tabla = new PdfPTable(tablaInicial);
+            PdfPCell celda = new PdfPCell( celdaInicial  );
+            // label folio (que en realidad es el número de oficio)
+            celda.setPhrase(new Phrase("\nFolio", fontbold));
+            //celda.add(new Phrase(r.oficio.folio, fontCuerpo));
+            celda.setColspan(3);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            //celda.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            celda.setBorder(Rectangle.NO_BORDER);
+            tabla.addCell(celda);
+
+
+
+            celda = new PdfPCell( new Phrase(ovf.encabezado, fontboldTitulo)  );
+            celda.setPadding(5);
+            celda.setColspan(3);
+            celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            //celda.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            celda.setBorder(Rectangle.NO_BORDER);
+            tabla.addCell(celda);
+
+            doc.add(tabla);
+
+            // folio (número de oficio)
+            tabla = new PdfPTable(1);
+            tabla.setWidthPercentage(100);
+            celda = new PdfPCell(celdaInicial);
+            //celda.setColspan(3);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPhrase( new Phrase(r.oficiovaloracion.numero));
+            celda.setBorder(Rectangle.NO_BORDER);
+            //celda.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            tabla.addCell(celda);
+            doc.add(tabla);
+
+            // Label Asunto
+            tabla = new PdfPTable(1);
+            tabla.setWidthPercentage(40);
+            tabla.setSpacingBefore(25);
+            tabla.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda = new PdfPCell(celdaInicial);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPhrase(new Phrase("Asunto", fontbold));
+            celda.setBorder(Rectangle.NO_BORDER);
+            tabla.addCell(celda);
+            //Asunto
+            celda = new PdfPCell(celdaInicial);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPhrase(new Phrase(ovf.asunto, fontCuerpo));
+            celda.setBorder(Rectangle.NO_BORDER);
+            tabla.addCell(celda);
+            doc.add(tabla);
+
+            // fecha
+            tabla = new PdfPTable(1);
+            tabla.setWidthPercentage(100);
+            tabla.setSpacingBefore(10);
+            celda = new PdfPCell(celdaInicial);
+            celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            celda.setPhrase(new Phrase("Ciudad de México, "+ sdf.format(r.oficiovaloracion.fechaoficio)  , fontCuerpo));
+            celda.setBorder(Rectangle.NO_BORDER);
+            tabla.addCell(celda);
+            doc.add(tabla);
+
+            // Para
+            tabla = new PdfPTable(1);
+            tabla.setWidthPercentage(100);
+            tabla.setSpacingBefore(10);
+            celda = new PdfPCell(celdaInicial);
+
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPhrase(new Phrase("[nombreDirector]\nDirector de "+r.unidadacademica.nombre+" del Instituto Politécnico Nacional\nPRESENTE"  , fontbold));
+            celda.setBorder(Rectangle.NO_BORDER);
+            tabla.addCell(celda);
+            doc.add(tabla);
+
+            // Cuerpo1
+            String folioOficioSolicitud = r.oficio.folio;
+            String folioOficioSolicitudRecibido = sdf.format(r.oficio.fecharecepcion);
+            String stringAux = ovf.cuerpo
+                    .replace("[folio]", folioOficioSolicitud)
+                    .replace("[fechaFolio]", folioOficioSolicitudRecibido);
+            tabla = new PdfPTable(1);
+            tabla.setWidthPercentage(100);
+            tabla.setSpacingBefore(10);
+            celda = new PdfPCell(celdaInicial);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPhrase(new Phrase(stringAux  , fontCuerpo));
+            celda.setBorder(Rectangle.NO_BORDER);
+            tabla.addCell(celda);
+            doc.add(tabla);
+
+            // tabla
+            String ua = "";
+            String titulo = r.titulo;
+            String autores = "";
+
+            List<String> lstAutores = r.autores.stream().map(m -> m.nombreCompleto()).collect(Collectors.toList());
+
+            autores = String.join(", ", lstAutores);
+            tabla = new PdfPTable(2);
+            tabla.setWidths(new int[]{80,200});
+            tabla.setWidthPercentage(100);
+            tabla.setSpacingBefore(10);
+            // tabla rdd
+            celda = new PdfPCell(celdaInicial);
+            celda.setPaddingLeft(6f);
+            celda.setMinimumHeight(20f);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPhrase(new Phrase("RDD"  , fontbold));
+            tabla.addCell(celda);
+            celda = new PdfPCell(celdaInicial);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPaddingLeft(6f); celda.setMinimumHeight(20f);
+            celda.setPhrase(new Phrase(r.titulo  , fontCuerpo));
+            tabla.addCell(celda);
+
+            // tabla autores
+            celda = new PdfPCell(celdaInicial);
+            celda.setPaddingLeft(6f);
+            celda.setMinimumHeight(20f);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPhrase(new Phrase("Autores"  , fontbold));
+            tabla.addCell(celda);
+            celda = new PdfPCell(celdaInicial);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPaddingLeft(6f); celda.setMinimumHeight(20f);
+            celda.setPhrase(new Phrase(autores  , fontCuerpo));
+            tabla.addCell(celda);
+
+            // tabla UR
+            celda = new PdfPCell(celdaInicial);
+            celda.setPaddingLeft(6f);
+            celda.setMinimumHeight(20f);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPhrase(new Phrase("Unidad académica"  , fontbold));
+            tabla.addCell(celda);
+            celda = new PdfPCell(celdaInicial);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPaddingLeft(6f); celda.setMinimumHeight(20f);
+            celda.setPhrase(new Phrase(r.unidadacademica.nombre  , fontCuerpo));
+            tabla.addCell(celda);
+
+            // tabla nivel
+            celda = new PdfPCell(celdaInicial);
+            celda.setPaddingLeft(6f);
+            celda.setMinimumHeight(20f);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPhrase(new Phrase("Nivel"  , fontbold));
+            tabla.addCell(celda);
+            celda = new PdfPCell(celdaInicial);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPaddingLeft(6f); celda.setMinimumHeight(20f);
+            celda.setPhrase(new Phrase(r.niveleducativo.descripcion  , fontCuerpo));
+            tabla.addCell(celda);
+
+            // tabla área conocimiento
+            celda = new PdfPCell(celdaInicial);
+            celda.setPaddingLeft(6f);
+            celda.setMinimumHeight(20f);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPhrase(new Phrase("Área de conocimiento"  , fontbold));
+            tabla.addCell(celda);
+            celda = new PdfPCell(celdaInicial);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPaddingLeft(6f); celda.setMinimumHeight(20f);
+            celda.setPhrase(new Phrase(r.areaconocimiento.descripcion  , fontCuerpo));
+            tabla.addCell(celda);
+
+            // tabla version
+            celda = new PdfPCell(celdaInicial);
+            celda.setPaddingLeft(6f);
+            celda.setMinimumHeight(20f);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPaddingLeft(6f); celda.setMinimumHeight(20f);
+            celda.setPhrase(new Phrase("Versión"  , fontbold));
+            tabla.addCell(celda);
+            celda = new PdfPCell(celdaInicial);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPaddingLeft(6f); celda.setMinimumHeight(20f);
+            celda.setPhrase(new Phrase(r.version.descripcion  , fontCuerpo));
+            tabla.addCell(celda);
+
+            // tabla categoría (calificacion)
+            celda = new PdfPCell(celdaInicial);
+            celda.setPaddingLeft(6f);
+            celda.setMinimumHeight(20f);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPhrase(new Phrase("Categoría"  , fontbold));
+            tabla.addCell(celda);
+            celda = new PdfPCell(celdaInicial);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPaddingLeft(6f); celda.setMinimumHeight(20f);
+            celda.setPhrase(new Phrase(r.clasificacion.tiporecurso.descripcion , fontCuerpo));
+            tabla.addCell(celda);
+            doc.add(tabla);
+
+            // cuerpo2
+            String evaluacion = r.calificacionLetraGral();
+
+
+
+
+            String aux2 = ovf.pie
+                    .replace("[evaluación]", evaluacion);
+            tabla = new PdfPTable(1);
+            tabla.setWidthPercentage(100);
+            tabla.setSpacingBefore(10);
+            celda = new PdfPCell(celdaInicial);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPhrase(new Phrase( aux2  , fontCuerpo));
+            celda.setBorder(Rectangle.NO_BORDER);
+            tabla.addCell(celda);
+            doc.add(tabla);
+
+            // alojado
+
+            // salida
+
+            // despedida director dev
+            tabla = new PdfPTable(1);
+            tabla.setWidthPercentage(100);
+            tabla.setSpacingBefore(10);
+            celda = new PdfPCell(celdaInicial);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPhrase(new Phrase( "ATENTAMENTE\n\"La Técnica al servicio de la Patria\"\n"+"director de la dev\nDirector"  , fontbold));
+            celda.setBorder(Rectangle.NO_BORDER);
+            tabla.addCell(celda);
+            doc.add(tabla);
+
+            // c.c.p.
+            tabla = new PdfPTable(2);
+            tabla.setWidths(new int[]{10,200});
+            tabla.setWidthPercentage(100);
+            tabla.setSpacingBefore(10);
+            celda = new PdfPCell(celdaInicial);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPhrase(new Phrase( "c.c.p. "  , fontLMS));
+            celda.setBorder(Rectangle.NO_BORDER);
+            tabla.addCell(celda);
+            celda = new PdfPCell(celdaInicial);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPhrase(new Phrase( "[nombres].\nInteresado. "  , fontLMS));
+            celda.setBorder(Rectangle.NO_BORDER);
+            tabla.addCell(celda);
+            doc.add(tabla);
+
+            // folio recepción
+            tabla = new PdfPTable(1);
+            tabla.setWidthPercentage(100);
+            tabla.setSpacingBefore(10);
+            celda = new PdfPCell(celdaInicial);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPhrase(new Phrase( "Folio recepción: [folio recepción]"  , fontLMS));
+            celda.setBorder(Rectangle.NO_BORDER);
+            tabla.addCell(celda);
+            doc.add(tabla);
+
+            // CCD 2023
+            tabla = new PdfPTable(1);
+            tabla.setWidthPercentage(100);
+            //tabla.setSpacingBefore(10);
+            celda = new PdfPCell(celdaInicial);
+            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setPhrase(new Phrase( "CCD 2023: [¿?]"  , fontLMS));
+            celda.setBorder(Rectangle.NO_BORDER);
+            tabla.addCell(celda);
+            doc.add(tabla);
+
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        }
+        doc.close();
+        docWriter.close();
+
+        // Aqui termina
+        response().setContentType("application/pdf");
+        return ok (  mipdf.baos.toByteArray() );
     }
 
 

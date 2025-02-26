@@ -393,3 +393,9 @@ GET     /calificarRecursos                          controllers.RecursoControlle
 
 GET     /pruebaEncrypt2                             controllers.AdminCorreoController.pruebaEncrypt2()
 
+GET     /pruebaOficioValoracion                     controllers.RecursoevaluadorController.pruebaOficioValoracion()
+GET     /pruebaPDFImagen                            controllers.RecursoevaluadorController.pruebaPDFImagen()
+
+
+
+

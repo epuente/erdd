@@ -520,7 +520,6 @@ System.out.println("Renglon: "+row.getRowNum() +" de "+sheet.getLastRowNum()+" e
     public static Result timeOut(){
     	play.mvc.Controller.session().clear();
 		return ok(views.html.timeOut.render(form(Login.class)));
-    	
     }
     
     

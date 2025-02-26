@@ -31,3 +31,21 @@ reload
 compile
 run 9000
 exit
+run 9000
+clean
+dist
+run
+run 9000
+clean
+reload
+run 9000
+clean
+reload
+compile
+run 9000
+clean
+reload
+compile
+run 9000
+clean
+exit

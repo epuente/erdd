@@ -28,6 +28,15 @@ public class ReporteLogo extends Model {
     public Date auditlastupdate;
 
     public static Finder<Long,ReporteLogo> find = new Finder<>(Long.class, ReporteLogo.class);
+
+
+    public byte[] getContenido() {
+        return contenido;
+    }
+
+    public void setContenido(byte[] contenido) {
+        this.contenido = contenido;
+    }
 }
 
 

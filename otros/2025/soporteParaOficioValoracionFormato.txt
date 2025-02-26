@@ -1,0 +1,75 @@
+Exportar de erdd_test8 a erdd_dev2
+---------------------------------------
+mysqldump -u erdd -p erdd_test8 --ignore-table=erdd_test8.play_evolutions --no-create-info --skip-extended-insert --complete-insert --skip-triggers > ~/dumps/erdd_test8_insertsTriggersNoOwner_$(date +%Y%m%d_%H%M%S).sql
+
+
+Correr aplicación para crear tablas
+---------------------------------------
+
+Importar datos
+------------------------------------
+mysql -u erdd -p erdd_dev2 < ~/dumps/erdd_test8_insertsSkipTriggers_20250221_110811.sql
+
+Generar script para triggers
+------------------------------
+sudo mysql -u root
+use erdd_dev2;
+
+SELECT
+	'DELIMITER ;;'
+UNION
+SELECT
+		concat('CREATE TRIGGER ',table_name
+			,'_BEFORE_INSERT'
+			,' BEFORE INSERT ON ',table_name,' FOR EACH ROW BEGIN  if (new.auditinsert is null) then     set new.auditinsert = current_timestamp();   end if; END;;')
+FROM information_schema.tables
+where table_schema = 'erdd_dev2' and table_name!='recurso'
+UNION
+SELECT
+		concat('CREATE TRIGGER ',table_name
+		,'_BEFORE_UPDATE',' BEFORE UPDATE ON ',table_name,' FOR EACH ROW BEGIN  set new.auditlastupdate = current_timestamp(); END;;')
+FROM information_schema.tables
+where table_schema = 'erdd_dev2'
+UNION
+SELECT
+	'DELIMITER ;';
+
+
+El resultado de lo anterior, correrlo en erdd_dev2
+
+Generar los los triggers de la tabla recursos (ojo, dbeaver tiene problemas, mejor usar la consola)
+---------------------------------------------------------------------------------------------------
+DELIMITER ;;
+CREATE TRIGGER recurso_BEFORE_INSERT BEFORE INSERT ON recurso
+FOR EACH ROW
+BEGIN
+    DECLARE auxNC VARCHAR(255);
+    DECLARE existe BOOLEAN;
+    ciclo:
+        REPEAT
+            SET auxNC = CONV(FLOOR(RAND() * 99999999999999), 20, 36);
+            SELECT COUNT(numcontrol) INTO existe FROM recurso WHERE numcontrol = auxNC;
+        UNTIL existe = 0
+        END REPEAT ciclo;
+    SET new.numcontrol = auxNC;
+    IF new.auditinsert IS NULL THEN
+        SET new.auditinsert = CURRENT_TIMESTAMP();
+    END IF;
+END;;
+DELIMITER ;
+
+
+DELIMITER ;;
+CREATE TRIGGER recurso_AFTER_INSERT AFTER INSERT ON recurso FOR EACH ROW BEGIN
+	insert into historialestado values (null, new.id, new.estado_id, null,now());
+END;;
+DELIMITER ;
+
+
+DELIMITER ;;
+CREATE TRIGGER recurso_AFTER_UPDATE AFTER UPDATE ON recurso FOR EACH ROW BEGIN
+	insert into historialestado values (null, new.id, new.estado_id, null,now());
+END;;
+DELIMITER ;
+
+
