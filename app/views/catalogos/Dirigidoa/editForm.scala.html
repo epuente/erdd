@@ -23,7 +23,7 @@
 					<div style="vertical-align: middle;"> 
 						@form(CSRF(routes.DirigidoaController.update(id)), 'class->"form-inline", 'id->"frmEdit"  ) {
 						  <div class="form-group">
-					    		@inputText(daForm("descripcion"), 'labelAlterna->"Descripcion", '_help -> "", 'size->"90px", 'required->"required")
+					    		@inputText(daForm("descripcion"), 'labelAlterna->"Descripcion", '_help -> "", 'size->"90px", 'required->"required",  'class->"form-control")
 						  </div>
 						  <button type="submit" class="btn btn-primary">Actualizar</button>
 						}

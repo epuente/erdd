@@ -11,19 +11,24 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 import com.avaje.ebean.Expr;
 import com.avaje.ebean.annotation.Transactional;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.itextpdf.text.*;
 import actions.miCorreo;
 import actions.miPdf;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.hyphenation.Hyphenation;
 import models.*;
 import models.Version;
+import org.json.JSONException;
+import org.json.JSONObject;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.ebean.Model;
@@ -1092,7 +1097,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         SimpleDateFormat sdf = new SimpleDateFormat("d 'de' MMMM 'de' yyyy");
 
         ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
-        long id =24;
+        long id =1;
         miPdf mipdf = new miPdf(id);
         mipdf.baos = baosPDF;
 
@@ -1137,15 +1142,10 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         doc.addCreationDate();
         doc.addCreator("SERDD");
 
-
-
-
-
-
         try {
             PdfPTable tablaInicial = new PdfPTable(6);
             tablaInicial.setWidthPercentage(100);
-            tablaInicial.setSpacingBefore(5);
+            //tablaInicial.setSpacingBefore(5);
             tablaInicial.setSpacingAfter(-12);
             PdfPCell celdaInicial = new PdfPCell();
             //celdaInicial.setPaddingLeft(6f);
@@ -1235,14 +1235,14 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
             // Cuerpo1
             String folioOficioSolicitud = r.oficio.folio;
             String folioOficioSolicitudRecibido = sdf.format(r.oficio.fecharecepcion);
-            String stringAux = ovf.cuerpo
+            String stringAux = ovf.cuerpo1
                     .replace("[folio]", folioOficioSolicitud)
                     .replace("[fechaFolio]", folioOficioSolicitudRecibido);
             tabla = new PdfPTable(1);
             tabla.setWidthPercentage(100);
             tabla.setSpacingBefore(10);
             celda = new PdfPCell(celdaInicial);
-            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
             celda.setPhrase(new Phrase(stringAux  , fontCuerpo));
             celda.setBorder(Rectangle.NO_BORDER);
             tabla.addCell(celda);
@@ -1259,7 +1259,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
             tabla = new PdfPTable(2);
             tabla.setWidths(new int[]{80,200});
             tabla.setWidthPercentage(100);
-            tabla.setSpacingBefore(10);
+            //tabla.setSpacingBefore(2);
             // tabla rdd
             celda = new PdfPCell(celdaInicial);
             celda.setPaddingLeft(6f);
@@ -1353,27 +1353,61 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
             tabla.addCell(celda);
             doc.add(tabla);
 
-            // cuerpo2
+
+            // cuerpo2   (resultado de la evaluación)
             String evaluacion = r.calificacionLetraGral();
-
-
-
-
-            String aux2 = ovf.pie
+            String aux2 = ovf.cuerpo2
                     .replace("[evaluación]", evaluacion);
             tabla = new PdfPTable(1);
             tabla.setWidthPercentage(100);
             tabla.setSpacingBefore(10);
             celda = new PdfPCell(celdaInicial);
-            celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celda.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
             celda.setPhrase(new Phrase( aux2  , fontCuerpo));
             celda.setBorder(Rectangle.NO_BORDER);
             tabla.addCell(celda);
             doc.add(tabla);
 
-            // alojado
+            // alojado (tiene url)
+            if (r.url!=null && !r.url.isEmpty()) {
+                // ¿requiere user/pass?
+                boolean usaCuenta = !r.recursosenweb.isEmpty();
+                String x = ovf.cuerpo5
+                        .replace("[enlaces]", r.url);
+                tabla = new PdfPTable(1);
+                tabla.setWidthPercentage(100);
+                tabla.setSpacingBefore(10);
+                celda = new PdfPCell(celdaInicial);
+                celda.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
+                celda.setPhrase(new Phrase(x, fontCuerpo));
+                celda.setBorder(Rectangle.NO_BORDER);
+                tabla.addCell(celda);
+                doc.add(tabla);
+                if (usaCuenta){
+                    tabla = new PdfPTable(1);
+                    tabla.setWidthPercentage(100);
+                    tabla.setSpacingBefore(10);
+                    celda = new PdfPCell(celdaInicial);
+                    celda.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
+                    celda.setPhrase(new Phrase("El acceso requiere de usuario y clave, mismas que se le haran llegar.", fontCuerpo));
+                    celda.setBorder(Rectangle.NO_BORDER);
+                    tabla.addCell(celda);
+                    doc.add(tabla);
+                }
+            }
 
-            // salida
+            // despedida
+            if (ovf.despedida!=null){
+                tabla = new PdfPTable(1);
+                tabla.setWidthPercentage(100);
+                tabla.setSpacingBefore(10);
+                celda = new PdfPCell(celdaInicial);
+                celda.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
+                celda.setPhrase(new Phrase(ovf.despedida, fontCuerpo));
+                celda.setBorder(Rectangle.NO_BORDER);
+                tabla.addCell(celda);
+                doc.add(tabla);
+            }
 
             // despedida director dev
             tabla = new PdfPTable(1);
@@ -1433,8 +1467,29 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
 
         // Aqui termina
         response().setContentType("application/pdf");
+        System.out.println("generado");
         return ok (  mipdf.baos.toByteArray() );
     }
+/*
+    public static Result generaOficioValoracion(long idRecurso, String folio, String fecha, String recepcion, String iniciales )  {
+        System.out.println("Desde RecursoevaluadorController.generaOficioValoracion");
+        byte[] r = generaOficioValoracionByte(idRecurso, folio, fecha, recepcion, iniciales);
+        // Aqui termina
+        response().setContentType("application/pdf");
+        response().setHeader("Content-Disposition", "inline");
+        System.out.println("---------------------");
+        // return ok (  mipdf.baos.toByteArray() );
+
+
+
+
+
+        return ok (  r);
+    }
+*/
+
+
+
 
 
 }

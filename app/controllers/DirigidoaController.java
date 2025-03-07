@@ -10,7 +10,7 @@ import models.Dirigidoa;
 
 import play.data.Form;
 import play.mvc.Result;
-import views.html.Dirigidoa.*;
+import views.html.catalogos.Dirigidoa.*;
 
 public class DirigidoaController extends ControladorSeguro{
 	
@@ -24,7 +24,7 @@ public class DirigidoaController extends ControladorSeguro{
 
 	public static Result create(){
 		Form<Dirigidoa> aForm =	form(Dirigidoa.class);	
-		return ok( views.html.Dirigidoa.createForm.render(aForm)  );	
+		return ok( views.html.catalogos.Dirigidoa.createForm.render(aForm)  );
 	}
 	
     public static Result delete(Long id) {

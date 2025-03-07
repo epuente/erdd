@@ -22,6 +22,22 @@
 			</div>
 		</div>
 
+        @if(flash.containsKey("success")) {
+        <div class="alert alert-success" role="alert">
+            <strong>@flash.get("success")</strong>
+        </div>
+        }
+        @if(flash.containsKey("warning")) {
+        <div class="alert alert-warning" role="alert">
+            <strong>@flash.get("warning")</strong>
+        </div>
+        }    @if(flash.containsKey("error")) {
+        <div class="alert alert-danger" role="alert">
+            <strong>@flash.get("error")</strong>
+        </div>
+        }
+
+
 		<div class="row">
 			<div class="col-lg-12">
 				@comunListarEvaluaciones(re, tipo)

@@ -6,11 +6,10 @@
  <script src="/assets/javascripts/fullcalendar/moment.min.js" ></script>
 @import helper._
 
-@id<br>
-Long.parseLong(@id))<br>
-@models.OficioValoracion.find.findList().size<br>
-@models.OficioValoracion.find.where().eq("recurso_id", id).findList().size
-
+@if(rForm.get.oficiovaloracion!=null && rForm.get.oficiovaloracion.fechaoficio!=null){
+    @rForm.get.oficiovaloracion.fechaoficio.format("yyyy-MM-dd")<br>
+    @rForm.get.oficiovaloracion.fechaoficio.format("dd/MM/yyyy")
+}
 
 <style>
     .swal2-container {
@@ -32,7 +31,7 @@ Long.parseLong(@id))<br>
 
 @main{
 
-    @modal( models.OficioValoracion.find.where().eq("recurso_id", id).findList().size )
+    @modal(models.OficioValoracion.find.where().eq("recurso.id", "@id").findList().size)
 	<div class="container-fluid">
  
 		<div class="row">
@@ -259,48 +258,6 @@ Long.parseLong(@id))<br>
         $.when($x).done(function(data){
             console.dir(data)
             if (data.estado=="grabado"){
-                $.notify({
-                    title: "Correcto:",
-                    message: data.mensaje+"<br><br>...regresando a evaluaciones concluidas."
-                }, {type: 'success'});
-                $('#myModalOV').modal('hide');
-                setTimeout(() => {
-                    location.href = '/mostrarEvaluacionesConcluidas/0/lg';
-                }, "2000");
-            }
-            if (data.estado=="error"){
-                $.notify({
-                    title: "Error:",
-                    message: data.mensaje+"<br><br>...regresando a evaluaciones concluidas"
-                }, {type: 'danger'});
-            }
-        });
-
-    });
-
-
-
-    $("#btnActualizarModal").click(function(){
-        console.log("click actualizar")
-        var url = "/generaOficioValoracionAJAX";
-        var id= @id;
-        var folio = $("#oficiovaloracion_numero").val();
-        var fecha = $("#oficiovaloracion_fechaoficio").val();
-        var folRecepcion = $("#oficiovaloracion_foliorecepcion").val();
-        var iniciales = $("#oficiovaloracion_iniciales").val();
-        fecha=fecha.replace(/\//g,"-");
-        // Objeto JSON que deseas enviar al servidor
-        const parametros = {
-            idRecurso: id,
-            folio: folio,
-            fecha: fecha,
-            recepcion: folRecepcion,
-            iniciales: iniciales
-        };
-        var $x = LlamadaAjax("/editOficioValoracionAJAX", "POST", JSON.stringify({parametros}));
-        $.when($x).done(function(data){
-            console.dir(data)
-            if (data.estado=="actualizado"){
                 $.notify({
                     title: "Correcto:",
                     message: data.mensaje+"<br><br>...regresando a evaluaciones concluidas."

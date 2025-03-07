@@ -21,7 +21,7 @@
                         @form(routes.NiveleducativoController.save(), 'class->"form-inline", 'id->"frmCreate") {
                             @CSRF.formField
                             <div class="form-group">
-                                @inputText(niveleducativoForm("descripcion"), 'labelAlterna -> "Descripción", '_help -> "", 'size->"40em", 'required->"required")
+                                @inputText(niveleducativoForm("descripcion"), 'labelAlterna -> "Descripción", '_help -> "", 'size->"40em", 'required->"required",  'class->"form-control")
                             </div>
                             <input type="submit" value="Agregar nivel" class="btn btn-primary">
                         }

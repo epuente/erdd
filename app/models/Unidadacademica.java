@@ -21,13 +21,18 @@ public class Unidadacademica extends Model {
 	
     @Constraints.Required
     public String nombre;
+
+    @OneToMany(mappedBy="unidadacademica", cascade=CascadeType.ALL)
+    public List<UnidadacademicaDirector> directores;
     
     @OneToMany (mappedBy="unidadacademica", cascade=CascadeType.ALL)
     public List<UnidadacademicaNiveleducativo> niveles;
 
     @OneToMany (mappedBy="unidadacademica", cascade=CascadeType.ALL)
     public List<UnidadacademicaAreaconocimiento> areas;    
-    
+
+    public String articulo;
+
 	@CreatedTimestamp
     public Date auditinsert;
 	@UpdatedTimestamp

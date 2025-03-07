@@ -26,7 +26,7 @@
                     <div class="col-lg-12">
                         @form(CSRF(routes.FormatoentregaController.save()), 'class->"form-inline", 'id->"frmCreate") {
                           <div class="form-group">
-                                @inputText(feForm("descripcion"), 'labelAlterna -> "Descripción", '_help -> "", 'required->"required", 'size->"40em")
+                                @inputText(feForm("descripcion"), 'labelAlterna -> "Descripción", '_help -> "", 'required->"required", 'size->"40em",  'class->"form-control")
                                 <input type="submit" value="Agregar" class="btn btn-primary">
                            </div>
 

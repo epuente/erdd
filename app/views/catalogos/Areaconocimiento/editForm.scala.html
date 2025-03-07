@@ -23,7 +23,7 @@
    				<div style="vertical-align: middle;">    
 				    @form(CSRF(routes.AreaconocimientoController.update(id)), 'class->"form-inline", 'id->"frmEdit") {        
 						<div class="form-group">        
-				            @inputText(areaconocimientoForm("descripcion"), '_label -> "Descripción", '_help -> "", 'size->"70em", 'required->"required")
+				            @inputText(areaconocimientoForm("descripcion"), '_label -> "Descripción", '_help -> "", 'size->"70em", 'required->"required",  'class->"form-control")
 				            <input type="submit" value="Actualizar el área del conocimiento" class="btn btn-primary">
 				        </div>
 				    }

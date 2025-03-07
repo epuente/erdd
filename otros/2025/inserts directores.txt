@@ -1,0 +1,5 @@
+INSERT INTO director (id, ur, titulo, nombre, paterno, materno, genero, auditinsert, auditlastupdate) VALUES(1, 'DEV', 'Mtro', 'Jonathan', ' Rosales', 'Juan', 'M', '2025-03-04 00:00:00', '2025-03-04 14:11:43');
+INSERT INTO director (id, ur, titulo, nombre, paterno, materno, genero, auditinsert, auditlastupdate) VALUES(2, 'EMS', 'M. en E.N.A.', 'María Isabel', 'Rojas', 'Ruíz', 'F', '2025-03-04 00:00:00', '2025-03-04 14:11:43');
+INSERT INTO director (id, ur, titulo, nombre, paterno, materno, genero, auditinsert, auditlastupdate) VALUES(3, 'ES', 'Lic', 'Gilberto Alejandro', 'García', 'Guerra', 'M', '2025-03-04 00:00:00', '2025-03-04 14:11:43');
+INSERT INTO director (id, ur, titulo, nombre, paterno, materno, genero, auditinsert, auditlastupdate) VALUES(4, 'PGD', 'Dr', 'Francisco', 'Gutiérrez', 'Galicia', 'M', '2025-03-04 00:00:00', '2025-03-04 14:11:43');
+

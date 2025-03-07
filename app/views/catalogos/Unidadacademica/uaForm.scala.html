@@ -2,13 +2,39 @@
 
 @import helper._
 
+<style>
+fieldset.scheduler-border {
+border: 1px groove #ddd !important;
+padding: 0 1.4em 1.4em 1.4em !important;
+margin: 0 0 1.5em 0 !important;
+-webkit-box-shadow:  0px 0px 0px 0px #000;
+box-shadow:  0px 0px 0px 0px #000;
+}
+
+legend.scheduler-border {
+font-size: 1.2em !important;
+font-weight: bold !important;
+text-align: left !important;
+width:auto;
+padding:0 10px;
+border-bottom:none;
+}
+
+</style>
 
 <fieldset>
     <div class="row">
-        <div class="col-sm-6">
-            @inputText(forma2("nombre"), '_label -> "Nombre", '_help -> "", 'required->"required", 'size->"50em")
+        <div class="col-sm-4">
+            @inputText(forma2("nombre"), '_label -> "Nombre", '_help -> "", 'required->"required", 'size->"50em", 'class->"form-control")
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
+            @inputRadioGroup(
+            forma2("articulo"),
+            options = Seq("el" -> "Masculino", "la" -> "Femenino", " " -> "No aplica"),
+            '_label -> "Artículo", '_help->"¿A esta UA se le refiere como masculino o femenino?"
+            )
+        </div>
+        <div class="col-sm-4">
             @inputCheckboxGroup(
             forma2("nivel"),
             options = options(models.Niveleducativo.options),
@@ -22,6 +48,41 @@
             options = options(models.Areaconocimiento.options),
             '_label -> "Área del conocimiento"
             )
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+
+
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Director de la unidad académica</legend>
+                <div class="control-group">
+                    <div class="controls bootstrap-timepicker">
+
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="width:10%; padding:10px;">@inputText(forma2("directores[0].titulo"), '_label -> "Título", '_help -> "",  'class->"form-control")</td>
+                                <td style="width:30%; padding:10px;">@inputText(forma2("directores[0].paterno"), '_label -> "Paterno", '_help -> "", 'class->"form-control")</td>
+                                <td style="width:30%; padding:10px;">@inputText(forma2("directores[0].materno"), '_label -> "Materno", '_help -> "", 'class->"form-control")</td>
+                                <td style="width:30%; padding:10px;">@inputText(forma2("directores[0].nombre"), '_label -> "Nombre(s)", '_help -> "", 'class->"form-control")</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" style="padding-left:10px;">@inputRadioGroup(
+                                    forma2("directores[0].genero"),
+                                    options = Seq("M"->"Masculino", "F"->"Femenino"),
+                                    '_label -> "Género") </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </fieldset>
+
+
+
+
+
+
+
         </div>
 
     </div>

@@ -7,7 +7,6 @@ import play.db.ebean.Model;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class OficiovaloracionFormato extends Model {
@@ -19,44 +18,41 @@ public class OficiovaloracionFormato extends Model {
     @Size(max = 400)
     public String encabezado;
 
-    @OneToMany
-    List<OficiovaloracionFormatoLeyenda> leyendas;
-
     @Size(max = 500)
     public String asunto;
 
     @Size(max = 5000)
-    public String cuerpo;
+    public String cuerpo1;
 
     @Size(max = 5000)
-    public String pie;
+    public String cuerpo2;
+
+    @Size(max = 5000)
+    public String cuerpo3;
+
+    @Size(max = 5000)
+    public String cuerpo4;
+
+    @Size(max = 5000)
+    public String cuerpo5;
+
+    @Size(max = 5000)
+    public String despedida;
 
     @Size(max = 500)
-    public String remitente;
+    public String direccionDEV;
 
     @OneToOne(mappedBy = "oficiovaloracionformato", cascade = CascadeType.ALL)
-    OficiovaloracionFormatoLogo logoEncabezado1;
+    OficiovaloracionFormatoLogo imagenFondo;
 
-    @OneToOne(mappedBy = "oficiovaloracionformato", cascade = CascadeType.ALL)
-    OficiovaloracionFormatoLogo logoEncabezado2;
 
-    @OneToOne(mappedBy = "oficiovaloracionformato", cascade = CascadeType.ALL)
-    OficiovaloracionFormatoLogo logoEncabezado3;
-
-    @OneToOne(mappedBy = "oficiovaloracionformato", cascade = CascadeType.ALL)
-    OficiovaloracionFormatoLogo logoPie1;
-
-    @OneToOne(mappedBy = "oficiovaloracionformato", cascade = CascadeType.ALL)
-    OficiovaloracionFormatoLogo logoPie2;
-
-    @OneToOne(mappedBy = "oficiovaloracionformato", cascade = CascadeType.ALL)
-    OficiovaloracionFormatoLogo logoPie3;
 
     @CreatedTimestamp
     public Date auditinsert;
     @UpdatedTimestamp
     public Date auditlastupdate;
 
-
     public static Finder<Long,OficiovaloracionFormato> find = new Finder<>(Long.class, OficiovaloracionFormato.class);
+
+
 }

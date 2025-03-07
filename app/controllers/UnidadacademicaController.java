@@ -8,17 +8,13 @@ import java.util.stream.Collectors;
 
 import javax.persistence.PersistenceException;
 
+import models.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.avaje.ebean.Page;
 import com.avaje.ebean.Query;
-import models.Areaconocimiento;
-import models.Niveleducativo;
-import models.Unidadacademica;
-import models.UnidadacademicaAreaconocimiento;
-import models.UnidadacademicaNiveleducativo;
 import play.data.Form;
 import play.mvc.*;
 import views.html.catalogos.Unidadacademica.*;
@@ -68,11 +64,8 @@ System.out.println("Unidadacademica.list");
 		        uaa.unidadacademica = ua;
 		        uaa.area = Areaconocimiento.find.byId( Long.parseLong(x.getValue())  );
 		        ua.areas.add( uaa  );		
-			} 			
-        });        
-        
-        
-        
+			}
+        });
         unidadacademicaForm.get().save();
         flash("success", "'"+unidadacademicaForm.get().nombre +"' ha sido creada.");
         return GO_HOME;                 
@@ -127,8 +120,9 @@ System.out.println("**** ua: "+ua);
         System.out.println("Objeto nivel: "+ua.niveles);
         
         
-        
+
         unidadacademicaForm.data().entrySet().forEach(x->{
+            System.out.println("entrySet "+x.getKey());
 			if (x.getKey().startsWith("nivel[")){
 		        UnidadacademicaNiveleducativo uan = new UnidadacademicaNiveleducativo();
 		        uan.unidadacademica = ua;
@@ -139,14 +133,43 @@ System.out.println("**** ua: "+ua);
 		        UnidadacademicaAreaconocimiento uaa = new UnidadacademicaAreaconocimiento();
 		        uaa.unidadacademica = ua;
 		        uaa.area = Areaconocimiento.find.byId( Long.parseLong(x.getValue())  );
-		        ua.areas.add( uaa  );		
-			} 			
+		        ua.areas.add( uaa  );
+			}
+            /*
+            if (x.getKey().startsWith("director")){
+                System.out.println("Si hay Director");
+                UnidadacademicaDirector uad = new UnidadacademicaDirector();
+                if (x.getKey().startsWith("director.titulo")){
+                    uad.titulo = x.getValue();
+                }
+                if (x.getKey().startsWith("director.nombre")){
+                    uad.nombre = x.getValue();
+                }
+                if (x.getKey().startsWith("director.paterno")){
+                    uad.paterno = x.getValue();
+                }
+                if (x.getKey().startsWith("director.materno")){
+                    uad.materno = x.getValue();
+                }
+                if (x.getKey().startsWith("director.genero")){
+                    uad.genero = x.getValue();
+                }
+                uad.unidadacademica = ua;
+                ua.directores.add(uad);
+            }
+             */
         });
-        
-        
-        
+
+        // Director de la UA
+        //ua.director.unidadacademica = ua;
+
+
+
+
+
         ua.update(id);
         flash("success", "'"+unidadacademicaForm.get().nombre + "' ha sido actualizada");
+        System.out.println("\n\n\n\n");
         return GO_HOME;        
     }    
 
@@ -196,10 +219,15 @@ System.out.println("************************************************************
 					 .fetch("niveles.nivel")
 					 .fetch("areas")
 					 .fetch("areas.area")
+                     .fetch("directores")
 					 .where(
 								"nombre like :cadena "+
 										"or niveles.nivel.descripcion like :cadena "+
-										"or areas.area.descripcion like :cadena "
+										"or areas.area.descripcion like :cadena "+
+                                        "or directores.titulo like :cadena "+
+                                        "or directores.nombre like :cadena "+
+                                        "or directores.paterno like :cadena "+
+                                        "or directores.materno like :cadena "
 									    ).setParameter("cadena", "%"+filtro+"%")			 
 					 	.orderBy( "c"+    (colOrden==0?columnasOrdenables.get(0)  :  columnasOrdenables.get(colOrden)-1)  +" "+tipoOrden )
 						.findPagingList(numRegistros)
@@ -209,13 +237,7 @@ System.out.println("************************************************************
 			 
 			filtrados = q2.findList().size();
 			sinFiltro = q1.findList().size();	
-		 
-		 
-			
-               
 
-
-		
 		System.out.println("**************************************************************************************"       );		
 //System.out.println("tam page: "+serv.getTotalPageCount());
 
@@ -234,6 +256,7 @@ System.out.println("************************************************************
 				datoP.put("nombre", p.nombre);
 				datoP.put("niveles", p.niveles.stream().map(m->m.nivel.descripcion).collect(Collectors.toList()));
 				datoP.put("areas", p.areas.stream().map(m->m.area.descripcion).collect(Collectors.toList()));
+                datoP.put("director", p.directores.size()!=0?p.directores.get(0).nombreConTitulo():"");
 				losDatos.put(datoP);
 			}
 			if ( ua.getTotalRowCount()>0 ){

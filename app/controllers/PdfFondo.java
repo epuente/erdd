@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
@@ -10,7 +9,7 @@ import models.OficiovaloracionFormatoLogo;
 import models.ReporteLogo;
 
 public class PdfFondo implements PdfPageEvent {
-    Font ffont = new Font(Font.FontFamily.UNDEFINED, 5, Font.ITALIC);
+    //Font ffont = new Font(Font.FontFamily.UNDEFINED, 5, Font.ITALIC);
     public String emisor;
     public String titulo;
 
@@ -69,15 +68,15 @@ public class PdfFondo implements PdfPageEvent {
         try {
             // Texto de la dirección de la DEV
             OficiovaloracionFormato f = OficiovaloracionFormato.find.byId(1L);
-            Font fontFooter = FontFactory.getFont("Cournier", 8);
+            Font fontFooter = FontFactory.getFont("Cournier", 7);
 
             PdfPTable table = new PdfPTable(2);
             table.setWidthPercentage(100);
-            table.setWidths(new int[]{70, 200});
+            table.setWidths(new int[]{75, 200});
             table.setTotalWidth(doc.getPageSize().getWidth() - doc.leftMargin() - doc.rightMargin());
 
             PdfPCell cell1 = new PdfPCell(new Paragraph("", fontFooter));
-            PdfPCell cell2 = new PdfPCell(new Paragraph(f.remitente, fontFooter));
+            PdfPCell cell2 = new PdfPCell(new Paragraph(f.direccionDEV, fontFooter));
 
             cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell2.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -96,17 +95,20 @@ public class PdfFondo implements PdfPageEvent {
             if (this.emisor != null) {
                 if (!this.emisor.contentEquals("admin") && !this.emisor.contentEquals("formatoOV")) {
                     PdfContentByte cb = writer.getDirectContent();
-                    Image watermark_image = null;
+                    Image imagen = null;
                     try {
                         //watermark_image = Image.getInstance("public/images/watermark3.jpg");
-                        watermark_image = Image.getInstance(ReporteLogo.find.byId(3L).getContenido());
+                        imagen = Image.getInstance(ReporteLogo.find.byId(3L).getContenido());
+
+                        imagen.scaleAbsolute(2550,3300);
                     } catch (BadElementException | IOException e) {
                         System.out.println("Error Excepción de bad element-- " + e.getMessage() + "\n" + e.getCause());
                     }
-                    assert watermark_image != null;
-                    watermark_image.setAbsolutePosition(10, 100);
+                    assert imagen != null;
+                    imagen.setAbsolutePosition(10, 100);
+
                     try {
-                        cb.addImage(watermark_image);
+                        cb.addImage(imagen);
                     } catch (DocumentException e) {
                         System.out.println("Error de Excepción de documento -- " + e.getMessage() + "\n" + e.getCause());
                     }
@@ -114,19 +116,28 @@ public class PdfFondo implements PdfPageEvent {
 
                 if (this.emisor.contentEquals("formatoOV")) {
                     PdfContentByte cb = writer.getDirectContent();
-                    Image watermark_image = null;
+                    Image imagenFondo = null;
                     try {
                         //watermark_image = Image.getInstance("public/images/watermark3.jpg");
-                        watermark_image = Image.getInstance(OficiovaloracionFormatoLogo.find.byId(1L).getContenido());
+                        imagenFondo = Image.getInstance(OficiovaloracionFormatoLogo.find.byId(1L).getContenido());
 
-                        System.out.println("watermark_image " + watermark_image);
+                        //System.out.println("watermark_image " + imagenFondo);
                     } catch (BadElementException | IOException e) {
                         System.out.println("Error Excepción de bad element-- " + e.getMessage() + "\n" + e.getCause());
                     }
-                    assert watermark_image != null;
-                    watermark_image.setAbsolutePosition(0, 0);
+                    assert imagenFondo != null;
+                    imagenFondo.setAbsolutePosition(0, 0);
+
+
+                    int indentation = 0;
+                    float scaler = ((doc.getPageSize().getWidth() - doc.leftMargin()
+                            - doc.rightMargin() - indentation) / imagenFondo.getWidth()) * 100;
+                    System.out.println("scaler "+scaler);
+                    imagenFondo.scalePercent((float) (scaler+3.14));
+
+
                     try {
-                        cb.addImage(watermark_image);
+                        cb.addImage(imagenFondo);
                     } catch (DocumentException e) {
                         System.out.println("Error de Excepción de documento -- " + e.getMessage() + "\n" + e.getCause());
                     }

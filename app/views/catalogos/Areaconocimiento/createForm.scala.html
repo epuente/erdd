@@ -21,7 +21,7 @@
 				    <h3>Agregar Área del Conocimiento</h3>				    
 				    @form(CSRF(routes.AreaconocimientoController.save()), 'class->"form-inline", 'id->"frmCreate") {	
    					  	<div class="form-group">			        			        
-				            @inputText(areaconocimientoForm("descripcion"), 'labelAlterna -> "Descripción", '_help -> "", 'size->"40em")
+				            @inputText(areaconocimientoForm("descripcion"), 'labelAlterna -> "Descripción", '_help -> "", 'size->"40em",  'class->"form-control")
 				            <input type="submit" value="Crear área del conocimiento." class="btn btn-primary">
 			            </div> 
 				    }

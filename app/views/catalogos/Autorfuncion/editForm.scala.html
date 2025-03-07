@@ -23,7 +23,7 @@
                         <div style="vertical-align: middle;">
                             @form(CSRF(routes.AutorfuncionController.update(id)), 'class->"form-inline", 'id->"frmEdit"  ) {
                               <div class="form-group">
-                                    @inputText(afForm("descripcion"), 'labelAlterna->"Descripción", '_help -> "", 'size->"90px", 'required->"required")
+                                    @inputText(afForm("descripcion"), 'labelAlterna->"Descripción", '_help -> "", 'size->"90px", 'required->"required",  'class->"form-control")
                               </div>
                               <button type="submit" class="btn btn-primary">Actualizar</button>
                             }

@@ -1,0 +1,2 @@
+INSERT INTO unidadacademica_director (id, unidadacademica_id, paterno, materno, nombre, genero, titulo, auditinsert, auditlastupdate) VALUES(4, 73, 'González', 'Rogel', 'Emmanuel', 'M', 'M en C.', '2025-03-05 09:35:35', '2025-03-05 09:35:35');
+

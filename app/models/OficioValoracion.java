@@ -24,6 +24,14 @@ public class OficioValoracion extends Model {
 	
 	@NotNull
 	public String numero;
+
+    @NotNull
+    public Date fechaoficio;
+
+    @NotNull
+    public String foliorecepcion;
+
+    public String iniciales;
 	
 	public String contenttype;	
 
@@ -31,18 +39,12 @@ public class OficioValoracion extends Model {
 	public byte[] contenido;
 	
 	public String nombrearchivo;
-	
 
-	public Date fechaoficio;	
-
-	
 	@CreatedTimestamp
     public Date auditinsert;
 	@UpdatedTimestamp
     public Date auditlastupdate; 
-	
-    
-    
+
     public static Finder<Long,OficioValoracion> find = new Finder<>(Long.class, OficioValoracion.class);
     
     public static OficioValoracion searchByRecurso(Long recurso){

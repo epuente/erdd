@@ -49,3 +49,21 @@ compile
 run 9000
 clean
 exit
+run 9000
+clean
+reload
+run 9000
+reload
+run 9000
+compile
+run 9000
+compile
+CREATE DATABASE erdd_dev4 DEFAULT CHARACTER SET latin1;
+compile
+run 9000
+compile
+run 9000
+ompile
+compile
+run 9000
+exit

@@ -1,0 +1,54 @@
+@(id: Long, dForm: Form[Director])
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.render) }
+
+
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/> 
+
+
+@main {
+	<div class="container-fluid"  >
+			<div class="row">
+				<div class="col-sm-12">
+					<ol class="breadcrumb">
+					  <li>Catálogos</li>
+					  <li class="active">Director Posgrado</li>
+					</ol>			
+				</div>
+			</div>
+
+            <div class="elContenido">
+			    <div class="row">
+				<div class="col-sm-12">    
+				    <h3>Editar Director de Posgrado</h3>
+       			</div>
+			</div>
+
+            @if(flash.containsKey("success")) {
+                <div class="alert alert-success" role="alert">
+                    @flash.get("success")
+                </div>
+            }
+            @if(flash.containsKey("warning")) {
+                <div class="alert alert-warning" role="alert">
+                    <strong>@flash.get("warning")</strong>
+                </div>
+            }
+            @if(flash.containsKey("error")) {
+                <div class="alert alert-danger" role="alert">
+                    <strong>@flash.get("error")</strong>
+                </div>
+            }
+            <div style="vertical-align: middle;">
+                @form(CSRF(routes.DirectoresController.update("DEV")), 'class->"form-inline5", 'id->"frmEdit"  ) {
+                    @ddevForm(dForm)
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                }
+            </div>
+
+
+            </div>
+    </div>
+}
+@comunCatalogosJS("Edit", "tipo de documento")

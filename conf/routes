@@ -396,6 +396,12 @@ GET     /pruebaEncrypt2                             controllers.AdminCorreoContr
 GET     /pruebaOficioValoracion                     controllers.RecursoevaluadorController.pruebaOficioValoracion()
 GET     /pruebaPDFImagen                            controllers.RecursoevaluadorController.pruebaPDFImagen()
 
+#GET     /generaOficioValoracion/:id/:folio/:fecha/:recepcion/:iniciales                 controllers.RecursoevaluadorController.generaOficioValoracion(id:Long, folio:String, fecha:String, recepcion:String, iniciales:String)
+POST    /generaOficioValoracionAJAX                 controllers.OficioValoracionController.generaOficioValoracionAJAX()
+POST    /saveOficioValoracionAJAX                   controllers.OficioValoracionController.saveOficioValoracionAJAX()
+#POST    /editOficioValoracionAJAX                   controllers.OficioValoracionController.editOficioValoracionAJAX()
+POST    /editOficioValoracionAJAX                   controllers.OficioValoracionController.editOficioValoracionAJAX()
 
-
+GET     /director/:ur                               controllers.DirectoresController.edit(ur:String)
+POST    /director/update/:ur                        controllers.DirectoresController.update(ur:String)
 
