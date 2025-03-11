@@ -539,6 +539,8 @@ create table oficio_valoracion (
 
 create table oficiovaloracion_formato (
   id                        bigint auto_increment not null,
+  version                   integer,
+  activo                    tinyint(1) default 0,
   encabezado                varchar(400),
   asunto                    varchar(500),
   cuerpo1                   varchar(5000),

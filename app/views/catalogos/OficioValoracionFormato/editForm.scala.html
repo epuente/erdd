@@ -1,0 +1,64 @@
+@(forma: Form[OficiovaloracionFormato])
+
+@import helper._
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/> 
+
+@main {
+    @modal(1)
+	<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+					  <li>Catálogos</li>
+					  <li><a href="/formatoOV">Formato de oficio de valoración</a></li>
+					  <li class="active">Edición</li>
+					</ol>			
+				</div>
+			</div>
+            <div class="elContenido">
+                <div class="row">
+                    <div class="col-lg-12">
+                      <h3>Editar formato de oficio de valoración</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        @form(CSRF(routes.DirigidoaController.save()), 'class->"form-inline", 'id->"frmCreate") {
+                            @ovForm(forma)
+                        }
+                        <div class="actions">
+                            <a href="@routes.DirigidoaController.list()" class="btn btn-default">Cancelar</a>
+                        </div>
+                     </div>
+             </div>
+            </div>
+    </div>
+    
+
+    <script>
+        $(function() {
+            // Agrega descripciones a los labels de los cuerpos
+            $("#cuerpo3_field").find("dt:eq(0)").append("<span class='text-muted' style='padding-left:2rem;'>Esta sección aplica cuando el rdd tiene registrada una url.</span>");
+
+            $("#cuerpo4_field").find("dt:eq(0)").append("<span class='text-muted' style='padding-left:2rem;'>Si además de tener registrada una url, requiere de usuario y password.</span>");
+
+            $("#cuerpo5_field").find("dt:eq(0)").append("<span class='text-muted' style='padding-left:2rem;'>Si tiene registrada una url pero no requiere de usuario y password.</span>");
+
+            leer();
+        });
+
+        function leer(){
+            if (@forma.get().activo==1)
+                $("#activo_S").attr("checked", true);
+            if (@forma.get().activo==0)
+                $("#activo_N").attr("checked", true);
+        }
+    </script>
+
+}
+
+@comunCatalogosJS("edit", "Oficio Valoracion Formato")
+
+<script src="@routes.Assets.at("javascripts/async.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("javascripts/oficioValoracionFormato.js")" type="text/javascript"></script>
+

@@ -15,6 +15,11 @@ public class OficiovaloracionFormato extends Model {
     @Id
     public Long id;
 
+    public int version;
+
+
+    public boolean activo;
+
     @Size(max = 400)
     public String encabezado;
 
@@ -41,6 +46,14 @@ public class OficiovaloracionFormato extends Model {
 
     @Size(max = 500)
     public String direccionDEV;
+
+    public OficiovaloracionFormatoLogo getImagenFondo() {
+        return imagenFondo;
+    }
+
+    public void setImagenFondo(OficiovaloracionFormatoLogo imagenFondo) {
+        this.imagenFondo = imagenFondo;
+    }
 
     @OneToOne(mappedBy = "oficiovaloracionformato", cascade = CascadeType.ALL)
     OficiovaloracionFormatoLogo imagenFondo;

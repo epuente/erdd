@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 import actions.miPdf;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -45,7 +46,7 @@ public class OficioValoracionController extends ControladorSeguroCoordinador{
     public static Result list(){    	
     	//List<Recurso>  r = Ebean.find(Recurso.class).fetch("oficio").where().isNotNull("oficio").findList();    
     	List<Recurso>  r = Recurso.find.where().eq("estado.id", 110L).ne("oficio", null).findList(); 
-    	return ok(list.render(r ));    	
+    	return ok(  list.render(r ));
     }
     
 	public static Result create(Long id){
@@ -186,16 +187,40 @@ public class OficioValoracionController extends ControladorSeguroCoordinador{
             throw new RuntimeException(e);
         }
 
-        //Font fontboldTitulo = FontFactory.getFont("Cournier-bold", 14, Font.BOLD);
-        Font fontboldTitulo = FontFactory.getFont("Noto-sans-bold", 10, Font.BOLD);
-        //Font fontbold = FontFactory.getFont("Cournier-bold", 12, Font.BOLD);
-        Font fontbold = FontFactory.getFont("Noto-sans-bold", 10, Font.BOLD);
-        //Font fontCuerpo = FontFactory.getFont("Cournier",12);
-        Font fontCuerpo = FontFactory.getFont("Noto-sans",10);
-        //Font fontLMS = FontFactory.getFont("Cournier",7);
-        Font fontLMS = FontFactory.getFont("Noto-sans",5);
+        BaseFont baseFont;
+        BaseFont baseFontBold;
+        BaseFont baseMontserrat = null;
 
-        Font fontMonse = FontFactory.getFont("Montserrat",7);
+        Font fontMontserrat;
+
+
+
+        try {
+            baseFont = BaseFont.createFont("/public/fonts/NotoSans-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+
+            baseFontBold = BaseFont.createFont("/public/fonts/NotoSans-Bold.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+
+            baseMontserrat = BaseFont.createFont("/public/fonts/Montserrat-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+
+        } catch (DocumentException e) {
+            System.out.println("Excepcionnnnnn "+e.getMessage());
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        //Font fontboldTitulo = FontFactory.getFont("Cournier-bold", 14, Font.BOLD);
+        //Font fontboldTitulo = FontFactory.getFont("Noto-sans-bold", 10, Font.BOLD);
+        //Font fontbold = FontFactory.getFont("Cournier-bold", 12, Font.BOLD);
+        //Font fontbold = FontFactory.getFont("Noto-sans-bold", 10, Font.BOLD);
+        //Font fontCuerpo = FontFactory.getFont("Cournier",12);
+        //Font fontCuerpo = FontFactory.getFont("Noto-sans",10);
+        Font fontboldTitulo = new Font(baseFontBold, 10);
+        Font fontbold = new Font(baseFontBold, 10);
+        Font fontCuerpo =  new Font(baseFont, 9);
+        fontMontserrat = new Font(baseMontserrat, 7);
+
 
         //Encabezado del reporte pdf
         PdfFondo auxPie = new PdfFondo();
@@ -218,7 +243,8 @@ public class OficioValoracionController extends ControladorSeguroCoordinador{
 
 
             Paragraph parrafo = new Paragraph();
-            parrafo.setFont(fontCuerpo);
+            //parrafo.setFont(fontCuerpo);
+            parrafo.setFont(fontMontserrat);
             parrafo.setSpacingBefore(10f);
             parrafo.setAlignment(Element.ALIGN_LEFT);
             parrafo.setMultipliedLeading(1.1f);
@@ -249,7 +275,7 @@ public class OficioValoracionController extends ControladorSeguroCoordinador{
             tabla.setWidthPercentage(100);
             celda = new PdfPCell(celdaInicial);
             celda.setHorizontalAlignment(Element.ALIGN_LEFT);
-            celda.setPhrase( new Phrase(folio));
+            celda.setPhrase( new Phrase(folio,fontCuerpo));
             celda.setBorder(Rectangle.NO_BORDER);
             tabla.addCell(celda);
             doc.add(tabla);
@@ -305,8 +331,6 @@ public class OficioValoracionController extends ControladorSeguroCoordinador{
 
             String textoDirector = "[nombreDirector]\nDirector[directorGenero] de [articulo] "+r.unidadacademica.nombre+" del Instituto Politécnico Nacional\nPRESENTE";
 
-            System.out.println("genero dir UA: "+r.unidadacademica.directores.get(0).genero);
-            System.out.println("artículo UA: "+r.unidadacademica.articulo);
 
             if (r.unidadacademica.directores.size()>0) {
                 if (r.unidadacademica.directores.get(0).genero.length() > 0)
@@ -446,6 +470,7 @@ public class OficioValoracionController extends ControladorSeguroCoordinador{
             celda.setPaddingLeft(6f); celda.setMinimumHeight(20f);
             celda.setPhrase(new Phrase(r.clasificacion.tiporecurso.descripcion , fontCuerpo));
             tabla.addCell(celda);
+            tabla.setSpacingBefore(10f);
             doc.add(tabla);
             // termimna tabla
 
@@ -462,14 +487,18 @@ public class OficioValoracionController extends ControladorSeguroCoordinador{
             if (r.url!=null && !r.url.isEmpty()) {
                 // ¿requiere user/pass?
                 boolean usaCuenta = !r.recursosenweb.isEmpty();
-                String x = ovf.cuerpo5
+                String x = ovf.cuerpo3
                         .replace("[enlaces]", r.url);
                 parrafo.clear();
                 parrafo.add(x);
                 doc.add(parrafo);
                 if (usaCuenta){
                     parrafo.clear();
-                    parrafo.add("El acceso requiere de usuario y clave, mismas que se le haran llegar.");
+                    parrafo.add(ovf.cuerpo4);
+                    doc.add(parrafo);
+                } else {
+                    parrafo.clear();
+                    parrafo.add(ovf.cuerpo5);
                     doc.add(parrafo);
                 }
             }
@@ -528,12 +557,12 @@ public class OficioValoracionController extends ControladorSeguroCoordinador{
             tabla.setSpacingBefore(10);
             celda = new PdfPCell(celdaInicial);
             celda.setHorizontalAlignment(Element.ALIGN_LEFT);
-            celda.setPhrase(new Phrase( "c.c.p. " , fontMonse));
+            celda.setPhrase(new Phrase( "c.c.p. " , fontMontserrat));
             celda.setBorder(Rectangle.NO_BORDER);
             tabla.addCell(celda);
             celda = new PdfPCell(celdaInicial);
             celda.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
-            celda.setPhrase(new Phrase( textoDirNivel+"\nInteresado."  , fontMonse));
+            celda.setPhrase(new Phrase( textoDirNivel+"\nInteresado."  , fontMontserrat));
             celda.setBorder(Rectangle.NO_BORDER);
             tabla.addCell(celda);
             doc.add(tabla);
@@ -542,7 +571,7 @@ public class OficioValoracionController extends ControladorSeguroCoordinador{
             if (iniciales!=null && !iniciales.isEmpty()){
                 parrafo.clear();
                 parrafo.setSpacingBefore(2f);
-                parrafo.setFont(fontMonse);
+                parrafo.setFont(fontMontserrat);
                 parrafo.add(iniciales);
                 doc.add(parrafo);
             }
@@ -551,7 +580,7 @@ public class OficioValoracionController extends ControladorSeguroCoordinador{
             // folio recepción
             parrafo.clear();
             parrafo.setSpacingBefore(2f);
-            parrafo.setFont(fontMonse);
+            parrafo.setFont(fontMontserrat);
             parrafo.add("Folio recepción: "+folRecepcion);
             doc.add(parrafo);
 
@@ -559,7 +588,7 @@ public class OficioValoracionController extends ControladorSeguroCoordinador{
             // CCD 2023
             parrafo.clear();
             parrafo.setSpacingBefore(2f);
-            parrafo.setFont(fontMonse);
+            parrafo.setFont(fontMontserrat);
             parrafo.add("CCD 2023: [¿?]");
             doc.add(parrafo);
 
@@ -584,7 +613,7 @@ public class OficioValoracionController extends ControladorSeguroCoordinador{
         JSONObject jo = new JSONObject();
         System.out.println(json);
 
-        SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
 
         long idRecurso = json.findValue("idRecurso").longValue();
@@ -641,7 +670,7 @@ public class OficioValoracionController extends ControladorSeguroCoordinador{
         JSONObject jo = new JSONObject();
         System.out.println(json);
 
-        SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
 
         long idRecurso = json.findValue("idRecurso").longValue();

@@ -13,12 +13,7 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.ColumnText;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfPageEvent;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.*;
 import models.OficiovaloracionFormatoLogo;
 import models.ReporteLogo;
 import play.api.mvc.Call;
@@ -99,8 +94,21 @@ public class MyFooter implements PdfPageEvent {
         cell.addElement(escudoPoli);
         tablaEnc.addCell(cell);
 
-        Font fontbold = FontFactory.getFont("Cournier-bold", 10, Font.BOLD);
-        PdfPCell cell3 = new PdfPCell(new Phrase("INSTITUTO POLITÉCNICO NACIONAL\nSECRETARÍA ACADÉMICA\nDIRECCIÓN DE EDUCACIÓN VIRTUAL\n"+this.titulo,fontbold));
+        //Font fontbold = FontFactory.getFont("Cournier-bold", 10, Font.BOLD);
+        BaseFont baseFontSemiBold;
+        Font semiBold = null;
+        try {
+            baseFontSemiBold = BaseFont.createFont("/public/fonts/NotoSans-SemiBold.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            semiBold =  new Font(baseFontSemiBold, 10);
+
+
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        //PdfPCell cell3 = new PdfPCell(new Phrase("INSTITUTO POLITÉCNICO NACIONAL\nSECRETARÍA ACADÉMICA\nDIRECCIÓN DE EDUCACIÓN VIRTUAL\n"+this.titulo,fontbold));
+        PdfPCell cell3 = new PdfPCell(new Phrase("INSTITUTO POLITÉCNICO NACIONAL\nSECRETARÍA ACADÉMICA\nDIRECCIÓN DE EDUCACIÓN VIRTUAL\n"+this.titulo,semiBold));
         cell3.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell3.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell3.setBorder(Rectangle.NO_BORDER);

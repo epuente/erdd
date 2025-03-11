@@ -405,3 +405,8 @@ POST    /editOficioValoracionAJAX                   controllers.OficioValoracion
 GET     /director/:ur                               controllers.DirectoresController.edit(ur:String)
 POST    /director/update/:ur                        controllers.DirectoresController.update(ur:String)
 
+GET     /formatoOV                                  controllers.OficioValoracionFormatoController.list()
+GET     /formatoOV/create                           controllers.OficioValoracionFormatoController.create()
+GET     /formatoOV/:id                              controllers.OficioValoracionFormatoController.edit(id:Long)
+GET     /muestra/:idFmto                            controllers.OficioValoracionFormatoController.soloFormatoImagen(idFmto:Long)
+POST    /previewFormato                     controllers.OficioValoracionFormatoController.previewFormato()

@@ -33,7 +33,9 @@ public class miPdf {
 	
 	public miPdf(Long id) {
 		this.id = id;
-		this.numControl = Recurso.find.byId(this.id).numcontrol;
+        Recurso r = Recurso.find.byId(this.id);
+        if (r!= null && r.numcontrol!=null && !r.numcontrol.isEmpty())
+		    this.numControl = Recurso.find.byId(this.id).numcontrol;
 	}
 	
 	public String getClaveControl() {

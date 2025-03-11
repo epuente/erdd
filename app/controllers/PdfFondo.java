@@ -68,15 +68,22 @@ public class PdfFondo implements PdfPageEvent {
         try {
             // Texto de la dirección de la DEV
             OficiovaloracionFormato f = OficiovaloracionFormato.find.byId(1L);
-            Font fontFooter = FontFactory.getFont("Cournier", 7);
+            BaseFont baseMontserrat = BaseFont.createFont("/public/fonts/Montserrat-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            BaseFont baseGeomanist = BaseFont.createFont("/public/fonts/geomanist-medium.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            //Font fontFooter = FontFactory.getFont("Cournier", 7);
+            Font fontFooter = new Font(baseMontserrat, 7);
 
             PdfPTable table = new PdfPTable(2);
             table.setWidthPercentage(100);
             table.setWidths(new int[]{75, 200});
             table.setTotalWidth(doc.getPageSize().getWidth() - doc.leftMargin() - doc.rightMargin());
 
+            BaseColor baseColorPie = new BaseColor(77, 25, 42); // color poli
+            Font fontPie = new Font(baseGeomanist, 7, Font.NORMAL,  baseColorPie);
+
             PdfPCell cell1 = new PdfPCell(new Paragraph("", fontFooter));
-            PdfPCell cell2 = new PdfPCell(new Paragraph(f.direccionDEV, fontFooter));
+            //PdfPCell cell2 = new PdfPCell(new Paragraph(f.direccionDEV, fontFooter));
+            PdfPCell cell2 = new PdfPCell(new Paragraph(f.direccionDEV, fontPie));
 
             cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell2.setHorizontalAlignment(Element.ALIGN_LEFT);

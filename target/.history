@@ -67,3 +67,37 @@ ompile
 compile
 run 9000
 exit
+clean
+dist
+clean
+compile
+clean
+dist
+exit
+run 9000
+compile
+run 9000
+clean
+dist
+exit
+run 9000
+clean
+dist
+exit
+reload
+clean
+dist
+exit
+compile
+run 9000
+clean
+reload
+compile
+run 9000
+reload
+run 9000
+compile
+run 9000
+reload
+compile
+run 9000

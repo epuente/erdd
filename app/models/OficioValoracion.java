@@ -45,7 +45,7 @@ public class OficioValoracion extends Model {
 	@UpdatedTimestamp
     public Date auditlastupdate; 
 
-    public static Finder<Long,OficioValoracion> find = new Finder<>(Long.class, OficioValoracion.class);
+    public static Model.Finder<Long,OficioValoracion> find = new Finder<>(Long.class, OficioValoracion.class);
     
     public static OficioValoracion searchByRecurso(Long recurso){
         return find.where().eq("recurso_id", recurso).findUnique();

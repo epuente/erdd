@@ -1372,7 +1372,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
             if (r.url!=null && !r.url.isEmpty()) {
                 // ¿requiere user/pass?
                 boolean usaCuenta = !r.recursosenweb.isEmpty();
-                String x = ovf.cuerpo5
+                String x = ovf.cuerpo3
                         .replace("[enlaces]", r.url);
                 tabla = new PdfPTable(1);
                 tabla.setWidthPercentage(100);

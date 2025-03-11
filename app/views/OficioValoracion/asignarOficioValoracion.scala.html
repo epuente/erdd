@@ -6,11 +6,6 @@
  <script src="/assets/javascripts/fullcalendar/moment.min.js" ></script>
 @import helper._
 
-@id<br>
-Long.parseLong(@id))<br>
-@models.OficioValoracion.find.findList().size<br>
-@models.OficioValoracion.find.where().eq("recurso_id", id).findList().size
-
 
 <style>
     .swal2-container {
@@ -49,7 +44,7 @@ Long.parseLong(@id))<br>
         <div class="elContenido">
             <div class="row">
                 <div class="col-lg-12">
-                    <h3>Generar oficio de valoración al recurso '@rForm.get().titulo'</h3>
+                    <h3>Generar el oficio de valoración al recurso '@rForm.get().titulo'</h3>
                 </div>
             </div>
 		    <div class="row">
@@ -59,12 +54,12 @@ Long.parseLong(@id))<br>
 			 			<table class="table"  style="border: none;">
 			 				<tr>
 			 					<td colspan="1"  style="border: none;">@inputText(rForm("oficiovaloracion.numero"), 'labelAlterna -> "Folio  oficio de valoración", '_help -> "", 'size->"25", 'required->"required", 'class->"form-control" )</td>
-                                <td>@inputText(rForm("oficiovaloracion.fechaoficio"), 'labelAlterna -> "Fecha del oficio", '_help -> "", 'required->"required", 'placeholder->"dd/mm/aaaa", 'class->"form-control", 'autocomplete->"off" )</td>
+                                <td style="border: none;">@inputText(rForm("oficiovaloracion.fechaoficio"), 'labelAlterna -> "Fecha del oficio", '_help -> "", 'required->"required", 'placeholder->"dd/mm/aaaa", 'class->"form-control", 'autocomplete->"off" )</td>
 			 				</tr>
 			 				<tr>
-                                <td  style="border: none;">@inputText(rForm("oficiovaloracion.foliorecepcion"), 'labelAlterna -> "Folio recepción", '_help -> "",  'size->"25", 'required->"required", 'placeholder->"", 'class->"form-control", 'autocomplete->"off" )</td>
+                                <td style="border: none;">@inputText(rForm("oficiovaloracion.foliorecepcion"), 'labelAlterna -> "Folio recepción", '_help -> "",  'size->"25", 'required->"required", 'placeholder->"", 'class->"form-control", 'autocomplete->"off" )</td>
 
-                                <td  style="border: none;">@inputText(rForm("oficiovaloracion.iniciales"), 'labelAlterna -> "Iniciales al final del oficio", 'size->"25", 'required->"required", 'class->"form-control", 'autocomplete->"off", '_help->"Iniciales que aparecen al final del oficio" )</td>
+                                <td style="border: none;">@inputText(rForm("oficiovaloracion.iniciales"), 'labelAlterna -> "Iniciales al final del oficio", 'size->"25", 'required->"required", 'class->"form-control", 'autocomplete->"off", '_help->"Iniciales que aparecen al final del oficio" )</td>
 			 				</tr>
 			 				<tr>
 			 					<td colspan="2"  style="border: none;">
