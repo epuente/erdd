@@ -33,6 +33,7 @@ public class Encriptacion2 {
             byte[] encrypted = cipher.doFinal(cadena.getBytes());
             return Base64.encodeBase64String(encrypted);
         } catch (Exception ex) {
+            System.out.println("Ocurrió un error en Encriptacion2.encrypt. "+ex.getCause());
             ex.printStackTrace();
         }
         return null;
@@ -53,6 +54,7 @@ public class Encriptacion2 {
 
             return new String(original);
         } catch (Exception ex) {
+            System.out.println("Ocurrió un error en Encriptacion2.dencrypt. "+ex.getCause());
             ex.printStackTrace();
         }
 

@@ -3,8 +3,9 @@ package controllers;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+
+import controllers.util.ControladorDefault;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,7 +18,7 @@ import models.Historialestado;
 import play.mvc.Result;
 //import views.html.Historial.log2;
 
-public class HistorialController extends ControladorDefault{
+public class HistorialController extends ControladorDefault {
 	
 	public static Result ajaxActualizaLog(Integer nitems){
 		System.out.println("desde HistorialController.ajaxActualizaLog");

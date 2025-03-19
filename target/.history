@@ -101,3 +101,69 @@ run 9000
 reload
 compile
 run 9000
+compile
+run 9000
+console
+scala
+compile
+run 9000
+clean
+exit;
+exit
+clean
+reload
+compile
+run 9000
+compile
+run 9000
+compile
+run 9000
+reload
+compile
+run 9000
+clean
+reload
+compile
+run 9000
+reload
+run 9000
+exit
+run 9000
+exit
+run 9000
+exit
+run 9000
+exit
+run 9000
+exit
+run 9000
+compile
+run 9000
+compile
+run 9000
+compile
+run 9000
+compile
+run 9000
+exit
+run 9000
+clean
+reload
+clean
+dist
+compile
+clean
+reload
+compile
+reload
+compile
+exit
+clean
+reload
+compile
+reload
+compile
+run 9000
+clean
+dist
+run 9000

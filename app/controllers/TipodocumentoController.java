@@ -6,12 +6,13 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import controllers.util.ControladorSeguro;
 import models.Tipodocumento;
 import play.data.Form;
 import play.mvc.Result;
 import views.html.catalogos.Tipodocumento.*;
 
-public class TipodocumentoController extends ControladorSeguro{
+public class TipodocumentoController extends ControladorSeguro {
 
     public static Result GO_HOME = redirect(
             routes.TipodocumentoController.list() );   

@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import controllers.util.ControladorSeguroCoordinador;
 import models.Estado;
 import models.Oficio;
 import models.Recurso;
@@ -24,7 +25,7 @@ import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import views.html.Oficio.*;
 
-public class OficioController extends ControladorSeguroCoordinador{
+public class OficioController extends ControladorSeguroCoordinador {
 	
     public static Result GO_HOME = redirect( 
             routes.OficioController.list()

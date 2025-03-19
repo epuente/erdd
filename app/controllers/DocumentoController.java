@@ -2,13 +2,13 @@ package controllers;
 import static play.data.Form.form;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 
+import controllers.util.ControladorSeguro;
 import models.Documento;
 import play.data.Form;
 import play.mvc.*;
@@ -47,6 +47,7 @@ public class DocumentoController extends ControladorSeguro {
 				 d.contenttype = contentType;
 				 d.contenido =  byteFile;
 			} catch (IOException ioe){
+                System.out.println("Ocurrió un error en DocumentoController.upload. "+ioe.getCause());
 				ioe.printStackTrace();
 			}		    
 		    

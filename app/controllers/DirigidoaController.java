@@ -6,13 +6,14 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import controllers.util.ControladorSeguro;
 import models.Dirigidoa;
 
 import play.data.Form;
 import play.mvc.Result;
 import views.html.catalogos.Dirigidoa.*;
 
-public class DirigidoaController extends ControladorSeguro{
+public class DirigidoaController extends ControladorSeguro {
 	
     public static Result GO_HOME = redirect(
             routes.DirigidoaController.list() );   

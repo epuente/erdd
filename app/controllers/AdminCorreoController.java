@@ -31,6 +31,7 @@ public class AdminCorreoController {
 			byte[] encrypted = cipher.doFinal(value.getBytes());
 			return Base64.encodeBase64String(encrypted);
 		} catch (Exception ex) {
+            System.out.println("Ocurrió un error en AdminCorreoController.encrypt. "+ex.getCause());
 			ex.printStackTrace();
 		}
 		return null;
@@ -49,6 +50,7 @@ public class AdminCorreoController {
 
 			return new String(original);
 		} catch (Exception ex) {
+            System.out.println("Ocurrió un error en AdminCorreoController dencrypt. "+ex.getCause());
 			ex.printStackTrace();
 		}
 

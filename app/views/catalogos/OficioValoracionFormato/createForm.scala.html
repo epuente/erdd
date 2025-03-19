@@ -1,11 +1,10 @@
-@(forma: Form[OficiovaloracionFormato])
-
+@(forma: Form[OficiovaloracionFormato], numVersion:Int)
 @import helper._
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/> 
 
 
-
 @main {
+    @modal(0)
 	<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-12">
@@ -24,20 +23,38 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        @form(CSRF(routes.DirigidoaController.save()), 'class->"form-inline", 'id->"frmCreate") {
-                            @ovForm(forma)
-
+                        @form(CSRF(routes.DirigidoaController.save()), 'class->"form-inline", 'id->"frmCreate", 'enctype->"multipart/form-data") {
+                            @CSRF.formField
+                            @ovForm(forma, "create", numVersion)
                         }
-                        <div class="actions">
-                            <a href="@routes.DirigidoaController.list()" class="btn btn-default">Cancelar</a>
+                        <div class="actions" style="text-align: center; margin:4rem;">
+
+                            <button id="btnPreviewFormato2" class="btn btn-primary ">Previsualización y asignación del formato</button>
+
+                            <a href="@routes.OficioValoracionFormatoController.list()" class="btn btn-default">Cancelar y regresar</a>
                         </div>
                      </div>
              </div>
             </div>
     </div>
-    
-    
+
+    <script>
+        $(function() {
+            // Agrega descripciones a los labels de los cuerpos
+            $("#cuerpo3_field").find("dt:eq(0)").append("<span class='text-muted' style='padding-left:2rem;'>Esta sección aplica cuando el rdd tiene registrada una url.</span>");
+
+            $("#cuerpo4_field").find("dt:eq(0)").append("<span class='text-muted' style='padding-left:2rem;'>Si además de tener registrada una url, requiere de usuario y password.</span>");
+
+            $("#cuerpo5_field").find("dt:eq(0)").append("<span class='text-muted' style='padding-left:2rem;'>Si tiene registrada una url pero no requiere de usuario y password.</span>");
+
+            $("#activo_false").trigger("click");
+
+        });
+    </script>
 }
 
-@comunCatalogosJS("Create", "Dirigido a")
+@comunCatalogosJS("Create", "Oficio Valoracion Formato")
 
+<script src="@routes.Assets.at("javascripts/async.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("javascripts/oficioValoracionFormato.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("lib/bootstrap-notify/bootstrap-notify.min.js")" type="text/javascript"></script>

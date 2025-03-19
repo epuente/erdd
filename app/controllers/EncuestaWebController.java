@@ -6,16 +6,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import actions.miCorreo;
+import classes.miCorreo;
+import controllers.util.ControladorDefault;
 import models.*;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Result;
 import views.html.Encuesta.*;
 
-import javax.management.remote.rmi.RMIConnection;
-
-public class EncuestaWebController extends ControladorDefault{
+public class EncuestaWebController extends ControladorDefault {
 	
 	public static Result desdeLiga(String ncontrol){
 		session("idRecurso", Recurso.searchByNumControl(ncontrol).id.toString()   );

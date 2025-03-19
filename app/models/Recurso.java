@@ -246,27 +246,27 @@ public class Recurso extends Model {
     }
     
     public String  ncLetras(){
-    	String cadena = "";
+    	StringBuilder cadena = new StringBuilder();
     	for (int x = 0; x<=this.numcontrol.length()-1;x++){
     		String aux = this.numcontrol.substring(x, x+1);    		
     		if (  aux.matches("[0-9]") ){
     			switch(Integer.parseInt(aux)){
-	    			case 0: cadena+="cero-"; break;
-	    			case 1: cadena+="uno-"; break;
-	    			case 2: cadena+="dos-"; break;
-	    			case 3: cadena+="tres-"; break;
-	    			case 4: cadena+="cuatro-"; break;
-	    			case 5: cadena+="cinco-"; break;
-	    			case 6: cadena+="seis-"; break;
-	    			case 7: cadena+="siete-"; break;
-	    			case 8: cadena+="ocho-"; break;
-	    			case 9: cadena+="nueve-"; break;
+	    			case 0: cadena.append("cero-"); break;
+	    			case 1: cadena.append("uno-"); break;
+	    			case 2: cadena.append("dos-"); break;
+	    			case 3: cadena.append("tres-"); break;
+	    			case 4: cadena.append("cuatro-"); break;
+	    			case 5: cadena.append("cinco-"); break;
+	    			case 6: cadena.append("seis-"); break;
+	    			case 7: cadena.append("siete-"); break;
+	    			case 8: cadena.append("ocho-"); break;
+	    			case 9: cadena.append("nueve-"); break;
     			} 
     		} else {
-    			cadena+=aux+"-";
+    			cadena.append(aux).append("-");
     		}
     	}
-    	return cadena.substring(0, cadena.lastIndexOf('-'));
+    	return cadena.substring(0, cadena.toString().lastIndexOf('-'));
     }
 
     // Este método es temporal, para calificar los recursos que ya estaban en la db

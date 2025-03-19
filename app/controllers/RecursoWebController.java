@@ -14,8 +14,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import actions.*;
+import classes.Notificacion;
+import classes.miCorreo;
+import classes.miPdf;
 import com.fasterxml.jackson.databind.JsonNode;
+import controllers.util.ControladorDefault;
 import models.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,9 +51,7 @@ import views.html.Recurso.editMasterForm;
 import views.html.Recurso.recibidoMaster;
 import views.html.Recurso.actualizadoMaster;
 
-import play.api.Application;
-
-public class RecursoWebController extends ControladorDefault{
+public class RecursoWebController extends ControladorDefault {
 
 
 	public static Result index() {
@@ -192,7 +193,7 @@ public class RecursoWebController extends ControladorDefault{
 		System.out.println("***  Se agregaron "+r.documentos.size()+" documentos");
 
 		System.out.println("***  Se trata de actualización del recurso????   "+requestData.get("version.id"));
-		if (  requestData.get("version.id").contains("2")  ){
+		if (  requestData.get("version.id").contains("2") && requestData.get("extra1").contains("S")  ){
 			System.out.println("***  Si se trata de actualización");
 			r.versionanterior = new Versionanterior();
 			r.versionanterior.recurso = r;

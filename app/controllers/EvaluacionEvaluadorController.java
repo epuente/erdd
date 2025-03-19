@@ -9,8 +9,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.avaje.ebean.*;
-import actions.Notificacion;
-import actions.miCorreo;
+import classes.Notificacion;
+import classes.miCorreo;
+import controllers.util.ControladorSeguroEvaluador;
 import models.*;
 
 import play.data.DynamicForm;
@@ -21,7 +22,7 @@ import play.mvc.Result;
 import views.html.EvaluacionEvaluador.*;
 
 
-public class EvaluacionEvaluadorController extends ControladorSeguroEvaluador{
+public class EvaluacionEvaluadorController extends ControladorSeguroEvaluador {
 
     public static Result index(){
 		return redirect (routes.EvaluacionEvaluadorController.resumen());

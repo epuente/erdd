@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import javax.persistence.PersistenceException;
 
+import controllers.util.ControladorSeguro;
 import models.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,13 +27,13 @@ public class UnidadacademicaController extends ControladorSeguro {
         );	
 	
     public static Result list(int page, String sortBy, String order, String filter) {
-System.out.println("Unidadacademica.list");    	
+        System.out.println("UnidadacademicaController.list");
     	return ok(
     	list.render(
                 Unidadacademica.page(page, 10, sortBy, order, filter),
                 sortBy, order, filter
             )
-         );        
+         );
     }
 
     
@@ -82,10 +83,10 @@ System.out.println("Unidadacademica.list");
     
     
     public static Result delete(Long id) {
-System.out.println("**** id: "+id);    	
+        System.out.println("**** id: "+id);
         Unidadacademica ua = Unidadacademica.find.ref(id);
         String nua = ua.nombre;
-System.out.println("**** ua: "+ua);        
+        System.out.println("**** ua: "+ua);
         try{
         ua.delete();
         flash("success", "'"+nua+"' se eliminó.");
@@ -183,20 +184,20 @@ System.out.println("**** ua: "+ua);
 		columnasOrdenables.put(0, 1);
 		columnasOrdenables.put(1, 19);
 		columnasOrdenables.put(2, 9);
-System.out.println( columnasOrdenables.get(0)  );		
-System.out.println( columnasOrdenables.get(1)  );
+        System.out.println( columnasOrdenables.get(0)  );
+        System.out.println( columnasOrdenables.get(1)  );
 		//Page<Folio> otro = null;
-System.out.println("Desde UnidadacademicaController.ajaxListDTSS............");
-System.out.println( "parametros 0:"+ request() );
+        System.out.println("Desde UnidadacademicaController.ajaxListDTSS............");
+        System.out.println( "parametros 0:"+ request() );
 		
 		String filtro = request().getQueryString("search[value]");
 		int colOrden =   Integer.parseInt( request().getQueryString("order[0][column]")   );
 		String tipoOrden = request().getQueryString("order[0][dir]");
-System.out.println( "parametro start:"+ Integer.parseInt(request().getQueryString("start")));
-System.out.println( "parametro length:"+ Integer.parseInt(request().getQueryString("length")));		
-System.out.println( "parametros order[0][column]:"+ colOrden);
-System.out.println( "parametros order[0][dir]:"+ tipoOrden);		
-System.out.println( "filtrando :"+ filtro);
+        System.out.println( "parametro start:"+ Integer.parseInt(request().getQueryString("start")));
+        System.out.println( "parametro length:"+ Integer.parseInt(request().getQueryString("length")));
+        System.out.println( "parametros order[0][column]:"+ colOrden);
+        System.out.println( "parametros order[0][dir]:"+ tipoOrden);
+        System.out.println( "filtrando :"+ filtro);
 		int numPag = 0;
 		if (Integer.parseInt(request().getQueryString("start")) != 0)
 			numPag = Integer.parseInt(request().getQueryString("start")) /   Integer.parseInt(request().getQueryString("length"));		

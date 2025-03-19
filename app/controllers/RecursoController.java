@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.persistence.PersistenceException;
 import com.avaje.ebean.Ebean;
+import controllers.util.ControladorSeguroCoordinador;
 import models.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,8 +18,8 @@ import play.data.Form;
 import play.db.ebean.Model;
 import play.mvc.*;
 import views.html.Recurso.*;
-import actions.Notificacion;
-import actions.miCorreo;
+import classes.Notificacion;
+import classes.miCorreo;
 
 
 public class RecursoController extends ControladorSeguroCoordinador {

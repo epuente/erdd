@@ -1,4 +1,4 @@
-@(forma: Form[OficiovaloracionFormato])
+@(forma: Form[OficiovaloracionFormato], numVersion:Int)
 
 @import helper._
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/> 
@@ -23,17 +23,19 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        @form(CSRF(routes.DirigidoaController.save()), 'class->"form-inline", 'id->"frmCreate") {
-                            @ovForm(forma)
+                        @form(CSRF(routes.OficioValoracionFormatoController.upload()), 'class->"form-inline", 'id->"frmCreate", 'enctype->"multipart/form-data") {
+                            @CSRF.formField
+                            @ovForm(forma, "edit", numVersion)
                         }
-                        <div class="actions">
-                            <a href="@routes.DirigidoaController.list()" class="btn btn-default">Cancelar</a>
+                        <div class="actions" style="text-align: center; margin:4rem;">
+                            <button id="btnPreviewFormato2" class="btn btn-primary ">Previsualización y actualización del formato</button>
+                            <a href="@routes.OficioValoracionFormatoController.list()" class="btn btn-default">Cancelar y regresar</a>
                         </div>
                      </div>
              </div>
             </div>
     </div>
-    
+
 
     <script>
         $(function() {
@@ -52,6 +54,11 @@
                 $("#activo_S").attr("checked", true);
             if (@forma.get().activo==0)
                 $("#activo_N").attr("checked", true);
+            var nArch="";
+            if (   "@forma.get().getImagenFondo().nombrearchivo".length>0){
+                nArch = "@forma.get().getImagenFondo().nombrearchivo"
+            }
+            $("#msgNombreArchivo").text(nArch);
         }
     </script>
 
@@ -61,4 +68,5 @@
 
 <script src="@routes.Assets.at("javascripts/async.js")" type="text/javascript"></script>
 <script src="@routes.Assets.at("javascripts/oficioValoracionFormato.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("lib/bootstrap-notify/bootstrap-notify.min.js")" type="text/javascript"></script>
 

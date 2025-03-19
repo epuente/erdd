@@ -3,6 +3,7 @@ import static play.data.Form.form;
 
 import javax.persistence.PersistenceException;
 
+import controllers.util.ControladorSeguro;
 import models.Areaconocimiento;
 import play.data.Form;
 import play.mvc.*;

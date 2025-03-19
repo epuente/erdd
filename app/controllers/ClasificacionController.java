@@ -5,6 +5,7 @@ import static play.data.Form.form;
 import java.util.Collections;
 import java.util.List;
 
+import controllers.util.ControladorSeguroCoordinador;
 import models.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,8 +13,8 @@ import org.json.JSONObject;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import actions.Notificacion;
-import actions.miCorreo;
+import classes.Notificacion;
+import classes.miCorreo;
 import play.data.Form;
 import play.mvc.Result;
 import views.html.Clasificacion.*;

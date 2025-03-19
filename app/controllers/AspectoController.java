@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import controllers.util.ControladorSeguro;
 import models.Aspecto;
 import play.data.Form;
 import play.mvc.Result;
@@ -13,7 +14,7 @@ import views.html.Aspecto.*;
 
 
 
-public class AspectoController extends ControladorSeguro{
+public class AspectoController extends ControladorSeguro {
     public static Result GO_HOME = redirect(
             routes.AspectoController.list() );   
     

@@ -13,10 +13,10 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
-import actions.Notificacion;
-import actions.miCorreo;
+import classes.Notificacion;
+import classes.miCorreo;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.google.gson.JsonObject;
+import controllers.util.ControladorSeguro;
 import models.*;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +27,7 @@ import play.mvc.Result;
 import views.html.Evaluador.*;
 
 
-public class EvaluadorController extends ControladorSeguro{
+public class EvaluadorController extends ControladorSeguro {
     public static Result GO_HOME = redirect(
             routes.EvaluadorController.list() );   
     

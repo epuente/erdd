@@ -3,6 +3,7 @@ import static play.data.Form.form;
 
 import javax.persistence.PersistenceException;
 
+import controllers.util.ControladorSeguro;
 import models.Niveleducativo;
 import play.data.Form;
 import play.mvc.*;

@@ -65,7 +65,7 @@ public class OficiovaloracionFormato extends Model {
     @UpdatedTimestamp
     public Date auditlastupdate;
 
-    public static Finder<Long,OficiovaloracionFormato> find = new Finder<>(Long.class, OficiovaloracionFormato.class);
+    public static Model.Finder<Long,OficiovaloracionFormato> find = new Finder<>(Long.class, OficiovaloracionFormato.class);
 
 
 }

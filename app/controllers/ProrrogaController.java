@@ -10,7 +10,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import actions.miCorreo;
+import classes.miCorreo;
+import controllers.util.ControladorSeguroCoordinador;
 import models.Calendario;
 import models.EvaluacionProrroga;
 import models.Recursoevaluador;
@@ -18,7 +19,7 @@ import play.data.DynamicForm;
 import play.mvc.Result;
 import views.html.Prorrogas.*;
 
-public class ProrrogaController extends ControladorSeguroCoordinador{
+public class ProrrogaController extends ControladorSeguroCoordinador {
 	
     public static Result list(int page, String sortBy, String order, String filter, String cf, int rdioSolicitud) {		
 

@@ -1,9 +1,8 @@
 package controllers;
 
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.*;
 
+import controllers.util.ControladorSeguroCoordinador;
 import models.EncuestaRespuesta;
 import models.EvaluacionProrroga;
 import models.Recurso;

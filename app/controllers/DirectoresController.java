@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.util.ControladorSeguro;
 import models.Director;
 import play.data.Form;
 import play.mvc.Result;
@@ -7,7 +8,7 @@ import play.mvc.Result;
 
 import static play.data.Form.form;
 
-public class DirectoresController extends ControladorSeguro{
+public class DirectoresController extends ControladorSeguro {
     public static Result edit(String ur) {
         Form<Director> dForm = form(Director.class).fill(
                 Director.find.where().eq("ur", ur).findUnique()
@@ -29,21 +30,13 @@ public class DirectoresController extends ControladorSeguro{
 
     public static Result update(String ur) {
         Form<Director> aForm = form(Director.class).bindFromRequest();
-        /*
-        if(aForm.hasErrors()) {
-            return badRequest(editForm.render(1L, aForm));
-        }
-         */
         Director d = Director.find.where().eq("ur", ur).findUnique();
         aForm.get().update(d.id);
+        System.out.println("ur "+ur);
         flash("success", "Se actualizó la información del director.");
         //return redirect ( routes.DirectoresController.edit(ur)  );
-        switch (ur){
-            case "DEV":
                 return redirect (routes.DirectoresController.edit(ur));
-            default:
-                throw new IllegalStateException("Unexpected value: " + ur);
-        }
+
     }
 
 

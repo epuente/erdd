@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import controllers.util.ControladorSeguroCoordinador;
 import models.Calendario;
 
 import play.mvc.Result;

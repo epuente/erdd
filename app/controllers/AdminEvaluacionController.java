@@ -7,9 +7,10 @@ import java.util.stream.Collectors;
 
 import com.avaje.ebean.annotation.Transactional;
 
-import actions.Notificacion;
-import actions.miCorreo;
-import actions.miPdf;
+import classes.Notificacion;
+import classes.miCorreo;
+import classes.miPdf;
+import controllers.util.ControladorSeguroCoordinador;
 import models.*;
 import play.data.DynamicForm;
 import play.mvc.Result;

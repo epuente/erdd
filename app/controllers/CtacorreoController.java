@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 
 import classes.Encriptacion2;
 import com.avaje.ebean.Ebean;
+import controllers.util.ControladorSeguro;
 import models.Ctacorreo;
 
 import org.json.JSONException;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class CtacorreoController extends ControladorSeguro{
+public class CtacorreoController extends ControladorSeguro {
 
     public static Result list(){
         List<Ctacorreo> retorno = Ctacorreo.find

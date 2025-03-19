@@ -11,6 +11,7 @@ import com.avaje.ebean.SqlRow;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import controllers.util.ControladorSeguroCoordinador;
 import models.*;
 import org.json.JSONArray;
 import org.json.JSONException;

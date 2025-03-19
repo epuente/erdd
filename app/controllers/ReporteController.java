@@ -1,10 +1,10 @@
 package controllers;
 
+import controllers.util.ControladorSeguroCoordinador;
 import models.*;
 import play.mvc.Result;
-import views.html.accesoNoAutorizado;
 
-public class ReporteController extends ControladorSeguroCoordinador{
+public class ReporteController extends ControladorSeguroCoordinador {
 	
 	public static Result cesoe(Long id){
 		Recurso r = Recurso.find.byId(id);

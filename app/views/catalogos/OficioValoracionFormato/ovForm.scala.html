@@ -1,4 +1,4 @@
-@(forma: Form[OficiovaloracionFormato])
+@(forma: Form[OficiovaloracionFormato], tipo:String, numVersion:Int)
 @import helper._
 
 
@@ -16,40 +16,53 @@
         font-size: small;
         background-color: #dfdfdf;
     }
+    .botonUpload {
+        border: none !important;
+        outline: none !important;
+    }
 </style>
 
 <div class="row">
     <div class="col-sm-4 col-md-4 col-lg-4">
         <table>
             <tr>
-                <td style="padding-right:20px;">
-                    @inputText(forma("version"), '_label -> "Versión", '_help -> "", 'required->"required",  'class->"form-control") <br>
+                <td style="padding-right:20px; vertical-align:top;">
+                    <label>Versión</label><br>
+                    <div id="laVersion">@numVersion</div>
                 </td>
                 <td>@inputRadioGroup(
                     forma("activo"),
-                    options = options("S"->"Si","N"->"No"), 'labelAlterna -> "Obligatorio",
+                    options = options("true"->"Si","false"->"No"), 'labelAlterna -> "Obligatorio",
                     '_label -> "Activo", 'required->"required"
                     )</td>
             </tr>
         </table>
 
         <label for="archFondo">Imágen de fondo</label>
-        <div style="margin-bottom:2rem;" class="text-muted">La imágen de fondo debe incluir logotipos en encabezado y pié de página y fechas que se conmemoran.</div>
-        <div id="archFondoActual">
-            @if(forma.get().getImagenFondo()!=null){
-            PDF con la imagen de fondo:
-            <a href="@routes.OficioValoracionFormatoController.soloFormatoImagen(forma.field("id").value().toLong)" target="_blank"> @forma.get().getImagenFondo().nombrearchivo</a><br><br>
+        <div style="margin-bottom:2rem;" class="text-muted">La imágen de fondo debe incluir logotipos en encabezado, pie de página y fechas que se conmemoran.</div>
+        <div id="archFondoActual" style="display:none;">
+            @if(tipo=="edit" && forma.get().getImagenFondo()!=null){
+                PDF solo con la imagen de fondo:
+                <a href="@routes.OficioValoracionFormatoController.soloFormatoImagen(forma.field("id").value().toLong)" target="_blank"> @forma.get().getImagenFondo().nombrearchivo</a><br><br>
             }
         </div>
-        <input type="file" name="archFondo" id="archFondo">
-        <p class="text-muted small"> Resolución de la imágen: 2550 x 3300 pixeles</p>
+        <div style="text-align:center; margin: 1rem;">
+            <div class="text-muted small"> Resolución de la imágen: 2550 x 3300 pixeles.</div>
+            <div class="text-muted small">Formato png o jpg, con fondo transparente.</div>
+            <button class="btn  btn-link botonUpload" id="btnCargarImaFondo">
+                <i class="fa fa-cloud-upload fa-4x" aria-hidden="true"></i>
+                <div><small>Seleccionar un archivo</small></div>
+            </button>
+            <div id="msgNombreArchivo" >No se ha seleccionado archivo</div>
+        </div>
+        <input type="file" name="archFondo" id="archFondo" style="display:none;">
+
+
+        <div style="margin-top: 4rem;">
+            En las secciones: Cuerpo 1, Cuerpo 2 y Cuerpo 3 se usan las variables indicadas para ser reemplazadas por sus valores correspondientes.
+        </div>
 
         <div id="previewFmto">
-            <button id="btnPreviewFormato">Preview del formato</button>
-
-
-
-
 
         </div>
 
@@ -138,9 +151,6 @@
 
 
 
-<input type="submit" value="Agregar" class="btn btn-primary">
+<!--input type="submit" value="Agregar" class="btn btn-primary"-->
 
 
-<script src="@routes.Assets.at("tagify/tagify")" nonce="@session.get("nonce")"></script>
-<script src="@routes.Assets.at("tagify/tagify.polyfills.min.js")" nonce="@session.get("nonce")"></script>
-<link href="@routes.Assets.at("tagify/tagify.css")" rel="stylesheet" type="text/css"  nonce="@session.get("nonce")"/>

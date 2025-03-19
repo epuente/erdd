@@ -7,13 +7,14 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.PersistenceException;
 
+import controllers.util.ControladorSeguro;
 import models.Formatoentrega;
 import play.data.Form;
 import play.mvc.Result;
 import views.html.catalogos.Formatoentrega.*;
 
 @Entity
-public class FormatoentregaController extends ControladorSeguro{
+public class FormatoentregaController extends ControladorSeguro {
     public static Result GO_HOME = redirect(
             routes.FormatoentregaController.list() );   
     

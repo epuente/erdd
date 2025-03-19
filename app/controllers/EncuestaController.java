@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import actions.Notificacion;
-import actions.miCorreo;
+import classes.Notificacion;
+import classes.miCorreo;
+import controllers.util.ControladorSeguroCoordinador;
 import models.RecursoAutor;
 import models.EncuestaObservacion;
 import models.EncuestaReactivo;
@@ -29,7 +30,7 @@ import play.mvc.Result;
 import views.html.Encuesta.*;
 
 
-public class EncuestaController extends ControladorSeguroCoordinador{
+public class EncuestaController extends ControladorSeguroCoordinador {
 	public static Result encuestasPorRevisar(){
 		return ok( porRevisar.render(  EncuestaRespuesta.find.where().eq("estado.id", 1).findList() ) );
 	}
@@ -104,7 +105,7 @@ System.out.println("id "+idEnc);
 				mc.enviar();
 				//mc.run();
 			} catch (Exception e) {
-				System.out.println("Ocurrio un error: "+e);
+				System.out.println("Ocurrio un error: "+e.getCause());
 				e.printStackTrace();
 			}			
 			
@@ -175,7 +176,7 @@ System.out.println("id "+idEnc);
 	    	Notificacion n = new Notificacion();
 	    	n.enviar(ofv.recurso.numcontrol, "ERDD", mc.mensaje);
 		} catch (Exception e) {
-			System.out.println("Ocurrio un error: "+e);
+			System.out.println("Ocurrio un error: "+e.getCause());
 			e.printStackTrace();
 		}		
 	}

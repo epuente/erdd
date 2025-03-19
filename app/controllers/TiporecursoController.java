@@ -2,11 +2,12 @@ package controllers;
 
 import java.util.List;
 
+import controllers.util.ControladorSeguro;
 import models.ClasificadorEjemplo;
 import play.libs.Json;
 import play.mvc.Result;
 
-public class TiporecursoController extends ControladorSeguro{
+public class TiporecursoController extends ControladorSeguro {
 	
     public static Result list(){
     	List<ClasificadorEjemplo> ejemplos = ClasificadorEjemplo.find

@@ -41,9 +41,11 @@
                 </div>
             }
             <div style="vertical-align: middle;">
-                @form(CSRF(routes.DirectoresController.update("DEV")), 'class->"form-inline5", 'id->"frmEdit"  ) {
+                @form(CSRF(routes.DirectoresController.update("PGD")), 'class->"form-inline5", 'id->"frmEdit"  ) {
                     @ddevForm(dForm)
-                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                    </div>
                 }
             </div>
 

@@ -13,22 +13,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
+import classes.MyFooter;
+import classes.PdfFondo;
 import com.avaje.ebean.Expr;
 import com.avaje.ebean.annotation.Transactional;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.itextpdf.text.*;
-import actions.miCorreo;
-import actions.miPdf;
+import classes.miCorreo;
+import classes.miPdf;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.hyphenation.Hyphenation;
+import controllers.util.ControladorSeguroCoordinador;
 import models.*;
 import models.Version;
-import org.json.JSONException;
-import org.json.JSONObject;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.ebean.Model;
@@ -930,7 +927,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         miCorreo mc2 = new miCorreo();
         mc2.asunto = "abcdef";
         mc2.mensaje= "12345";
-        List<String> listaD = new ArrayList<String>();
+        List<String> listaD = new ArrayList<>();
         listaD.add("epuente_72@yahoo.com");
         //listaD.add("aperezg@ipn.mx");
 
@@ -1253,7 +1250,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
             String titulo = r.titulo;
             String autores = "";
 
-            List<String> lstAutores = r.autores.stream().map(m -> m.nombreCompleto()).collect(Collectors.toList());
+            List<String> lstAutores = r.autores.stream().map(RecursoAutor::nombreCompleto).collect(Collectors.toList());
 
             autores = String.join(", ", lstAutores);
             tabla = new PdfPTable(2);

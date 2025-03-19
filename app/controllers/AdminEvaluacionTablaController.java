@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.*;
 
 import com.avaje.ebean.*;
+import controllers.util.ControladorSeguroCoordinador;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
 import org.json.JSONArray;
@@ -704,16 +705,16 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
             //Quitar nodo 'id'
 
         } catch (JsonParseException e) {
-            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
+            System.out.println("Error JsonParseException!!!!!!!!!!!!!   "+e.getMessage());
             e.getMessage();
         } catch (JsonMappingException e) {
-            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
+            System.out.println("Error JsonMappingException!!!!!!!!!!!!!   "+e.getMessage());
             e.getMessage();
         } catch (IOException e) {
-            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
+            System.out.println("Error IOException!!!!!!!!!!!!!   "+e.getMessage());
             e.getMessage();
         } catch ( Exception e){
-            System.out.println("Error!!!!!!!!!!!!!   "+e.getMessage());
+            System.out.println("Error Exception!!!!!!!!!!!!!   "+e.getMessage());
             e.getMessage();
         }
         return ok( "{\"estado\":\"ok\"}" );
@@ -953,7 +954,6 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
 
 
     public static Result baseInstrumento(){
-        JSONObject joRetorno = new JSONObject();
 
         Logger.debug("Desde AdminEvaluacionTablaController.baseInstrumento");
         String q=	"select cc1.id c1, cc2.id c2, cc3.id, "+
@@ -1085,8 +1085,7 @@ public class AdminEvaluacionTablaController extends ControladorSeguroCoordinador
             json2.put("recordsTotal",  sinFiltro );
             json2.put("recordsFiltered", filtrados);
             JSONArray losDatos = new JSONArray();
-            DateTime hoy = new DateTime();
-            DateTimeComparator dateTimeComparator = DateTimeComparator.getDateOnlyInstance();
+
             for(  EvaluacionTablaReactivo p : reacs.getList()  ){
                 JSONObject datoP = new JSONObject();
                 datoP.put("id", p.id);

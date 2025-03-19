@@ -5,14 +5,16 @@ import static play.data.Form.form;
 import java.util.ArrayList;
 import java.util.List;
 
+import controllers.util.ControladorSeguroCoordinador;
 import models.Recurso;
 import models.Versionanterior;
 import play.data.Form;
 import play.mvc.Result;
 import views.html.Versionanterior.*;
+import classes.Actualizacion;
 
 
-public class VersionanteriorController extends ControladorSeguroCoordinador{
+public class VersionanteriorController extends ControladorSeguroCoordinador {
 	
 	
 	

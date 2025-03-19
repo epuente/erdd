@@ -2,6 +2,8 @@ package controllers;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Iterator;
+
+import controllers.util.ControladorDefault;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -507,6 +509,7 @@ System.out.println("Renglon: "+row.getRowNum() +" de "+sheet.getLastRowNum()+" e
         } 
         catch (Exception e) 
         {
+            System.out.println("Ocurrió un error en Application.leerXL4. "+e.getCause());
             e.printStackTrace();
         }
 		return ok ("yap");    	

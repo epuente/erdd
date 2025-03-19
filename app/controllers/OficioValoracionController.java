@@ -16,13 +16,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import actions.miPdf;
+import classes.miPdf;
+import classes.PdfFondo;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import controllers.util.ControladorSeguroCoordinador;
 import models.*;
 import models.Version;
 import org.json.JSONException;
@@ -35,7 +37,7 @@ import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import views.html.OficioValoracion.*;
 
-public class OficioValoracionController extends ControladorSeguroCoordinador{
+public class OficioValoracionController extends ControladorSeguroCoordinador {
 	
     public static Result GO_HOME = redirect( 
             routes.OficioValoracionController.list()
@@ -373,7 +375,7 @@ public class OficioValoracionController extends ControladorSeguroCoordinador{
             String titulo = r.titulo;
             String autores = "";
 
-            List<String> lstAutores = r.autores.stream().map(m -> m.nombreCompleto()).collect(Collectors.toList());
+            List<String> lstAutores = r.autores.stream().map(RecursoAutor::nombreCompleto).collect(Collectors.toList());
 
             autores = String.join(", ", lstAutores);
             tabla = new PdfPTable(2);
@@ -593,7 +595,7 @@ public class OficioValoracionController extends ControladorSeguroCoordinador{
             doc.add(parrafo);
 
         } catch (DocumentException e) {
-            System.out.println("Error. Ocurrió una excepción "+e.getMessage());
+            System.out.println("Error. Ocurrió una excepción (1122d) "+e.getMessage());
             throw new RuntimeException(e);
         } catch (ParseException e) {
             System.out.println("Error en la conversion - (ParseException)");

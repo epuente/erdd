@@ -1,27 +1,28 @@
 @(ddevForm: Form[Director])
-@implicitFieldConstructor = @{ FieldConstructor(myFieldConstructor.render) }
+
+
 @import helper._
 
 	  <div class="form-group">
 	  	<div class="row">
-	  		<div class="col-md-2">
+	  		<div class="col-md-1">
                 @inputText(ddevForm("titulo"), 'labelAlterna -> "Título", '_help -> "", 'class->"form-control", 'required->"required")
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4">
 	  			@inputText(ddevForm("nombre"), 'labelAlterna -> "Nombre", '_help -> "", 'class->"form-control", 'required->"required")
 	  		</div>
-            <div class="col-md-2">
+            <div class="col-md-4">
                 @inputText(ddevForm("paterno"), 'labelAlterna -> "Paterno", '_help -> "", 'class->"form-control", 'required->"required")
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 @inputText(ddevForm("materno"), 'labelAlterna -> "Materno", '_help -> "", 'class->"form-control", 'required->"required")
             </div>
 	  	</div>
 	  	<div class="row">
-	  		<div class="col-sm-6">            
+	  		<div class="col-sm-12">
 	    		@inputRadioGroup(
                 ddevForm("genero"),
-							options = Seq("M"->"Masculino", "F"->"Femenino"), 'required->"required", 'labelAlterna->"Género"
+							options = Seq("M"->"Masculino", "F"->"Femenino"), 'required->"required", '_label->"Género"
 						)	  		
 	  		</div>
 	  	</div>

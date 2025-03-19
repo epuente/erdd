@@ -3,12 +3,13 @@ package controllers;
 import java.util.Collections;
 import java.util.Date;
 
-import actions.miCorreo;
+import classes.miCorreo;
+import controllers.util.ControladorSeguroEvaluador;
 import models.*;
 import play.data.DynamicForm;
 import play.mvc.*;
 
-public class CancelacionController extends ControladorSeguroEvaluador{
+public class CancelacionController extends ControladorSeguroEvaluador {
 	
 	// El evaluador solicita sea cancelado el recurso
 	public static Result solicitudCancelacion(Long id){

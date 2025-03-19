@@ -6,13 +6,14 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import controllers.util.ControladorSeguro;
 import models.Autorfuncion;
 import play.data.Form;
 import play.mvc.Result;
 import views.html.catalogos.Autorfuncion.*;
 
 
-public class AutorfuncionController  extends ControladorSeguro{
+public class AutorfuncionController  extends ControladorSeguro {
 
     public static Result list(){
 System.out.println("-list-");    	

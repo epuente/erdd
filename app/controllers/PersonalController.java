@@ -2,6 +2,7 @@ package controllers;
 
 import static play.data.Form.form;
 
+import controllers.util.ControladorSeguro;
 import models.Personal;
 import models.UsuarioRol;
 import play.data.DynamicForm;
@@ -10,7 +11,7 @@ import play.mvc.Result;
 import views.html.ctaAdminEdit;
 import views.html.ctaCoordEdit;
 
-public class PersonalController  extends ControladorSeguro{
+public class PersonalController  extends ControladorSeguro {
     
     public static Result AdminEdit() {    	
     	UsuarioRol c = UsuarioRol.find.where().eq("rol.id", 1).findUnique();    	

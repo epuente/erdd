@@ -2,6 +2,7 @@ package controllers;
 
 import static play.data.Form.form;
 
+import controllers.util.ControladorSeguroCoordinador;
 import models.RecursoAutor;
 import play.data.DynamicForm;
 import play.mvc.Result;
