@@ -1,3 +1,66 @@
-2025-03-18 17:54:57,037 - [INFO] - from play in pool-71-thread-4 
-Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+2025-04-10 10:57:17,877 - [INFO] - from play in pool-12-thread-2 
+Listening for HTTP on /0:0:0:0:0:0:0:0:8085
+
+2025-04-10 11:00:14,997 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev6
+
+2025-04-10 11:00:16,317 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-10 11:10:35,374 - [INFO] - from play in play-internal-execution-context-3 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev6
+
+2025-04-10 11:10:35,962 - [INFO] - from play in play-internal-execution-context-3 
+Application started (Dev)
+
+2025-04-10 11:12:24,288 - [ERROR] - from application in New I/O worker #8 
+
+
+! @894e0ipgb - Internal server error, for (GET) [/admin/reporteEvaluacion/9] ->
+
+play.PlayExceptions$CompilationException: Compilation error[error: cannot find symbol]
+	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
+	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
+	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
+	at play.PlayReloader$$anon$1$$anonfun$play$PlayReloader$$anon$$taskFailureHandler$1.apply(PlayReloader.scala:235) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$play$PlayReloader$$anon$$taskFailureHandler$1.apply(PlayReloader.scala:230) ~[na:na]
+	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
+	at play.PlayReloader$$anon$1.play$PlayReloader$$anon$$taskFailureHandler(PlayReloader.scala:230) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:90) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:90) ~[na:na]
+	at scala.util.Either$LeftProjection.map(Either.scala:377) ~[scala-library-2.11.4.jar:na]
+	at play.PlayReloader$$anon$1.reload(PlayReloader.scala:90) ~[na:na]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:122) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:120) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1361) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
+
+2025-04-10 11:15:29,342 - [INFO] - from play in play-internal-execution-context-5 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev6
+
+2025-04-10 11:15:29,731 - [INFO] - from play in play-internal-execution-context-5 
+Application started (Dev)
+
+2025-04-10 11:17:59,552 - [INFO] - from play in play-internal-execution-context-5 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev6
+
+2025-04-10 11:17:59,945 - [INFO] - from play in play-internal-execution-context-5 
+Application started (Dev)
+
+2025-04-10 11:19:46,913 - [INFO] - from play in play-internal-execution-context-7 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev6
+
+2025-04-10 11:19:47,307 - [INFO] - from play in play-internal-execution-context-7 
+Application started (Dev)
+
+2025-04-10 11:21:18,038 - [INFO] - from play in play-internal-execution-context-7 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev6
+
+2025-04-10 11:21:18,303 - [INFO] - from play in play-internal-execution-context-7 
+Application started (Dev)
 

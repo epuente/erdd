@@ -16,7 +16,7 @@ section#main {
 
 body, html {
 	/*background-image: url(../images/fondoTeclas.jpg);*/
-	background-color: white;
+	/*background-color: white;*/
 	background-attachment:scroll;
     background-size:cover;
     height: 100%;
@@ -203,4 +203,57 @@ body {
    position:relative;
    top: -10px;
    left: 0px;
+}
+
+
+:root {
+  --background-color-light: #ffffff;
+  --text-color-light: #000000;
+  --label-color-light: #000000;
+
+  /*--background-color-dark: #121212;*/
+  --background-color-dark: #353535;
+
+  --text-color-dark: #ffffff;
+  --label-color-light: #ffffff;
+
+  --letraBlanca: #b5b5b5;
+  --letraNegra: #000000;
+}
+
+.fondoOscuro {
+    background-color: var(--background-color-dark);
+    .labelTema {
+        color: var(--letraBlanca) !important;
+    }
+}
+
+.fondoOscuro textarea {
+        background: #3f3f3f;
+        color: var(--letraBlanca);
+        border: 1px solid #252525;
+}
+
+.fondoOscuro input[type="radio"]  {
+    background-color: #00FF00;
+}
+
+
+.fondoOscuro .navbarTema {
+    background-color: #262626 !important;
+    a {
+        color: #c0c0c0;
+    }
+}
+
+.fondoOscuro .breadcrumb {
+    background-color: #252525;
+}
+
+.fondoOscuro .breadcrumb ol li {
+    color: var(--letraBlanca);
+}
+
+.fondoOscuro .navbarTema .nav:hover {
+    background-color: #262626 !important;
 }

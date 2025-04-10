@@ -3,13 +3,42 @@
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/> 
 
 
+<style>
+    input[type="radio"] {
+      display: none;
+    }
+
+    input[type="radio"] + label:before {
+      content: "";
+      width: 15px;
+      height: 15px;
+      float: left;
+      margin: 0.1em 0.1em 0 0;
+      border: 1px solid grey;
+      background: var(--background-color-dark);
+      border-radius: 100%;
+    }
+
+    input[type="radio"] + label:after {
+
+      margin-left: 4rem;
+
+    }
+
+    input[type="radio"]:checked + label:before {
+      border: 1px solid grey;
+      background: blue;
+    }
+</style>
+
+
 @main {
     @modal(0)
 	<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-12">
 					<ol class="breadcrumb">
-					  <li>Catálogos</li>
+					  <li class="labelTema">Catálogos</li>
 					  <li><a href="/formatoOV">Formato de oficio de valoración</a></li>
 					  <li class="active">Agregar</li>
 					</ol>			
@@ -48,6 +77,51 @@
             $("#cuerpo5_field").find("dt:eq(0)").append("<span class='text-muted' style='padding-left:2rem;'>Si tiene registrada una url pero no requiere de usuario y password.</span>");
 
             $("#activo_false").trigger("click");
+
+
+
+            // Agregar clase a los labels
+            $("#activo_field, #frmCreate label[for='encabezado'], #frmCreate label[for='asunto'], #frmCreate label[for^='cuerpo'], #frmCreate label[for='despedida'], #frmCreate label[for^='direccionDEV']").addClass("labelTema");
+            $("#laVersion").parent().addClass("labelTema");
+
+            // Agregar clase a navbar
+            $(".navbar").addClass("navbarTema").removeClass("navbar-default");
+
+
+        $('#theme-toggle').click(function() {
+            var temaActual = $('body').attr('data-theme');
+
+            if ( temaActual == "light"  ){
+                $("body").removeClass("fondoClaro").addClass("fondoOscuro");
+                $('body').attr('data-theme', 'dark');
+            }
+
+            if ( temaActual == "dark"  ){
+                $("body").removeClass("fondoOscuro").addClass("fondoClaro");
+                $('body').attr('data-theme', 'light');
+            }
+
+
+            /*
+            if (currentTheme === 'light') {
+              $('body').attr('data-theme', 'dark');
+              $('body').css({
+                'background-color': 'var(--background-color-dark)',
+                'color': 'var(--text-color-dark)',
+                'label-color-light': 'var(--label-color-dark)'
+              });
+              $(".labelTema").css( "color","var(--letraBlanca)" );
+            } else {
+              $('body').attr('data-theme', 'light');
+              $('body').css({
+                'background-color': 'var(--background-color-light)',
+                'color': 'var(--text-color-light)',
+                'label-color-light': 'var(--label-color-light)'
+              });
+              $(".labelTema").css( "color","var(--letraNegra)" );
+            }
+            */
+          });
 
         });
     </script>

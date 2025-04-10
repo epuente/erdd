@@ -445,11 +445,11 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
             celda.setHorizontalAlignment(Element.ALIGN_LEFT);
         }
 
-        PdfPCell cmod = new PdfPCell (tablaModalidad);
-        cmod.setPadding(0);
-        cmod.setColspan(4);
-        tabla3.addCell(cmod);
-        doc.add(tabla3);
+        //PdfPCell cmod = new PdfPCell (tablaModalidad);
+        //cmod.setPadding(0);
+        //cmod.setColspan(4);
+        //tabla3.addCell(cmod);
+        //doc.add(tabla3);
 
         PdfPTable tablaDir = new PdfPTable(tablaInicial);
         celda = new PdfPCell(celdaInicial);
@@ -459,6 +459,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         tablaDir.addCell(celda);
 
         //Subtabla Dirigido a
+        /*
         PdfPTable tablaDirigidoa = new PdfPTable( dirigidoa.size()*3  );
         celda = new PdfPCell(celdaInicial);
         for (Dirigidoa d : dirigidoa){
@@ -489,13 +490,13 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         xy.setColspan(4);
         tablaDir.addCell(xy);
         doc.add(tablaDir);
-
+*/
         PdfPTable tabla4 = new PdfPTable(tablaInicial);
         celda = new PdfPCell(celdaInicial);
-        celda.setPhrase( new Phrase("Duración en "+um+":", fontCuerpo)  );
+        //celda.setPhrase( new Phrase("Duración en "+um+":", fontCuerpo)  );
         celda.setColspan(2);
         tabla4.addCell(celda);
-        celda.setPhrase(new Phrase(r.duracion, fontCuerpo)  );
+        //celda.setPhrase(new Phrase(r.duracion, fontCuerpo)  );
         celda.setColspan(4);
         tabla4.addCell(celda);
 
@@ -850,8 +851,8 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
 
         celda.setColspan(6);
         tabla12.addCell(celda);
-
-        celda.setPhrase(new Phrase("Clave de registro DEV", fontCuerpo)  );
+        /*
+        //celda.setPhrase(new Phrase("Clave de registro DEV", fontCuerpo)  );
         celda.setPadding(10);
         celda.setHorizontalAlignment(Element.ALIGN_CENTER);
         celda.setBackgroundColor(null);
@@ -859,10 +860,13 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         celda.setColspan(3);
         tabla12.addCell(celda);
 
-        celda.setPhrase(new Phrase(r.numcontrol, fontCuerpo)  );
+        //celda.setPhrase(new Phrase(r.numcontrol, fontCuerpo)  );
         celda.setColspan(3);
         tabla12.addCell(celda);
-
+*/
+        celda.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celda.setBackgroundColor(null);
+        celda.setBorderColor(BaseColor.LIGHT_GRAY);
         celda.setPhrase(new Phrase("Resultado", fontbold)  );
         celda.setColspan(2);
         tabla12.addCell(celda);
