@@ -92,6 +92,8 @@
 						            		<hr>					            		
 						            		@form(  routes.RecursoWebController.imprimirSolicitudAceptada, 'role -> "form" ) {	
 						            			<input class="btn btn-success center-block btn-block"  type="submit" value="Ver e imprimir formato">
+                                                <button class="btn btn-primary btn-block" id="btnFormatoWord">Formato word</button>
+
 						            		}
 				            			</div>
 					            	}
@@ -250,4 +252,19 @@
 		$("[name='divReporteEval']:not(:last)").hide();
 		
 	});
+
+    $("#btnFormatoWord").click(function(e){
+        e.preventDefault();
+        console.log("-->");
+        window.open("/aceptadaWord", "_blank");
+    });
+
+
+    $("#btnFormatoWord2").click(function(e){
+        e.preventDefault();
+        console.log("-->");
+        window.open("/aceptadaWord2", "_blank");
+    });
+
+
 </script>

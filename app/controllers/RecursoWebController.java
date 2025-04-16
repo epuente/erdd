@@ -14,9 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import classes.Notificacion;
-import classes.miCorreo;
-import classes.miPdf;
+import classes.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import controllers.util.ControladorDefault;
 import models.*;
@@ -32,7 +30,6 @@ import com.itextpdf.text.DocumentException;
 import akka.actor.ActorRef;
 import akka.actor.Cancellable;
 import akka.actor.Props;
-import classes.RetornoWSRecurso;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Akka;
@@ -219,23 +216,26 @@ public class RecursoWebController extends ControladorDefault {
 		ra.save();
 
 
-		// Envio de correo a autores
-		List<String> listaDirecciones = new ArrayList<>();
-		for (RecursoAutor a : r.autores) {
-			if (a.autorfuncion.id == 1L){
-				listaDirecciones.add( a.correo.email );
-			}
-		}
-		miCorreo mc = new miCorreo();
-		mc.asunto = "Solicitud de ETPRDD (correo al Docente)";
-		mc.para = listaDirecciones;
-        mc.mensaje = "Estimado usuario:<br><br>"+
-		        "Su solicitud de evaluación de Recurso Didáctico Digital se recibió correctamente.<br>En caso de existir observaciones sobre la información y/o documentos registrados, recibirá una notificación por correo electrónico para realizar las modificaciones conducentes, en un plazo máximo de 72 horas. En caso de no recibirla, por favor comuníquese a la Ext. 57405.<br><br>"+
-		        "La clave de control para el seguimiento de su solicitud es:<br><br>"+
-                "<big>"+r.numcontrol+"</big>"+
-                "<br>("+r.ncLetras()+")<br><br>"+
-                "Ingrese a la dirección <a href='"+urlSitio+"'>"+urlSitio+"</a> y utilizando su clave de control realice su seguimiento.<br><br>"+
-                "O ingrese directamente <a href='"+urlSitio+"/seguimiento/"+r.numcontrol+"'>Aqui</a>  ";
+        miCorreo mc = new miCorreo();
+
+
+        // Envio de correo a autores
+        List<String> listaDirecciones = new ArrayList<>();
+        for (RecursoAutor a : r.autores) {
+            if (a.autorfuncion.id == 1L) {
+                listaDirecciones.add(a.correo.email);
+            }
+        }
+
+        mc.asunto = "Solicitud de ETPRDD (correo al Docente)";
+        mc.para = listaDirecciones;
+        mc.mensaje = "Estimado usuario:<br><br>" +
+                "Su solicitud de evaluación de Recurso Didáctico Digital se recibió correctamente.<br>En caso de existir observaciones sobre la información y/o documentos registrados, recibirá una notificación por correo electrónico para realizar las modificaciones conducentes, en un plazo máximo de 72 horas. En caso de no recibirla, por favor comuníquese a la Ext. 57405.<br><br>" +
+                "La clave de control para el seguimiento de su solicitud es:<br><br>" +
+                "<big>" + r.numcontrol + "</big>" +
+                "<br>(" + r.ncLetras() + ")<br><br>" +
+                "Ingrese a la dirección <a href='" + urlSitio + "'>" + urlSitio + "</a> y utilizando su clave de control realice su seguimiento.<br><br>" +
+                "O ingrese directamente <a href='" + urlSitio + "/seguimiento/" + r.numcontrol + "'>Aqui</a>  ";
         mc.enviar();
 
         CorreoSalida cs = new CorreoSalida(mc, r);
@@ -319,6 +319,16 @@ public class RecursoWebController extends ControladorDefault {
 		response().setContentType("application/pdf");
 		return ok (  mipdf.baos.toByteArray() );
 	}
+
+
+    public static Result imprimirSolicitudAceptadaWord()throws DocumentException, IOException{
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        miWord miword = new miWord(Long.parseLong(session("idRecurso")));
+        miword.baos = baos;
+        miword.generarSolicitudEvaluacionWord();
+        response().setContentType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        return ok (  miword.baos.toByteArray() );
+    }
 
 
 	@play.db.ebean.Transactional

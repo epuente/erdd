@@ -1,22 +1,168 @@
-2025-04-10 10:57:17,877 - [INFO] - from play in pool-12-thread-2 
+2025-04-16 08:52:27,479 - [INFO] - from play in pool-6-thread-9 
 Listening for HTTP on /0:0:0:0:0:0:0:0:8085
 
-2025-04-10 11:00:14,997 - [INFO] - from play in play-internal-execution-context-1 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev6
+2025-04-16 08:52:37,159 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-04-10 11:00:16,317 - [INFO] - from play in play-internal-execution-context-1 
+2025-04-16 08:52:38,161 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2025-04-10 11:10:35,374 - [INFO] - from play in play-internal-execution-context-3 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev6
+2025-04-16 08:54:59,700 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-04-10 11:10:35,962 - [INFO] - from play in play-internal-execution-context-3 
+2025-04-16 08:55:00,148 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2025-04-10 11:12:24,288 - [ERROR] - from application in New I/O worker #8 
+2025-04-16 09:17:09,545 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 09:17:09,836 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 09:17:10,057 - [ERROR] - from play in play-akka.actor.default-dispatcher-7 
+Cannot invoke the action, eventually got an error: java.util.ConcurrentModificationException
+
+2025-04-16 09:17:10,092 - [ERROR] - from application in play-akka.actor.default-dispatcher-7 
 
 
-! @894e0ipgb - Internal server error, for (GET) [/admin/reporteEvaluacion/9] ->
+! @8965209cb - Internal server error, for (GET) [/aceptadaWord] ->
+
+play.api.Application$$anon$1: Execution exception[[ConcurrentModificationException: null]]
+	at play.api.Application$class.handleError(Application.scala:296) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.DefaultApplication.handleError(Application.scala:402) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:316) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:344) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:343) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [scala-library-2.11.4.jar:na]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:40) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:248) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Promise$class.complete(Promise.scala:55) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:153) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:23) [scala-library-2.11.4.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41) [akka-actor_2.11-2.3.4.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393) [akka-actor_2.11-2.3.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.4.jar:na]
+Caused by: java.util.ConcurrentModificationException: null
+	at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:911) ~[na:1.8.0_442]
+	at java.util.ArrayList$Itr.next(ArrayList.java:861) ~[na:1.8.0_442]
+	at java.util.Collections$UnmodifiableCollection$1.next(Collections.java:1044) ~[na:1.8.0_442]
+	at classes.miWord.setCellTextWithFont(miWord.java:434) ~[classes/:na]
+	at classes.miWord.generarSolicitudEvaluacionWord(miWord.java:207) ~[classes/:na]
+	at controllers.RecursoWebController.imprimirSolicitudAceptadaWord(RecursoWebController.java:328) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at play.core.Router$HandlerInvokerFactory$$anon$4.resultCall(Router.scala:264) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.invocation(Router.scala:255) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:55) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.GlobalSettings$1.call(GlobalSettings.java:67) ~[play_2.11-2.3.7.jar:2.3.7]
+	at actions.Encabezados.call(Encabezados.java:60) ~[classes/:na]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$.apply(Future.scala:31) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$.apply(Future.scala:492) ~[scala-library-2.11.4.jar:na]
+	at play.core.j.JavaAction$class.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.apply(Router.scala:252) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:129) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:121) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	... 6 common frames omitted
+
+2025-04-16 09:18:22,348 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 09:18:22,626 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 09:20:25,190 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 09:20:25,406 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 09:21:39,381 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 09:21:39,560 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 09:23:13,883 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 09:23:14,056 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 09:24:56,029 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 09:24:56,204 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 09:26:08,782 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 09:26:09,076 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 09:33:34,832 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 09:33:35,000 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 09:37:28,409 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 09:37:28,589 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 09:38:16,125 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 09:38:16,300 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 09:43:19,750 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 09:43:19,907 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 09:46:06,201 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 09:46:06,363 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 09:48:12,494 - [ERROR] - from application in New I/O worker #1 
+
+
+! @8965628da - Internal server error, for (GET) [/aceptadaWord] ->
 
 play.PlayExceptions$CompilationException: Compilation error[error: cannot find symbol]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
@@ -40,27 +186,1377 @@ play.PlayExceptions$CompilationException: Compilation error[error: cannot find s
 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
 
-2025-04-10 11:15:29,342 - [INFO] - from play in play-internal-execution-context-5 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev6
+2025-04-16 09:48:28,765 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-04-10 11:15:29,731 - [INFO] - from play in play-internal-execution-context-5 
+2025-04-16 09:48:28,918 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2025-04-10 11:17:59,552 - [INFO] - from play in play-internal-execution-context-5 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev6
+2025-04-16 09:50:46,213 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-04-10 11:17:59,945 - [INFO] - from play in play-internal-execution-context-5 
+2025-04-16 09:50:46,416 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2025-04-10 11:19:46,913 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev6
+2025-04-16 09:55:31,188 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-04-10 11:19:47,307 - [INFO] - from play in play-internal-execution-context-7 
+2025-04-16 09:55:31,349 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2025-04-10 11:21:18,038 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev6
+2025-04-16 09:59:07,774 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-04-10 11:21:18,303 - [INFO] - from play in play-internal-execution-context-7 
+2025-04-16 09:59:07,971 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 10:01:26,647 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 10:01:26,807 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 10:34:36,029 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 10:34:36,172 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 10:37:27,333 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 10:37:27,474 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 10:38:38,134 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 10:38:38,280 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 10:40:36,897 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 10:40:37,055 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 10:45:47,345 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 10:45:47,950 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 10:49:50,128 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 10:49:50,431 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 10:50:31,337 - [ERROR] - from play in play-akka.actor.default-dispatcher-42 
+Cannot invoke the action, eventually got an error: java.lang.NumberFormatException: null
+
+2025-04-16 10:50:31,351 - [ERROR] - from application in play-akka.actor.default-dispatcher-42 
+
+
+! @8965e719e - Internal server error, for (GET) [/aceptadaWord] ->
+
+play.api.Application$$anon$1: Execution exception[[NumberFormatException: null]]
+	at play.api.Application$class.handleError(Application.scala:296) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.DefaultApplication.handleError(Application.scala:402) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:316) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:344) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:343) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [scala-library-2.11.4.jar:na]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:40) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:248) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Promise$class.complete(Promise.scala:55) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:153) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:23) [scala-library-2.11.4.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41) [akka-actor_2.11-2.3.4.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393) [akka-actor_2.11-2.3.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.4.jar:na]
+Caused by: java.lang.NumberFormatException: null
+	at java.lang.Long.parseLong(Long.java:552) ~[na:1.8.0_442]
+	at java.lang.Long.parseLong(Long.java:631) ~[na:1.8.0_442]
+	at controllers.RecursoWebController.imprimirSolicitudAceptadaWord(RecursoWebController.java:326) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at play.core.Router$HandlerInvokerFactory$$anon$4.resultCall(Router.scala:264) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.invocation(Router.scala:255) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:55) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.GlobalSettings$1.call(GlobalSettings.java:67) ~[play_2.11-2.3.7.jar:2.3.7]
+	at actions.Encabezados.call(Encabezados.java:60) ~[classes/:na]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$.apply(Future.scala:31) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$.apply(Future.scala:492) ~[scala-library-2.11.4.jar:na]
+	at play.core.j.JavaAction$class.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.apply(Router.scala:252) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:129) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:121) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	... 6 common frames omitted
+
+2025-04-16 10:59:03,685 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 10:59:03,915 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 10:59:04,006 - [ERROR] - from play in play-akka.actor.default-dispatcher-55 
+Cannot invoke the action, eventually got an error: java.lang.NullPointerException
+
+2025-04-16 10:59:04,014 - [ERROR] - from application in play-akka.actor.default-dispatcher-55 
+
+
+! @8965fa5jc - Internal server error, for (GET) [/aceptadaWord] ->
+
+play.api.Application$$anon$1: Execution exception[[NullPointerException: null]]
+	at play.api.Application$class.handleError(Application.scala:296) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.DefaultApplication.handleError(Application.scala:402) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:316) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:344) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:343) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [scala-library-2.11.4.jar:na]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:40) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:248) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Promise$class.complete(Promise.scala:55) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:153) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:23) [scala-library-2.11.4.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41) [akka-actor_2.11-2.3.4.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393) [akka-actor_2.11-2.3.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.4.jar:na]
+Caused by: java.lang.NullPointerException: null
+	at classes.miWord.generarSolicitudEvaluacionWord(miWord.java:154) ~[classes/:na]
+	at controllers.RecursoWebController.imprimirSolicitudAceptadaWord(RecursoWebController.java:328) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at play.core.Router$HandlerInvokerFactory$$anon$4.resultCall(Router.scala:264) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.invocation(Router.scala:255) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:55) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.GlobalSettings$1.call(GlobalSettings.java:67) ~[play_2.11-2.3.7.jar:2.3.7]
+	at actions.Encabezados.call(Encabezados.java:60) ~[classes/:na]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$.apply(Future.scala:31) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$.apply(Future.scala:492) ~[scala-library-2.11.4.jar:na]
+	at play.core.j.JavaAction$class.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.apply(Router.scala:252) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:129) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:121) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	... 6 common frames omitted
+
+2025-04-16 10:59:27,271 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 10:59:27,506 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 10:59:27,597 - [ERROR] - from play in play-akka.actor.default-dispatcher-61 
+Cannot invoke the action, eventually got an error: java.lang.NullPointerException
+
+2025-04-16 10:59:27,602 - [ERROR] - from application in play-akka.actor.default-dispatcher-61 
+
+
+! @8965fbegi - Internal server error, for (GET) [/aceptadaWord] ->
+
+play.api.Application$$anon$1: Execution exception[[NullPointerException: null]]
+	at play.api.Application$class.handleError(Application.scala:296) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.DefaultApplication.handleError(Application.scala:402) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:316) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:344) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:343) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [scala-library-2.11.4.jar:na]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:40) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:248) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Promise$class.complete(Promise.scala:55) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:153) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:23) [scala-library-2.11.4.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41) [akka-actor_2.11-2.3.4.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393) [akka-actor_2.11-2.3.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.4.jar:na]
+Caused by: java.lang.NullPointerException: null
+	at classes.miWord.generarSolicitudEvaluacionWord(miWord.java:154) ~[classes/:na]
+	at controllers.RecursoWebController.imprimirSolicitudAceptadaWord(RecursoWebController.java:328) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at play.core.Router$HandlerInvokerFactory$$anon$4.resultCall(Router.scala:264) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.invocation(Router.scala:255) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:55) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.GlobalSettings$1.call(GlobalSettings.java:67) ~[play_2.11-2.3.7.jar:2.3.7]
+	at actions.Encabezados.call(Encabezados.java:60) ~[classes/:na]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$.apply(Future.scala:31) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$.apply(Future.scala:492) ~[scala-library-2.11.4.jar:na]
+	at play.core.j.JavaAction$class.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.apply(Router.scala:252) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:129) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:121) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	... 6 common frames omitted
+
+2025-04-16 11:00:08,840 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 11:00:09,077 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 11:16:08,599 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 11:16:08,897 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 11:16:09,105 - [ERROR] - from play in play-akka.actor.default-dispatcher-62 
+Cannot invoke the action, eventually got an error: java.lang.NullPointerException
+
+2025-04-16 11:16:09,135 - [ERROR] - from application in play-akka.actor.default-dispatcher-62 
+
+
+! @8965hge4p - Internal server error, for (GET) [/aceptadaWord] ->
+
+play.api.Application$$anon$1: Execution exception[[NullPointerException: null]]
+	at play.api.Application$class.handleError(Application.scala:296) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.DefaultApplication.handleError(Application.scala:402) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:316) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:344) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:343) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [scala-library-2.11.4.jar:na]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:40) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:248) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Promise$class.complete(Promise.scala:55) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:153) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:23) [scala-library-2.11.4.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41) [akka-actor_2.11-2.3.4.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393) [akka-actor_2.11-2.3.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.4.jar:na]
+Caused by: java.lang.NullPointerException: null
+	at classes.miWord.generarSolicitudEvaluacionWord(miWord.java:251) ~[classes/:na]
+	at controllers.RecursoWebController.imprimirSolicitudAceptadaWord(RecursoWebController.java:328) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at play.core.Router$HandlerInvokerFactory$$anon$4.resultCall(Router.scala:264) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.invocation(Router.scala:255) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:55) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.GlobalSettings$1.call(GlobalSettings.java:67) ~[play_2.11-2.3.7.jar:2.3.7]
+	at actions.Encabezados.call(Encabezados.java:60) ~[classes/:na]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$.apply(Future.scala:31) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$.apply(Future.scala:492) ~[scala-library-2.11.4.jar:na]
+	at play.core.j.JavaAction$class.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.apply(Router.scala:252) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:129) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:121) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	... 6 common frames omitted
+
+2025-04-16 11:17:04,909 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 11:17:05,182 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 11:17:05,325 - [ERROR] - from play in play-akka.actor.default-dispatcher-65 
+Cannot invoke the action, eventually got an error: java.lang.NullPointerException
+
+2025-04-16 11:17:05,334 - [ERROR] - from application in play-akka.actor.default-dispatcher-65 
+
+
+! @8965hjj8g - Internal server error, for (GET) [/aceptadaWord] ->
+
+play.api.Application$$anon$1: Execution exception[[NullPointerException: null]]
+	at play.api.Application$class.handleError(Application.scala:296) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.DefaultApplication.handleError(Application.scala:402) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:316) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:344) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:343) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [scala-library-2.11.4.jar:na]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:40) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:248) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Promise$class.complete(Promise.scala:55) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:153) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:23) [scala-library-2.11.4.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41) [akka-actor_2.11-2.3.4.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393) [akka-actor_2.11-2.3.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.4.jar:na]
+Caused by: java.lang.NullPointerException: null
+	at classes.miWord.generarSolicitudEvaluacionWord(miWord.java:252) ~[classes/:na]
+	at controllers.RecursoWebController.imprimirSolicitudAceptadaWord(RecursoWebController.java:328) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at play.core.Router$HandlerInvokerFactory$$anon$4.resultCall(Router.scala:264) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.invocation(Router.scala:255) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:55) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.GlobalSettings$1.call(GlobalSettings.java:67) ~[play_2.11-2.3.7.jar:2.3.7]
+	at actions.Encabezados.call(Encabezados.java:60) ~[classes/:na]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$.apply(Future.scala:31) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$.apply(Future.scala:492) ~[scala-library-2.11.4.jar:na]
+	at play.core.j.JavaAction$class.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.apply(Router.scala:252) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:129) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:121) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	... 6 common frames omitted
+
+2025-04-16 11:17:29,433 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 11:17:29,633 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 11:17:29,738 - [ERROR] - from play in play-akka.actor.default-dispatcher-66 
+Cannot invoke the action, eventually got an error: java.lang.NullPointerException
+
+2025-04-16 11:17:29,741 - [ERROR] - from application in play-akka.actor.default-dispatcher-66 
+
+
+! @8965hl3bb - Internal server error, for (GET) [/aceptadaWord] ->
+
+play.api.Application$$anon$1: Execution exception[[NullPointerException: null]]
+	at play.api.Application$class.handleError(Application.scala:296) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.DefaultApplication.handleError(Application.scala:402) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:316) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:344) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:343) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [scala-library-2.11.4.jar:na]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:40) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:248) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Promise$class.complete(Promise.scala:55) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:153) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:23) [scala-library-2.11.4.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41) [akka-actor_2.11-2.3.4.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393) [akka-actor_2.11-2.3.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.4.jar:na]
+Caused by: java.lang.NullPointerException: null
+	at classes.miWord.generarSolicitudEvaluacionWord(miWord.java:252) ~[classes/:na]
+	at controllers.RecursoWebController.imprimirSolicitudAceptadaWord(RecursoWebController.java:328) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at play.core.Router$HandlerInvokerFactory$$anon$4.resultCall(Router.scala:264) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.invocation(Router.scala:255) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:55) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.GlobalSettings$1.call(GlobalSettings.java:67) ~[play_2.11-2.3.7.jar:2.3.7]
+	at actions.Encabezados.call(Encabezados.java:60) ~[classes/:na]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$.apply(Future.scala:31) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$.apply(Future.scala:492) ~[scala-library-2.11.4.jar:na]
+	at play.core.j.JavaAction$class.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.apply(Router.scala:252) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:129) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:121) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	... 6 common frames omitted
+
+2025-04-16 11:17:51,922 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 11:17:52,191 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 11:21:41,588 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 11:21:41,924 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 11:32:39,429 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 11:32:39,723 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 11:33:17,792 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 11:33:18,053 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 11:39:43,176 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 11:39:43,416 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 11:41:02,954 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 11:41:03,239 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 11:42:16,236 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 11:42:16,472 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 11:45:19,971 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 11:45:20,256 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 11:46:31,762 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 11:46:32,030 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 11:48:04,548 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 11:48:04,802 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 11:51:45,646 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 11:51:45,943 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 11:59:34,289 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 11:59:34,639 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 12:03:08,522 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 12:03:08,765 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 12:04:00,668 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 12:04:00,903 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 12:06:35,838 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 12:06:36,090 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 12:35:13,095 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 12:35:13,400 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 12:35:13,555 - [ERROR] - from play in play-akka.actor.default-dispatcher-89 
+Cannot invoke the action, eventually got an error: java.lang.NullPointerException
+
+2025-04-16 12:35:13,572 - [ERROR] - from application in play-akka.actor.default-dispatcher-89 
+
+
+! @896620cfd - Internal server error, for (GET) [/aceptadaWord] ->
+
+play.api.Application$$anon$1: Execution exception[[NullPointerException: null]]
+	at play.api.Application$class.handleError(Application.scala:296) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.DefaultApplication.handleError(Application.scala:402) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:316) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:344) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:343) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [scala-library-2.11.4.jar:na]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:40) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:248) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Promise$class.complete(Promise.scala:55) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:153) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:23) [scala-library-2.11.4.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41) [akka-actor_2.11-2.3.4.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393) [akka-actor_2.11-2.3.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.4.jar:na]
+Caused by: java.lang.NullPointerException: null
+	at classes.miWord.generarSolicitudEvaluacionWord(miWord.java:382) ~[classes/:na]
+	at controllers.RecursoWebController.imprimirSolicitudAceptadaWord(RecursoWebController.java:328) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at play.core.Router$HandlerInvokerFactory$$anon$4.resultCall(Router.scala:264) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.invocation(Router.scala:255) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:55) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.GlobalSettings$1.call(GlobalSettings.java:67) ~[play_2.11-2.3.7.jar:2.3.7]
+	at actions.Encabezados.call(Encabezados.java:60) ~[classes/:na]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$.apply(Future.scala:31) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$.apply(Future.scala:492) ~[scala-library-2.11.4.jar:na]
+	at play.core.j.JavaAction$class.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.apply(Router.scala:252) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:129) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:121) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	... 6 common frames omitted
+
+2025-04-16 12:36:34,566 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 12:36:34,752 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 12:38:35,846 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 12:38:36,087 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 12:39:15,713 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 12:39:15,951 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 12:44:02,107 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 12:44:02,356 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 12:45:01,310 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 12:45:01,565 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 12:45:01,696 - [ERROR] - from play in play-akka.actor.default-dispatcher-93 
+Cannot invoke the action, eventually got an error: java.lang.NullPointerException
+
+2025-04-16 12:45:01,702 - [ERROR] - from application in play-akka.actor.default-dispatcher-93 
+
+
+! @896637ofl - Internal server error, for (GET) [/aceptadaWord] ->
+
+play.api.Application$$anon$1: Execution exception[[NullPointerException: null]]
+	at play.api.Application$class.handleError(Application.scala:296) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.DefaultApplication.handleError(Application.scala:402) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:316) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:344) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:343) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [scala-library-2.11.4.jar:na]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:40) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:248) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Promise$class.complete(Promise.scala:55) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:153) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:23) [scala-library-2.11.4.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41) [akka-actor_2.11-2.3.4.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393) [akka-actor_2.11-2.3.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.4.jar:na]
+Caused by: java.lang.NullPointerException: null
+	at classes.miWord.generarSolicitudEvaluacionWord(miWord.java:388) ~[classes/:na]
+	at controllers.RecursoWebController.imprimirSolicitudAceptadaWord(RecursoWebController.java:328) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at play.core.Router$HandlerInvokerFactory$$anon$4.resultCall(Router.scala:264) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.invocation(Router.scala:255) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:55) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.GlobalSettings$1.call(GlobalSettings.java:67) ~[play_2.11-2.3.7.jar:2.3.7]
+	at actions.Encabezados.call(Encabezados.java:60) ~[classes/:na]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$.apply(Future.scala:31) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$.apply(Future.scala:492) ~[scala-library-2.11.4.jar:na]
+	at play.core.j.JavaAction$class.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.apply(Router.scala:252) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:129) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:121) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	... 6 common frames omitted
+
+2025-04-16 12:45:40,841 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 12:45:41,059 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 12:47:05,135 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 12:47:05,359 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 12:51:48,777 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 12:51:49,045 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 12:54:56,749 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 12:54:57,017 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 12:54:57,081 - [ERROR] - from com.jolbox.bonecp.ConnectionHandle in play-akka.actor.default-dispatcher-98 
+Database access problem. Killing off this connection and all remaining connections in the connection pool. SQL State = HY000
+
+2025-04-16 12:54:57,089 - [ERROR] - from com.avaje.ebeaninternal.server.core.BeanRequest in play-akka.actor.default-dispatcher-98 
+Error trying to rollack a transaction (after a prior exception thrown)
+javax.persistence.PersistenceException: java.sql.SQLException: Connection is closed!
+	at com.avaje.ebeaninternal.server.transaction.JdbcTransaction.rollback(JdbcTransaction.java:640) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.transaction.JdbcTransaction.rollback(JdbcTransaction.java:625) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.core.BeanRequest.rollbackTransIfRequired(BeanRequest.java:95) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.core.DefaultServer.findList(DefaultServer.java:1508) [avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.core.DefaultServer.findUnique(DefaultServer.java:1272) [avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.querydefn.DefaultOrmQuery.findUnique(DefaultOrmQuery.java:908) [avaje-ebeanorm-3.3.4.jar:na]
+	at classes.miWord.generarSolicitudEvaluacionWord(miWord.java:40) [classes/:na]
+	at controllers.RecursoWebController.imprimirSolicitudAceptadaWord(RecursoWebController.java:328) [classes/:2.3.7]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) [classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) [classes/:na]
+	at play.core.Router$HandlerInvokerFactory$$anon$4.resultCall(Router.scala:264) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.invocation(Router.scala:255) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:55) [play_2.11-2.3.7.jar:2.3.7]
+	at play.GlobalSettings$1.call(GlobalSettings.java:67) [play_2.11-2.3.7.jar:2.3.7]
+	at actions.Encabezados.call(Encabezados.java:60) [classes/:na]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40) [play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$.apply(Future.scala:31) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$.apply(Future.scala:492) [scala-library-2.11.4.jar:na]
+	at play.core.j.JavaAction$class.apply(JavaAction.scala:82) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.apply(Router.scala:252) [play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) [play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) [play_2.11-2.3.7.jar:2.3.7]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) [play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:129) [play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:128) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:128) [play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:121) [play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41) [akka-actor_2.11-2.3.4.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393) [akka-actor_2.11-2.3.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.4.jar:na]
+Caused by: java.sql.SQLException: Connection is closed!
+	at com.jolbox.bonecp.ConnectionHandle.checkClosed(ConnectionHandle.java:459) ~[bonecp-0.8.0.RELEASE.jar:na]
+	at com.jolbox.bonecp.ConnectionHandle.rollback(ConnectionHandle.java:1270) ~[bonecp-0.8.0.RELEASE.jar:na]
+	at com.avaje.ebeaninternal.server.transaction.JdbcTransaction.rollback(JdbcTransaction.java:637) ~[avaje-ebeanorm-3.3.4.jar:na]
+	... 47 common frames omitted
+
+2025-04-16 12:54:57,089 - [ERROR] - from play in play-akka.actor.default-dispatcher-98 
+Cannot invoke the action, eventually got an error: javax.persistence.PersistenceException: Query threw SQLException:Expression #1 of ORDER BY clause is not in SELECT list, references column 'erdd_dev7.t2.id' which is not in SELECT list; this is incompatible with DISTINCT 
+Bind values:[38] 
+Query was:
+select distinct t0.id c0, t0.titulo c1, t0.duracion c2, t0.elaboracion c3, t0.programaacad c4, t0.unidadaprendizaje c5, t0.sinopsis c6, t0.formatoentregaotro c7, t0.url c8, t0.numcontrol c9, t0.auditinsert c10, t0.auditlastupdate c11, t0.areaconocimiento_id c12, t0.niveleducativo_id c13, t0.unidadmedida_id c14, t0.unidadacademica_id c15, t0.coberturacontenido_id c16, t0.modalidad_id c17, t0.version_id c18, t4.id c19, t0.formatoentrega_id c20, t0.estado_id c21, t5.id c22, t6.id c23, t7.id c24, t8.id c25, t9.id c26, t10.id c27, t11.id c28, t3.id c29, t3.usuario c30, t3.password c31, t3.auditinsert c32, t3.auditlastupdate c33, t3.recurso_id c34 from recurso t0 left outer join versionanterior t4 on t4.recurso_id = t0.id  left outer join oficio t5 on t5.recurso_id = t0.id  left outer join oficio_valoracion t6 on t6.recurso_id = t0.id  left outer join clasificacion t7 on t7.recurso_id = t0.id  left outer join evaluacion_fecha t8 on t8.recurso_id = t0.id  left outer join observacion_cancelacion t9 on t9.recurso_id = t0.id  left outer join recurso_calificacion t10 on t10.recurso_id = t0.id  left outer join encuesta_respuesta t11 on t11.recurso_id = t0.id  left outer join recursoenweb t3 on t3.recurso_id = t0.id  left outer join recurso_autor t1 on t1.recurso_id = t0.id  left outer join autorfuncion t2 on t2.id = t1.autorfuncion_id  where t0.id = ?  order by t2.id, t0.id 
+
+
+
+2025-04-16 12:54:57,102 - [ERROR] - from application in play-akka.actor.default-dispatcher-98 
+
+
+! @89664fl9j - Internal server error, for (GET) [/aceptadaWord] ->
+
+play.api.Application$$anon$1: Execution exception[[PersistenceException: Query threw SQLException:Expression #1 of ORDER BY clause is not in SELECT list, references column 'erdd_dev7.t2.id' which is not in SELECT list; this is incompatible with DISTINCT 
+Bind values:[38] 
+Query was:
+select distinct t0.id c0, t0.titulo c1, t0.duracion c2, t0.elaboracion c3, t0.programaacad c4, t0.unidadaprendizaje c5, t0.sinopsis c6, t0.formatoentregaotro c7, t0.url c8, t0.numcontrol c9, t0.auditinsert c10, t0.auditlastupdate c11, t0.areaconocimiento_id c12, t0.niveleducativo_id c13, t0.unidadmedida_id c14, t0.unidadacademica_id c15, t0.coberturacontenido_id c16, t0.modalidad_id c17, t0.version_id c18, t4.id c19, t0.formatoentrega_id c20, t0.estado_id c21, t5.id c22, t6.id c23, t7.id c24, t8.id c25, t9.id c26, t10.id c27, t11.id c28, t3.id c29, t3.usuario c30, t3.password c31, t3.auditinsert c32, t3.auditlastupdate c33, t3.recurso_id c34 from recurso t0 left outer join versionanterior t4 on t4.recurso_id = t0.id  left outer join oficio t5 on t5.recurso_id = t0.id  left outer join oficio_valoracion t6 on t6.recurso_id = t0.id  left outer join clasificacion t7 on t7.recurso_id = t0.id  left outer join evaluacion_fecha t8 on t8.recurso_id = t0.id  left outer join observacion_cancelacion t9 on t9.recurso_id = t0.id  left outer join recurso_calificacion t10 on t10.recurso_id = t0.id  left outer join encuesta_respuesta t11 on t11.recurso_id = t0.id  left outer join recursoenweb t3 on t3.recurso_id = t0.id  left outer join recurso_autor t1 on t1.recurso_id = t0.id  left outer join autorfuncion t2 on t2.id = t1.autorfuncion_id  where t0.id = ?  order by t2.id, t0.id 
+
+]]
+	at play.api.Application$class.handleError(Application.scala:296) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.DefaultApplication.handleError(Application.scala:402) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:316) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:344) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:343) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [scala-library-2.11.4.jar:na]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:40) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:248) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Promise$class.complete(Promise.scala:55) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:153) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:23) [scala-library-2.11.4.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41) [akka-actor_2.11-2.3.4.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393) [akka-actor_2.11-2.3.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.4.jar:na]
+Caused by: javax.persistence.PersistenceException: Query threw SQLException:Expression #1 of ORDER BY clause is not in SELECT list, references column 'erdd_dev7.t2.id' which is not in SELECT list; this is incompatible with DISTINCT 
+Bind values:[38] 
+Query was:
+select distinct t0.id c0, t0.titulo c1, t0.duracion c2, t0.elaboracion c3, t0.programaacad c4, t0.unidadaprendizaje c5, t0.sinopsis c6, t0.formatoentregaotro c7, t0.url c8, t0.numcontrol c9, t0.auditinsert c10, t0.auditlastupdate c11, t0.areaconocimiento_id c12, t0.niveleducativo_id c13, t0.unidadmedida_id c14, t0.unidadacademica_id c15, t0.coberturacontenido_id c16, t0.modalidad_id c17, t0.version_id c18, t4.id c19, t0.formatoentrega_id c20, t0.estado_id c21, t5.id c22, t6.id c23, t7.id c24, t8.id c25, t9.id c26, t10.id c27, t11.id c28, t3.id c29, t3.usuario c30, t3.password c31, t3.auditinsert c32, t3.auditlastupdate c33, t3.recurso_id c34 from recurso t0 left outer join versionanterior t4 on t4.recurso_id = t0.id  left outer join oficio t5 on t5.recurso_id = t0.id  left outer join oficio_valoracion t6 on t6.recurso_id = t0.id  left outer join clasificacion t7 on t7.recurso_id = t0.id  left outer join evaluacion_fecha t8 on t8.recurso_id = t0.id  left outer join observacion_cancelacion t9 on t9.recurso_id = t0.id  left outer join recurso_calificacion t10 on t10.recurso_id = t0.id  left outer join encuesta_respuesta t11 on t11.recurso_id = t0.id  left outer join recursoenweb t3 on t3.recurso_id = t0.id  left outer join recurso_autor t1 on t1.recurso_id = t0.id  left outer join autorfuncion t2 on t2.id = t1.autorfuncion_id  where t0.id = ?  order by t2.id, t0.id 
+
+
+	at com.avaje.ebeaninternal.server.query.CQuery.createPersistenceException(CQuery.java:834) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.query.CQuery.createPersistenceException(CQuery.java:811) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.query.CQueryEngine.findMany(CQueryEngine.java:205) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.query.DefaultOrmQueryEngine.findMany(DefaultOrmQueryEngine.java:77) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.core.OrmQueryRequest.findList(OrmQueryRequest.java:263) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.core.DefaultServer.findList(DefaultServer.java:1502) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.core.DefaultServer.findUnique(DefaultServer.java:1272) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.querydefn.DefaultOrmQuery.findUnique(DefaultOrmQuery.java:908) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at classes.miWord.generarSolicitudEvaluacionWord(miWord.java:40) ~[classes/:na]
+	at controllers.RecursoWebController.imprimirSolicitudAceptadaWord(RecursoWebController.java:328) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at play.core.Router$HandlerInvokerFactory$$anon$4.resultCall(Router.scala:264) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.invocation(Router.scala:255) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:55) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.GlobalSettings$1.call(GlobalSettings.java:67) ~[play_2.11-2.3.7.jar:2.3.7]
+	at actions.Encabezados.call(Encabezados.java:60) ~[classes/:na]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$.apply(Future.scala:31) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$.apply(Future.scala:492) ~[scala-library-2.11.4.jar:na]
+	at play.core.j.JavaAction$class.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.apply(Router.scala:252) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:129) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:121) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	... 6 common frames omitted
+Caused by: java.sql.SQLException: Expression #1 of ORDER BY clause is not in SELECT list, references column 'erdd_dev7.t2.id' which is not in SELECT list; this is incompatible with DISTINCT
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:968) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.jolbox.bonecp.PreparedStatementHandle.executeQuery(PreparedStatementHandle.java:174) ~[bonecp-0.8.0.RELEASE.jar:na]
+	at com.avaje.ebeaninternal.server.query.CQuery.prepareBindExecuteQueryWithOption(CQuery.java:409) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.query.CQuery.prepareBindExecuteQuery(CQuery.java:368) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.query.CQueryEngine.findMany(CQueryEngine.java:165) ~[avaje-ebeanorm-3.3.4.jar:na]
+	... 47 common frames omitted
+
+2025-04-16 13:02:53,885 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:02:54,153 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:05:30,340 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:05:30,641 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:05:30,690 - [ERROR] - from com.jolbox.bonecp.ConnectionHandle in play-akka.actor.default-dispatcher-101 
+Database access problem. Killing off this connection and all remaining connections in the connection pool. SQL State = HY000
+
+2025-04-16 13:05:30,701 - [ERROR] - from com.avaje.ebeaninternal.server.core.BeanRequest in play-akka.actor.default-dispatcher-101 
+Error trying to rollack a transaction (after a prior exception thrown)
+javax.persistence.PersistenceException: java.sql.SQLException: Connection is closed!
+	at com.avaje.ebeaninternal.server.transaction.JdbcTransaction.rollback(JdbcTransaction.java:640) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.transaction.JdbcTransaction.rollback(JdbcTransaction.java:625) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.core.BeanRequest.rollbackTransIfRequired(BeanRequest.java:95) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.core.DefaultServer.findList(DefaultServer.java:1508) [avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.core.DefaultServer.findUnique(DefaultServer.java:1272) [avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.querydefn.DefaultOrmQuery.findUnique(DefaultOrmQuery.java:908) [avaje-ebeanorm-3.3.4.jar:na]
+	at classes.miWord.generarSolicitudEvaluacionWord(miWord.java:40) [classes/:na]
+	at controllers.RecursoWebController.imprimirSolicitudAceptadaWord(RecursoWebController.java:328) [classes/:2.3.7]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) [classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) [classes/:na]
+	at play.core.Router$HandlerInvokerFactory$$anon$4.resultCall(Router.scala:264) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.invocation(Router.scala:255) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:55) [play_2.11-2.3.7.jar:2.3.7]
+	at play.GlobalSettings$1.call(GlobalSettings.java:67) [play_2.11-2.3.7.jar:2.3.7]
+	at actions.Encabezados.call(Encabezados.java:60) [classes/:na]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40) [play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$.apply(Future.scala:31) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$.apply(Future.scala:492) [scala-library-2.11.4.jar:na]
+	at play.core.j.JavaAction$class.apply(JavaAction.scala:82) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.apply(Router.scala:252) [play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) [play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) [play_2.11-2.3.7.jar:2.3.7]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) [play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:129) [play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:128) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:128) [play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:121) [play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41) [akka-actor_2.11-2.3.4.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393) [akka-actor_2.11-2.3.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.4.jar:na]
+Caused by: java.sql.SQLException: Connection is closed!
+	at com.jolbox.bonecp.ConnectionHandle.checkClosed(ConnectionHandle.java:459) ~[bonecp-0.8.0.RELEASE.jar:na]
+	at com.jolbox.bonecp.ConnectionHandle.rollback(ConnectionHandle.java:1270) ~[bonecp-0.8.0.RELEASE.jar:na]
+	at com.avaje.ebeaninternal.server.transaction.JdbcTransaction.rollback(JdbcTransaction.java:637) ~[avaje-ebeanorm-3.3.4.jar:na]
+	... 47 common frames omitted
+
+2025-04-16 13:05:30,702 - [ERROR] - from play in play-akka.actor.default-dispatcher-101 
+Cannot invoke the action, eventually got an error: javax.persistence.PersistenceException: Query threw SQLException:Expression #1 of ORDER BY clause is not in SELECT list, references column 'erdd_dev7.t2.id' which is not in SELECT list; this is incompatible with DISTINCT 
+Bind values:[38] 
+Query was:
+select distinct t0.id c0, t0.titulo c1, t0.duracion c2, t0.elaboracion c3, t0.programaacad c4, t0.unidadaprendizaje c5, t0.sinopsis c6, t0.formatoentregaotro c7, t0.url c8, t0.numcontrol c9, t0.auditinsert c10, t0.auditlastupdate c11, t0.areaconocimiento_id c12, t0.niveleducativo_id c13, t0.unidadmedida_id c14, t0.unidadacademica_id c15, t0.coberturacontenido_id c16, t0.modalidad_id c17, t0.version_id c18, t4.id c19, t0.formatoentrega_id c20, t0.estado_id c21, t5.id c22, t6.id c23, t7.id c24, t8.id c25, t9.id c26, t10.id c27, t11.id c28, t3.id c29, t3.usuario c30, t3.password c31, t3.auditinsert c32, t3.auditlastupdate c33, t3.recurso_id c34 from recurso t0 left outer join versionanterior t4 on t4.recurso_id = t0.id  left outer join oficio t5 on t5.recurso_id = t0.id  left outer join oficio_valoracion t6 on t6.recurso_id = t0.id  left outer join clasificacion t7 on t7.recurso_id = t0.id  left outer join evaluacion_fecha t8 on t8.recurso_id = t0.id  left outer join observacion_cancelacion t9 on t9.recurso_id = t0.id  left outer join recurso_calificacion t10 on t10.recurso_id = t0.id  left outer join encuesta_respuesta t11 on t11.recurso_id = t0.id  left outer join recursoenweb t3 on t3.recurso_id = t0.id  left outer join recurso_autor t1 on t1.recurso_id = t0.id  left outer join autorfuncion t2 on t2.id = t1.autorfuncion_id  where t0.id = ?  order by t2.id, t0.id 
+
+
+
+2025-04-16 13:05:30,708 - [ERROR] - from application in play-akka.actor.default-dispatcher-101 
+
+
+! @89665pmha - Internal server error, for (GET) [/aceptadaWord] ->
+
+play.api.Application$$anon$1: Execution exception[[PersistenceException: Query threw SQLException:Expression #1 of ORDER BY clause is not in SELECT list, references column 'erdd_dev7.t2.id' which is not in SELECT list; this is incompatible with DISTINCT 
+Bind values:[38] 
+Query was:
+select distinct t0.id c0, t0.titulo c1, t0.duracion c2, t0.elaboracion c3, t0.programaacad c4, t0.unidadaprendizaje c5, t0.sinopsis c6, t0.formatoentregaotro c7, t0.url c8, t0.numcontrol c9, t0.auditinsert c10, t0.auditlastupdate c11, t0.areaconocimiento_id c12, t0.niveleducativo_id c13, t0.unidadmedida_id c14, t0.unidadacademica_id c15, t0.coberturacontenido_id c16, t0.modalidad_id c17, t0.version_id c18, t4.id c19, t0.formatoentrega_id c20, t0.estado_id c21, t5.id c22, t6.id c23, t7.id c24, t8.id c25, t9.id c26, t10.id c27, t11.id c28, t3.id c29, t3.usuario c30, t3.password c31, t3.auditinsert c32, t3.auditlastupdate c33, t3.recurso_id c34 from recurso t0 left outer join versionanterior t4 on t4.recurso_id = t0.id  left outer join oficio t5 on t5.recurso_id = t0.id  left outer join oficio_valoracion t6 on t6.recurso_id = t0.id  left outer join clasificacion t7 on t7.recurso_id = t0.id  left outer join evaluacion_fecha t8 on t8.recurso_id = t0.id  left outer join observacion_cancelacion t9 on t9.recurso_id = t0.id  left outer join recurso_calificacion t10 on t10.recurso_id = t0.id  left outer join encuesta_respuesta t11 on t11.recurso_id = t0.id  left outer join recursoenweb t3 on t3.recurso_id = t0.id  left outer join recurso_autor t1 on t1.recurso_id = t0.id  left outer join autorfuncion t2 on t2.id = t1.autorfuncion_id  where t0.id = ?  order by t2.id, t0.id 
+
+]]
+	at play.api.Application$class.handleError(Application.scala:296) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.DefaultApplication.handleError(Application.scala:402) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:316) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:344) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:343) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [scala-library-2.11.4.jar:na]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:40) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:248) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Promise$class.complete(Promise.scala:55) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:153) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:23) [scala-library-2.11.4.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41) [akka-actor_2.11-2.3.4.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393) [akka-actor_2.11-2.3.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.4.jar:na]
+Caused by: javax.persistence.PersistenceException: Query threw SQLException:Expression #1 of ORDER BY clause is not in SELECT list, references column 'erdd_dev7.t2.id' which is not in SELECT list; this is incompatible with DISTINCT 
+Bind values:[38] 
+Query was:
+select distinct t0.id c0, t0.titulo c1, t0.duracion c2, t0.elaboracion c3, t0.programaacad c4, t0.unidadaprendizaje c5, t0.sinopsis c6, t0.formatoentregaotro c7, t0.url c8, t0.numcontrol c9, t0.auditinsert c10, t0.auditlastupdate c11, t0.areaconocimiento_id c12, t0.niveleducativo_id c13, t0.unidadmedida_id c14, t0.unidadacademica_id c15, t0.coberturacontenido_id c16, t0.modalidad_id c17, t0.version_id c18, t4.id c19, t0.formatoentrega_id c20, t0.estado_id c21, t5.id c22, t6.id c23, t7.id c24, t8.id c25, t9.id c26, t10.id c27, t11.id c28, t3.id c29, t3.usuario c30, t3.password c31, t3.auditinsert c32, t3.auditlastupdate c33, t3.recurso_id c34 from recurso t0 left outer join versionanterior t4 on t4.recurso_id = t0.id  left outer join oficio t5 on t5.recurso_id = t0.id  left outer join oficio_valoracion t6 on t6.recurso_id = t0.id  left outer join clasificacion t7 on t7.recurso_id = t0.id  left outer join evaluacion_fecha t8 on t8.recurso_id = t0.id  left outer join observacion_cancelacion t9 on t9.recurso_id = t0.id  left outer join recurso_calificacion t10 on t10.recurso_id = t0.id  left outer join encuesta_respuesta t11 on t11.recurso_id = t0.id  left outer join recursoenweb t3 on t3.recurso_id = t0.id  left outer join recurso_autor t1 on t1.recurso_id = t0.id  left outer join autorfuncion t2 on t2.id = t1.autorfuncion_id  where t0.id = ?  order by t2.id, t0.id 
+
+
+	at com.avaje.ebeaninternal.server.query.CQuery.createPersistenceException(CQuery.java:834) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.query.CQuery.createPersistenceException(CQuery.java:811) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.query.CQueryEngine.findMany(CQueryEngine.java:205) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.query.DefaultOrmQueryEngine.findMany(DefaultOrmQueryEngine.java:77) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.core.OrmQueryRequest.findList(OrmQueryRequest.java:263) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.core.DefaultServer.findList(DefaultServer.java:1502) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.core.DefaultServer.findUnique(DefaultServer.java:1272) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.querydefn.DefaultOrmQuery.findUnique(DefaultOrmQuery.java:908) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at classes.miWord.generarSolicitudEvaluacionWord(miWord.java:40) ~[classes/:na]
+	at controllers.RecursoWebController.imprimirSolicitudAceptadaWord(RecursoWebController.java:328) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at play.core.Router$HandlerInvokerFactory$$anon$4.resultCall(Router.scala:264) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.invocation(Router.scala:255) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:55) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.GlobalSettings$1.call(GlobalSettings.java:67) ~[play_2.11-2.3.7.jar:2.3.7]
+	at actions.Encabezados.call(Encabezados.java:60) ~[classes/:na]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$.apply(Future.scala:31) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$.apply(Future.scala:492) ~[scala-library-2.11.4.jar:na]
+	at play.core.j.JavaAction$class.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.apply(Router.scala:252) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:129) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:121) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	... 6 common frames omitted
+Caused by: java.sql.SQLException: Expression #1 of ORDER BY clause is not in SELECT list, references column 'erdd_dev7.t2.id' which is not in SELECT list; this is incompatible with DISTINCT
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:968) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.jolbox.bonecp.PreparedStatementHandle.executeQuery(PreparedStatementHandle.java:174) ~[bonecp-0.8.0.RELEASE.jar:na]
+	at com.avaje.ebeaninternal.server.query.CQuery.prepareBindExecuteQueryWithOption(CQuery.java:409) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.query.CQuery.prepareBindExecuteQuery(CQuery.java:368) ~[avaje-ebeanorm-3.3.4.jar:na]
+	at com.avaje.ebeaninternal.server.query.CQueryEngine.findMany(CQueryEngine.java:165) ~[avaje-ebeanorm-3.3.4.jar:na]
+	... 47 common frames omitted
+
+2025-04-16 13:06:07,264 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:06:07,502 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:08:47,342 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:08:47,570 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:10:48,412 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:10:48,646 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:13:13,637 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:13:13,842 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:14:23,695 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:14:23,922 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:16:04,689 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:16:04,965 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:21:12,137 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:21:12,375 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:21:12,481 - [ERROR] - from play in play-akka.actor.default-dispatcher-110 
+Cannot invoke the action, eventually got an error: java.lang.NullPointerException
+
+2025-04-16 13:21:12,486 - [ERROR] - from application in play-akka.actor.default-dispatcher-110 
+
+
+! @896681blf - Internal server error, for (GET) [/aceptadaWord] ->
+
+play.api.Application$$anon$1: Execution exception[[NullPointerException: null]]
+	at play.api.Application$class.handleError(Application.scala:296) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.DefaultApplication.handleError(Application.scala:402) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3$$anonfun$applyOrElse$4.apply(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:320) [play_2.11-2.3.7.jar:2.3.7]
+	at play.core.server.netty.PlayDefaultUpstreamHandler$$anonfun$3.applyOrElse(PlayDefaultUpstreamHandler.scala:316) [play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:344) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:343) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:32) [scala-library-2.11.4.jar:na]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:40) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:248) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.Promise$class.complete(Promise.scala:55) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:153) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:23) [scala-library-2.11.4.jar:na]
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:41) [akka-actor_2.11-2.3.4.jar:na]
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:393) [akka-actor_2.11-2.3.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) [scala-library-2.11.4.jar:na]
+Caused by: java.lang.NullPointerException: null
+	at classes.miWord.generarSolicitudEvaluacionWord(miWord.java:198) ~[classes/:na]
+	at controllers.RecursoWebController.imprimirSolicitudAceptadaWord(RecursoWebController.java:328) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at Routes$$anonfun$routes$1$$anonfun$applyOrElse$36$$anonfun$apply$36.apply(routes_routing.scala:2195) ~[classes/:na]
+	at play.core.Router$HandlerInvokerFactory$$anon$4.resultCall(Router.scala:264) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.invocation(Router.scala:255) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anon$1.call(JavaAction.scala:55) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.GlobalSettings$1.call(GlobalSettings.java:67) ~[play_2.11-2.3.7.jar:2.3.7]
+	at actions.Encabezados.call(Encabezados.java:60) ~[classes/:na]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.JavaAction$$anonfun$11.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at play.core.j.HttpExecutionContext$$anon$2.run(HttpExecutionContext.scala:40) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:46) [play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.core.j.HttpExecutionContext.execute(HttpExecutionContext.scala:32) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$.apply(Future.scala:31) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.Future$.apply(Future.scala:492) ~[scala-library-2.11.4.jar:na]
+	at play.core.j.JavaAction$class.apply(JavaAction.scala:82) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.Router$HandlerInvokerFactory$JavaActionInvokerFactory$$anon$15$$anon$1.apply(Router.scala:252) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4$$anonfun$apply$5.apply(Action.scala:130) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:129) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1$$anonfun$apply$4.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.Option.map(Option.scala:145) [scala-library-2.11.4.jar:na]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:128) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.mvc.Action$$anonfun$apply$1.apply(Action.scala:121) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$mapM$1.apply(Iteratee.scala:483) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMapM$1.apply(Iteratee.scala:519) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at play.api.libs.iteratee.Iteratee$$anonfun$flatMap$1$$anonfun$apply$14.apply(Iteratee.scala:496) ~[play-iteratees_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) [scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) [scala-library-2.11.4.jar:na]
+	... 6 common frames omitted
+
+2025-04-16 13:24:51,241 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:24:51,472 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:25:55,746 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:25:56,007 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:26:27,238 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:26:27,521 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:30:16,504 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:30:17,251 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:34:41,983 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:34:42,233 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:36:11,900 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:36:12,171 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:37:40,879 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:37:41,121 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:40:14,484 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:40:14,705 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:44:03,368 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:44:03,526 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:46:26,703 - [ERROR] - from application in New I/O worker #4 
+
+
+! @8966b9fki - Internal server error, for (GET) [/recursowebAn?passActual=&claveAcceso=] ->
+
+play.PlayExceptions$CompilationException: Compilation error[value imprimirSolicitudAceptadaWord2 is not a member of object controllers.RecursoWebController]
+	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
+	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
+	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
+	at play.PlayReloader$$anon$1$$anonfun$play$PlayReloader$$anon$$taskFailureHandler$1.apply(PlayReloader.scala:235) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$play$PlayReloader$$anon$$taskFailureHandler$1.apply(PlayReloader.scala:230) ~[na:na]
+	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
+	at play.PlayReloader$$anon$1.play$PlayReloader$$anon$$taskFailureHandler(PlayReloader.scala:230) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:90) ~[na:na]
+	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:90) ~[na:na]
+	at scala.util.Either$LeftProjection.map(Either.scala:377) ~[scala-library-2.11.4.jar:na]
+	at play.PlayReloader$$anon$1.reload(PlayReloader.scala:90) ~[na:na]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:122) ~[play_2.11-2.3.7.jar:2.3.7]
+	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:120) ~[play_2.11-2.3.7.jar:2.3.7]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1361) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
+
+2025-04-16 13:47:23,212 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:47:23,365 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:49:15,858 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:49:16,005 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:49:51,119 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:49:51,264 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:50:23,716 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:50:23,858 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2025-04-16 13:51:00,337 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-04-16 13:51:00,488 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 

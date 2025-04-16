@@ -53,6 +53,7 @@ GET     /recursoweb/:id                controllers.RecursoWebController.mastered
 GET     /recursowebAn                  controllers.RecursoWebController.mastereditAn()
 POST    /recursoweb/:id                 controllers.RecursoWebController.masterupdate(id: Long)
 GET     /aceptada         				controllers.RecursoWebController.imprimirSolicitudAceptada()
+GET     /aceptadaWord         			controllers.RecursoWebController.imprimirSolicitudAceptadaWord()
 GET		/verDatosEnviados				controllers.RecursoWebController.verDatosEnviados()
 
 
@@ -329,6 +330,11 @@ GET		/reporteEvaluacion						controllers.RecursoWebController.reporteEvaluacion(
 
 
 GET		/admin/reporteEvaluacion/:id			controllers.RecursoevaluadorController.reporteEvaluacion(id:Long)
+GET		/admin/reporteEvaluacionWord			controllers.RecursoevaluadorController.reporteEvaluacionWord
+GET		/admin/conEncabezado			controllers.RecursoevaluadorController.conEncabezado
+GET		/admin/conEncabezadoTabla			controllers.RecursoevaluadorController.conEncabezadoTabla
+
+
 
 GET		/dirigidoa								controllers.DirigidoaController.list()
 GET		/dirigidoa/create						controllers.DirigidoaController.create()

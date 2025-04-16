@@ -2,8 +2,8 @@ package controllers;
 
 import static play.data.Form.form;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -20,12 +20,56 @@ import com.avaje.ebean.annotation.Transactional;
 import com.itextpdf.text.*;
 import classes.miCorreo;
 import classes.miPdf;
+import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import controllers.util.ControladorSeguroCoordinador;
 import models.*;
 import models.Version;
+
+
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
+import org.apache.poi.xwpf.usermodel.*;
+import org.apache.poi.util.Units;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.FileInputStream;
+
+
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFHeader;
+//import org.apache.poi.xwpf.usermodel.XWPFHeaderFooterPolicy;
+//import org.apache.poi.xwpf.usermodel.HeaderFooterType;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+
+
+
+
+import org.apache.poi.xwpf.usermodel.*;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
+import org.apache.poi.util.Units;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.FileInputStream;
+
+
+import org.apache.poi.util.Units;
+import org.apache.poi.xwpf.usermodel.*;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
+
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFHeader;
+import org.apache.poi.util.Units;
+import java.io.*;
+
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.ebean.Model;
@@ -1489,7 +1533,317 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
     }
 */
 
+    /*   version 3.9
+    public static Result reporteEvaluacionWord() throws IOException {
+        // Crear un nuevo documento
+        XWPFDocument documento = new XWPFDocument();
 
+        // Crear un párrafo
+        XWPFParagraph parrafo = documento.createParagraph();
+        XWPFRun run = parrafo.createRun();
+        run.setText("Documento creado con Apache POI 3.9");
+        run.setBold(true);
+        run.setFontSize(14);
+
+        // Crear una tabla
+        XWPFTable tabla = documento.createTable(3, 2);
+
+        // Llenar la tabla
+        tabla.getRow(0).getCell(0).setText("Producto");
+        tabla.getRow(0).getCell(1).setText("Precio");
+        tabla.getRow(1).getCell(0).setText("Laptop");
+        tabla.getRow(1).getCell(1).setText("$1200");
+        tabla.getRow(2).getCell(0).setText("Teléfono");
+        tabla.getRow(2).getCell(1).setText("$500");
+
+        // Guardar el documento
+        FileOutputStream out = new FileOutputStream("documento_v3.9.docx");
+        documento.write(out);
+        out.close();
+
+        return ok ("Documento Word (.docx) creado exitosamente!");
+    }
+    */
+
+
+    private static boolean checkClass(String className) {
+        try {
+            Class.forName(className);
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+
+    // version 5.4.1
+    public static Result reporteEvaluacionWord() throws IOException {
+        try (XWPFDocument doc = new XWPFDocument()) {
+
+            System.out.println("POI Core version: " + org.apache.poi.Version.getVersion());
+            System.out.println("Clase HeaderFooterPolicy disponible: " +
+                    (checkClass("org.apache.poi.xwpf.usermodel.XWPFHeaderFooterPolicy") ? "SÍ" : "NO"));
+
+
+            // Estilo para título
+            XWPFParagraph titlePara = doc.createParagraph();
+            titlePara.setAlignment(ParagraphAlignment.CENTER);
+
+            XWPFRun titleRun = titlePara.createRun();
+            titleRun.setText("Informe Anual 2023");
+            titleRun.setColor("2F5496");
+            titleRun.setFontSize(20);
+            titleRun.setBold(true);
+
+            // Párrafo normal con sangría
+            XWPFParagraph normalPara = doc.createParagraph();
+            normalPara.setIndentationLeft(400); // 400 twips = 0.25 pulgadas
+
+            XWPFRun normalRun = normalPara.createRun();
+            normalRun.setText("Este documento fue generado automáticamente usando Apache POI 5.4.1.");
+            normalRun.setFontSize(12);
+
+            // Tabla con bordes personalizados
+            XWPFTable table = doc.createTable(4, 3);
+
+            // Estilo de borde para la tabla
+            table.setInsideHBorder(XWPFTable.XWPFBorderType.SINGLE, 4, 0, "000000");
+            table.setInsideVBorder(XWPFTable.XWPFBorderType.SINGLE, 4, 0, "000000");
+            //table.setBottomBorder(XWPFTable.XWPFBorderType.SINGLE, 8, 0, "2F5496");
+
+            // Encabezados de tabla
+            table.getRow(0).getCell(0).setText("Mes");
+            table.getRow(0).getCell(1).setText("Ventas");
+            table.getRow(0).getCell(2).setText("Crecimiento");
+
+            // Datos de la tabla
+            String[][] data = {
+                    {"Enero", "$15,000", "5%"},
+                    {"Febrero", "$18,500", "23%"},
+                    {"Marzo", "$21,200", "15%"}
+            };
+
+            for (int i = 0; i < data.length; i++) {
+                for (int j = 0; j < data[i].length; j++) {
+                    table.getRow(i+1).getCell(j).setText(data[i][j]);
+                }
+            }
+
+            // Guardar documento
+            try (FileOutputStream out = new FileOutputStream("Informe_2023.docx")) {
+                doc.write(out);
+            }
+
+            return ok ("Documento Word moderno creado con éxito (Informe_2023.docx)");
+        }
+    }
+
+
+    public static Result conEncabezado() throws IOException, BadElementException {
+        Image imgUPEV = null;
+
+        imgUPEV = Image.getInstance(ReporteLogo.find.byId(1L).getContenido());
+
+        byte[] x = ReporteLogo.find.byId(1L).getContenido();
+        InputStream is = new ByteArrayInputStream(x);
+
+        try (XWPFDocument doc = new XWPFDocument()) {
+
+            // 2. Configurar la política de encabezados (IMPORTANTE para POI 5.4.1)
+            CTSectPr sectPr = doc.getDocument().getBody().isSetSectPr() ?
+                    doc.getDocument().getBody().getSectPr() :
+                    doc.getDocument().getBody().addNewSectPr();
+            XWPFHeaderFooterPolicy headerFooterPolicy = new XWPFHeaderFooterPolicy(doc, sectPr);
+
+            // 3. Crear el encabezado DEFAULT
+            XWPFHeader header = headerFooterPolicy.createHeader(XWPFHeaderFooterPolicy.DEFAULT);
+
+            // 4. Crear párrafo en el encabezado
+            XWPFParagraph headerParagraph = header.createParagraph();
+            headerParagraph.setAlignment(ParagraphAlignment.RIGHT);
+
+            // 5. Agregar texto al encabezado
+            XWPFRun headerRun = headerParagraph.createRun();
+            headerRun.setText("Mi Compañía - ");
+
+            // 6. Agregar imagen al encabezado
+            try (FileInputStream imageStream = new FileInputStream("/home/eduardo/Imágenes/logoDEVReporte.png")) {
+
+
+                // Crear una tabla
+                XWPFTable tabla = doc.createTable(1, 3);
+                tabla.getRow(0).getCell(0).setText("Nombre");
+                tabla.getRow(0).getCell(1).setText("Edad");
+                tabla.getRow(0).getCell(2).setText("Juan");
+
+
+
+                headerRun.addPicture(
+                        is,
+                         XWPFDocument.PICTURE_TYPE_PNG,
+                        "logoDEVReporte.png",
+                        //Units.toEMU(50),  // Ancho (50 puntos ≈ 1.76 cm)
+                        //Units.toEMU(25)   // Alto (25 puntos ≈ 0.88 cm)
+                        Units.pixelToEMU(58),
+                        Units.pixelToEMU(52)
+                );
+            } catch (IOException e) {
+                System.out.println("Excepción "+e.getMessage());
+                throw new RuntimeException(e);
+            } catch (InvalidFormatException e) {
+                throw new RuntimeException(e);
+            }
+
+            // 7. Agregar contenido al cuerpo del documento
+            XWPFParagraph bodyParagraph = doc.createParagraph();
+            XWPFRun bodyRun = bodyParagraph.createRun();
+            bodyRun.setText("Este documento demuestra cómo agregar imágenes a encabezados en POI 5.4.1");
+            bodyRun.addBreak();
+
+            bodyRun.addCarriageReturn();
+            bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();
+            bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();bodyRun.addCarriageReturn();
+
+            bodyRun.setText("Funciona correctamente con la versión " +
+                    org.apache.poi.Version.getVersion());
+
+            // 8. Guardar el documento
+            try (FileOutputStream out = new FileOutputStream("DocumentoConEncabezado.docx")) {
+                doc.write(out);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            return ok("Documento creado exitosamente con POI " +
+                    org.apache.poi.Version.getVersion());
+        }
+    }
+
+
+
+
+    public static Result conEncabezadoTabla() throws IOException {
+        try (XWPFDocument doc = new XWPFDocument()) {
+            // 1. Configurar política de encabezados
+            CTSectPr sectPr = doc.getDocument().getBody().isSetSectPr()
+                    ? doc.getDocument().getBody().getSectPr()
+                    : doc.getDocument().getBody().addNewSectPr();
+            XWPFHeaderFooterPolicy policy = new XWPFHeaderFooterPolicy(doc, sectPr);
+
+            // 2. Crear encabezado DEFAULT
+            XWPFHeader header = policy.createHeader(XWPFHeaderFooterPolicy.DEFAULT);
+
+            // 3. Crear tabla en el encabezado (1 fila, 3 columnas)
+            XWPFTable table = header.createTable(1, 3);
+
+            // 4. Configurar ancho de la tabla (100% del ancho de página)
+            table.setWidth("100%");
+
+            // 5. Configurar ancho de columnas
+            // Columna 1: 30%
+            //setColumnWidth(table, 0, "30%");
+            // Columna 2: 40%
+            //setColumnWidth(table, 1, "40%");
+            // Columna 3: 30%
+            //setColumnWidth(table, 2, "30%");
+
+            // 6. Configurar contenido de las celdas
+            // Celda 1: Logo
+            XWPFTableCell cell1 = table.getRow(0).getCell(0);
+            cell1.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+
+            byte[] bLogoDEV = ReporteLogo.find.byId(1L).getContenido();
+            InputStream isLogoDEV = new ByteArrayInputStream(bLogoDEV);
+
+            byte[] bEscudoIPN = ReporteLogo.find.byId(2L).getContenido();
+            InputStream isEscudoIPN = new ByteArrayInputStream(bEscudoIPN);
+            try {
+
+
+                XWPFParagraph p1 = cell1.addParagraph();
+                p1.setAlignment(ParagraphAlignment.LEFT);
+                XWPFRun r1 = p1.createRun();
+                // Agrega aquí tu imagen si es necesario
+                // r1.addPicture(...);
+
+                r1.addPicture(
+                        isEscudoIPN,
+                        XWPFDocument.PICTURE_TYPE_JPEG,
+                        "ipn-escudo.jpg",
+                        Units.pixelToEMU(65),
+                        Units.pixelToEMU(95)
+                );
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // Celda 2: Título
+            XWPFTableCell cell2 = table.getRow(0).getCell(1);
+            cell2.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+            XWPFParagraph p2 = cell2.addParagraph();
+            p2.setAlignment(ParagraphAlignment.CENTER);
+            XWPFRun r2 = p2.createRun();
+
+            XWPFParagraph p1C2 = doc.createParagraph();
+
+            p1C2.createRun().setText("INSTITUTO POLITÉCNICO NACIONAL");
+
+
+            r2.setText("Reporte de Evaluación Técnico Pedagógica");
+            r2.setBold(true);
+            r2.setFontSize(14);
+
+            // Celda 3: Fecha
+            XWPFTableCell cell3 = table.getRow(0).getCell(2);
+            cell3.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+            XWPFParagraph p3 = cell3.addParagraph();
+            p3.setAlignment(ParagraphAlignment.RIGHT);
+            XWPFRun r3 = p3.createRun();
+            //r3.setText("Fecha: " + java.time.LocalDate.now());
+            //r3.setItalic(true);
+            r3.addPicture(
+                    isLogoDEV,
+                    XWPFDocument.PICTURE_TYPE_PNG,
+                    "logoDEVReporte.png",
+                    Units.pixelToEMU(58),
+                    Units.pixelToEMU(52)
+            );
+
+            // 7. Agregar contenido al cuerpo del documento
+            XWPFParagraph bodyPara = doc.createParagraph();
+            bodyPara.createRun().setText("Este es el contenido principal del documento.");
+            bodyPara.createRun().addBreak();
+            bodyPara.createRun().setText("El encabezado contiene una tabla de 3 columnas.");
+
+            // 8. Guardar documento
+            try (FileOutputStream out = new FileOutputStream("DocumentoConTablaEnEncabezadoJAJA.docx")) {
+                doc.write(out);
+                System.out.println("Documento creado exitosamente con tabla en el encabezado");
+            }
+        } catch (InvalidFormatException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ok("ok");
+    }
+
+
+    //Método auxiliar para configurar ancho de columnas
+    private static void setColumnWidth(XWPFTable table, int colIndex, String width) {
+        CTTblWidth tblWidth = CTTblWidth.Factory.newInstance();
+        tblWidth.setType(STTblWidth.PCT);
+        tblWidth.setW(new BigInteger("5000")); // Valor porcentual (5000 = 50%)
+
+        if (width.endsWith("%")) {
+            int percent = Integer.parseInt(width.substring(0, width.length() - 1));
+            tblWidth.setW(BigInteger.valueOf(percent * 50)); // Conversión a unidades de Word
+        }
+
+        table.getCTTbl().getTblGrid().getGridColArray(colIndex).setW(tblWidth.getW());
+    }
 
 
 

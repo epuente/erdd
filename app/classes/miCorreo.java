@@ -51,6 +51,12 @@ public class miCorreo extends Thread{
     }
 
     public void enviar(){
+        // ¿Esta activa la cuenta de salida de correo del sistema?
+        Ctacorreo cc =Ctacorreo.find.where().eq("activo", true).findUnique();
+
+        if (cc==null)
+            return;
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy kk:mm:ss");
 
 		//Ctacorreo cc =Ctacorreo.find.where().eq("activo", true).findUnique();

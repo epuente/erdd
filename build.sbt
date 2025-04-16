@@ -19,8 +19,10 @@ libraryDependencies ++= Seq(
   "com.feth" %% "play-authenticate" % "0.6.8",
   "org.json" % "org.json" % "chargebee-1.0",
 
-  "org.apache.poi" % "poi" % "3.9",
-  "org.apache.poi" % "poi-ooxml" % "3.9",
+  //"org.apache.poi" % "poi" % "3.9",
+  //"org.apache.poi" % "poi-ooxml" % "3.9",
+  "org.apache.poi" % "poi" % "5.4.1",
+  "org.apache.poi" % "poi-ooxml" % "5.4.1",
 
   "com.itextpdf" % "itextpdf" % "5.5.8",
   "com.itextpdf.tool" % "xmlworker" % "5.4.4",
