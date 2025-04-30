@@ -5,5 +5,7 @@ PlayFramework version 2.3.7
 
 Java 8
 
+Mysql 8.0.41
+
 iTextPdf version 5.5.8
  

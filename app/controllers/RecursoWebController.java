@@ -322,6 +322,7 @@ public class RecursoWebController extends ControladorDefault {
 
 
     public static Result imprimirSolicitudAceptadaWord()throws DocumentException, IOException{
+        System.out.println("generando solicitud en formato word (desde RecursoWebController.imprimirSolicitudAceptadaWord...)");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         miWord miword = new miWord(Long.parseLong(session("idRecurso")));
         miword.baos = baos;

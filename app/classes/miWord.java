@@ -12,6 +12,7 @@ import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
+import static org.openxmlformats.schemas.wordprocessingml.x2006.main.STBorder.*;
 import play.mvc.Result;
 
 import java.io.*;
@@ -64,16 +65,20 @@ public class miWord {
             // 4. Configurar ancho de la tabla (100% del ancho de página)
             tableEnc.setWidth("100%");
 
-            // 5. Configurar ancho de columnas
-            // Columna 1: 30%
-            //setColumnWidth(table, 0, "30%");
-            // Columna 2: 40%
-            //setColumnWidth(table, 1, "40%");
-            // Columna 3: 30%
-            //setColumnWidth(table, 2, "30%");
+            // Quitar borde a la tabla del header
+            {
+                CTTblBorders borders = tableEnc.getCTTbl().getTblPr().addNewTblBorders();
+                for (CTBorder border : new CTBorder[]{borders.addNewTop(), borders.addNewBottom(),
+                        borders.addNewLeft(), borders.addNewRight(),
+                        borders.addNewInsideH(), borders.addNewInsideV()}) {
+                    border.setVal(STBorder.Enum.forInt(INT_NONE));
+                }
+            }
+
+
 
             // 6. Configurar contenido de las celdas
-            // Celda 1: Logo
+            // Celda 1: LogoIPN
             XWPFTableCell cell1 = tableEnc.getRow(0).getCell(0);
             cell1.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
 
@@ -83,14 +88,9 @@ public class miWord {
             byte[] bEscudoIPN = ReporteLogo.find.byId(2L).getContenido();
             InputStream isEscudoIPN = new ByteArrayInputStream(bEscudoIPN);
             try {
-
-
                 XWPFParagraph p1 = cell1.addParagraph();
                 p1.setAlignment(ParagraphAlignment.LEFT);
                 XWPFRun r1 = p1.createRun();
-                // Agrega aquí tu imagen si es necesario
-                // r1.addPicture(...);
-
                 r1.addPicture(
                         isEscudoIPN,
                         XWPFDocument.PICTURE_TYPE_JPEG,
@@ -98,36 +98,48 @@ public class miWord {
                         Units.pixelToEMU(65),
                         Units.pixelToEMU(95)
                 );
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
+            // Configurar el ancho de las columnas de la tabla del encabezado
+            // Obtener el objeto CTTbl (representación XML de la tabla)
+            CTTbl ctTbl = tableEnc.getCTTbl();
+            ctTbl.addNewTblPr();
+            if (!ctTbl.getTblPr().isSetTblLayout()) {
+                ctTbl.getTblPr().addNewTblLayout();
+            }
+            // Configurar los anchos de las columnas
+            CTTblGrid grid = ctTbl.addNewTblGrid();
+            // Columna 1: 20%
+            grid.addNewGridCol().setW(BigInteger.valueOf(2000));
+            // Columna 2: 60%
+            grid.addNewGridCol().setW(BigInteger.valueOf(6000));
+            // Columna 3: 20%
+            grid.addNewGridCol().setW(BigInteger.valueOf(2000));
+
             // Celda 2: Título
             XWPFTableCell cell2 = tableEnc.getRow(0).getCell(1);
-            cell2.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+            cell2.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.TOP);
             XWPFParagraph p2 = cell2.addParagraph();
             p2.setAlignment(ParagraphAlignment.CENTER);
             XWPFRun r2 = p2.createRun();
-
-            XWPFParagraph p1C2 = doc.createParagraph();
-
-            p1C2.createRun().setText("INSTITUTO POLITÉCNICO NACIONAL");
-
-
-            r2.setText("Reporte de Evaluación Técnico Pedagógica");
+            r2.setText("INSTITUTO POLITÉCNICO NACIONAL");
+            r2.addBreak();
+            r2.setText("SECRETARÍA ACADÉMICA");
+            r2.addBreak();
+            r2.setText("DIRECCIÓN DE EDUCACIÓN VIRTUAL");
+            r2.addBreak();
+            r2.setText("Cédula de Solicitud de Evaluación Técnico-Pedagógica de Recurso Didáctico Digital (CESOE)");
             r2.setBold(true);
             r2.setFontSize(9);
 
-            // Celda 3: Fecha
+            // Celda 3: logoDEV
             XWPFTableCell cell3 = tableEnc.getRow(0).getCell(2);
             cell3.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
             XWPFParagraph p3 = cell3.addParagraph();
             p3.setAlignment(ParagraphAlignment.RIGHT);
             XWPFRun r3 = p3.createRun();
-            //r3.setText("Fecha: " + java.time.LocalDate.now());
-            //r3.setItalic(true);
             r3.addPicture(
                     isLogoDEV,
                     XWPFDocument.PICTURE_TYPE_PNG,
@@ -135,29 +147,6 @@ public class miWord {
                     Units.pixelToEMU(58),
                     Units.pixelToEMU(52)
             );
-
-            // 7. Agregar contenido al cuerpo del documento
-            /*
-            XWPFParagraph bodyPara = doc.createParagraph();
-            bodyPara.createRun().setText("Este es el contenido principal del documento.");
-            bodyPara.createRun().setText("Funciona correctamente con la versión " +org.apache.poi.Version.getVersion());
-            bodyPara.createRun().addBreak();
-            bodyPara.createRun().setText("El encabezado contiene una tabla de 3 columnas.");
-             */
-
-            // Datos de identidad
-
-            // Crear título
-            /*
-            XWPFParagraph title = doc.createParagraph();
-            title.setAlignment(ParagraphAlignment.CENTER);
-            XWPFRun titleRun = title.createRun();
-            titleRun.setBold(true);
-            titleRun.setFontSize(14);
-            titleRun.setText("Tabla Dinámica 12 Columnas");
-             */
-
-
 
 
             // Crear tabla con 12 columnas
@@ -167,62 +156,43 @@ public class miWord {
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 12; j++) {
                     // Luego obtienes el párrafo y el run para modificar el formato
-                    System.out.println("R"+i+" C"+j);
+                    //System.out.println("R"+i+" C"+j);
                     XWPFTableCell cell = table.getRow(i).getCell(j);
-                    XWPFParagraph paragraph = cell.getParagraphs().get(0); // Obtener el primer párrafo
-
-// Asegurarte de que hay al menos un Run (puede haber sido creado por setText)
+                    XWPFParagraph paragraph = cell.getParagraphs().get(0);
                     if (!paragraph.getRuns().isEmpty()) {
                         XWPFRun run = paragraph.getRuns().get(0);
-                        run.setFontSize(9); // Cambiar el tamaño de fuente aquí (12 puntos en este ejemplo)
-                        run.setFontFamily("Arial"); // Opcional: cambiar tipo de letra
+                        run.setFontSize(9);
+                        run.setFontFamily("Arial");
                     } else {
-                        // Si no hay Run, crear uno nuevo
                         XWPFRun newRun = paragraph.createRun();
-                        // newRun.setText("Unidad académica");
                         newRun.setFontSize(9);
                     }
                 }
             }
 
-
-
             // Configurar encabezado gris
             XWPFTableRow headerRow = table.getRow(0);
-            //CTShd headerShading = headerRow.getCtRow().addNewTrPr().addNewShd();
-            //headerShading.setFill("D3D3D3");
-
-            // Llenar encabezados
-            for (int i = 0; i < 12; i++) {
-                //setCell(headerRow.getCell(i), "Col " + i, true);
-            }
-
             setCell(headerRow.getCell(0), "Datos de identidad",  true);
-            //setCellTextWithFont(table.getRow(0).getCell(0), "Datos de identidad", tamFuente);
             mergeCellHorizontally(table, 0, 0, 11);
 
-
-            // Datos de ejemplo (lista de objetos CeldaData)
-            java.util.List<CeldaData> fila1 = new ArrayList<>();
-            java.util.List<CeldaData> fila2 = new ArrayList<>();
-            //fila1.add(new CeldaData("Dato A", 0, 0));  // Celda individual col 0
-            //fila1.add(new CeldaData("Combinado B-C", 1, 2)); // Combina cols 1-2
-
-
-            setCellTextWithFont(table.getRow(1).getCell(0), "Título", tamFuente);
-            setCellTextWithFont(table.getRow(1).getCell(1), r.titulo, tamFuente);
-            mergeCellHorizontally(table, 1, 0, 0);
-            mergeCellHorizontally(table, 1, 1, 11);
-
-            //table.getRow(1).getCell(4).setText(r.titulo);
+            setCellTextWithFont(table.getRow(1).getCell(0), "Título del recurso", tamFuente);
+            setCellTextWithFont(table.getRow(1).getCell(3), r.titulo, tamFuente);
+            mergeCellHorizontally(table, 1, 0, 2);
+            mergeCellHorizontally(table, 1, 3, 11);
 
             setCellTextWithFont(table.getRow(2).getCell(0), "Área del conocimiento", tamFuente);
-            setCellTextWithFont(table.getRow(2).getCell(4),  r.areaconocimiento.descripcion, tamFuente);
+            setCellTextWithFont(table.getRow(2).getCell(3),  r.areaconocimiento.descripcion, tamFuente);
+            mergeCellHorizontally(table, 2, 0, 2);
+            mergeCellHorizontally(table, 2, 3, 11);
 
             setCellTextWithFont(table.getRow(3).getCell(0), "Nivel ", tamFuente );
             setCellTextWithFont(table.getRow(3).getCell(2),  r.niveleducativo.descripcion, tamFuente);
             setCellTextWithFont(table.getRow(3).getCell(5), "Duración en "+r.unidadmedida.descripcion.toLowerCase(), tamFuente);
             setCellTextWithFont(table.getRow(3).getCell(9) ,r.duracion, tamFuente);
+            mergeCellHorizontally(table, 3, 0, 1);
+            mergeCellHorizontally(table, 3, 2, 4);
+            mergeCellHorizontally(table, 3, 5, 8);
+            mergeCellHorizontally(table, 3, 9, 11);
 
             setCellTextWithFont(table.getRow(4).getCell(0), "Unidad académica", tamFuente);
             setCellTextWithFont(table.getRow(4).getCell(2), r.unidadacademica.nombre, tamFuente);
@@ -234,9 +204,6 @@ public class miWord {
             mergeCellHorizontally(table, 4, 2, 6);
             mergeCellHorizontally(table, 4, 7, 9);
             mergeCellHorizontally(table, 4, 10, 11);
-
-
-
 
             setCellTextWithFont(table.getRow(5).getCell(0), "Programa académico", tamFuente);
             setCellTextWithFont(table.getRow(5).getCell(3),  r.programaacad, tamFuente);
@@ -281,7 +248,7 @@ public class miWord {
             if (!r.recursosenweb.isEmpty()){
                 XWPFTableRow row = table.createRow();
                 int numRenglones = table.getNumberOfRows()-1;
-                System.out.println("nr "+numRenglones);
+                //System.out.println("nr "+numRenglones);
                 setCellTextWithFont(table.getRow(numRenglones).getCell(0), "Usuario", tamFuente);
                 setCellTextWithFont(table.getRow(numRenglones).getCell(3), r.recursosenweb.get(0).usuario, tamFuente);
                 setCellTextWithFont(table.getRow(numRenglones).getCell(6), "Clave de acceso", tamFuente);
@@ -291,32 +258,6 @@ public class miWord {
                 mergeCellHorizontally(table, numRenglones, 6, 8);
                 mergeCellHorizontally(table, numRenglones, 9, 11);
             }
-
-
-
-
-            // Combinacion de celdas
-
-
-
-            mergeCellHorizontally(table, 2, 0, 3);
-            mergeCellHorizontally(table, 2, 4, 11);
-
-            // nivel, duración
-            mergeCellHorizontally(table, 3, 0, 1);
-            mergeCellHorizontally(table, 3, 2, 4);
-            mergeCellHorizontally(table, 3, 5, 8);
-            mergeCellHorizontally(table, 3, 9, 11);
-
-            // Unidad académica, fecha de  elaboración
-
-
-            // Programa académico
-
-
-            // Modalidad, versión
-
-
 
             // Establecer el color del borde
             CTTblBorders borders = table.getCTTbl().getTblPr().getTblBorders();
@@ -332,28 +273,7 @@ public class miWord {
                 for ( XWPFTableCell laCelda : elRenglonr.getTableCells()){
                     laCelda.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
                 }
-
             }
-
-
-            /*
-            fila1.add(new CeldaData("Dato D", 3, 3));  // Celda individual col 3
-            fila1.add(new CeldaData("Gran combinación", 4, 7)); // Combina cols 4-7
-            fila1.add(new CeldaData("Dato H", 8, 8));  // Celda individual col 8
-            fila1.add(new CeldaData("Final", 9, 11)); // Combina cols 9-11
-
-            java.util.List<CeldaData> fila2 = new ArrayList<>();
-            fila2.add(new CeldaData("X", 0, 2));  // Combina cols 0-2
-            fila2.add(new CeldaData("Y", 3, 5));  // Combina cols 3-5
-            fila2.add(new CeldaData("Z", 6, 11)); // Combina cols 6-11
-
-             */
-
-            // Agregar filas a la tabla
-            //addDynamicRow(table, fila1);
-            //addDynamicRow(table, fila2);
-
-
 
 
             // TABLA AUTORES POR FUNCION
@@ -387,11 +307,6 @@ public class miWord {
                 //CTShd headerShading = headerRow.getCtRow().addNewTrPr().addNewShd();
                 //headerShading.setFill("D3D3D3");
 
-                // Llenar encabezados
-                for (int i = 0; i < 12; i++) {
-                   // setCell(headerRowAF.getCell(i), "Col " + i, true);
-                }
-
                 setCell(headerRowAF.getCell(0), "Autores por función",  true);
                 mergeCellHorizontally(tableAF, 0, 0, 11);
 
@@ -420,7 +335,6 @@ public class miWord {
                     XWPFRun run = paragraph.createRun();
                     run.addBreak();
 
-
                     mergeCellHorizontally(tableAF, renglon, 0, 11);
                 }
                 // Establecer el color del borde
@@ -437,13 +351,8 @@ public class miWord {
                     for ( XWPFTableCell laCelda : elRenglonr.getTableCells()){
                         laCelda.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
                     }
-
                 }
-
             }
-
-
-
 
             // 8. Guardar documento
             try (FileOutputStream out = new FileOutputStream("DocumentoConTablaEnEncabezadoJAJA.docx")) {
@@ -458,12 +367,6 @@ public class miWord {
         } catch (InvalidFormatException e) {
             throw new RuntimeException(e);
         }
-
-
-
-
-
-
         //return ok("ok");
     }
 

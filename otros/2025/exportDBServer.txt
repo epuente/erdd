@@ -1,0 +1,88 @@
+Crear usuario y DB
+------------------
+sudo mysql -u root -p
+
+CREATE USER 'erdd'@'localhost' IDENTIFIED BY 'dberdd2024';
+
+CREATE DATABASE erdd DEFAULT CHARACTER SET latin1;
+grant all on erdd.* to erdd@localhost;
+grant super on *.* to erdd@localhost;
+FLUSH PRIVILEGES;
+
+
+Export para crear DB en el server
+------------------------------------
+Con CREATE DATABASE, DROP TABLE IF EXISTS, CREATE TABLE
+mysqldump -u erdd -p erdd_dev6 --ignore-table=erdd_dev6.play_evolutions --routines=false --no-tablespaces --complete-insert --skip-triggers> ~/dumps/erdd_dev6Completo_20250429.sql
+
+
+
+Importar DB
+----------------
+Para cambiar de erdd_dev6 a erdd
+sed -i 's/erdd_dev6/erdd/g' ~/dumps/erdd_dev6Completo_20250429.sql
+
+SE RESTAURA CON
+mysql -u erdd -p erdd < ~/dumps/erdd_dev6Completo_20250429.sql
+
+
+Query para generar los triggers
+-------------------------------
+sudo mysql -u erdd -p
+use erdd;
+
+
+
+SELECT
+	'DELIMITER ;;'
+UNION
+SELECT
+		concat('CREATE TRIGGER ',table_name
+			,'_BEFORE_INSERT'
+			,' BEFORE INSERT ON ',table_name,' FOR EACH ROW BEGIN  if (new.auditinsert is null) then     set new.auditinsert = current_timestamp();   end if; END;;')
+FROM information_schema.tables
+where table_schema = 'erdd' and table_name!='recurso'
+UNION
+SELECT
+		concat('CREATE TRIGGER ',table_name
+		,'_BEFORE_UPDATE',' BEFORE UPDATE ON ',table_name,' FOR EACH ROW BEGIN  set new.auditlastupdate = current_timestamp(); END;;')
+FROM information_schema.tables
+where table_schema = 'erdd'
+UNION
+SELECT
+	'DELIMITER ;';
+
+El resultado es un query que genera los triggers para cada tabla del esquema (así se generó el archivo triggersServer.sh)  .
+
+Los siguientes 3 triggers son de la tabla recurso que ademas de actualizar los campos de auditoria, agregan registreos a la tabla historialestado y el trigger 'recurso_BEFORE_INSERT' genera el número de control cada que se agrega un registro a la tabla 'recurso'
+
+
+DELIMITER ;;
+CREATE TRIGGER recurso_BEFORE_INSERT BEFORE INSERT ON recurso
+FOR EACH ROW
+BEGIN
+    DECLARE auxNC VARCHAR(255);
+    DECLARE existe BOOLEAN;
+    ciclo:
+        REPEAT
+            SET auxNC = CONV(FLOOR(RAND() * 99999999999999), 20, 36);
+            SELECT COUNT(numcontrol) INTO existe FROM recurso WHERE numcontrol = auxNC;
+        UNTIL existe = 0
+        END REPEAT ciclo;
+    SET new.numcontrol = auxNC;
+END;;
+DELIMITER ;
+
+
+DELIMITER ;;
+CREATE TRIGGER recurso_AFTER_INSERT AFTER INSERT ON recurso FOR EACH ROW BEGIN
+	insert into historialestado values (null, new.id, new.estado_id, null,now());
+END;;
+DELIMITER ;
+
+
+DELIMITER ;;
+CREATE TRIGGER recurso_AFTER_UPDATE AFTER UPDATE ON recurso FOR EACH ROW BEGIN
+	insert into historialestado values (null, new.id, new.estado_id, null,now());
+END;;
+DELIMITER ;

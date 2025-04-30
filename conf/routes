@@ -53,7 +53,7 @@ GET     /recursoweb/:id                controllers.RecursoWebController.mastered
 GET     /recursowebAn                  controllers.RecursoWebController.mastereditAn()
 POST    /recursoweb/:id                 controllers.RecursoWebController.masterupdate(id: Long)
 GET     /aceptada         				controllers.RecursoWebController.imprimirSolicitudAceptada()
-GET     /aceptadaWord         			controllers.RecursoWebController.imprimirSolicitudAceptadaWord()
+GET     /solicitudEvaRDD                controllers.RecursoWebController.imprimirSolicitudAceptadaWord()
 GET		/verDatosEnviados				controllers.RecursoWebController.verDatosEnviados()
 
 
