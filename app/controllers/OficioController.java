@@ -135,7 +135,9 @@ System.out.println(df);
 		return redirect("/recursos/completoList");
 		
 	}	
-	
+
+    // Muestra el oficio pdf
+    // Recibe el id del recurso
 	public static Result verOficio(Long id) {
 		System.out.println("DEsde OficioController.verOficio");
 		Oficio o = Oficio.find.where().eq("recurso.id", id).findUnique();

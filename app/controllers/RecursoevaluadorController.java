@@ -1515,55 +1515,6 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         System.out.println("generado");
         return ok (  mipdf.baos.toByteArray() );
     }
-/*
-    public static Result generaOficioValoracion(long idRecurso, String folio, String fecha, String recepcion, String iniciales )  {
-        System.out.println("Desde RecursoevaluadorController.generaOficioValoracion");
-        byte[] r = generaOficioValoracionByte(idRecurso, folio, fecha, recepcion, iniciales);
-        // Aqui termina
-        response().setContentType("application/pdf");
-        response().setHeader("Content-Disposition", "inline");
-        System.out.println("---------------------");
-        // return ok (  mipdf.baos.toByteArray() );
-
-
-
-
-
-        return ok (  r);
-    }
-*/
-
-    /*   version 3.9
-    public static Result reporteEvaluacionWord() throws IOException {
-        // Crear un nuevo documento
-        XWPFDocument documento = new XWPFDocument();
-
-        // Crear un párrafo
-        XWPFParagraph parrafo = documento.createParagraph();
-        XWPFRun run = parrafo.createRun();
-        run.setText("Documento creado con Apache POI 3.9");
-        run.setBold(true);
-        run.setFontSize(14);
-
-        // Crear una tabla
-        XWPFTable tabla = documento.createTable(3, 2);
-
-        // Llenar la tabla
-        tabla.getRow(0).getCell(0).setText("Producto");
-        tabla.getRow(0).getCell(1).setText("Precio");
-        tabla.getRow(1).getCell(0).setText("Laptop");
-        tabla.getRow(1).getCell(1).setText("$1200");
-        tabla.getRow(2).getCell(0).setText("Teléfono");
-        tabla.getRow(2).getCell(1).setText("$500");
-
-        // Guardar el documento
-        FileOutputStream out = new FileOutputStream("documento_v3.9.docx");
-        documento.write(out);
-        out.close();
-
-        return ok ("Documento Word (.docx) creado exitosamente!");
-    }
-    */
 
 
     private static boolean checkClass(String className) {

@@ -3,6 +3,7 @@
 APP_HOME=/home/eduardo/pruebasServer/erdd/dist/erdd-1.2.2-SNAPSHOT
 APP_EXEC=$APP_HOME/bin/erdd
 
+
 # Detiene el servicio que esta usando el puerto 80
 fuser -k 80/tcp
 
@@ -17,6 +18,7 @@ PATH=$JAVA_HOME/bin:$PATH
 export PATH
 
 # Iniciar el servicio/daemon
-$APP_EXEC -Dhttp.port=80 -Dplay.crypto.secret=mySecretKey >> $APP_HOME/salida.log
+$APP_EXEC -Dhttp.port=80 -Dplay.crypto.secret=`yED;8wVLx[z^x5pWdxyXie8u`dKSm:YK2c9KX3Fv7glnHNk?P0SS4pX^xT^;7p< >> $APP_HOME/salida.log
+
 
 

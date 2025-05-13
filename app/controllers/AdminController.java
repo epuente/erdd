@@ -2,11 +2,10 @@ package controllers;
 
 import java.util.*;
 
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.SqlRow;
 import controllers.util.ControladorSeguro;
-import models.EncuestaRespuesta;
-import models.EvaluacionProrroga;
-import models.Recurso;
-import models.Recursoevaluador;
+import models.*;
 
 import com.avaje.ebean.Expr;
 
@@ -25,7 +24,8 @@ public class AdminController extends ControladorSeguro {
 		
 		Map<String, Object> registros = new HashMap<>();
 
-    	List<Recurso> todos = Recurso.find.all();
+
+        List<Recurso> todos = Recurso.find.all();
     	registros.put("rs", todos.size());
 		
     	int r1 = Recurso.find.where().eq("estado.id", 1L).findRowCount();
@@ -97,10 +97,105 @@ public class AdminController extends ControladorSeguro {
 		int p = EvaluacionProrroga.find.where().eq("autorizado","0").findRowCount();
 		registros.put("solPro", p);
 		
-System.out.println(		routes.AdminController.index().url()  );	
+        System.out.println(		routes.AdminController.index().url()  );
+
+
+        // info para la grafica Sankey
+        List<Recurso> recursos = Recurso.find
+                .fetch("recursoevaluadores")
+                .fetch("recursoevaluadores.aspecto")
+                .where().ge("estado.id", 6)
+                .order().asc("titulo")
+                .findList();
+        List<String> nodos = new ArrayList<>();
+        for ( Recurso r : recursos  ){
+            nodos.add(r.titulo);
+        }
+
+        List<Aspecto> aspectos = Aspecto.find.order().asc("descripcion").findList();
+        List<String> cols1 = new ArrayList<>();
+        for (Aspecto a : aspectos){
+            cols1.add(a.descripcion);
+        }
+
+        // Evaluadores
+        List<Evaluador> evs = Evaluador.find.fetch("personal").order().asc("personal.nombre").findList();
+        List<String> evaluadores = new ArrayList<>();
+        for(Evaluador e : evs){
+            evaluadores.add( e.personal.nombreCompleto() );
+            System.out.println(e.personal.nombreCompleto());
+        }
+
+
+
+        // paso 1
+        // De rdd a aspecto
+
+
+        Map<String,String> mapaUno = new HashMap<>();
+        ArrayList<String[]> paresCadenas = new ArrayList<>();
+
+        for (Recurso r : recursos){
+            System.out.println(r.titulo);
+            for (Aspecto a : aspectos) {
+                mapaUno.put(r.titulo, a.descripcion);
+                System.out.println("     "+a.descripcion);
+                //OJO AQUI FALTa un array,   solo se queda el último valor de  mapaUno.put(r.titulo, a.descripcion);
+
+                paresCadenas.add(new String[]{r.titulo, a.descripcion});
+            }
+        }
+
+        for (String[] par : paresCadenas) {
+            System.out.println(par[0]+" "+par[1]);
+
+        }
+
+        //paso 2
+        // De aspecto a evaluador
+
+        // tocho
+        List<Recurso> tch = Recurso.find
+                .fetch("recursoevaluadores")
+                .fetch("recursoevaluadores.aspecto")
+                .fetch("recursoevaluadores.evaluador")
+                .fetch("recursoevaluadores.evaluador.personal")
+                .where()
+                    .ge("estado.id", 6)
+                    .ne("estado.id",100)
+                    .ne("estado.id", 402)
+                .order().asc("titulo")
+                .order().asc("recursoevaluadores.aspecto.descripcion")
+                .order().asc("recursoevaluadores.evaluador.personal.nombre")
+                .order().asc("recursoevaluadores.evaluador.personal.paterno")
+                .order().asc("recursoevaluadores.evaluador.personal.materno")
+                .findList();
+
+
+        List<SqlRow> sqrRs = Ebean.createSqlQuery("select distinct  r.titulo,\n" +
+                "\t\t\t\t a.descripcion aspecto,\t\t\t\t \n" +
+                "\t\t\t\t concat(p.nombre, ' ', p.paterno,' ', p.materno) evaluador\n" +
+                "from recurso r \n" +
+                "inner join recursoevaluador re on r.id = re.recurso_id \n" +
+                "inner join aspecto a on re.aspecto_id = a.id \n" +
+                "inner join evaluador e on re.evaluador_id = e.id \n" +
+                "inner join personal p on e.personal_id = p.id\n" +
+                "where r.estado_id >=6 and r.estado_id <> 100 and r.estado_id <> 402  \n" +
+                "order by r.titulo, aspecto, evaluador")
+                .findList();
+
+        System.out.println("\n\n\n\n\n");
+        System.out.println(sqrRs.size()+" regs ");
+        System.out.println(tch.size()+" tch ");
+        for ( SqlRow r : sqrRs ){
+            System.out.println("-->"+r.getString("titulo")+"  -  "+r.getString("aspecto")+"  -  "+ r.getString("evaluador") );
+            System.out.println("-->"+r.getString("titulo")+"  -  "+r.getString("aspecto")+"  -  "+ r.getString("evaluador") );
+        }
+
+
+
 		
-		
-    	return ok(views.html.resumenAdministrador.render(registros));
+    	return ok(views.html.resumenAdministrador.render(registros, nodos, cols1, evaluadores, mapaUno, paresCadenas));
     }	
 
 }

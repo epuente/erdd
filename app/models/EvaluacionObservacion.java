@@ -27,7 +27,7 @@ public class EvaluacionObservacion extends Model {
 	
 	@Required
 	@NotNull
-    @Size(max=600)
+    @Size(max=2000)
 	public String Observacion;
 	
 	

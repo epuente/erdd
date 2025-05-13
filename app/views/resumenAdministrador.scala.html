@@ -1,6 +1,270 @@
-@(registros:Map[String,Int])
+@(registros:Map[String,Int],  nodos:List[String], cols1:List[String] , evaluadores:List[String], mapaUno:Map[String,String] , data:java.util.ArrayList[Array[String]] )
 @import helper._
-
-@main {
-	Tablero de indicadores en construcción
+@*
+nodos<br>
+@for(n<-nodos){
+    @n,
 }
+<br><br>
+
+@for(i <- 0 until data.size()) {
+    @for(j <- 0 until data.get(i).length) {
+        @data.get(i)(j)
+        @if(j < data.get(i).length - 1) { | }
+    }
+}
+***********************<br>
+@for(i <- 0 until data.size()) {
+    ['@data.get(i)(0)', '@data.get(i)(1)', 1],<br>
+}
+
+*@
+@main {
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/sankey.js"></script>
+    <script src="https://code.highcharts.com/modules/non-cartesian-zoom.js"></script>
+    <script src="https://code.highcharts.com/modules/mouse-wheel-zoom.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+	Tablero de indicadores en construcción
+
+    <div id="container0"></div>
+
+    <div id="container"></div>
+
+}
+<script type="text/javascript">
+
+    $(function () {
+            $('#container0').highcharts({
+                chart: {
+                    zooming: {
+                        type: 'xy'
+                    },
+                    panning: {
+                        enabled: true,
+                        type: 'xy'
+                    },
+                    panKey: 'shift'
+                },
+                title: {
+                    text: 'Estimated US Energy Consumption in 2022'
+                },
+                subtitle: {
+                    text:
+                  'Source: <a href=\'https://www.llnl.gov/\'> Lawrence Livermore National Laboratory</a>'
+                },
+                accessibility: {
+                    point: {
+                        valueDescriptionFormat: '{index}. {point.from} to {point.to}, ' +
+                            '{point.weight}.'
+                    }
+                },
+                tooltip: {
+                    headerFormat: null,
+                    pointFormat:
+                  '{point.fromNode.name} \u2192 {point.toNode.name}: {point.weight:.2f} ' +
+                  'quads',
+                    nodeFormat: '{point.name}: {point.sum:.2f} quads'
+                },
+                series: [{
+
+                    nodes: [
+
+                        @for(n<-nodos){
+                            { id: '@n' },
+                        }
+
+                        @for(c1<-cols1){
+                            { id: '@c1', column:1  },
+                        }
+
+                        @for(e<-evaluadores){
+                            { id: '@e', column:2  },
+                        }
+
+                    ],
+                data: [
+
+
+['Economía conductual para la toma de decisiones en las unidades económicas, E1', 'Diseño gráfico', 1],
+['Economía conductual para la toma de decisiones en las unidades económicas, E1', 'Editorial', 1],
+['Economía conductual para la toma de decisiones en las unidades económicas, E1', 'Pedagógico', 1],
+['Economía conductual para la toma de decisiones en las unidades económicas, E1', 'Técnico', 1],
+
+['Economía conductual para la toma de decisiones en las unidades económicas, E2', 'Diseño gráfico', 1],
+['Economía conductual para la toma de decisiones en las unidades económicas, E2', 'Editorial', 1],
+['Economía conductual para la toma de decisiones en las unidades económicas, E2', 'Pedagógico', 1],
+['Economía conductual para la toma de decisiones en las unidades económicas, E2', 'Técnico', 1],
+
+['Herramientas Computacionales', 'Diseño gráfico', 1],
+['Herramientas Computacionales', 'Editorial', 1],
+['Herramientas Computacionales', 'Pedagógico', 1],
+['Herramientas Computacionales', 'Técnico', 1],
+
+
+
+
+
+                        @*for((k, v) <- mapaUno) {
+                            ['@k', '@v', 1],
+                        }
+                        *@
+
+                @*for(i <- 0 until data.size()) {
+                        ['@data.get(i)(0)', '@data.get(i)(1), 1'],
+
+                }
+                *@
+@*for(i <- 0 until data.size()) {
+    ['@data.get(i)(0)', '@data.get(i)(1)', 1],
+}
+*@
+
+
+
+
+
+
+
+//['Editorial', 'Kevin Gamaliel Luis Mateos', 1],
+
+
+
+
+                        ['rdd1', 'aspecto1',1],
+                        ['rdd1', 'aspecto2',1],
+                        ['rdd1', 'aspecto3',1],
+                        ['rdd1', 'aspecto4',1],
+                        ['aspecto1', 'eva1',1],
+                        ['aspecto2', 'eva1',1],
+                        ['aspecto3', 'eva1',1],
+                        ['aspecto4', 'eva1',1],
+
+                        ['rdd2', 'aspecto1', 1],
+                        ['rdd2', 'aspecto2', 1],
+                        ['rdd2', 'aspecto3', 1],
+                        ['rdd2', 'aspecto4', 1],
+
+                        ['aspecto1', 'eva1', 1],
+                        ['aspecto2', 'eva2', 1],
+                        ['aspecto3', 'eva3', 1],
+                        ['aspecto4', 'eva4', 1],
+                    ],
+                    type: 'sankey',
+                    name: 'Sankey demo series'
+                }]
+
+            });
+
+
+
+
+            /////////////////////////////////
+
+            $('#container').highcharts({
+                chart: {
+                    zooming: {
+                        type: 'xy'
+                    },
+                    panning: {
+                        enabled: true,
+                        type: 'xy'
+                    },
+                    panKey: 'shift'
+                },
+                title: {
+                    text: 'Estimated US Energy Consumption in 2022'
+                },
+                subtitle: {
+                    text:
+                  'Source: <a href=\'https://www.llnl.gov/\'> Lawrence Livermore National Laboratory</a>'
+                },
+                accessibility: {
+                    point: {
+                        valueDescriptionFormat: '{index}. {point.from} to {point.to}, ' +
+                            '{point.weight}.'
+                    }
+                },
+                tooltip: {
+                    headerFormat: null,
+                    pointFormat:
+                  '{point.fromNode.name} \u2192 {point.toNode.name}: {point.weight:.2f} ' +
+                  'quads',
+                    nodeFormat: '{point.name}: {point.sum:.2f} quads'
+                },
+                series: [{
+                    keys: ['from', 'to', 'weight'],
+                    nodes: [
+                        {
+                            id: 'rdd1'
+                        },
+                        {
+                            id: 'rdd2'
+                        },
+                        {
+                            id: 'aspecto1',
+                            column: 1,
+                            color: '#0000FF'
+                        },
+                        {
+                            id: 'aspecto2',
+                            column: 1
+                        },
+                        {
+                            id: 'aspecto3',
+                            column: 1
+                        },
+                        {
+                            id: 'aspecto4',
+                            column: 1
+                        },
+                        {
+                            id: 'eva1',
+                            column: 2
+                        },
+                        {
+                            id: 'eva2',
+                            column: 2
+                        },
+                        {
+                            id: 'eva3',
+                            column: 2
+                        },
+                        {
+                            id: 'eva4',
+                            column: 2
+                        },
+                    ],
+                data: [
+                        ['rdd1', 'aspecto1',1],
+                        ['rdd1', 'aspecto2',1],
+                        ['rdd1', 'aspecto3',1],
+                        ['rdd1', 'aspecto4',1],
+                        ['aspecto1', 'eva1',1],
+                        ['aspecto2', 'eva1',1],
+                        ['aspecto3', 'eva1',1],
+                        ['aspecto4', 'eva1',1],
+
+                        ['rdd2', 'aspecto1', 1],
+                        ['rdd2', 'aspecto2', 1],
+                        ['rdd2', 'aspecto3', 1],
+                        ['rdd2', 'aspecto4', 1],
+
+                        ['aspecto1', 'eva1', 1],
+                        ['aspecto2', 'eva2', 1],
+                        ['aspecto3', 'eva3', 1],
+                        ['aspecto4', 'eva4', 1],
+                    ],
+                    type: 'sankey',
+                    name: 'Sankey demo series'
+                }]
+
+            });
+    });
+
+</script>
+
+<script src="@routes.Assets.at("javascripts/utilerias.js")"></script>

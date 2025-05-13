@@ -2,7 +2,7 @@ import sbt.compiler.ComponentCompiler.javaVersion
 
 name := """erdd"""
 
-version := "1.2.3-SNAPSHOT"
+version := "1.2.5-SNAPSHOT"
 
 scalaVersion := "2.11.4"
 
@@ -15,6 +15,7 @@ libraryDependencies ++= Seq(
 
   //"mysql" % "mysql-connector-java" % "8.0.33",
   "com.mysql" % "mysql-connector-j" % "8.3.0",
+  "org.mariadb.jdbc" % "mariadb-java-client" % "3.0.7",
 
   "com.feth" %% "play-authenticate" % "0.6.8",
   "org.json" % "org.json" % "chargebee-1.0",

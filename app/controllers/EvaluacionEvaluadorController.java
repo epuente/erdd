@@ -369,7 +369,7 @@ System.out.println("* 4 * * * "+re.evaluador.personal.activo.id);
 			n.enviar(otro.recurso.numcontrol, "Evaluación del aspecto "+otro.aspecto.descripcion, "Se ha realizado una evaluación parcial del aspecto "+otro.aspecto.descripcion+ " para el recurso "+otro.recurso.titulo);
 
 
-			flash("warning", "Se guardó la evaluación parcial. Usted deberá reingresar despues para terminar de evaluar el recurso en su totalidad.");
+			flash("warning", "Se guardó la evaluación parcial. Usted deberá reingresar después para terminar de evaluar el recurso en su totalidad.");
 		}
 		otro.update(re.id);
 

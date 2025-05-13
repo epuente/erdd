@@ -25,8 +25,8 @@ public class EvaluacionObservacionGral extends Model {
 	public Recursoevaluador recursoevaluador;
 	
 	
-	@MaxLength(900)
-	@Size(max=900)
+	@MaxLength(2000)
+	@Size(max=2000)
 	public String observacion;
 	
 	@CreatedTimestamp

@@ -10,6 +10,13 @@ grant super on *.* to erdd@localhost;
 FLUSH PRIVILEGES;
 
 
+PARA CAMBIAR PASSWORD A UN USUARIO PREVIAMENTE CREADO
+------------------------------------------------------
+sudo mysql -u root -p
+SET PASSWORD FOR 'erdd'@'localhost' = 'erdd';
+FLUSH PRIVILEGES;
+
+
 Export para crear DB en el server
 ------------------------------------
 Con CREATE DATABASE, DROP TABLE IF EXISTS, CREATE TABLE
@@ -54,7 +61,7 @@ SELECT
 
 El resultado es un query que genera los triggers para cada tabla del esquema (así se generó el archivo triggersServer.sh)  .
 
-Los siguientes 3 triggers son de la tabla recurso que ademas de actualizar los campos de auditoria, agregan registreos a la tabla historialestado y el trigger 'recurso_BEFORE_INSERT' genera el número de control cada que se agrega un registro a la tabla 'recurso'
+Los siguientes 3 triggers son de la tabla recurso que además de actualizar los campos de auditoria, agregan registros a la tabla historialestado y el trigger 'recurso_BEFORE_INSERT' genera el número de control cada que se agrega un registro a la tabla 'recurso'
 
 
 DELIMITER ;;

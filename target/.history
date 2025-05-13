@@ -240,3 +240,46 @@ exit
 run 8085
 exit
 run 8085
+clean
+reload
+compile
+run 8085
+clean
+reload
+compile
+run 8085
+run 8080
+exit
+playGenerateSecret
+playUpdateSecret
+exit
+clean
+reload
+dist
+exit
+run 80
+run 8089
+run 80
+run 8086
+run 80
+run 8443
+ls
+exit
+clean
+reload
+compile
+run 
+run 8085
+clean
+dist
+run 8085
+exit
+run 8085
+clean
+reload
+run 8085
+clean
+reload
+compile
+run 8085
+exit
