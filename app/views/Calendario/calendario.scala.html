@@ -1,114 +1,102 @@
 @(fechas:List[Calendario])
 
 @main{
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/fullcalendar.css")"/>
 
-<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/fullcalendar.css")"/> 
+    <script src="@routes.Assets.at("javascripts/fullcalendar/moment.min.js")" ></script>
+    <script src="@routes.Assets.at("javascripts/fullcalendar/fullcalendar.min.js")" ></script>
+    <script src="@routes.Assets.at("javascripts/fullcalendar/es.js")" ></script>
+    <div id="fecha" class="hidden"></div> <script src="/assets/lib/jquery/jqueryui.js" type="text/javascript"></script>
 
-		
-<script src="@routes.Assets.at("javascripts/fullcalendar/moment.min.js")" ></script>
-<script src="@routes.Assets.at("javascripts/fullcalendar/fullcalendar.min.js")" ></script>
-<script src="@routes.Assets.at("javascripts/fullcalendar/es.js")" ></script>
-<div id="fecha" class="hidden"></div> <script src="/assets/lib/jquery/jqueryui.js" type="text/javascript"></script>
+    <div class="container-fluid">
 
-<div class="container-fluid">
- 
-		<div class="row">
-			<div class="col-lg-12">
-				<ol class="breadcrumb">
-				  <li>Catálogos</li>
-				  <li class="active">Calendario días inhábiles</li>
-				</ol>			
-			</div>
-		</div>	
-		<div class="row">
-			<div class="col-lg-12">
-  	          <h3>Calendario días inhábiles</h3>
-	        </div>
-		</div>
-		<div class="row">		
-			<div class="col-lg-3">
-					<div class="panel panel-default">
-	                	<div class="panel-heading"><span class="glyphicon glyphicon-info-sign"></span>Instrucciones</div>
-	               		<div class="panel-body">
-							<div>
-								Para agregar fechas:
-								<ul>									
-									<li>Arrastrar desde la fecha de inicio hasta la fecha del día de término</li>
-									<li>Escribir un título descriptivo, por ejemplo 'Periodo vacacional', 'Fumigación del edificio', etc.</li>
-									<li>Es obligatorio escribír el título descriptivo, en caso contrario no se agregará la fecha al calendario</li>
-								</ul>
-								<br>
-								Para ampliar o reducir la fecha límite:
-								<ul>
-									<li>Situar el cursor sobre el último día de la fecha, al colocarlo en el borde izquierdo el cursor cambia a una flecha hacia la derecha. </li>
-									<li>Arrastrar hasta la nueva fecha final.</li>
-								</ul>
-								Para cambiar bloques completos de rangos de fechas:
-								<ul>
-									<li>Arrastrar la fecha actual hasta la nueva posición.</li>
-								</ul>
-							</div>
-							
-							
-						
-							
-	               		</div>                	
-	               	</div>		
-			</div>
-			<div class="col-lg-9">
-					<div class="panel panel-default">
-	                	<div class="panel-heading"><span class="glyphicon glyphicon-calendar"></span>Calendario  <div id="divMsgCalendario" ></div>  </div>
-	               		<div class="panel-body">
-								<div id='calendar'></div>
-	               		</div>                	
-	               	</div>		
-			</div>		
-	</div>
-	</div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                      <li>Catálogos</li>
+                      <li class="active">Calendario días inhábiles</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                  <h3>Calendario días inhábiles</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><span class="glyphicon glyphicon-info-sign"></span>Instrucciones</div>
+                            <div class="panel-body">
+                                <div>
+                                    Para agregar fechas:
+                                    <ul>
+                                        <li>Arrastrar desde la fecha de inicio hasta la fecha del día de término</li>
+                                        <li>Escribir un título descriptivo, por ejemplo 'Periodo vacacional', 'Fumigación del edificio', etc.</li>
+                                        <li>Es obligatorio escribír el título descriptivo, en caso contrario no se agregará la fecha al calendario</li>
+                                    </ul>
+                                    <br>
+                                    Para ampliar o reducir la fecha límite:
+                                    <ul>
+                                        <li>Situar el cursor sobre el último día de la fecha, al colocarlo en el borde izquierdo el cursor cambia a una flecha hacia la derecha. </li>
+                                        <li>Arrastrar hasta la nueva fecha final.</li>
+                                    </ul>
+                                    Para cambiar bloques completos de rangos de fechas:
+                                    <ul>
+                                        <li>Arrastrar la fecha actual hasta la nueva posición.</li>
+                                    </ul>
+                                </div>
 
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Detalle</h4>
-      </div>
-      <div class="modal-body">
-      
-		<div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">    <p id="cTitulo" class="lead"></p>   </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">Desde: <div id="cDesde"></div></div>
-            <div class="col-md-6">Hasta: <div id="cHasta"></div></div>
-          </div>
-          <div class="row">
-          		<div id="cDuracion" class="col-md-12"></div>
-          </div>
+
+
+                            </div>
+                        </div>
+                </div>
+                <div class="col-lg-9">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><span class="glyphicon glyphicon-calendar"></span>Calendario  <div id="divMsgCalendario" ></div>  </div>
+                            <div class="panel-body">
+                                    <div id='calendar'></div>
+                            </div>
+                        </div>
+                </div>
+        </div>
         </div>
 
-      </div>
-      <div class="modal-footer">      	
-        <button type="button" class="btn btn-danger" >Borrar</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Detalle</h4>
+          </div>
+          <div class="modal-body">
+
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-12">    <p id="cTitulo" class="lead"></p>   </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">Desde: <div id="cDesde"></div></div>
+                <div class="col-md-6">Hasta: <div id="cHasta"></div></div>
+              </div>
+              <div class="row">
+                    <div id="cDuracion" class="col-md-12"></div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" >Borrar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-
-
-
-
-
-
-}
-
-
-
-
+ }
 
 
 <script type="text/javascript">

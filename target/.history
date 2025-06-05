@@ -283,3 +283,46 @@ reload
 compile
 run 8085
 exit
+run 8085
+dist
+exit
+run 8085
+exit
+clean
+run 8085
+clean
+run 8085
+compile
+run 8085
+clean
+reload
+dist
+exit
+run 8085
+update
+reload
+exit
+clean
+reload
+compile
+run
+run 8089
+clean
+reload
+compile
+run 8089
+clean
+reload
+compile
+run 8089
+reload
+compile
+run 8089
+exit
+clean
+reload
+compile
+run 8089
+clean
+dist
+exit

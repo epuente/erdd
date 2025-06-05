@@ -132,45 +132,14 @@ public class AdminController extends ControladorSeguro {
         // De rdd a aspecto
 
 
-        Map<String,String> mapaUno = new HashMap<>();
-        ArrayList<String[]> paresCadenas = new ArrayList<>();
 
-        for (Recurso r : recursos){
-            System.out.println(r.titulo);
-            for (Aspecto a : aspectos) {
-                mapaUno.put(r.titulo, a.descripcion);
-                System.out.println("     "+a.descripcion);
-                //OJO AQUI FALTa un array,   solo se queda el último valor de  mapaUno.put(r.titulo, a.descripcion);
+        ArrayList<String[]> triadaCadenas = new ArrayList<>();
+        ArrayList<String[]> triadaCadenas2 = new ArrayList<>();
 
-                paresCadenas.add(new String[]{r.titulo, a.descripcion});
-            }
-        }
 
-        for (String[] par : paresCadenas) {
-            System.out.println(par[0]+" "+par[1]);
-
-        }
 
         //paso 2
         // De aspecto a evaluador
-
-        // tocho
-        List<Recurso> tch = Recurso.find
-                .fetch("recursoevaluadores")
-                .fetch("recursoevaluadores.aspecto")
-                .fetch("recursoevaluadores.evaluador")
-                .fetch("recursoevaluadores.evaluador.personal")
-                .where()
-                    .ge("estado.id", 6)
-                    .ne("estado.id",100)
-                    .ne("estado.id", 402)
-                .order().asc("titulo")
-                .order().asc("recursoevaluadores.aspecto.descripcion")
-                .order().asc("recursoevaluadores.evaluador.personal.nombre")
-                .order().asc("recursoevaluadores.evaluador.personal.paterno")
-                .order().asc("recursoevaluadores.evaluador.personal.materno")
-                .findList();
-
 
         List<SqlRow> sqrRs = Ebean.createSqlQuery("select distinct  r.titulo,\n" +
                 "\t\t\t\t a.descripcion aspecto,\t\t\t\t \n" +
@@ -184,18 +153,60 @@ public class AdminController extends ControladorSeguro {
                 "order by r.titulo, aspecto, evaluador")
                 .findList();
 
+
         System.out.println("\n\n\n\n\n");
         System.out.println(sqrRs.size()+" regs ");
-        System.out.println(tch.size()+" tch ");
         for ( SqlRow r : sqrRs ){
-            System.out.println("-->"+r.getString("titulo")+"  -  "+r.getString("aspecto")+"  -  "+ r.getString("evaluador") );
-            System.out.println("-->"+r.getString("titulo")+"  -  "+r.getString("aspecto")+"  -  "+ r.getString("evaluador") );
+            triadaCadenas.add(new String[]{r.getString("titulo"), r.getString("aspecto"), r.getString("evaluador")});
+        }
+
+
+        List<SqlRow> sqrRs2 = Ebean.createSqlQuery("select " +
+                "a.descripcion aspecto,\n" +
+                "concat(p.nombre, ' ', p.paterno,' ', p.materno) evaluador,\n" +
+                "count(*) cantidad\n" +
+                "from recurso r \n" +
+                "inner join recursoevaluador re on r.id = re.recurso_id \n" +
+                "inner join aspecto a on re.aspecto_id = a.id \n" +
+                "inner join evaluador e on re.evaluador_id = e.id \n" +
+                "inner join personal p on e.personal_id = p.id\n" +
+                "where r.estado_id >=6 and r.estado_id <> 100 and r.estado_id <> 402  \n" +
+                "group BY evaluador, aspecto\n" +
+                "order by evaluador, aspecto")
+                .findList();
+
+        for ( SqlRow r : sqrRs2 ){
+            triadaCadenas2.add(new String[]{r.getString("aspecto"), r.getString("evaluador"), r.getString("cantidad")});
+        }
+
+
+        for (String[] tc : triadaCadenas){
+            System.out.println("* "+tc[0]+"  -  "+tc[1]+"  -  "+tc[2]);
+        }
+
+        for (String[] tc : triadaCadenas2){
+            System.out.println("+ "+tc[0]+"  -  "+tc[1]+"  -  "+tc[2]);
         }
 
 
 
+        // cta de  email de salida
+        Ctacorreo cta = Ctacorreo.find.where().eq("activo", true).findUnique();
+
+        // Cantidad de Unidades académicas
+        int cantidadUA = Unidadacademica.find.all().size();
+
+        // Cantidad de evaluadores
+        int cantidadEvaluadores = Evaluador.find.all().size();
+
+
+
+
 		
-    	return ok(views.html.resumenAdministrador.render(registros, nodos, cols1, evaluadores, mapaUno, paresCadenas));
+    	return ok(views.html.resumenAdministrador.render(registros, nodos, cols1, evaluadores,  triadaCadenas, triadaCadenas2,
+                cta,
+                cantidadUA,
+                cantidadEvaluadores));
     }	
 
 }

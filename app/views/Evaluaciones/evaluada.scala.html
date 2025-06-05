@@ -2,6 +2,7 @@
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/lineasColoresPaneles.css")"/>
 
 
+
 @main{
 	<div class="container-fluid" id="div0" style="display:none">
 			<div class="row">
@@ -162,6 +163,11 @@
     			$(this).find("[name='cpPagina']:first").click();
     	});
     	$("#div0").show();
+
+
+
+
+
     });
     
 
@@ -244,7 +250,13 @@
 						$("#divAspecto@r.aspecto.id input[name='califica@e.evaluaciontabla.id'][value='@e.respuesta']").prop("checked",true);
 					}
 					@if(e.recursoevaluador.observacionEvaluacion != null){
+                        var b = "@re.get(0).observacionEvaluacion.getObservacion()";
+                        var c = b.replaceAll("[saltoDeLinea]", "\n");
+                        $("[name^='observacionGral-@e.recursoevaluador.recurso.id-@e.evaluaciontabla.aspecto.id']").val(c);
+
+					    /*
 						$("#divAspecto@r.aspecto.id textarea[name='observacionGral-@e.recursoevaluador.recurso.id-@e.evaluaciontabla.aspecto.id']").val("@e.recursoevaluador.observacionEvaluacion.observacion" );
+						*/
 					}
 				}
 			}
@@ -273,7 +285,7 @@
 				}
 			});
         }
-	}	
+	}
 	
 
 	$( document ).on( "click", "[id^='carousel'][id$='Anterior']", function(event) {

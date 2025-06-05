@@ -40,7 +40,7 @@ public class Ctacorreo extends Model{
     public Date auditinsert = new Date();
 	@UpdatedTimestamp
     public Date auditlastupdate; 	
-		
-	public static Finder<Long,Ctacorreo> find = new Finder<>(Long.class, Ctacorreo.class);
+
+    public static Model.Finder<Long,Ctacorreo> find = new Model.Finder<>(Long.class, Ctacorreo.class);
 	
 }

@@ -43,7 +43,24 @@ public class EncuestaController extends ControladorSeguroCoordinador {
 		List<EncuestaReactivo> reactivos = EncuestaReactivo.find.all();		
 		return ok(encuestaPorRevisar.render(reactivos,  Unidadacademica.find.all(),  Niveleducativo.find.all(), encuestaRForm, respuestas ));			
 	}
-	
+
+    public static Result encuestaTerminada(Long id){
+        EncuestaRespuesta respuestas = EncuestaRespuesta.find.byId(id);
+
+        Form<EncuestaRespuesta> encuestaRForm = form(EncuestaRespuesta.class);
+        List<EncuestaReactivo> reactivos = EncuestaReactivo.find.all();
+        return ok(encuestaTerminada.render(reactivos,  Unidadacademica.find.all(),  Niveleducativo.find.all(), encuestaRForm, respuestas ));
+    }
+
+
+    public static Result encuestaTerminadaLectura(Long id){
+        EncuestaRespuesta respuestas = EncuestaRespuesta.find.byId(id);
+
+        Form<EncuestaRespuesta> encuestaRForm = form(EncuestaRespuesta.class);
+        List<EncuestaReactivo> reactivos = EncuestaReactivo.find.all();
+        return ok(encuestaTerminadaLectura.render(reactivos,  Unidadacademica.find.all(),  Niveleducativo.find.all(), encuestaRForm, respuestas ));
+    }
+
 	@Transactional
 	public static Result agregarObservaciones(Long idEnc){
 		String urlSitio= application().configuration().getString("urlSitio");

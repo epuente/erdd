@@ -1,15 +1,9 @@
-2025-05-13 09:12:01,606 - [INFO] - from play in pool-119-thread-7 
-Listening for HTTP on /0:0:0:0:0:0:0:0:8085
+2025-06-05 12:55:25,883 - [INFO] - from play in pool-20-thread-4 
+Listening for HTTP on /0:0:0:0:0:0:0:0:8089
 
-2025-05-13 09:12:16,463 - [INFO] - from play in play-internal-execution-context-1 
-database [default] connected at jdbc:mysql://localhost:3306/erdd
-
-2025-05-13 09:12:17,032 - [INFO] - from play in play-internal-execution-context-1 
-Application started (Dev)
-
-2025-05-13 09:12:59,053 - [INFO] - from play in play-internal-execution-context-1 
+2025-06-05 12:55:35,850 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev6
 
-2025-05-13 09:12:59,281 - [INFO] - from play in play-internal-execution-context-1 
+2025-06-05 12:55:36,795 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 

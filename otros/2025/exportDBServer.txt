@@ -20,7 +20,7 @@ FLUSH PRIVILEGES;
 Export para crear DB en el server
 ------------------------------------
 Con CREATE DATABASE, DROP TABLE IF EXISTS, CREATE TABLE
-mysqldump -u erdd -p erdd_dev6 --ignore-table=erdd_dev6.play_evolutions --routines=false --no-tablespaces --complete-insert --skip-triggers> ~/dumps/erdd_dev6Completo_20250429.sql
+mysqldump -u erdd -p erdd_dev6 --ignore-table=erdd_dev6.play_evolutions --routines=false --no-tablespaces --complete-insert --skip-triggers> ~/dumps/erdd_dev6Completo__`date +%Y%m%d_%H%M`.sql
 
 
 

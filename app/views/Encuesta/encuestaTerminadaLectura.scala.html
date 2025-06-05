@@ -1,0 +1,150 @@
+@(reactivos:List[EncuestaReactivo], unidadacademica:List[Unidadacademica], nivel:List[Niveleducativo], forma:Form[EncuestaRespuesta], respuestas:EncuestaRespuesta)
+@import helper._
+@implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) } 
+
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/>
+
+
+
+@main{
+    <script>$("body").css("display","none");</script>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<h3>Encuesta de satisfacción del servicio de Evaluación TP-RDD</h3>
+				<p>
+					Estimado docente, queremos conocer su opinión acerca del servicio de Evaluación Técnico Pedagógica, por tanto, solicitamos su valioso apoyo para llenar esta encuesta. A través de este medio obtendremos información que nos permitirá mejorar el servicio que ofrecemos. Los datos que nos proporcione son anónimos y confidenciales.
+					<br><br>
+					<p style="font-weight: bold;">Instrucciones generales:</p><br>
+					Lea cuidadosamente cada uno de los enunciados y responda lo que se le pide y/o marque la respuesta que mejor describa su opinión.
+					<p>Las preguntas marcadas con asterisco (*) son obligatorias.</p> 				
+				</p>
+			
+		
+				@form(CSRF(routes.EncuestaController.agregarObservaciones(respuestas.id)), 'role -> "form", 'style->"background-color: white;", 'id->"frmCreate") {
+					@encuestaForm(reactivos, unidadacademica, nivel, forma, respuestas)
+					<div style="display: block;  margin-left: auto;   margin-right: auto; width: 70%">
+						<input type="submit" class="btn btn-success btn-lg btn-block" id="btnForma"  value="Todo correcto, sin observaciones">
+					</div>				
+				}
+			</div>
+		</div>
+	</div>
+}
+
+
+
+<script type="text/javascript">
+	$(function() {
+
+		$("[name='respuesta1[]'], [name='respuesta2'], [name='respuesta3'], [name='respuesta4'], #respuesta1Txt, #respuesta2Txt, #respuesta3Txt, #respuesta4Txt, #respuesta5Txt").attr("disabled",true);
+		$("#frmCreate").validator();
+		$("[name*='btnObservacion_']").html("Agregar observación");
+		$("[name*='btnObservacion_']").addClass("btn-primary").removeClass("btn-danger");
+		$("label[for='respuesta1'], label[for='respuesta2'], label[for='respuesta3'],  label[for='respuesta4']").html("");
+
+		$(".container-fluid").show();
+		$("input[type='text']:required, textarea:required, input[type='date']:required").attr("data-error", "Complete este campo");
+		$("select:required").attr("data-error", "Seleccione una opción de la lista");
+		$("input[type='radio']:required").attr("data-error", "Seleccione una opción");
+
+		leer();
+		quitarElementos();
+
+	});
+
+
+	function quitarElementos(){
+	    console.log("quitando...")
+        $("button[name^='btnObservacion_respuesta']").remove();
+        $("div[style*='display: none']").remove();
+        $("input[type='submit']").remove();
+        $("input").attr("readonly", "readonly");
+
+
+	}
+
+
+    $(window).load(function() {
+            $("body").fadeIn("slow");
+    });
+
+	function leer(){
+		var l = "@respuestas.respuesta1".substring(1, @(respuestas.respuesta1.length()-1)  ).split(",");
+		if(l!=""){		
+			for(i=0;i<l.length;i++){
+				$("[name='respuesta1[]'][value="+l[i]+"]").attr("checked",true)
+			}
+		}
+		
+		// Muestra los botones 'Agregar Observación'
+		for(i=1; i<=4; i++){
+			$("[name='observacion_respuesta"+i+"']").parent().parent().parent().parent().show();
+		}
+		
+		
+		
+		if ( $("#respuesta1_6").prop("checked")  ){
+			$("[id='respuesta1Txt']").val("@respuestas.respuesta1txt");
+			$("[id='respuesta1Txt']").parent().parent().parent().show();
+
+			$("[name='observacion_respuesta1txt']").parent().show();			
+		}
+		
+		
+		$("[id='respuesta2_S']").prop("checked",  "@respuestas.respuesta2" == "S"  );
+		$("[id='respuesta2_N']").prop("checked",  "@respuestas.respuesta2" == "N"  );
+		
+		if($("[id='respuesta2_S']").prop("checked")){
+			$("[id='respuesta2Txt']").val("@respuestas.respuesta2txt");
+			$("[id='respuesta2Txt']").parent().parent().parent().show();			
+			$("[name='observacion_respuesta2txt']").parent().toggle(@respuestas.respuesta2txt.length()!=0);
+		}
+		
+		
+		$("[id='respuesta3_S']").prop("checked",  "@respuestas.respuesta3" == "S"  );
+		$("[id='respuesta3_N']").prop("checked",  "@respuestas.respuesta3" == "N"  );
+
+		if($("[id='respuesta3_N']").prop("checked")){
+			$("[id='respuesta3Txt']").val("@respuestas.respuesta3txt");
+			$("[id='respuesta3Txt']").parent().parent().parent().show();	
+			$("[name='observacion_respuesta3txt']").parent().toggle(@respuestas.respuesta3txt.length()!=0);		
+		}		
+		
+		$("[id='respuesta4_1']").prop("checked",  "@respuestas.respuesta4" == "1"  );
+		$("[id='respuesta4_2']").prop("checked",  "@respuestas.respuesta4" == "2"  );
+		$("[id='respuesta4_3']").prop("checked",  "@respuestas.respuesta4" == "3"  );
+		$("[id='respuesta4_4']").prop("checked",  "@respuestas.respuesta4" == "4"  );
+		$("[id='respuesta4_5']").prop("checked",  "@respuestas.respuesta4" == "5"  );
+
+
+		$("[id='respuesta4Txt']").val("@respuestas.respuesta4txt");
+		$("[name='observacion_respuesta4txt']").parent().toggle(@respuestas.respuesta4txt.length()!=0);
+					
+		$("[id='respuesta5Txt']").val("@respuestas.respuesta5txt");
+		$("[name='observacion_respuesta5txt']").parent().toggle(@respuestas.respuesta5txt.length()!=0);
+		
+		
+		/// Deshabilita los controles de las preguntas
+		for(a=1;a<=5;a++){
+			$("[name='respuesta"+a+"'], [name='respuesta"+a+"Txt']").prop("disabled", true);			
+		}		
+		
+		/// LEER OBSERVACIONES
+		
+		@for(observa<-respuestas.observaciones){
+			$("[name='observacion_@observa.respuesta']").val("@observa.descripcion");
+			$("[name='observacion_@observa.respuesta']").css("background-color","#FFFDDD");
+			$("[name='observacion_@observa.respuesta']").show();
+			$("[name='btnObservacion_@observa.respuesta']").html("Quitar observación");
+			$("[name='btnObservacion_@observa.respuesta']").removeClass("btn-primary").addClass("btn-danger");
+		}			
+	}
+
+
+function otro() {
+
+}
+
+	
+</script>

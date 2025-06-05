@@ -1,0 +1,16 @@
+Para hacer el fadeIn
+
+
+Se pone como invisible el body, dado que desde el inicio del proyecto no comtemplé que las páginas se "mueven" o se sé como se forman dinámicamente, no puse el display:none el el main.scala.html, pero si lo hago mediane javascript para las páginas que requieran esa funcionalidad.
+. Se pone justo depues de la inclusión de main
+
+  @main{
+    <script>$("body").css("display","none");</script>
+    .......
+
+
+y dentro de <script></script> de la paǵina incluir:
+
+    $(window).load(function() {
+            $("body").fadeIn("slow");
+    });

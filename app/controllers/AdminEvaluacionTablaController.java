@@ -6,8 +6,6 @@ import java.util.*;
 
 import com.avaje.ebean.*;
 import controllers.util.ControladorSeguroCoordinador;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeComparator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -83,7 +83,7 @@ public class Recurso extends Model {
     public Versionanterior versionanterior;
     
     
-    @Size(max=250)
+    @Size(max=1200)
     public String sinopsis;
     
     

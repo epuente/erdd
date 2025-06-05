@@ -38,6 +38,11 @@
 							<a href="@routes.EncuestaController.conObservaciones(r.id)" role="button" class="btn btn-primary btn-block center-block" style="width: 70%">Observaciones</a>
 						</td>
 					}
+                    @if(r.estado.id==3L){
+                    <td rowspan="1">
+                        <a href="@routes.EncuestaController.encuestaTerminadaLectura(r.id)" role="button" class="btn btn-primary btn-block center-block" style="width: 70%">Ver encuesta</a>
+                    </td>
+                    }
 				</tr>
 			}
 		</table>

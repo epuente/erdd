@@ -97,8 +97,7 @@ public class CoordinadorController extends ControladorSeguroCoordinador {
 		int p = EvaluacionProrroga.find.where().eq("autorizado","0").findRowCount();
 		registros.put("solPro", p);
 		
-System.out.println(		routes.AdminController.index().url()  );	
-		
+        //System.out.println(		routes.AdminController.index().url()  );
 		
     	return ok(views.html.resumenCoordinador.render(registros));
     }	

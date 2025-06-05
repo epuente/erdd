@@ -99,7 +99,16 @@ recurso: Recurso)
 			// Muestra los campos de observaciones y habilita los correspondientes campos				
 			@for( (o,i)<-recurso.observaciones.zipWithIndex){			
 				//Campos de observacion
-				$("[name='observacion_@o.campo']").text('@o.observacion').show();
+                var b = "@o.getObservacion()";
+                alert(b);
+
+                var c = b.replaceAll("[saltoDeLinea]", "\n");
+
+                alert(c);
+
+                $("[name='observacion_@o.campo']").text('Observación realizada: '+c).addClass("alert alert-warning").show();
+
+				@*$("[name='observacion_@o.campo']").text('@o.observacion').show();*@
 				$("[name='observacion_@o.campo']").addClass("alert-warning");
 				
 				$("[name='btnObservacion_@o.campo']").html('Quitar observación');
@@ -297,7 +306,18 @@ recurso: Recurso)
 						$("[name='@o.campo']").prop("disabled",false);
 						
 						//Campos de observacion
-						$("[name='observacion_@o.campo']").text('Observacion realizada: @o.observacion').addClass("alert alert-warning").show();
+
+                var b = "@o.getObservacion()";
+                alert(b);
+
+                var c = b.replaceAll("[saltoDeLinea]", "\n");
+
+                alert(c);
+
+                $("[name='observacion_@o.campo']").text('Observación realizada: '+c).addClass("alert alert-warning").show();
+
+						@*$("[name='observacion_@o.campo']").text('Observacion realizada: @o.observacion').addClass("alert alert-warning").show();
+						*@
 						$("[name='observacion_@o.campo']").css('margin-bottom',"0px");
 					
 						$("[name='btnObservacion_@o.campo']").show();

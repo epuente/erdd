@@ -2,7 +2,7 @@
 @import helper._
 
 @main {
-	
+    <script>$("body").css("display","none");</script>
 	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/seantheme.css")"/>
 	<script src="@routes.Assets.at("javascripts/highcharts/highcharts.js")" ></script>		
 	<script src="@routes.Assets.at("javascripts/highcharts/highcharts-3d.js")" ></script>
@@ -564,6 +564,10 @@ $(function () {
 	      }); 	
 	    	return d.promise();
 	}
+
+    $(window).load(function() {
+            $("body").fadeIn("slow");
+    });
 
 </script>
 <script src="@routes.Assets.at("javascripts/utilerias.js")"></script>

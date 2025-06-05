@@ -310,6 +310,10 @@ GET		/encuestasPorRevisarAdmin				controllers.EncuestaController.encuestasPorRev
 GET		/encuestaPorRevisarAdmin				controllers.EncuestaController.encuestaPorRevisar(idEnc:Long)
 POST	/encuestaAgregarObservaciones			controllers.EncuestaController.agregarObservaciones(idEnc:Long)
 GET		/conObservacionesList					controllers.EncuestaController.conObservacionesList()
+GET		/encuestaTerminada				        controllers.EncuestaController.encuestaTerminada(idEnc:Long)
+
+GET		/encuestaTerminadaLectura				  controllers.EncuestaController.encuestaTerminadaLectura(idEnc:Long)
+
 GET		/terminadasList							controllers.EncuestaController.terminadasList()
 GET		/encConObservaciones				controllers.EncuestaController.conObservaciones(idEnc:Long)
 

@@ -34,6 +34,7 @@ tiposrecursos:List[ClasificadorEjemplo]
 
 
 @main{
+    <script>$("body").css("display","none");</script>
 	<style nonce="@session.get("nonce")">
 		.filtrado, mark  {
 			background-color:#ffffcc !important;
@@ -86,7 +87,7 @@ tiposrecursos:List[ClasificadorEjemplo]
 									<select  name="reactivo" id ="reactivo"></select>
 									<div id="nuevoReactivo" style="display: none;">
 										<label>Nuevo texto de reactivo</label>
-										<textarea name="nuevoReactivo" style="min-width: 100%" rows="4"></textarea>
+										<textarea name="nuevoReactivo" style="min-width: 100%" rows="4" maxlength="900"></textarea>
 									</div>
 									<div id="campos">
 									   <table class="table table-bordered table-striped" id="tablaAgregarReactivo"  style="width: 100%">
@@ -1313,6 +1314,10 @@ alert("error hjk6");
 
 		});
 	}
+
+    $(window).load(function() {
+            $("body").fadeIn(1800);
+    });
 
 </script>
 

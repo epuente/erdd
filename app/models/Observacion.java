@@ -26,7 +26,19 @@ public class Observacion extends Model{
 	public Recurso recurso;
 	
 	public String campo;
-	@Required
+
+    public String getObservacion() {
+        return observacion.replaceAll("\\r\\n", "[saltoDeLinea]");
+    }
+
+    public void setObservacion(String observacion) {
+        if (observacion.startsWith("Observación realizada: ")){
+            this.observacion = observacion.replace("Observación realizada: ","");
+        } else
+            this.observacion = observacion;
+    }
+
+    @Required
 	@NotNull
     @Size(max=600)
 	public String observacion;

@@ -23,9 +23,15 @@ public class EvaluacionObservacionGral extends Model {
 	
 	@OneToOne
 	public Recursoevaluador recursoevaluador;
-	
-	
-	@MaxLength(2000)
+
+
+    public String getObservacion() {
+        return observacion.replaceAll("\\r\\n", "[saltoDeLinea]");
+    }
+
+
+
+    @MaxLength(2000)
 	@Size(max=2000)
 	public String observacion;
 	
@@ -39,5 +45,6 @@ public class EvaluacionObservacionGral extends Model {
     
     @OneToOne(mappedBy="evaluacionobservaciongral", cascade=CascadeType.ALL)
     public EvaluacionObservacionObservacionGral observacionobservaciongral;
+
 }
  

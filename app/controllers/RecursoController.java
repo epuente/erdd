@@ -269,11 +269,11 @@ for (Map.Entry<String, String> entry : otro.entrySet())
 	Observacion o =  new Observacion();
     o.recurso = r;		                
     if (entry.getKey().compareTo("observacion_dirigidoa.id[0]") == 0){
-    	System.out.println("   ??????????????????????????????????????????");		                	
     	o.campo="dirigidoa.id[]";
     } else
     	o.campo =entry.getKey().substring(12);
-    o.observacion = entry.getValue().replace("\n", "").replace("\r", "");
+    //o.observacion = entry.getValue().replace("\n", "").replace("\r", "");
+    o.setObservacion(entry.getValue());
     r.observaciones.add(o);	    
 }
 System.out.println("---------------------------------------");
