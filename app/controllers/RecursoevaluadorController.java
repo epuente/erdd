@@ -17,6 +17,7 @@ import classes.MyFooter;
 import classes.PdfFondo;
 import com.avaje.ebean.Expr;
 import com.avaje.ebean.annotation.Transactional;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.itextpdf.text.*;
 import classes.miCorreo;
 import classes.miPdf;
@@ -50,6 +51,7 @@ import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 
 
 import org.apache.poi.xwpf.usermodel.*;
+import org.json.JSONObject;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 import org.apache.poi.util.Units;
 import java.io.FileOutputStream;
@@ -1797,6 +1799,22 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
     }
 
 
+    public static Result imprimirEvaluacionGral(Long id) throws DocumentException {
+        System.out.println("Desde RecursoevaluadorController.imprimirEvaluacionGral");
+        ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
+        JSONObject retorno = new JSONObject();
+        System.out.println("id: "+id);
+        miPdf mipdf = new miPdf(id);
+        mipdf.baos = baosPDF;
+        mipdf.generaImpresionEvaGral();
+        response().setContentType("application/pdf");
+        response().setHeader("Content-Disposition", "inline; filename=DetalleETPRDD_" + mipdf.getClaveControl()+".pdf");
+        response().setHeader("Access-Control-Allow-Origin", "*");
+        response().setHeader("Allow", "*");
+        response().setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
+        response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Referer, User-Agent");
+        return ok (  mipdf.baos.toByteArray() );
+    }
 
 }
 

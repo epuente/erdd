@@ -1,9 +1,9 @@
-2025-06-05 12:55:25,883 - [INFO] - from play in pool-20-thread-4 
+2025-06-11 13:10:59,958 - [INFO] - from play in pool-6-thread-3 
 Listening for HTTP on /0:0:0:0:0:0:0:0:8089
 
-2025-06-05 12:55:35,850 - [INFO] - from play in play-internal-execution-context-1 
+2025-06-11 13:11:37,465 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev6
 
-2025-06-05 12:55:36,795 - [INFO] - from play in play-internal-execution-context-1 
+2025-06-11 13:11:39,326 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 

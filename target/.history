@@ -326,3 +326,25 @@ run 8089
 clean
 dist
 exit
+run 8089
+reload
+compile
+run 8089
+clean
+reload
+compile
+run 8089
+clean;reload;
+;clean;reload
+compile
+run 8089
+exit
+run 8089
+clean
+reload
+dist
+exit
+run 8089
+clean
+dist
+exit

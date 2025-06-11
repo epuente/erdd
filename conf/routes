@@ -362,6 +362,7 @@ GET		/Acerca									controllers.Application.Acerca()
 
 GET		/evaluada/:idRe  				    controllers.RecursoevaluadorController.evaluada(idRe:Long, tipo:String?="0" )
 GET		/evaluadas/:idRecurso  				controllers.RecursoevaluadorController.evaluadas(idRecurso:Long, tipo:String?="0")
+GET    /imprimirEvaluacionGral/:idRecurso  controllers.RecursoevaluadorController.imprimirEvaluacionGral(idRecurso:Long)
 
 GET    /conEncuestasAceptadas				controllers.EncuestaController.conEncuestasAceptadas()
 

@@ -1,25 +1,18 @@
 package classes;
 
 import java.io.ByteArrayOutputStream;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.HyphenationAuto;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import models.Aspecto;
-import models.RecursoAutor;
-import models.Dirigidoa;
-import models.Formatoentrega;
-import models.Modalidad;
-import models.Recurso;
-import models.Recursoevaluador;
+import models.*;
 import models.Version;
-import models.recursoDirigidoa;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Objects;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class miPdf {
@@ -53,8 +46,8 @@ public class miPdf {
 		
 		List<Version> versiones = Version.lista();
 		List<Formatoentrega> fe = Formatoentrega.lista();
-		List<Modalidad> modalidades = models.Modalidad.find.all();
-		List<Dirigidoa> dirigidoa =models.Dirigidoa.find.all();
+		List<Modalidad> modalidades = Modalidad.find.all();
+		List<Dirigidoa> dirigidoa = Dirigidoa.find.all();
 		ArrayList<Long> rdir = new ArrayList<>();
 		recursoDirigidoa.find.where().eq("recurso.id", this.id).findList().forEach(z -> {
 			rdir.add(z.id);
@@ -854,20 +847,275 @@ doc.add(tabla13);
 	        
 			tablaAut.getDefaultCell().setBorderColor(BaseColor.LIGHT_GRAY);
 			tablaAut.completeRow();
-	        
-	        
-	        
+
 	        doc.add(tabla);
 	        //doc.add(tablaPC);
 	        doc.add(tablaAut);
 	        doc.add(tablaOa);
-	        
-	        
-	       
-	        
-	        
+
 	        doc.close();
 	        docWriter.close();			
 	}
+
+    public void generaImpresionEvaGral() throws DocumentException {
+        System.out.println("Desde miPdf.generaImpresionEvaGral");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy kk:mm:ss");
+        List<Aspecto> aspectos = Aspecto.find.orderBy("id").findList();
+        String[] arrResumen = {"Calificación aspecto", "Total de reactivos", "Si cumple", "No cumple", "Parcialmente", "No aplica"};
+        // Configurar hyphenation para español
+        // Parámetros: idioma, país, guiones mínimos al inicio, guiones mínimos al final
+        HyphenationAuto hyphenation = new HyphenationAuto("es", "ES", 2, 2);
+
+
+        Recurso r = Recurso.find.byId(this.id);
+
+        Document doc = new Document(PageSize.LETTER.rotate(), 40,40,90,40);
+        PdfWriter docWriter;
+        docWriter = PdfWriter.getInstance(doc, this.baos);
+
+        MyFooter auxPie = new MyFooter();
+        auxPie.titulo = "Reporte detalle de ETPRDD del Recurso Didáctico Digital:\n"+r.titulo;
+        docWriter.setPageEvent(auxPie);
+
+        doc.addTitle("Detalle de evaluación");
+        doc.addCreationDate();
+        doc.addCreator("SERDD");
+        doc.addSubject("Reporte de detalle de la evaluación teórico-práctica del recurso didáctico digital "+r.titulo);
+        doc.open();
+
+        // Font fontbold = FontFactory.getFont("Cournier-bold", 10, Font.BOLD);
+        Font fontCuerpo = FontFactory.getFont("Cournier",8);
+        Font fontCuerpo0 = FontFactory.getFont("Cournier",8, BaseColor.LIGHT_GRAY);
+        Font fontLMS = FontFactory.getFont("Cournier",7);
+        Font fontLMSItalic = FontFactory.getFont("Cournier",7, Font.ITALIC);
+
+
+        PdfPTable tabla = new PdfPTable(20);
+        tabla.setWidthPercentage(100);
+        tabla.setSpacingBefore(20);
+
+        PdfPCell celda = new PdfPCell( new Phrase("Identificación")  );
+        celda.setPadding(6);
+
+        celda.setColspan(20);
+        celda.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        celda.setBackgroundColor(BaseColor.LIGHT_GRAY); celda.setBorderColor(BaseColor.LIGHT_GRAY);
+        tabla.addCell(celda);
+
+        celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celda.setPhrase( new Phrase("Título del recurso", fontCuerpo)  );celda.setBorderColor(BaseColor.LIGHT_GRAY); celda.setBackgroundColor(BaseColor.WHITE);
+        celda.setColspan(3);
+        tabla.addCell(celda);
+        celda.setPhrase(new Phrase(r.titulo, fontCuerpo) );
+        celda.setColspan(11);
+        tabla.addCell(celda);
+        celda.setPhrase(new Phrase("Clave de control", fontCuerpo)  );
+        celda.setColspan(3);
+        tabla.addCell(celda);
+        celda.setPhrase( new Phrase(r.numcontrol, fontCuerpo)  );
+        celda.setColspan(3);
+        tabla.addCell(celda);
+
+
+
+        celda.setPhrase(new Phrase("Dependencia politécnica", fontCuerpo)  );
+        celda.setColspan(4);
+        tabla.addCell(celda);
+        celda.setPhrase( new Phrase(r.unidadacademica.nombre, fontCuerpo)  );
+        celda.setColspan(16);
+        tabla.addCell(celda);
+
+
+        //tabla.addCell(celda);
+
+        celda.setPhrase(new Phrase("Calificación general", fontCuerpo)  );
+        celda.setColspan(4);
+        tabla.addCell(celda);
+        celda.setPhrase( new Phrase(r.calificacion.calificacion.toString()+",  "+r.calificacionLetraGral(), fontCuerpo)  );
+        celda.setColspan(4);
+        tabla.addCell(celda);
+        celda.setPhrase(new Phrase("Fecha de evaluación", fontCuerpo)  );
+        celda.setColspan(4);
+        tabla.addCell(celda);
+        celda.setPhrase( new Phrase( sdf.format(r.calificacion.auditinsert), fontCuerpo)  );
+        celda.setColspan(12);
+        tabla.addCell(celda);
+        tabla.completeRow();
+
+        doc.add(tabla);
+
+        //  Resumen
+        PdfPTable tablaResumen = new PdfPTable(5);
+        tablaResumen.setWidthPercentage(100);
+        tablaResumen.setSpacingBefore(20);
+        tablaResumen.getDefaultCell().setBorderColor(BaseColor.LIGHT_GRAY);
+
+        PdfPCell celdaResumen = new PdfPCell( new Phrase("Resumen")  );
+        celdaResumen.setPadding(6);
+        celdaResumen.setColspan(5);
+        celdaResumen.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        celdaResumen.setBackgroundColor(BaseColor.LIGHT_GRAY); celdaResumen.setBorderColor(BaseColor.LIGHT_GRAY);
+        tablaResumen.addCell(celdaResumen);
+
+        celdaResumen.setHorizontalAlignment(Element.ALIGN_LEFT);
+        celdaResumen.setPhrase( new Phrase("", fontCuerpo)  );celdaResumen.setBorderColor(BaseColor.LIGHT_GRAY); celdaResumen.setBackgroundColor(BaseColor.WHITE);
+        celdaResumen.setColspan(1);
+        tablaResumen.addCell(celdaResumen);
+
+        for (Aspecto aspecto: aspectos) {
+
+            celdaResumen.setPhrase(new Phrase(aspecto.descripcion, fontCuerpo) );
+            celdaResumen.setHorizontalAlignment(Element.ALIGN_CENTER);
+            celdaResumen.setColspan(1);
+            tablaResumen.addCell(celdaResumen);
+        }
+
+        for (String x : arrResumen){
+            celdaResumen.setPhrase(new Phrase(x, fontCuerpo) );
+            celdaResumen.setHorizontalAlignment(Element.ALIGN_LEFT);
+            celdaResumen.setColspan(1);
+
+            tablaResumen.addCell(celdaResumen);
+
+            for (RecursoCalificacionA calificacionesAspecto : r.calificacionesAspectos){
+                celdaResumen.setHorizontalAlignment(Element.ALIGN_CENTER);
+                // Calificación del aspecto
+                if (  Arrays.asList(arrResumen).indexOf(x) == 0 ) {
+                    celdaResumen.setPhrase(new Phrase(calificacionesAspecto.calificacion.toString(), fontCuerpo));
+                }
+                // Número total reactivos
+                if (  Arrays.asList(arrResumen).indexOf(x) == 1 ) {
+                    Recursoevaluador unAspecto = r.recursoevaluadores.stream().filter(f1 -> f1.aspecto.id == calificacionesAspecto.aspecto.id).findFirst().get();
+                    long tr = unAspecto.evaluaciones.size();
+                    celdaResumen.setPhrase(new Phrase( Long.toString(tr), fontCuerpo));
+                }
+                // Número total de respuestas "Si cumple" valor 2
+                if (  Arrays.asList(arrResumen).indexOf(x) == 2 ) {
+                    Recursoevaluador unAspecto = r.recursoevaluadores.stream().filter(f1 -> f1.aspecto.id == calificacionesAspecto.aspecto.id).findFirst().get();
+                    long respSiCumple = unAspecto.evaluaciones.stream().filter(f->f.respuesta==2).count();
+                    celdaResumen.setPhrase(new Phrase( Long.toString(respSiCumple), fontCuerpo));
+                }
+
+                // Número total de respuestas "No cumple" valor 0
+                if (  Arrays.asList(arrResumen).indexOf(x) == 3 ) {
+                    Recursoevaluador unAspecto = r.recursoevaluadores.stream().filter(f1 -> f1.aspecto.id == calificacionesAspecto.aspecto.id).findFirst().get();
+                    long respNoCumple = unAspecto.evaluaciones.stream().filter(f->f.respuesta==0).count();
+                    celdaResumen.setPhrase(new Phrase( Long.toString(respNoCumple), fontCuerpo));
+                }
+
+                // Número total de respuestas "Parcialmente" valor 1
+                if (  Arrays.asList(arrResumen).indexOf(x) == 4 ) {
+                    Recursoevaluador unAspecto = r.recursoevaluadores.stream().filter(f1 -> f1.aspecto.id == calificacionesAspecto.aspecto.id).findFirst().get();
+                    long parcialmente = unAspecto.evaluaciones.stream().filter(f->f.respuesta==1).count();
+                    celdaResumen.setPhrase(new Phrase( Long.toString(parcialmente), fontCuerpo));
+                }
+
+                // Número total de respuestas "No aplica" valor -1
+                if (  Arrays.asList(arrResumen).indexOf(x) == 5 ) {
+                    Recursoevaluador unAspecto = r.recursoevaluadores.stream().filter(f1 -> f1.aspecto.id == calificacionesAspecto.aspecto.id).findFirst().get();
+                    long noaplica = unAspecto.evaluaciones.stream().filter(f->f.respuesta==-1).count();
+                    celdaResumen.setPhrase(new Phrase( Long.toString(noaplica), fontCuerpo));
+                }
+
+                celdaResumen.setColspan(1);
+                tablaResumen.addCell(celdaResumen);
+            }
+        }
+        doc.add(tablaResumen);
+
+
+        //  Detalle
+        for (Aspecto aspecto: aspectos) {
+
+            PdfPTable tablaD = new PdfPTable(4);
+            tablaD.setWidthPercentage(100);
+            tablaD.setSpacingBefore(20);
+            tablaD.getDefaultCell().setBorderColor(BaseColor.LIGHT_GRAY);
+
+            PdfPCell celdaD = new PdfPCell( new Phrase("Detalle del aspecto: "+aspecto.descripcion)  );
+            celdaD.setPadding(6);
+            celdaD.setColspan(4);
+            celdaD.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            celdaD.setBackgroundColor(BaseColor.LIGHT_GRAY);celdaD.setBorderColor(BaseColor.LIGHT_GRAY);
+            tablaD.addCell(celdaD);
+
+            Recursoevaluador unAspecto = r.recursoevaluadores.stream().filter(f1 -> f1.aspecto.id ==
+                    aspecto.id).findFirst().get();
+
+            //////////////
+            List<Evaluacion> er = Evaluacion.find.where().eq("recursoevaluador.id", unAspecto.id).findList();
+            ArrayList<Long> arrIds = new ArrayList<>();
+            for ( Evaluacion a : er){
+                arrIds.add(a.evaluaciontabla.id);
+            }
+            List<EvaluacionTabla> yy = EvaluacionTabla.find.where().idIn(arrIds)
+                    .findList();
+            //////////////
+
+            //System.out.println("aspecto "+unAspecto.aspecto.descripcion);
+            //for ( EvaluacionTabla a: EvaluacionTabla.searchByRecursoEvaluadorId(unAspecto.id)){
+            for ( EvaluacionTabla a: yy){
+                //System.out.println("    id reactivo: "+a.reactivo.id+"  "+a.reactivo.descripcion.substring(0, 10));
+
+                PdfPCell celdaCol = new PdfPCell();
+                celdaCol.setPadding(4);
+                celdaCol.setColspan(1);
+                celdaCol.setBorderColor(BaseColor.LIGHT_GRAY);
+
+                celdaCol.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                celdaCol.addElement(new Phrase("id reactivo: " + a.reactivo.id, fontLMSItalic));
+
+                Paragraph p = new Paragraph(a.reactivo.descripcion, fontCuerpo);
+                //p.setAlignment(Element.ALIGN_JUSTIFIED_ALL);
+                p.setHyphenation(new HyphenationAuto("es", "ES", 2, 2));
+                celdaCol.addElement(p);
+                //celdaCol.addElement(   new Phrase(eva.evaluaciontabla.reactivo.descripcion, fontCuerpo)   );
+                celdaCol.setHorizontalAlignment(Element.ALIGN_JUSTIFIED);
+                PdfPTable tablaInterna = new PdfPTable(2);
+                tablaInterna.setWidthPercentage(100);
+                //tablaInterna.setHorizontalAlignment(Element.ALIGN_CENTER);
+                tablaInterna.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+                tablaInterna.setSpacingBefore(10);
+
+                //unAspecto.evaluaciones.forEach(t->System.out.println("   "+t.evaluaciontabla.reactivo.id+"  "+   (Objects.equals(t.evaluaciontabla.reactivo.id, a.reactivo.id))   ));
+
+
+                Evaluacion eg = unAspecto.evaluaciones.stream().filter(f-> Objects.equals(f.evaluaciontabla.reactivo.id, a.reactivo.id)).findFirst().get();
+
+                tablaInterna.addCell(new Phrase("No cumple", (eg.respuesta == 0) ? fontCuerpo : fontCuerpo0));
+                tablaInterna.addCell(new Phrase("Cumple parcialmente", (eg.respuesta == 1) ? fontCuerpo : fontCuerpo0));
+                tablaInterna.addCell(new Phrase("Si cumple", (eg.respuesta == 2) ? fontCuerpo : fontCuerpo0));
+                PdfPCell cellNA = new PdfPCell(new Phrase("No aplica"));
+                tablaInterna.addCell(new Phrase("No aplica", (eg.respuesta == -1) ? fontCuerpo : fontCuerpo0));
+                cellNA.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                celdaCol.addElement(tablaInterna);
+                tablaD.addCell(celdaCol);
+            }
+            tablaD.completeRow();
+            doc.add(tablaD);
+            // ¿Se tienen observaciones para este aspecto?
+            if (unAspecto.observacionEvaluacion!=null) {
+                PdfPTable tablaOb = new PdfPTable(4);
+                tablaOb.setWidthPercentage(100);
+                tablaOb.setSpacingBefore(2);
+                tablaOb.getDefaultCell().setBorderColor(BaseColor.LIGHT_GRAY);
+
+                String lasObservaciones = unAspecto.observacionEvaluacion.getObservacion();
+                lasObservaciones = lasObservaciones.replace("[saltoDeLinea]","\n");
+
+                PdfPCell celdaOb = new PdfPCell(new Phrase("Observaciones al aspecto: " + aspecto.descripcion+"\n"+lasObservaciones, fontCuerpo));
+                celdaOb.setPadding(6);
+                celdaOb.setColspan(4);
+                celdaOb.setHorizontalAlignment(Element.ALIGN_LEFT);
+                celdaOb.setBackgroundColor(BaseColor.WHITE);
+                celdaOb.setBorderColor(BaseColor.LIGHT_GRAY);
+                tablaOb.addCell(celdaOb);
+                doc.add(tablaOb);
+            }
+        }
+        doc.close();
+        docWriter.close();
+    }
+
 
 }

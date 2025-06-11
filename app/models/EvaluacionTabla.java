@@ -56,7 +56,7 @@ public class EvaluacionTabla extends Model{
         return find.where().eq("version.id",idVersion).eq("reactivo.id", idReactivo).findList();
     }  	
     
-    public static List<EvaluacionTabla> searchByAspecto(Long idRecursoEvaluador){
+    public static List<EvaluacionTabla> searchByRecursoEvaluadorId(Long idRecursoEvaluador){
     	  List<Evaluacion> er = Evaluacion.find.where().eq("recursoevaluador.id", idRecursoEvaluador).findList();
 		 ArrayList<Long> arrIds = new ArrayList<>();
 		 for ( Evaluacion a : er){ 
