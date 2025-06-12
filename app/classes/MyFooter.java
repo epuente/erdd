@@ -168,7 +168,9 @@ public class MyFooter implements PdfPageEvent {
 	@Override
 	public void onStartPage(PdfWriter writer, Document doc) {
 		if (this.emisor != null) {
-            if (!this.emisor.contentEquals("admin") && !this.emisor.contentEquals("formatoOV")) {
+            if (!this.emisor.contentEquals("admin")
+                    && !this.emisor.contentEquals("formatoOV")
+                    && !this.emisor.contentEquals("detalleETPRDD")) {
                 PdfContentByte cb = writer.getDirectContent();
                 Image watermark_image = null;
                 try {

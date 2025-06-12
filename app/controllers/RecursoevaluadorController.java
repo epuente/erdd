@@ -1806,15 +1806,18 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
         System.out.println("id: "+id);
         miPdf mipdf = new miPdf(id);
         mipdf.baos = baosPDF;
-        mipdf.generaImpresionEvaGral();
+        mipdf.generaImpresionEvaGral2();
         response().setContentType("application/pdf");
         response().setHeader("Content-Disposition", "inline; filename=DetalleETPRDD_" + mipdf.getClaveControl()+".pdf");
-        response().setHeader("Access-Control-Allow-Origin", "*");
-        response().setHeader("Allow", "*");
-        response().setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
-        response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Referer, User-Agent");
+        //response().setHeader("Access-Control-Allow-Origin", "*");
+        //response().setHeader("Allow", "*");
+        //response().setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
+        //response().setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Referer, User-Agent");
         return ok (  mipdf.baos.toByteArray() );
     }
+
+
+
 
 }
 

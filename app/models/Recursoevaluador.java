@@ -132,7 +132,7 @@ public class Recursoevaluador extends Model{
 
     public Float calificacionPorcentajeAspecto(){
         Integer calMaxima = this.evaluaciones.size();
-        System.out.println("CALMAXIMA  "+calMaxima);
+        //System.out.println("CALMAXIMA  "+calMaxima);
         Integer acum = 0;
         Integer numNA = 0;
         System.out.println("\n");
@@ -144,12 +144,12 @@ public class Recursoevaluador extends Model{
                 numNA++;
             }
         }
-        System.out.println("\n idRe: "+ this.id);
-        System.out.println(" Acumulado: "+ acum);
-        System.out.println(" (calMaxima - numNA)*2: "+ (calMaxima - numNA)*2);
-        //return (float) (  (acum*25) / ((calMaxima - numNA)*2)  );
+        //System.out.println("\n idRe: "+ this.id);
+        //System.out.println(" Acumulado: "+ acum);
+        //System.out.println(" (calMaxima - numNA)*2: "+ (calMaxima - numNA)*2);
+
         float c = (float) (  (acum*25) / ((calMaxima - numNA)*2)  );
-        System.out.println("calificacion "  +  (Math.round(c * 10.0) / 10.0) );
+        //System.out.println("calificacion "  +  (Math.round(c * 10.0) / 10.0) );
         return (float) (Math.round(c * 10.0) / 10.0);
     }
 

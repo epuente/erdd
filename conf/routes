@@ -364,6 +364,7 @@ GET		/evaluada/:idRe  				    controllers.RecursoevaluadorController.evaluada(id
 GET		/evaluadas/:idRecurso  				controllers.RecursoevaluadorController.evaluadas(idRecurso:Long, tipo:String?="0")
 GET    /imprimirEvaluacionGral/:idRecurso  controllers.RecursoevaluadorController.imprimirEvaluacionGral(idRecurso:Long)
 
+
 GET    /conEncuestasAceptadas				controllers.EncuestaController.conEncuestasAceptadas()
 
 GET		/autores							controllers.AutorController.list()
