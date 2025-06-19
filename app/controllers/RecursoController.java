@@ -434,7 +434,7 @@ System.out.println("---------------------------------------");
         auxIds.forEach(d->System.out.println("    "+ d));
 
         System.out.println("r: "+r);
-                List<Evaluacion> er = Evaluacion.find.where().in("recursoevaluador.id", auxIds).findList();
+        List<Evaluacion> er = Evaluacion.find.where().in("recursoevaluador.id", auxIds).findList();
 
         System.out.println("respuestas: "+er.size());
         //System.out.println(er.get(0).evaluaciontabla.version.id+"    "+aspecto);

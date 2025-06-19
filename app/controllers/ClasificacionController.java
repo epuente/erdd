@@ -29,7 +29,7 @@ public class ClasificacionController extends ControladorSeguroCoordinador {
 	
     public static Result list(){    	
     	List<Recurso>  r = Recurso.find.where().eq("estado.id", 5L).findList();
-        System.out.println("tamaño r : "+r.size());
+        //System.out.println("tamaño r : "+r.size());
     	return ok(list.render(r ));    	
     }
     
@@ -38,13 +38,12 @@ public class ClasificacionController extends ControladorSeguroCoordinador {
 		Form<Clasificacion> reForm =	form(Clasificacion.class);
 		
 		List<ClasificadorCriterio3> tempo = ClasificadorCriterio3.find.fetch("catalogo").findList();
-		
+		/*
 		tempo.forEach(a->
 		System.out.print(a.id+"    "+a.criterio1.id+"      "+a.criterio2.id+"     " +a.catalogo.descripcion+"\n")
-		
-		
-				
 				);
+
+		 */
 		
 		return ok(  create.render(reForm, id, 
 						ClasificadorCriterio2.find.all(), 
@@ -70,13 +69,13 @@ public class ClasificacionController extends ControladorSeguroCoordinador {
 
 
 		//Es cancelable?
-        System.out.println(" *  00000");
+        //System.out.println(" *  00000");
         List<ClasificadorCancelable> cancela = ClasificadorCancelable.find.where()
         		.eq("criterio1.id", c.criterio1.id)
         		.eq("criterio2.id", c.criterio2.id)
         		.eq("criterio3.id", c.criterio3.id).findList();
         		//.eq("criterio3.id", cc3.id).findList();
-        System.out.println(" *  00010");
+        //System.out.println(" *  00010");
         if (  cancela.isEmpty()  ){
 			System.out.println("No es cancelable");
 			r.clasificacion.observacion = null;        	
@@ -166,7 +165,8 @@ public class ClasificacionController extends ControladorSeguroCoordinador {
     
     
     public static Result ejemplos(Long c1, Long c2, Long c3){
-        System.out.println(c1+" - "+c2+" - "+c3);
+        System.out.println("Desde ClasificacionController.ejemplos");
+        //System.out.println(c1+" - "+c2+" - "+c3);
 		JSONArray losDatos = new JSONArray();
     	List<ClasificadorEjemplo> ejemplos = ClasificadorEjemplo.find.where()
     			.eq("criterio1.id", c1)
@@ -187,7 +187,7 @@ public class ClasificacionController extends ControladorSeguroCoordinador {
 				System.out.println("Ocurrio un error: "+e.getMessage()+"\n\n"+e.getCause());
 			}
     	}    
-        System.out.println("retornano:"+losDatos.toString());
+        //System.out.println("retornano:"+losDatos.toString());
 		return ok ( losDatos.toString() );
     }
 
@@ -197,7 +197,7 @@ public class ClasificacionController extends ControladorSeguroCoordinador {
     	long c1 = json.findPath("c1").asLong();
     	long c2 = json.findPath("c2").asLong();
     	long c3 = json.findPath("c3").asLong();
-    	System.out.println(c1+"  "+c2+"  "+c3+"       "+ClasificadorCriterio3.find.byId(c3).catalogo.id);
+    	//System.out.println(c1+"  "+c2+"  "+c3+"       "+ClasificadorCriterio3.find.byId(c3).catalogo.id);
     	List<ClasificadorNoevaluable> r = ClasificadorNoevaluable.find.where()
     		.eq("criterio1.id", c1).eq("criterio2.id", c2).eq("criterio3.id", ClasificadorCriterio3
 					.find.byId(c3).catalogo.id)
@@ -206,7 +206,7 @@ public class ClasificacionController extends ControladorSeguroCoordinador {
         		.eq("criterio1.id", c1).eq("criterio2.id", c2).eq("criterio3.id", ClasificadorCriterio3
     					.find.byId(c3).catalogo.id)
         		.findList();    	
-    	System.out.println(  "{\"noevaluable\":"+  (r.size()>0)+", \"cancelable\":"+  (rc.size()>0)+" }"   );
+    	//System.out.println(  "{\"noevaluable\":"+  (r.size()>0)+", \"cancelable\":"+  (rc.size()>0)+" }"   );
     	return ok ( "{\"noevaluable\":"+  (r.size()>0)+", \"cancelable\":"+  (rc.size()>0)+" }" );
     }
     

@@ -9,11 +9,16 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.util.Date;
+import java.util.Objects;
 
 // Se almacena la información de los directores de DEV, EMS, ES y Posgrado
 @Entity
 public class Director extends Model {
     private static final long serialVersionUID = 1L;
+
+    public Long getId() {
+        return id;
+    }
 
     @Id
     public Long id;
@@ -39,6 +44,9 @@ public class Director extends Model {
 
     public String nombreConTitulo(){
         return titulo+" "+nombreCompleto();
+    }
+    public String nombreConTituloArticulo(){
+        return ((Objects.equals(this.genero, "M"))?"el":"la")+" "+titulo+" "+nombreCompleto();
     }
 
     public String nombreCompleto(){

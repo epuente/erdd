@@ -445,9 +445,9 @@
             mensajesError += "Debe escribir La sinopsis del recurso.<br>";
         }
 
-		// VAlida que no se sobrepase 1200 caracteres la sinopsis
-		if ($("#sinopsis").val().length >= 1200){
-			$("#sinopsis").parent().find(".help-block").html('<ul class="list-unstyled"><li>Este campo ha excedido los 600 caracteres</li></ul>');
+		// VAlida que no se sobrepase 1000 caracteres la sinopsis
+		if ($("#sinopsis").val().length >= 1000){
+			$("#sinopsis").parent().find(".help-block").html('<ul class="list-unstyled"><li>Este campo ha excedido los 1000 caracteres</li></ul>');
 			$("#sinopsis").parent().parent().addClass("has-error");
 			$("#sinopsis").parent().parent().addClass("error");
 			mensajesError = mensajesError + "La sinopsis no debe exceder los 1000 caracteres.<br>";
@@ -644,12 +644,15 @@
         $(this).keydown();
     });
 
+
     $(document).on("paste",".validaRegExp", function (e) {
-        var patron = $(this).attr("patron");
-        var pastedData = e.originalEvent.clipboardData.getData('text');
-        if (   !eval("/^"+patron+"$/").test(pastedData)){
-            alert("Al menos uno de los caracteres que intenta copiar no es válido.");
-            return false;
+        if ( $(this).attr("id")!="url"){
+            var patron = $(this).attr("patron");
+            var pastedData = e.originalEvent.clipboardData.getData('text');
+            if (   !eval("/^"+patron+"$/").test(pastedData)){
+                alert("Al menos uno de los caracteres que intenta copiar no es válido.");
+                return false;
+            }
         }
     });
 

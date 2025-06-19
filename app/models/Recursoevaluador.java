@@ -138,7 +138,7 @@ public class Recursoevaluador extends Model{
         System.out.println("\n");
         for (Evaluacion rvResp : this.evaluaciones){
             if (rvResp.respuesta != -1){
-                System.out.print("   "+rvResp.respuesta);
+                //System.out.print("   "+rvResp.respuesta);
                 acum+=rvResp.respuesta;
             } else {
                 numNA++;

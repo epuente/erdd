@@ -17,6 +17,7 @@ public class AdminController extends ControladorSeguro {
 	
     
 	public static Result index(){
+        System.out.println("Desde AdminController.index");
 		response().setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 		response().setHeader("Pragma", "no-cache"); // HTTP 1.0.
 		response().setHeader("Expires", "0"); // Proxies.  
@@ -193,6 +194,15 @@ public class AdminController extends ControladorSeguro {
         // cta de  email de salida
         Ctacorreo cta = Ctacorreo.find.where().eq("activo", true).findUnique();
 
+        // Director DEV
+        Director directorDEV = Director.find.byId(1L);
+        // Director EMS
+        Director directorEMS = Director.find.byId(2L);
+        // Director ES
+        Director directorES = Director.find.byId(3L);
+        // Director PGD (posgrado)
+        Director directorPGD = Director.find.byId(4L);
+
         // Cantidad de Unidades académicas
         int cantidadUA = Unidadacademica.find.all().size();
 
@@ -205,6 +215,10 @@ public class AdminController extends ControladorSeguro {
 		
     	return ok(views.html.resumenAdministrador.render(registros, nodos, cols1, evaluadores,  triadaCadenas, triadaCadenas2,
                 cta,
+                directorDEV,
+                directorEMS,
+                directorES,
+                directorPGD,
                 cantidadUA,
                 cantidadEvaluadores));
     }	

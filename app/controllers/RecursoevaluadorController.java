@@ -1031,6 +1031,7 @@ public class RecursoevaluadorController  extends ControladorSeguroCoordinador {
 
 
     public static Result evaluadas(Long idRecurso, String tipo){
+        System.out.println("Desde RecursoevaluadorController.evaluadas");
         Recurso r = Recurso.find.byId(idRecurso);
         return ok ( evaluada.render( r.recursoevaluadores, tipo, r)  );
     }

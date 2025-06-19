@@ -2,7 +2,7 @@ import sbt.compiler.ComponentCompiler.javaVersion
 
 name := """erdd"""
 
-version := "1.2.8-SNAPSHOT"
+version := "1.2.9-SNAPSHOT"
 
 scalaVersion := "2.11.4"
 
@@ -80,7 +80,7 @@ libraryDependencies += "org.webjars" % "Eonasdan-bootstrap-datetimepicker" % "4.
 
 
 
-//libraryDependencies += "org.webjars.npm" % "moment" % "2.22.2"
+libraryDependencies += "org.webjars.npm" % "moment" % "2.22.2"
 //libraryDependencies += "org.webjars.npm" % "moment" % "2.29.4"
 
 

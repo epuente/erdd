@@ -2,6 +2,83 @@
 @import helper._
 @implicitFieldConstructor = @{ FieldConstructor(personalFieldConstructor.render) } 
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/recurso.css")"/>
+<style>
+
+    .pulse {
+      animation: pulse-animation 2s 5;
+    }
+
+    @@keyframes pulse-animation {
+      0% {
+        box-shadow: 0 0 0 0px rgba(256, 0, 0, 0.5);
+      }
+      100% {
+        box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+      }
+    }
+
+
+    .bounce {
+      animation: bounce 2s  3;
+    }
+    @@keyframes bounce {
+
+        80% { transform:translateY(-15%); border-color:red;}
+        90% { transform:translateY(0%); }
+        95% { transform:translateY(-7%); }
+        97% { transform:translateY(0%); }
+        99% { transform:translateY(-3%); }
+        100% { transform:translateY(0); border-color:red;}
+    }
+
+
+
+    .hithere {
+      animation: hithere 1s ease 3;
+    }
+    @@keyframes hithere {
+      30% { transform: scale(0.8); }
+      40%, 60% { transform: rotate(-20deg) scale(0.8); }
+      50% { transform: rotate(20deg) scale(0.8); }
+      70% { transform: rotate(0deg) scale(0.8); }
+      100% { transform: scale(1); }
+    }
+
+
+
+.flip {
+	backface-visibility: visible !important;
+	animation: flip 2s ease 1;
+}
+@@keyframes flip {
+	0% {
+		transform: perspective(400px) rotateY(0);
+		animation-timing-function: ease-out;
+	}
+	40% {
+		transform: perspective(400px) translateZ(150px) rotateY(170deg);
+		animation-timing-function: ease-out;
+	}
+	50% {
+		transform: perspective(400px) translateZ(150px) rotateY(190deg) scale(1);
+		animation-timing-function: ease-in;
+	}
+	80% {
+		transform: perspective(400px) rotateY(360deg) scale(.95);
+		animation-timing-function: ease-in;
+	}
+	100% {
+		transform: perspective(400px) scale(1);
+		animation-timing-function: ease-in;
+	}
+}
+
+
+
+
+
+
+</style>
 @main{
 	<div class="container-fluid">
 		<div style="display: none;" id="divGral">
@@ -103,7 +180,16 @@
 		
 		recuento();
 	//	$(".badge").hide();
-		$("#divGral").show();		
+		$("#divGral").show();
+
+		// ¿cuantos slides tiene el carrusel?
+		var nSlides = $("div.carousel-inner div.item").length;
+		console.log("nSlides: "+nSlides);
+		for (x=0;x<nSlides;x++){
+		    $("div.carousel-inner div.item:eq("+x+")").data("nSlide", x);
+		}
+
+
 	});
 
 
@@ -141,6 +227,11 @@
 			$("#terminado").val("NO");
 		}
 		toggleColorPanel( $(this).closest( ".panel-warning" )  );
+		console.log("cl "+$(this).closest("div.panel").css("border-color"))
+
+		if ($(this).closest("div.panel").css("border-color") == "rgb(255, 0, 0)"){
+		    $(this).closest("div.panel").css("border-color", "#faebcc")
+		}
 		recuento();
 	});
 	
@@ -181,7 +272,11 @@
             $("#btnEvaluar").attr("value","Guardar la evaluación y continuar más tarde");
             $("#btnEvaluar").addClass("btn-primary").removeClass("btn-success");
             $("#terminado").val("NO");
-        }		
+        }
+
+        if ($(this).closest("div.panel").css("border-color") == "rgb(255, 0, 0)"){
+		    $(this).closest("div.panel").css("border-color", "#faebcc")
+		}
 		recuento();
 	});
 	
@@ -216,6 +311,7 @@
 	});
 	
 	function recuento(){
+	    console.log("recuento")
 		texto = "";
 		ac = null; 
 		cal = null;
@@ -247,26 +343,28 @@
             $(".panel").each(function(i){
                 num =   $(this).find(".panel-title").html().substring(20, $(this).find(".panel-title").html().length-8 );
                 if ($(this).find("input[name^='califica']:checked").val()==undefined){
-                    cadenaSinContestar+=num+"  ";
+                    //cadenaSinContestar+=num+"  ";
+                    cadenaSinContestar += "<button id='btnReactivo-"+num+"' class='button btn-link btn-xm'>"+num+"</button>";
+
                 }  
                 
                 if ($(this).find("input[name^='califica']:checked").val()==-1){
-                    cadenaNoAplican+=num+"  ";
+                    cadenaNoAplican += "<button id='btnReactivo-"+num+"' class='button btn-link btn-xm'>"+num+"</button>";
                 }                  
                 
                 // No cumple (0)
                 if ($(this).find("input[name^='califica']:checked").val()==0){
-                    cadenaNoCumple+=num+"  ";
+                    cadenaNoCumple += "<button id='btnReactivo-"+num+"' class='button btn-link btn-xm'>"+num+"</button>";
                 }                
 
                 // Parcialmente cumple (1)
                 if ($(this).find("input[name^='califica']:checked").val()==1){
-                    cadenaParcialmenteCumple+=num+"  ";
+                    cadenaParcialmenteCumple+="<button id='btnReactivo-"+num+"' class='button btn-link btn-xm'>"+num+"</button>";
                 }
                 
                 // Si cumple (2)
                 if ($(this).find("input[name^='califica']:checked").val()==2){
-                    cadenaSiCumple+=num+"  ";
+                    cadenaSiCumple+="<button id='btnReactivo-"+num+"' class='button btn-link btn-xm'>"+num+"</button>";
                 }                  
                 
               });			
@@ -370,5 +468,36 @@
 		$(this).hasClass('fa-chevron-down')?  $(this).removeClass('fa-chevron-down').addClass('fa-chevron-up') : $(this).removeClass('fa-chevron-up').addClass('fa-chevron-down') ;
 	});
 	
-	
+
+    $(document).on("click", "button[id^='btnReactivo-']", function(e){
+        e.preventDefault();
+        console.log("click")
+        var id = $(this).prop("id").substring(12);
+        console.log("el id... "+id)
+
+        $("div.carousel-inner").find("div.item.active").removeClass("active");
+        $("#pnlReactivo-"+id).closest("div.item").addClass("active");
+
+        var ns = $("#pnlReactivo-"+id).closest("div.item").data("nSlide");
+
+        $("a[data-slide-to='"+ns+"']").click();
+
+
+        //$(".hithere").removeClass("hithere");
+        $("#pnlReactivo-"+id).addClass("hithere");
+
+        // ¿Los radios y el boton no han sido seleccionados?
+        var radiosCheched = $("#pnlReactivo-"+id).find("input[name^='califica']:checked").length;
+        var btnOprimidoNoAplica = $("#pnlReactivo-"+id).find("[id^='btnNA_']").prop("value");
+
+        console.log("Checados "+radiosCheched)
+        console.log(btnOprimidoNoAplica)
+
+        if ( radiosCheched==0   &&  btnOprimidoNoAplica=="No aplica" ){
+            $("#pnlReactivo-"+id).css("border-color","red");
+        }
+
+    });
+
+
 </script>

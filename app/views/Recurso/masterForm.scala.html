@@ -26,11 +26,11 @@
 					<div class="row">
 						@if(recurso == null){
 							<div class="col-md-12 reqtitulo" id="reqtitulo">
-								@inputText(recursoForm("titulo"), '_label -> "Título del Recurso Didáctico Digital*", '_help -> "", 'size->"80", 'required->"required", 'class->"form-control validaRegExp", 'maxlength->"150", 'patron->"[a-z0-9àèìòùáéíóúñ_ \"'/*-+.,()ü{}=<>:;-]+")
+								@inputText(recursoForm("titulo"), '_label -> "Título del Recurso Didáctico Digital*", '_help -> "", 'size->"80", 'required->"required", 'class->"form-control validaRegExp", 'maxlength->"150", 'patron->"[A-Za-z0-9àèìòùáéíóúñÀÈÌÒÙÁÉÍÓÚÑ_ &quot;'/*-+.,()üÜ{}=<>:;-]+")
 							</div>							
        					} else {
 							<div class="col-md-8 reqtitulo">
-								@inputText(recursoForm("titulo"), '_label -> "Título del Recurso Didáctico Digital*", '_help -> "", 'size->"80", 'required->"required", 'class->"form-control validaRegExp", 'maxlength->"150", 'patron->"[a-z0-9àèìòùáéíóúñ_ \"'/*-+.,()ü{}=<>:;-]+")
+								@inputText(recursoForm("titulo"), '_label -> "Título del Recurso Didáctico Digital*", '_help -> "", 'size->"80", 'required->"required", 'class->"form-control validaRegExp", 'maxlength->"150", 'patron->"[A-Za-z0-9àèìòùáéíóúñÀÈÌÒÙÁÉÍÓÚÑ_ &quot;'/*-+.,()üÜ{}=<>:;-]+")
 							</div>        					
       						<div class="col-md-4 center-block">
       							Clave de control:
@@ -68,10 +68,10 @@
 					</div>
 					<div class="row">
 							<div id="reqprogramaacad" class="col-md-6 requerido">
-			       				@inputText(recursoForm("programaacad"), '_label -> "Programa académico/Carrera*", '_help -> "", 'required->"required", 'class->"form-control validaRegExp", 'size->50, 'maxlength->"80", 'patron->"[a-z0-99àèìòùáéíóúñ_ \"'/*-+.,()ü{}=<>:;-]+")
+			       				@inputText(recursoForm("programaacad"), '_label -> "Programa académico/Carrera*", '_help -> "", 'required->"required", 'class->"form-control validaRegExp", 'size->50, 'maxlength->"80", 'patron->"[A-Za-z0-9àèìòùáéíóúñÀÈÌÒÙÁÉÍÓÚÑ_ \"'/*-+.,()üÜ{}=<>:;-]+")
 				       		</div>
                         <div id="requnidadaprendizaje" class="col-md-6 requerido">
-                            @inputText(recursoForm("unidadaprendizaje"), '_label -> "Unidad de aprendizaje*", '_help -> "", 'required->"required", 'class->"form-control validaRegExp", 'size->50, 'maxlength->"80", 'patron->"[a-z0-99àèìòùáéíóúñ_ \"'/*-+.,()ü{}=<>:;-]+")
+                            @inputText(recursoForm("unidadaprendizaje"), '_label -> "Unidad de aprendizaje*", '_help -> "", 'required->"required", 'class->"form-control validaRegExp", 'size->50, 'maxlength->"80", 'patron->"[A-Za-z0-9àèìòùáéíóúñÀÈÌÒÙÁÉÍÓÚÑ_ \"'/*-+.,()üÜ{}=<>:;-]+")
                         </div>
                     </div>
                     <div class="row">
@@ -178,7 +178,7 @@
 			      </div>	
 			      <div class="row">
         		  	<div id="reqsinopsis" class="col-md-12 requerido" >
-       						@textarea(recursoForm("sinopsis"), args = 'rows -> 8, 'cols -> 60, 'required->"required", 'class->"form-control validaRegExp", '_label->"Sinopsis*", 'maxlength->"250", 'style->"min-width:100%", 'patron->"[a-z0-99àèìòùáéíóúñ_ \"'/*-+.,()ü{}=<>:;-]+")
+       						@textarea(recursoForm("sinopsis"), args = 'rows -> 8, 'cols -> 60, 'required->"required", 'class->"form-control validaRegExp", '_label->"Sinopsis*", 'maxlength->"1000", 'style->"min-width:100%", 'patron->"[A-Za-z0-9àèìòùáéíóúñÀÈÌÒÙÁÉÍÓÚÑ_ \"'/*-+.,()üÜ{}=<>:;-¿?&#¡!°¬|@~]+")
       			  	</div>
    			  	  </div>
        				<div class="row">  
@@ -242,7 +242,7 @@
 								         options = options(models.Formatoentrega.options),
 								         'labelAlterna -> "Formato de entrega*", 'onclick->"javascript:clickFormato(this)", 'required->"required"
 								      )		
-								      @inputText(recursoForm("formatoentregaotro"), '_label -> "Describa:", '_help -> "", 'patron->"[a-z àèìòùáéíóúñü.,()-]+", 'class->"form-control validaRegExp")			
+								      @inputText(recursoForm("formatoentregaotro"), '_label -> "Describa:", '_help -> "", 'patron->"[A-Za-z àèìòùáéíóúñüÀÈÌÒÙÁÉÍÓÚÑÜ.,()-]+", 'class->"form-control validaRegExp")
 							</div>       				
 	       				</div>
        				</div>
@@ -260,7 +260,7 @@
        				</div>
        				<div class="row">
 	       				<div class="col-md-12">
-		       				@inputText(recursoForm("url"), '_label -> "Dirección", '_help -> "", 'class->"form-control validaRegExp", 'size->"40" ,'placeholder->"Dirección del tipo http://", 'maxlength->"80", 'patron->"[a-z0-99àèìòùáéíóúñ_ \"'/*-+.,()ü#$%&/!¿?¡{}=<>:;-]")
+		       				@inputText(recursoForm("url"), '_label -> "Dirección", '_help -> "", 'class->"form-control validaRegExp", 'size->"40" ,'placeholder->"Dirección del tipo http://", 'maxlength->"200", 'patron->"[A-Za-z0-9àèìòùáéíóúñüÀÈÌÒÙÁÉÍÓÚÑÜ_ \"'/*-+.,()ü#$%&/!¿?¡{}=<>:;-]+")
 	       				</div>
        				</div>
        				<div class="row">

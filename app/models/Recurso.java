@@ -97,7 +97,7 @@ public class Recurso extends Model {
     @Size(max=100)
     public String formatoentregaotro;
         
-    @Size(max=80)
+    @Size(max=200)
     public String url;
 
     @ManyToOne

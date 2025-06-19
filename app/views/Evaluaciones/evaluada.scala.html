@@ -168,7 +168,21 @@
     	$("div[id^='divAspecto']").each(function(i,e){
     			$(this).find("[name='cpPagina']:first").click();
     	});
+    	// Cambia el número de columnas (de 7 a 12)
+    	$("input:radio[name^='califica']").closest("div.col-lg-7").removeClass().addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12");
     	$("#div0").show();
+
+
+			// Homologa altura de paneles x aspecto
+			var max=0;
+			$("#divAspecto1").find("div.item").each(function(i,e){
+			    console.log("h "+e.clientHeight);
+				if(e.clientHeight > max){
+					max = e.clientHeight;
+				}
+				console.log("max aspecto1: "+max)
+			});
+
     });
     
 
@@ -273,18 +287,10 @@
 	    //	$("#calAspecto@r.aspecto.id").html(@r.calificacionPorcentajeAspecto());
 			
 			// Pone lineas de color
-			$("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='-1']:checked").closest(".panel-body").before("<div class='lineaColorNA'></div>")
-	    	$("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='2']:checked").closest(".panel-body").before("<div class='lineaColor2'></div>")
-	    	$("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='1']:checked").closest(".panel-body").before("<div class='lineaColor1'></div>")
-			$("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='0']:checked").closest(".panel-body").before("<div class='lineaColor0'></div>")
-			
-			// Homologa altura de paneles x aspecto
-			var max=0;
-			$("#divAspecto@r.aspecto.id .panel-body").each(function(i){
-				if($(this).height() > max){
-					max = $(this).height();	
-				}
-			});
+			$("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='-1']:checked").closest(".panel-body").before("<div class='lineaColorNA'></div>");
+	    	$("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='2']:checked").closest(".panel-body").before("<div class='lineaColor2'></div>");
+	    	$("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='1']:checked").closest(".panel-body").before("<div class='lineaColor1'></div>");
+			$("#divAspecto@r.aspecto.id input:radio[name^='califica'][value='0']:checked").closest(".panel-body").before("<div class='lineaColor0'></div>");
         }
 	}
 	

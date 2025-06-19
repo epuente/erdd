@@ -116,8 +116,8 @@ public class EvaluacionEvaluadorController extends ControladorSeguroEvaluador {
 			Long VersionRecienteID =  EvaluacionTablaVersion.find.where().eq("version", VersionReciente).findUnique().id;
 
 
-			System.out.println("versionReciente: "+VersionReciente);
-			System.out.println("versionRecienteID "+VersionRecienteID);
+			//System.out.println("versionReciente: "+VersionReciente);
+			//System.out.println("versionRecienteID "+VersionRecienteID);
 			Clasificacion c = Clasificacion.find.where().eq("recurso.id",id).findUnique();
 
 			ClasificadorCriterio3 cc3 = ClasificadorCriterio3.find.byId(  c.criterio3.id);
@@ -150,7 +150,7 @@ public class EvaluacionEvaluadorController extends ControladorSeguroEvaluador {
 			List<ClasificadorCriterio3Ejemplo> idscc3 = ClasificadorCriterio3Ejemplo.find
 					.where().eq("criterio3.id", c.criterio3.id).eq("tiporecurso.id", c.tiporecurso.id)
 					.findList();
-			System.out.println("idscc3 "+idscc3.size());
+			//System.out.println("idscc3 "+idscc3.size());
             /*
 			ArrayList<Long> bb = new ArrayList<>();
 			idscc3.forEach(x->{
@@ -168,7 +168,7 @@ public class EvaluacionEvaluadorController extends ControladorSeguroEvaluador {
 			System.out.println("x "+x.size());
 			List<Long> xIds = x.stream().map(m1->m1.evaluaciontabla.id).collect(Collectors.toList());
 
-			System.out.println("xIds: "+xIds);
+			//System.out.println("xIds: "+xIds);
 
 			List<EvaluacionTabla> evTab = EvaluacionTabla.find
 					.where().in("id", xIds)
@@ -187,13 +187,13 @@ public class EvaluacionEvaluadorController extends ControladorSeguroEvaluador {
 			}
 
 
-			System.out.println("la fecha mayor: "+fmaxima);
+			//System.out.println("la fecha mayor: "+fmaxima);
 
 			if ( fmaxima.before(hoy) ){
 				mensajes +="Tiempo superado y no tiene prorroga vigente para el aspecto.";
 			}
-			System.out.println(" mensajes: "+mensajes);
-			System.out.println(" evTab.size(): "+evTab.size());
+			//System.out.println(" mensajes: "+mensajes);
+			//System.out.println(" evTab.size(): "+evTab.size());
 
 
 			return ok(views.html.EvaluacionEvaluador.create.render(re, evTab,  mensajes ));

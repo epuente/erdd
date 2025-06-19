@@ -1,44 +1,27 @@
 @(registros:Map[String,Int],  nodos:List[String], cols1:List[String] , evaluadores:List[String],    triada:java.util.ArrayList[Array[String]],   triada2:java.util.ArrayList[Array[String]],
     cta:models.Ctacorreo,
+    directorDEV:models.Director,
+    directorEMS:models.Director,
+    directorES:models.Director,
+    directorPGD:models.Director,
     cantidadUA:Integer, cantidadEvaluadores:Integer)
 @import helper._
-@*
-nodos<br>
-@for(n<-nodos){
-    @n,
-}
-<br><br>
 
-@for(i <- 0 until data.size()) {
-    @for(j <- 0 until data.get(i).length) {
-        @data.get(i)(j)
-        @if(j < data.get(i).length - 1) { | }
-    }
-}
-***********************<br>
-@for(i <- 0 until data.size()) {
-    ['@data.get(i)(0)', '@data.get(i)(1)', 1],<br>
-}
 
-*@
+
+
 @main {
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/sankey.js"></script>
     <script src="https://code.highcharts.com/modules/non-cartesian-zoom.js"></script>
     <script src="https://code.highcharts.com/modules/mouse-wheel-zoom.js"></script>
-    <!--
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    -->
-
-
     <style>
         .fuenteTablero {
             color: #7a7a7a;
             font-size: 2rem;
             .cantidad {
                 font-size: 2.5rem;
+                text-align: right;
             }
             .subtitulo {
                 font-size: 1.5rem;
@@ -49,69 +32,139 @@ nodos<br>
                 padding: 5px 5px;
                 float: right !important;
             }
-
         }
-
     </style>
 
-	Tablero de indicadores en construcción
 
 
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <div class="panel ">
-                <div class="panel-body @if(cta!=null){bg-success}else{bg-danger}" >
-                    <div class="row fuenteTablero" style="display: flex;   align-items: center;">
-                        <div class="col-md-3" style="width:6rem;"><i class="fa fa-2x fa-envelope-o" aria-hidden="true"></i></div>
-                        <div class="col-md-9">Cuenta de correo electrónico de salida del sistema (cuenta activa). <div class="subtitulo"> @if(cta!=null){Correcto}else{
-                                De las @models.Ctacorreo.find.all().size() cuentas registradas, ninguna esta marcada como activa.<br>
-                            El sistema no puede notificar por email a los involucrados en la evaluación de los RDDs.<br>
-                            Ir a <a href="ctaCorreo">cuenta de correo de salida del sistema ERDD</a>
-                            }</div></div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-1"></div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <a href="/unidadacademica">
-                    <div class="row fuenteTablero" style="display: flex;   align-items: center;">
-                        <div class="col-md-3" style="width:6rem;"><i class="fa fa-3x fa-building-o" aria-hidden="true"></i></div>
-                        <div class="col-md-5">Unidades Académicas</div>
-                        <div class="col-md-2 cantidad" >@cantidadUA</div>
-                    </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <a href="/evaluadores">
+    <div class="elContenido">
+        Tablero de indicadores en construcción
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel ">
+                    <div class="panel-body @if(cta!=null){bg-success}else{bg-danger}" >
                         <div class="row fuenteTablero" style="display: flex;   align-items: center;">
-                            <div class="col-md-3" style="width:7rem;"><i class="fa fa-3x fa-users" aria-hidden="true"></i></div>
-                            <div class="col-md-5">Evaluadores</div>
-                            <div class="col-md-2 cantidad" >@cantidadEvaluadores</div>
+                            <div class="col-md-3" style="width:6rem;"><i class="fa-solid fa-2x fa-envelope"></i></div>
+                            <div class="col-md-9">Cuenta de correo electrónico de salida del sistema (cuenta activa). <div class="subtitulo"> @if(cta!=null){Correcto, la cuenta @cta.cuenta esta marcada como activa}else{
+                                    De las @models.Ctacorreo.find.all().size() cuentas registradas, ninguna esta marcada como activa.<br>
+                                El sistema no puede notificar por email a los involucrados en la evaluación de los RDDs.<br>
+                                Ir a <a href="ctaCorreo">cuenta de correo de salida del sistema ERDD</a> para definir una cuenta activa.
+                                }</div></div>
+
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel ">
+                    <div class="panel-body @if(directorDEV!=null){bg-success}else{bg-danger}" >
+                        <div class="row fuenteTablero" style="display: flex;   align-items: center;">
+                            <div class="col-md-3" style="width:6rem;"><i class="fa-solid fa-user-tie fa-2x"></i></div>
+                            <div class="col-md-9">Director de la DEV. <div class="subtitulo"> @if(directorDEV!=null){Correcto, se tiene el registro de <strong>@directorDEV.nombreConTituloArticulo()</strong> como titular de la Dirección de Educación Virtual}else{
+                                No se tiene registrado el nombre del titular de la Dirección de Educación Virtual.<br>
+                                El sistema no incluirá la información relacionada con el titular de la Dirección de Educación Virtual en los reportes.<br>
+                                Ir a <a href="/director/DEV">Director DEV</a> para editar la información necesaria.
+                                }</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel ">
+                    <div class="panel-body @if(directorEMS!=null){bg-success}else{bg-danger}" >
+                        <div class="row fuenteTablero" style="display: flex;   align-items: center;">
+                            <div class="col-md-3" style="width:6rem;"><i class="fa-solid fa-user-tie fa-2x"></i></div>
+                            <div class="col-md-9">Director de Educación Media Superior. <div class="subtitulo"> @if(directorEMS!=null){Correcto, se tiene el registro de <strong>@directorEMS.nombreConTituloArticulo()</strong> como titular de Educación Media Superior}else{
+                                No se tiene registrado el nombre del titular de Educación Media Superior.<br>
+                                El sistema no incluirá la información relacionada con el titular de Educación Media Superior en los reportes.<br>
+                                Ir a <a href="/director/EMS">Director EMS</a> para editar la información necesaria.
+                                }</div></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel ">
+                    <div class="panel-body @if(directorES!=null){bg-success}else{bg-danger}" >
+                        <div class="row fuenteTablero" style="display: flex;   align-items: center;">
+                            <div class="col-md-3" style="width:6rem;"><i class="fa-solid fa-user-tie fa-2x"></i></div>
+                            <div class="col-md-9">Director de Educación Superior. <div class="subtitulo"> @if(directorES!=null){Correcto, se tiene el registro de <strong>@directorES.nombreConTituloArticulo()</strong> como titular de Educación  Superior}else{
+                                No se tiene registrado el nombre del titular de Educación Superior.<br>
+                                El sistema no incluirá la información relacionada con el titular de Educación Superior en los reportes.<br>
+                                Ir a <a href="/director/ES">Director ES</a> para editar la información necesaria.
+                                }</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel ">
+                    <div class="panel-body @if(directorPGD!=null){bg-success}else{bg-danger}" >
+                        <div class="row fuenteTablero" style="display: flex;   align-items: center;">
+                            <div class="col-md-3" style="width:6rem;"><i class="fa-solid fa-user-tie fa-2x"></i></div>
+                            <div class="col-md-9">Director de Posgrado. <div class="subtitulo"> @if(directorPGD!=null){Correcto, se tiene el registro de <strong>@directorPGD.nombreConTituloArticulo()</strong> como titular de Posgrado}else{
+                                No se tiene registrado el nombre del titular de Posgrado.<br>
+                                El sistema no incluirá la información relacionada con el titular de Posgrado en los reportes.<br>
+                                Ir a <a href="/director/PGD">Director Posgrado</a> para editar la información necesaria.
+                                }</div></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="row">
+            <div class="col-xm-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <a href="/unidadacademica">
+                        <div class="row fuenteTablero" style="display: flex;   align-items: center;">
+                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" style="width:6rem;"><i class="fa-solid fa-building fa-2x"></i></div>
+                            <div class="col-xs-8 col-sm-7 col-md-8 col-lg-8 col-xl-6">Unidades Académicas</div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-5" >@cantidadUA</div>
+                        </div>
+                        </a>
                         <div class="row fuenteTablero">
                             <div class="col-md-12 iconitos" style="display: flex;  justify-content: flex-end;">
-                                    <div style="padding: -5px 8px;"><a href="/evaluadores"><i class="fa fa-list" aria-hidden="true"></i></a></div>
-                                    <div style="padding: 0px 8px;"><a href="/evaluador/new"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                <div style="padding: -5px 8px;"><a href="/unidadacademica"><i class="fa fa-list" aria-hidden="true"></i></a></div>
+                                <div style="padding: 0px 8px;"><a href="/unidadacademica/new"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
+            </div>
+            <div class="col-xm-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <a href="/evaluadores">
+                            <div class="row fuenteTablero" style="display: flex;   align-items: center;">
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1" style="width:7rem;"><i class="fa-solid fa-people-group fa-2x"></i></div>
+                                <div class="col-xs-8 col-sm-7 col-md-8 col-lg-8 col-xl-6">Evaluadores</div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-5 cantidad" >@cantidadEvaluadores</div>
+                            </div>
+                            <div class="row fuenteTablero">
+                                <div class="col-md-12 iconitos" style="display: flex;  justify-content: flex-end;">
+                                        <div style="padding: -5px 8px;"><a href="/evaluadores"><i class="fa fa-list" aria-hidden="true"></i></a></div>
+                                        <div style="padding: 0px 8px;"><a href="/evaluador/new"><i class="fa fa-plus" aria-hidden="true"></i></a></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
 
+                </div>
             </div>
         </div>
+
+        <div id="container0"></div>
+
     </div>
 
 
@@ -119,7 +172,6 @@ nodos<br>
 
 
 
-    <div id="container0"></div>
 
 
 
@@ -147,6 +199,7 @@ nodos<br>
                     }
                 },
                 accessibility: {
+                    enabled: false,
                     point: {
                         valueDescriptionFormat: '{index}. {point.from} to {point.to}, ' +
                             '{point.weight}.'
@@ -213,3 +266,7 @@ nodos<br>
 </script>
 
 <script src="@routes.Assets.at("javascripts/utilerias.js")"></script>
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("fontawesome6/css/fontawesome.css")"/>
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("fontawesome6/css/solid.css")"/>
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("fontawesome6/css/brands.css")"/>
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("fontawesome6/css/regular.css")"/>

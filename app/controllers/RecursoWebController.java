@@ -72,11 +72,12 @@ public class RecursoWebController extends ControladorDefault {
 	public static Result mastersave() {
 		String urlSitio= application().configuration().getString("urlSitio");
         urlSitio = application().isDev()?"http://"+urlSitio:"https://"+urlSitio;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy kk:mm:ss");
 		//String puerto = Play.application().configuration().getString("http.port");
 		//String direccionPuerto = direccion+":"+puerto;
 		Form<Recurso> recursoForm = form(Recurso.class).bindFromRequest();
 		DynamicForm requestData = form().bindFromRequest();
-		System.out.println("*************************************    RecursoWebController.mastersave dynamic ");
+		System.out.println("*************************************    RecursoWebController.mastersave dynamic "+ sdf.format(new Date()));
 		System.out.println(requestData);
 		System.out.println("************************************* recursoForm");
 		System.out.println(recursoForm);
