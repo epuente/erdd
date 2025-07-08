@@ -1,0 +1,44 @@
+1. Se recibe la solicitud.
+2. Revisión de la solicitud, en caso de existir errores o inconsistencias se hacen comentarios y se le indica al usuario para que lo corrija y se regresa al punto 2. Sino existen errores ni inconsistencias se continúa al punto 3.
+3. Se acepta la solicitud.
+
+
+
+
+
+
+
+
+1. Solicitudes por revisar
+2. Solicitudes con observaciones
+3. Solicitudes aceptadas	
+
+4. Solicitudes con oficio	
+5. Recursos clasificados	
+6. Evaluadores asignados 
+	Parcialmente
+	Completo
+	
+7. Evaluaciones sin atender
+8. Evaluaciones en proceso
+9. Evaluaciones para revisión
+10. Evaluaciones con observaciones
+11. Evaluaciones terminadas
+	por aspecto
+	commpletas
+	
+12. Recursos con oficio de valoración
+13. Encuestas por revisar
+14. Encuestas con observaciones
+15. Evaluaciones con encuestas aceptadas
+
+
+
+
+
+Solicitudes de cancelación
+	en clasificación
+	en evaluación	
+Canceladas
+
+

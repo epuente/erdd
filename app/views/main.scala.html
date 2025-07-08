@@ -1,5 +1,4 @@
 @(content: Html)
-
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -58,8 +57,12 @@
     <body data-theme="light" >
     	<div id="wrapper">
 			<div class="header">
-				<img src="@routes.Assets.at("images/escudoSEP-IPN.png")" class="img-responsive center-block" alt="Escudos" width="1920px" height="58px">
-				<img src="@routes.Assets.at("images/indexdevEncabezado.png")" class="img-responsive center-block" alt="Escudos" >
+                <div id="headerPoli">
+				    <img src="@routes.Assets.at("images/escudoSEP-IPN.png")" class="img-responsive center-block" alt="Escudos" width="1920px" height="58px">
+                </div>
+                <div id="headerDEV">
+				    <img src="@routes.Assets.at("images/indexdevEncabezado.png")" class="img-responsive center-block" alt="Escudos" >
+                </div>
 			</div>
 			<div id="content">
 				<div class="menu">@megamenu()</div>
@@ -67,7 +70,9 @@
 		            @content
 		        </div> 
 			</div>
- 			
+
+
+            <div id="bottom_fade"></div>
             <div id="footer">
                 <!--img src="@routes.Assets.at("images/pie.png")"  class="img-responsive center-block" alt="Datos de la DEV"-->
                 Unidad Profesional “Adolfo López Mateos”, Edificio “Adolfo Ruiz Cortines”, planta baja. Avenida Wilfrido Massieu s/n,<br>

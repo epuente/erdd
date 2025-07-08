@@ -1,0 +1,89 @@
+        .panelTitulo {
+            font-size:12 px;
+            font-color: black;
+        }
+
+        .panelColorTodos {
+            border-color: #c0c0c0;
+            border-left: 0.5rem solid #636363;
+        }
+        .panelColorTodos:hover {
+            color: #fff;
+            background-color: #636363;
+            border-color: #636363;
+        }
+
+        .panelColor1 {
+            border-color: #c0c0c0;
+            border-left: 0.5rem solid #2e7d59;
+        }
+        .panelColor1:hover {
+                color: #fff;
+                background-color: #2e7d59;
+                border-color: #2e7d59;
+            }
+
+
+        .panelColor4 {
+            border-color: #c0c0c0;
+            border-left: 0.5rem solid #543885;
+        }
+        .panelColor4:hover {
+            color: white;
+            background-color: #543885;
+            border-color: #543885;
+        }
+        .panelColor6 {
+            border-color: #c0c0c0;
+            border-left: 0.5rem solid #3576aa;
+        }
+        .panelColor6:hover {
+            color: #fff;
+            background-color: #3576aa;
+            border-color: #3576aa;
+        }
+        .panelColor110 {
+            border-color: #c0c0c0;
+            border-left: 0.5rem solid #900C3F;
+        }
+        .panelColor110:hover {
+            color: #fff;
+            background-color: #900C3F;
+            border-color: #900C3F;
+        }
+        .panelColorOtro{
+            border-color: #c0c0c0;
+            border-left: 0.5rem solid #d4481c;
+        }
+        .panelColorOtro:hover {
+            color: white;
+            background-color: #d4481c;
+            border-color: #d4481c;
+            .cuerpo { color:red; }
+        }
+
+        .miPanel {
+            cursor: pointer;
+            border-radius: 10px;
+            .titulo {
+                font-size: 16px;
+            }
+            .cuerpo {
+                font-weight: normal;
+                color:#777;
+                line-height: 1.3;
+                hyphens: auto;
+            }
+        }
+        .miPanel:hover{
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 10px;
+            .cuerpo {
+                color: #cccccc;
+            }
+        }
+
+        .btnVisualiza:visited { text-decoration: none;}
+
+        .btnVisualiza.activo { color:#606060; }
+        .btnVisualiza.inactivo { color:#c0c0c0; }

@@ -1,96 +1,660 @@
-2025-06-18 09:51:16,725 - [INFO] - from play in pool-18-thread-6 
+2025-07-08 09:36:13,813 - [INFO] - from play in pool-6-thread-4 
 Listening for HTTP on /0:0:0:0:0:0:0:0:8089
 
-2025-06-18 09:51:52,617 - [INFO] - from play in play-internal-execution-context-1 
+2025-07-08 09:36:27,462 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 09:51:54,455 - [INFO] - from play in play-internal-execution-context-1 
+2025-07-08 09:36:28,912 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2025-06-18 10:09:53,549 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:46:27,459 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 10:09:53,940 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:46:28,078 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2025-06-18 10:14:11,315 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:47:33,588 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 10:14:11,578 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:47:33,885 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2025-06-18 10:14:44,448 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:50:10,534 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 10:14:44,665 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:50:10,868 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2025-06-18 10:15:13,057 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:50:25,169 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 10:15:13,227 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:50:25,588 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2025-06-18 10:15:54,318 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:50:53,092 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 10:15:54,526 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:50:53,405 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2025-06-18 10:16:17,065 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:52:08,269 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 10:16:17,302 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:52:08,481 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2025-06-18 10:17:05,003 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:54:02,834 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 10:17:05,810 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:54:03,158 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2025-06-18 10:20:34,629 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:55:53,949 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 10:20:34,809 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:55:54,190 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2025-06-18 10:22:42,039 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:56:20,706 - [INFO] - from application in play-akka.actor.default-dispatcher-73 
+
+
+
+Desde AdminEvaluacionTablaController.reactivoDTSS
+
+2025-07-08 09:56:20,717 - [DEBUG] - from application in play-akka.actor.default-dispatcher-73 
+c0 asc
+
+2025-07-08 09:56:20,768 - [DEBUG] - from application in play-akka.actor.default-dispatcher-73 
+
+
+q2: select t0.id c0, t0.descripcion c1, t0.auditinsert c2, t0.auditlastupdate c3 from evaluacion_tabla_reactivo t0 where t0.descripcion like ? 
+
+
+
+2025-07-08 09:56:47,139 - [INFO] - from play in play-internal-execution-context-4 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 10:22:42,214 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:56:47,383 - [INFO] - from play in play-internal-execution-context-4 
 Application started (Dev)
 
-2025-06-18 10:23:27,465 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:57:30,790 - [INFO] - from play in play-internal-execution-context-4 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 10:23:27,671 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:57:31,022 - [INFO] - from play in play-internal-execution-context-4 
 Application started (Dev)
 
-2025-06-18 10:23:43,162 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:57:44,164 - [INFO] - from play in play-internal-execution-context-4 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 10:23:43,370 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:57:44,387 - [INFO] - from play in play-internal-execution-context-4 
 Application started (Dev)
 
-2025-06-18 10:24:05,450 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:57:59,907 - [INFO] - from play in play-internal-execution-context-4 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 10:24:05,696 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:58:00,188 - [INFO] - from play in play-internal-execution-context-4 
 Application started (Dev)
 
-2025-06-18 10:25:58,310 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:58:16,337 - [INFO] - from play in play-internal-execution-context-4 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 10:25:58,492 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 09:58:16,581 - [INFO] - from play in play-internal-execution-context-4 
 Application started (Dev)
 
-2025-06-18 10:31:13,063 - [ERROR] - from application in New I/O worker #6 
+2025-07-08 10:00:47,311 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:00:47,570 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:01:04,887 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:01:05,120 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:01:36,235 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:01:36,485 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:02:32,589 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:02:32,814 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:04:25,910 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:04:26,220 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:05:29,671 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:05:29,957 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:05:53,784 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:05:54,034 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:06:21,871 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:06:22,085 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:06:33,437 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:06:33,697 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:07:28,878 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:07:29,168 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:07:45,393 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:07:45,604 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:08:24,938 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:08:25,173 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:08:39,802 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:08:40,036 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:09:45,637 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:09:45,861 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:09:57,444 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:09:57,656 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:10:52,068 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:10:52,298 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:11:43,218 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:11:43,451 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:12:46,128 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:12:46,283 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:13:08,536 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:13:08,740 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:13:32,660 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:13:32,925 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:14:05,469 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:14:05,684 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:16:08,722 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:16:08,970 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:21:16,506 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:21:16,704 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:23:31,144 - [INFO] - from play in play-internal-execution-context-4 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:23:31,361 - [INFO] - from play in play-internal-execution-context-4 
+Application started (Dev)
+
+2025-07-08 10:25:16,483 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:25:16,712 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:26:05,100 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:26:05,310 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:26:58,586 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:26:58,812 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:28:01,862 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:28:02,087 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:28:16,163 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:28:16,392 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:28:39,856 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:28:40,073 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:29:33,065 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:29:33,292 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:31:27,044 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:31:27,243 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:31:42,547 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:31:42,744 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:31:55,073 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:31:55,305 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:32:14,727 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:32:14,935 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:32:27,403 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:32:27,606 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:34:02,040 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:34:02,277 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:34:34,477 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:34:34,701 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:36:38,108 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:36:38,333 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:36:56,204 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:36:56,409 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:37:10,721 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:37:10,944 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:37:24,059 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:37:24,256 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:39:05,107 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:39:05,309 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:40:07,935 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:40:08,091 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:43:47,278 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:43:47,508 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:44:11,377 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:44:11,593 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:44:31,774 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:44:31,989 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:44:52,560 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:44:52,823 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:45:54,899 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:45:55,126 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:48:08,074 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:48:08,310 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 10:56:18,760 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 10:56:18,998 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 11:16:11,040 - [INFO] - from application in play-akka.actor.default-dispatcher-435 
 
 
-! @89nlf24m5 - Internal server error, for (GET) [/admin] ->
 
-play.PlayExceptions$CompilationException: Compilation error[not found: type director]
+Desde AdminEvaluacionTablaController.reactivoDTSS
+
+2025-07-08 11:16:11,045 - [DEBUG] - from application in play-akka.actor.default-dispatcher-435 
+c0 asc
+
+2025-07-08 11:16:11,067 - [DEBUG] - from application in play-akka.actor.default-dispatcher-435 
+
+
+q2: select t0.id c0, t0.descripcion c1, t0.auditinsert c2, t0.auditlastupdate c3 from evaluacion_tabla_reactivo t0 where t0.descripcion like ? 
+
+
+
+2025-07-08 11:17:57,639 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 11:17:57,847 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 11:18:48,183 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 11:18:48,411 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 11:19:40,020 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 11:19:40,241 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 11:20:35,825 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 11:20:36,082 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 11:21:05,236 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 11:21:05,427 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 11:25:19,931 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 11:25:20,151 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 11:26:58,569 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 11:26:58,852 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 11:27:52,093 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 11:27:52,418 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 11:28:37,261 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 11:28:37,451 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 11:29:00,389 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 11:29:00,601 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 11:29:37,919 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 11:29:38,132 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 11:30:19,906 - [INFO] - from play in play-internal-execution-context-8 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 11:30:20,103 - [INFO] - from play in play-internal-execution-context-8 
+Application started (Dev)
+
+2025-07-08 11:33:14,183 - [INFO] - from application in play-akka.actor.default-dispatcher-539 
+
+
+
+Desde AdminEvaluacionTablaController.reactivoDTSS
+
+2025-07-08 11:33:14,186 - [DEBUG] - from application in play-akka.actor.default-dispatcher-539 
+c0 asc
+
+2025-07-08 11:33:14,209 - [DEBUG] - from application in play-akka.actor.default-dispatcher-539 
+
+
+q2: select t0.id c0, t0.descripcion c1, t0.auditinsert c2, t0.auditlastupdate c3 from evaluacion_tabla_reactivo t0 where t0.descripcion like ? 
+
+
+
+2025-07-08 11:55:07,484 - [INFO] - from play in play-internal-execution-context-19 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 11:55:07,731 - [INFO] - from play in play-internal-execution-context-19 
+Application started (Dev)
+
+2025-07-08 11:55:41,287 - [INFO] - from play in play-internal-execution-context-19 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 11:55:41,502 - [INFO] - from play in play-internal-execution-context-19 
+Application started (Dev)
+
+2025-07-08 11:55:51,931 - [INFO] - from play in play-internal-execution-context-19 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 11:55:52,142 - [INFO] - from play in play-internal-execution-context-19 
+Application started (Dev)
+
+2025-07-08 12:04:31,608 - [INFO] - from play in play-internal-execution-context-19 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:04:31,825 - [INFO] - from play in play-internal-execution-context-19 
+Application started (Dev)
+
+2025-07-08 12:05:21,343 - [INFO] - from play in play-internal-execution-context-22 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:05:21,588 - [INFO] - from play in play-internal-execution-context-22 
+Application started (Dev)
+
+2025-07-08 12:07:04,827 - [INFO] - from play in play-internal-execution-context-22 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:07:05,070 - [INFO] - from play in play-internal-execution-context-22 
+Application started (Dev)
+
+2025-07-08 12:13:05,278 - [INFO] - from play in play-internal-execution-context-22 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:13:05,582 - [INFO] - from play in play-internal-execution-context-22 
+Application started (Dev)
+
+2025-07-08 12:13:27,590 - [INFO] - from play in play-internal-execution-context-22 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:13:27,802 - [INFO] - from play in play-internal-execution-context-22 
+Application started (Dev)
+
+2025-07-08 12:14:41,803 - [INFO] - from play in play-internal-execution-context-22 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:14:41,991 - [INFO] - from play in play-internal-execution-context-22 
+Application started (Dev)
+
+2025-07-08 12:17:39,226 - [INFO] - from play in play-internal-execution-context-22 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:17:39,445 - [INFO] - from play in play-internal-execution-context-22 
+Application started (Dev)
+
+2025-07-08 12:31:03,429 - [INFO] - from play in play-internal-execution-context-23 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:31:03,727 - [INFO] - from play in play-internal-execution-context-23 
+Application started (Dev)
+
+2025-07-08 12:31:15,813 - [INFO] - from play in play-internal-execution-context-23 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:31:16,077 - [INFO] - from play in play-internal-execution-context-23 
+Application started (Dev)
+
+2025-07-08 12:31:29,959 - [INFO] - from play in play-internal-execution-context-23 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:31:30,185 - [INFO] - from play in play-internal-execution-context-23 
+Application started (Dev)
+
+2025-07-08 12:32:51,874 - [INFO] - from play in play-internal-execution-context-23 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:32:52,122 - [INFO] - from play in play-internal-execution-context-23 
+Application started (Dev)
+
+2025-07-08 12:34:45,728 - [INFO] - from play in play-internal-execution-context-23 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:34:45,945 - [INFO] - from play in play-internal-execution-context-23 
+Application started (Dev)
+
+2025-07-08 12:35:21,062 - [INFO] - from play in play-internal-execution-context-23 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:35:21,272 - [INFO] - from play in play-internal-execution-context-23 
+Application started (Dev)
+
+2025-07-08 12:36:24,757 - [INFO] - from play in play-internal-execution-context-23 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:36:24,974 - [INFO] - from play in play-internal-execution-context-23 
+Application started (Dev)
+
+2025-07-08 12:37:06,690 - [INFO] - from play in play-internal-execution-context-23 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:37:06,916 - [INFO] - from play in play-internal-execution-context-23 
+Application started (Dev)
+
+2025-07-08 12:38:08,575 - [INFO] - from play in play-internal-execution-context-23 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:38:08,730 - [INFO] - from play in play-internal-execution-context-23 
+Application started (Dev)
+
+2025-07-08 12:38:36,424 - [INFO] - from play in play-internal-execution-context-23 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:38:36,644 - [INFO] - from play in play-internal-execution-context-23 
+Application started (Dev)
+
+2025-07-08 12:40:38,697 - [INFO] - from play in play-internal-execution-context-23 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:40:38,857 - [INFO] - from play in play-internal-execution-context-23 
+Application started (Dev)
+
+2025-07-08 12:41:17,215 - [INFO] - from play in play-internal-execution-context-23 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:41:17,446 - [INFO] - from play in play-internal-execution-context-23 
+Application started (Dev)
+
+2025-07-08 12:44:38,372 - [INFO] - from play in play-internal-execution-context-23 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:44:38,549 - [INFO] - from play in play-internal-execution-context-23 
+Application started (Dev)
+
+2025-07-08 12:45:49,698 - [ERROR] - from application in New I/O worker #3 
+
+
+! @8a3bi3fek - Internal server error, for (GET) [/evResumen] ->
+
+play.PlayExceptions$CompilationException: Compilation error[not found: value registros]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
@@ -112,18 +676,12 @@ play.PlayExceptions$CompilationException: Compilation error[not found: type dire
 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
 
-2025-06-18 10:33:49,441 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 10:33:50,051 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 10:38:11,791 - [ERROR] - from application in New I/O worker #11 
+2025-07-08 12:45:50,783 - [ERROR] - from application in New I/O worker #3 
 
 
-! @89nlg0094 - Internal server error, for (GET) [/admin] ->
+! @8a3bi3h65 - Internal server error, for (GET) [/.well-known/appspecific/com.chrome.devtools.json] ->
 
-play.PlayExceptions$CompilationException: Compilation error[value id is not a member of (java.util.Map[String,Int], java.util.List[String], java.util.List[String], java.util.List[String], java.util.ArrayList[Array[String]], java.util.ArrayList[Array[String]], models.Ctacorreo, java.util.List[models.Director], Integer, Integer) => play.twirl.api.HtmlFormat.Appendable]
+play.PlayExceptions$CompilationException: Compilation error[not found: value registros]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
@@ -145,12 +703,12 @@ play.PlayExceptions$CompilationException: Compilation error[value id is not a me
 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
 
-2025-06-18 10:39:24,431 - [ERROR] - from application in New I/O worker #11 
+2025-07-08 12:46:01,855 - [ERROR] - from application in New I/O worker #3 
 
 
-! @89nlg43kj - Internal server error, for (GET) [/admin] ->
+! @8a3bi47fo - Internal server error, for (GET) [/evResumen] ->
 
-play.PlayExceptions$CompilationException: Compilation error[value getId is not a member of (java.util.Map[String,Int], java.util.List[String], java.util.List[String], java.util.List[String], java.util.ArrayList[Array[String]], java.util.ArrayList[Array[String]], models.Ctacorreo, java.util.List[models.Director], Integer, Integer) => play.twirl.api.HtmlFormat.Appendable]
+play.PlayExceptions$CompilationException: Compilation error[not found: value registros]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
@@ -172,12 +730,12 @@ play.PlayExceptions$CompilationException: Compilation error[value getId is not a
 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
 
-2025-06-18 10:41:23,927 - [ERROR] - from application in New I/O worker #11 
+2025-07-08 12:46:02,661 - [ERROR] - from application in New I/O worker #3 
 
 
-! @89nlgaof0 - Internal server error, for (GET) [/admin] ->
+! @8a3bi48l2 - Internal server error, for (GET) [/.well-known/appspecific/com.chrome.devtools.json] ->
 
-play.PlayExceptions$CompilationException: Compilation error[not found: value getId]
+play.PlayExceptions$CompilationException: Compilation error[not found: value registros]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
@@ -199,12 +757,96 @@ play.PlayExceptions$CompilationException: Compilation error[not found: value get
 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
 
-2025-06-18 10:41:38,372 - [ERROR] - from application in New I/O worker #11 
+2025-07-08 12:46:09,115 - [INFO] - from play in play-internal-execution-context-23 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:46:09,348 - [INFO] - from play in play-internal-execution-context-23 
+Application started (Dev)
+
+2025-07-08 12:47:39,123 - [INFO] - from play in play-internal-execution-context-23 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:47:39,292 - [INFO] - from play in play-internal-execution-context-23 
+Application started (Dev)
+
+2025-07-08 12:47:55,242 - [INFO] - from play in play-internal-execution-context-23 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:47:55,430 - [INFO] - from play in play-internal-execution-context-23 
+Application started (Dev)
+
+2025-07-08 12:48:55,967 - [INFO] - from play in play-internal-execution-context-24 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:48:56,163 - [INFO] - from play in play-internal-execution-context-24 
+Application started (Dev)
+
+2025-07-08 12:50:46,128 - [INFO] - from play in play-internal-execution-context-24 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:50:46,348 - [INFO] - from play in play-internal-execution-context-24 
+Application started (Dev)
+
+2025-07-08 12:53:08,459 - [INFO] - from play in play-internal-execution-context-24 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:53:08,610 - [INFO] - from play in play-internal-execution-context-24 
+Application started (Dev)
+
+2025-07-08 12:53:14,634 - [INFO] - from play in play-internal-execution-context-24 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:53:14,848 - [INFO] - from play in play-internal-execution-context-24 
+Application started (Dev)
+
+2025-07-08 12:55:28,002 - [INFO] - from play in play-internal-execution-context-24 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:55:28,214 - [INFO] - from play in play-internal-execution-context-24 
+Application started (Dev)
+
+2025-07-08 12:57:09,248 - [INFO] - from play in play-internal-execution-context-24 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:57:09,401 - [INFO] - from play in play-internal-execution-context-24 
+Application started (Dev)
+
+2025-07-08 12:57:25,941 - [INFO] - from play in play-internal-execution-context-24 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:57:26,183 - [INFO] - from play in play-internal-execution-context-24 
+Application started (Dev)
+
+2025-07-08 12:58:01,937 - [INFO] - from play in play-internal-execution-context-24 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:58:02,182 - [INFO] - from play in play-internal-execution-context-24 
+Application started (Dev)
+
+2025-07-08 12:59:27,832 - [INFO] - from play in play-internal-execution-context-25 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 12:59:28,034 - [INFO] - from play in play-internal-execution-context-25 
+Application started (Dev)
+
+2025-07-08 13:01:44,487 - [INFO] - from play in play-internal-execution-context-25 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 13:01:44,695 - [INFO] - from play in play-internal-execution-context-25 
+Application started (Dev)
+
+2025-07-08 13:02:43,879 - [INFO] - from play in play-internal-execution-context-25 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 13:02:44,069 - [INFO] - from play in play-internal-execution-context-25 
+Application started (Dev)
+
+2025-07-08 13:04:43,087 - [ERROR] - from application in New I/O worker #1 
 
 
-! @89nlgbjog - Internal server error, for (GET) [/admin] ->
+! @8a3bkg26a - Internal server error, for (GET) [/ajaxActualizaLog/10] ->
 
-play.PlayExceptions$CompilationException: Compilation error[not found: value id]
+play.PlayExceptions$CompilationException: Compilation error[not found: value registros]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
@@ -226,12 +868,12 @@ play.PlayExceptions$CompilationException: Compilation error[not found: value id]
 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
 
-2025-06-18 10:41:51,987 - [ERROR] - from application in New I/O worker #11 
+2025-07-08 13:05:22,588 - [ERROR] - from application in New I/O worker #1 
 
 
-! @89nlgce26 - Internal server error, for (GET) [/admin] ->
+! @8a3bki8hf - Internal server error, for (GET) [/coord?passActual=&claveAcceso=] ->
 
-play.PlayExceptions$CompilationException: Compilation error[value getId is not a member of object scala.collection.immutable.::]
+play.PlayExceptions$CompilationException: Compilation error[not found: value registros]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
@@ -253,12 +895,12 @@ play.PlayExceptions$CompilationException: Compilation error[value getId is not a
 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
 
-2025-06-18 10:44:18,769 - [ERROR] - from application in New I/O worker #11 
+2025-07-08 13:05:23,520 - [ERROR] - from application in New I/O worker #1 
 
 
-! @89nlgkn5i - Internal server error, for (GET) [/admin] ->
+! @8a3bkia1d - Internal server error, for (GET) [/.well-known/appspecific/com.chrome.devtools.json] ->
 
-play.PlayExceptions$CompilationException: Compilation error[value getId is not a member of (java.util.Map[String,Int], java.util.List[String], java.util.List[String], java.util.List[String], java.util.ArrayList[Array[String]], java.util.ArrayList[Array[String]], models.Ctacorreo, java.util.List[models.Director], Integer, Integer) => play.twirl.api.HtmlFormat.Appendable]
+play.PlayExceptions$CompilationException: Compilation error[not found: value registros]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
@@ -280,12 +922,24 @@ play.PlayExceptions$CompilationException: Compilation error[value getId is not a
 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
 
-2025-06-18 10:46:52,471 - [ERROR] - from application in New I/O worker #11 
+2025-07-08 13:06:00,472 - [INFO] - from play in play-internal-execution-context-25 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 13:06:00,722 - [INFO] - from play in play-internal-execution-context-25 
+Application started (Dev)
+
+2025-07-08 13:06:12,032 - [INFO] - from play in play-internal-execution-context-25 
+database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
+
+2025-07-08 13:06:12,239 - [INFO] - from play in play-internal-execution-context-25 
+Application started (Dev)
+
+2025-07-08 13:10:00,654 - [ERROR] - from application in New I/O worker #3 
 
 
-! @89nlh3gf4 - Internal server error, for (GET) [/admin] ->
+! @8a3bl8408 - Internal server error, for (GET) [/evResumen] ->
 
-play.PlayExceptions$CompilationException: Compilation error[value getId is not a member of (java.util.Map[String,Int], java.util.List[String], java.util.List[String], java.util.List[String], java.util.ArrayList[Array[String]], java.util.ArrayList[Array[String]], models.Ctacorreo, java.util.List[models.Director], Integer, Integer) => play.twirl.api.HtmlFormat.Appendable]
+play.PlayExceptions$CompilationException: Compilation error[play.api.mvc.Call does not take parameters]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
@@ -307,18 +961,12 @@ play.PlayExceptions$CompilationException: Compilation error[value getId is not a
 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
 
-2025-06-18 10:47:42,785 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 10:47:43,742 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 10:48:58,512 - [ERROR] - from application in New I/O worker #13 
+2025-07-08 13:10:01,533 - [ERROR] - from application in New I/O worker #3 
 
 
-! @89nlhal10 - Internal server error, for (GET) [/admin] ->
+! @8a3bl8589 - Internal server error, for (GET) [/.well-known/appspecific/com.chrome.devtools.json] ->
 
-play.PlayExceptions$CompilationException: Compilation error[value id is not a member of (java.util.Map[String,Int], java.util.List[String], java.util.List[String], java.util.List[String], java.util.ArrayList[Array[String]], java.util.ArrayList[Array[String]], models.Ctacorreo, java.util.List[models.Director], Integer, Integer) => play.twirl.api.HtmlFormat.Appendable]
+play.PlayExceptions$CompilationException: Compilation error[play.api.mvc.Call does not take parameters]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
 	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
@@ -340,625 +988,123 @@ play.PlayExceptions$CompilationException: Compilation error[value id is not a me
 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
 
-2025-06-18 10:49:22,274 - [ERROR] - from application in New I/O worker #13 
-
-
-! @89nlhc44n - Internal server error, for (GET) [/admin] ->
-
-play.PlayExceptions$CompilationException: Compilation error[missing arguments for method -> in class ArrowAssoc;
-follow this method with `_' if you want to treat it as a partially applied function]
-	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
-	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
-	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
-	at play.PlayReloader$$anon$1$$anonfun$play$PlayReloader$$anon$$taskFailureHandler$1.apply(PlayReloader.scala:235) ~[na:na]
-	at play.PlayReloader$$anon$1$$anonfun$play$PlayReloader$$anon$$taskFailureHandler$1.apply(PlayReloader.scala:230) ~[na:na]
-	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
-	at play.PlayReloader$$anon$1.play$PlayReloader$$anon$$taskFailureHandler(PlayReloader.scala:230) ~[na:na]
-	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:90) ~[na:na]
-	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:90) ~[na:na]
-	at scala.util.Either$LeftProjection.map(Either.scala:377) ~[scala-library-2.11.4.jar:na]
-	at play.PlayReloader$$anon$1.reload(PlayReloader.scala:90) ~[na:na]
-	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:122) ~[play_2.11-2.3.7.jar:2.3.7]
-	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:120) ~[play_2.11-2.3.7.jar:2.3.7]
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1361) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
-
-2025-06-18 10:52:54,618 - [ERROR] - from application in New I/O worker #13 
-
-
-! @89nlho67o - Internal server error, for (GET) [/admin] ->
-
-play.PlayExceptions$CompilationException: Compilation error[object models.Director is not a value]
-	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
-	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
-	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
-	at play.PlayReloader$$anon$1$$anonfun$play$PlayReloader$$anon$$taskFailureHandler$1.apply(PlayReloader.scala:235) ~[na:na]
-	at play.PlayReloader$$anon$1$$anonfun$play$PlayReloader$$anon$$taskFailureHandler$1.apply(PlayReloader.scala:230) ~[na:na]
-	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
-	at play.PlayReloader$$anon$1.play$PlayReloader$$anon$$taskFailureHandler(PlayReloader.scala:230) ~[na:na]
-	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:90) ~[na:na]
-	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:90) ~[na:na]
-	at scala.util.Either$LeftProjection.map(Either.scala:377) ~[scala-library-2.11.4.jar:na]
-	at play.PlayReloader$$anon$1.reload(PlayReloader.scala:90) ~[na:na]
-	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:122) ~[play_2.11-2.3.7.jar:2.3.7]
-	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:120) ~[play_2.11-2.3.7.jar:2.3.7]
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1361) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
-
-2025-06-18 10:53:06,161 - [ERROR] - from application in New I/O worker #13 
-
-
-! @89nlhon9p - Internal server error, for (GET) [/admin] ->
-
-play.PlayExceptions$CompilationException: Compilation error[object models.Director is not a value]
-	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
-	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
-	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
-	at play.PlayReloader$$anon$1$$anonfun$play$PlayReloader$$anon$$taskFailureHandler$1.apply(PlayReloader.scala:235) ~[na:na]
-	at play.PlayReloader$$anon$1$$anonfun$play$PlayReloader$$anon$$taskFailureHandler$1.apply(PlayReloader.scala:230) ~[na:na]
-	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
-	at play.PlayReloader$$anon$1.play$PlayReloader$$anon$$taskFailureHandler(PlayReloader.scala:230) ~[na:na]
-	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:90) ~[na:na]
-	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:90) ~[na:na]
-	at scala.util.Either$LeftProjection.map(Either.scala:377) ~[scala-library-2.11.4.jar:na]
-	at play.PlayReloader$$anon$1.reload(PlayReloader.scala:90) ~[na:na]
-	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:122) ~[play_2.11-2.3.7.jar:2.3.7]
-	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:120) ~[play_2.11-2.3.7.jar:2.3.7]
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1361) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
-
-2025-06-18 10:56:55,901 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:10:14,739 - [INFO] - from play in play-internal-execution-context-25 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 10:56:56,341 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:10:14,971 - [INFO] - from play in play-internal-execution-context-25 
 Application started (Dev)
 
-2025-06-18 10:57:18,903 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:13:44,959 - [INFO] - from play in play-internal-execution-context-26 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 10:57:19,156 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:13:45,161 - [INFO] - from play in play-internal-execution-context-26 
 Application started (Dev)
 
-2025-06-18 10:58:14,601 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:14:43,153 - [INFO] - from play in play-internal-execution-context-26 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 10:58:14,837 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:14:43,388 - [INFO] - from play in play-internal-execution-context-26 
 Application started (Dev)
 
-2025-06-18 11:00:46,087 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:17:39,879 - [INFO] - from play in play-internal-execution-context-26 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 11:00:46,370 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:17:40,089 - [INFO] - from play in play-internal-execution-context-26 
 Application started (Dev)
 
-2025-06-18 11:06:38,219 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:19:23,335 - [INFO] - from play in play-internal-execution-context-26 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 11:06:39,106 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:19:23,556 - [INFO] - from play in play-internal-execution-context-26 
 Application started (Dev)
 
-2025-06-18 11:07:25,626 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:21:10,029 - [INFO] - from play in play-internal-execution-context-26 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 11:07:25,846 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:21:10,238 - [INFO] - from play in play-internal-execution-context-26 
 Application started (Dev)
 
-2025-06-18 11:07:48,397 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:21:50,105 - [INFO] - from play in play-internal-execution-context-26 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 11:07:49,048 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:21:50,323 - [INFO] - from play in play-internal-execution-context-26 
 Application started (Dev)
 
-2025-06-18 11:08:06,740 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:22:50,151 - [INFO] - from play in play-internal-execution-context-26 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 11:08:06,991 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:22:50,358 - [INFO] - from play in play-internal-execution-context-26 
 Application started (Dev)
 
-2025-06-18 11:09:22,308 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:25:15,284 - [INFO] - from play in play-internal-execution-context-26 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 11:09:22,546 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:25:15,482 - [INFO] - from play in play-internal-execution-context-26 
 Application started (Dev)
 
-2025-06-18 11:10:43,147 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:26:11,241 - [INFO] - from play in play-internal-execution-context-26 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 11:10:43,383 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:26:11,451 - [INFO] - from play in play-internal-execution-context-26 
 Application started (Dev)
 
-2025-06-18 11:11:45,600 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:26:29,808 - [INFO] - from play in play-internal-execution-context-26 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 11:11:45,870 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:26:30,156 - [INFO] - from play in play-internal-execution-context-26 
 Application started (Dev)
 
-2025-06-18 11:11:54,598 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:27:23,589 - [INFO] - from play in play-internal-execution-context-26 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 11:11:54,846 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:27:23,806 - [INFO] - from play in play-internal-execution-context-26 
 Application started (Dev)
 
-2025-06-18 11:12:20,225 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:27:35,842 - [INFO] - from play in play-internal-execution-context-26 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 11:12:20,436 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:27:36,076 - [INFO] - from play in play-internal-execution-context-26 
 Application started (Dev)
 
-2025-06-18 11:15:27,785 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:27:45,562 - [INFO] - from play in play-internal-execution-context-26 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 11:15:28,244 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:27:45,791 - [INFO] - from play in play-internal-execution-context-26 
 Application started (Dev)
 
-2025-06-18 11:15:58,774 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:31:34,674 - [INFO] - from play in play-internal-execution-context-28 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 11:15:59,114 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:31:34,891 - [INFO] - from play in play-internal-execution-context-28 
 Application started (Dev)
 
-2025-06-18 11:18:13,316 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:32:27,744 - [INFO] - from play in play-internal-execution-context-31 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 11:18:13,701 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:32:27,955 - [INFO] - from play in play-internal-execution-context-31 
 Application started (Dev)
 
-2025-06-18 11:18:52,745 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:33:07,231 - [INFO] - from play in play-internal-execution-context-31 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 11:18:53,063 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:33:07,440 - [INFO] - from play in play-internal-execution-context-31 
 Application started (Dev)
 
-2025-06-18 11:19:43,060 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:33:59,059 - [INFO] - from play in play-internal-execution-context-31 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 11:19:43,334 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:33:59,295 - [INFO] - from play in play-internal-execution-context-31 
 Application started (Dev)
 
-2025-06-18 11:22:50,280 - [ERROR] - from application in New I/O worker #13 
-
-
-! @89nllmafp - Internal server error, for (GET) [/admin] ->
-
-play.PlayExceptions$CompilationException: Compilation error[not found: value directorEMS]
-	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
-	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
-	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
-	at play.PlayReloader$$anon$1$$anonfun$play$PlayReloader$$anon$$taskFailureHandler$1.apply(PlayReloader.scala:235) ~[na:na]
-	at play.PlayReloader$$anon$1$$anonfun$play$PlayReloader$$anon$$taskFailureHandler$1.apply(PlayReloader.scala:230) ~[na:na]
-	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
-	at play.PlayReloader$$anon$1.play$PlayReloader$$anon$$taskFailureHandler(PlayReloader.scala:230) ~[na:na]
-	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:90) ~[na:na]
-	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:90) ~[na:na]
-	at scala.util.Either$LeftProjection.map(Either.scala:377) ~[scala-library-2.11.4.jar:na]
-	at play.PlayReloader$$anon$1.reload(PlayReloader.scala:90) ~[na:na]
-	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:122) ~[play_2.11-2.3.7.jar:2.3.7]
-	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:120) ~[play_2.11-2.3.7.jar:2.3.7]
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1361) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
-
-2025-06-18 11:27:22,086 - [ERROR] - from application in New I/O worker #13 
-
-
-! @89nlmbmi1 - Internal server error, for (GET) [/admin] ->
-
-play.PlayExceptions$CompilationException: Compilation error[error: cannot find symbol]
-	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
-	at play.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27) ~[na:na]
-	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
-	at play.PlayReloader$$anon$1$$anonfun$play$PlayReloader$$anon$$taskFailureHandler$1.apply(PlayReloader.scala:235) ~[na:na]
-	at play.PlayReloader$$anon$1$$anonfun$play$PlayReloader$$anon$$taskFailureHandler$1.apply(PlayReloader.scala:230) ~[na:na]
-	at scala.Option.map(Option.scala:145) ~[scala-library-2.11.4.jar:na]
-	at play.PlayReloader$$anon$1.play$PlayReloader$$anon$$taskFailureHandler(PlayReloader.scala:230) ~[na:na]
-	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:90) ~[na:na]
-	at play.PlayReloader$$anon$1$$anonfun$reload$2.apply(PlayReloader.scala:90) ~[na:na]
-	at scala.util.Either$LeftProjection.map(Either.scala:377) ~[scala-library-2.11.4.jar:na]
-	at play.PlayReloader$$anon$1.reload(PlayReloader.scala:90) ~[na:na]
-	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:122) ~[play_2.11-2.3.7.jar:2.3.7]
-	at play.core.ReloadableApplication$$anonfun$get$1.apply(ApplicationProvider.scala:120) ~[play_2.11-2.3.7.jar:2.3.7]
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinTask$AdaptedRunnableAction.exec(ForkJoinTask.java:1361) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979) ~[scala-library-2.11.4.jar:na]
-	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107) ~[scala-library-2.11.4.jar:na]
-
-2025-06-18 11:27:57,339 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:41:40,564 - [INFO] - from play in play-internal-execution-context-31 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 11:27:57,737 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:41:40,821 - [INFO] - from play in play-internal-execution-context-31 
 Application started (Dev)
 
-2025-06-18 11:29:59,899 - [INFO] - from play in play-internal-execution-context-7 
+2025-07-08 13:45:03,575 - [INFO] - from play in play-internal-execution-context-31 
 database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
 
-2025-06-18 11:30:00,202 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 11:31:02,463 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 11:31:02,787 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 11:33:24,363 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 11:33:24,629 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 11:35:24,335 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 11:35:24,539 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 11:37:28,986 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 11:37:29,503 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 11:47:25,252 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 11:47:25,749 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 11:49:12,287 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 11:49:13,006 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 11:50:26,190 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 11:50:26,537 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 12:18:23,393 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:18:23,673 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 12:19:48,219 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:19:48,491 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 12:20:01,839 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:20:02,081 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 12:20:39,143 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:20:39,319 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 12:22:58,490 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:22:59,118 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 12:23:39,872 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:23:40,021 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 12:24:19,032 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:24:19,356 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 12:25:56,878 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:25:57,781 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 12:26:24,403 - [INFO] - from play in play-internal-execution-context-7 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:26:24,572 - [INFO] - from play in play-internal-execution-context-7 
-Application started (Dev)
-
-2025-06-18 12:26:54,273 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:26:54,436 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:27:09,683 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:27:09,829 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:28:52,615 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:28:52,787 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:29:13,505 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:29:13,673 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:30:11,125 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:30:11,263 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:30:29,848 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:30:30,025 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:33:46,601 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:33:47,228 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:34:50,856 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:34:51,929 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:36:48,611 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:36:48,768 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:39:47,041 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:39:47,976 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:40:01,893 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:40:02,061 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:40:19,179 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:40:19,347 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:41:00,779 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:41:00,924 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:41:49,090 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:41:49,430 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:43:10,092 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:43:10,272 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:43:34,074 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:43:34,793 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:44:06,054 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:44:06,462 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:44:44,126 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:44:44,274 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:45:27,338 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:45:27,500 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:45:50,654 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:45:50,925 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:46:08,422 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:46:08,611 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:46:24,382 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:46:24,523 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:46:35,372 - [INFO] - from play in play-internal-execution-context-16 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:46:35,544 - [INFO] - from play in play-internal-execution-context-16 
-Application started (Dev)
-
-2025-06-18 12:49:18,945 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:49:19,117 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:50:06,888 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:50:08,326 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:50:43,504 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:50:43,692 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:51:43,516 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:51:43,852 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:53:47,010 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:53:47,344 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:57:46,426 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:57:46,856 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 12:59:19,332 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 12:59:19,599 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 13:00:48,307 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 13:00:48,557 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 13:01:30,213 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 13:01:30,426 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 13:01:54,692 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 13:01:54,836 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 13:03:25,549 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 13:03:25,731 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 13:03:44,477 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 13:03:44,859 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 13:06:11,994 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 13:06:12,274 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 13:11:04,485 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 13:11:04,809 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 13:24:19,560 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 13:24:19,848 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 13:26:31,001 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 13:26:31,266 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 13:39:50,428 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 13:39:50,741 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 13:40:34,498 - [INFO] - from play in play-internal-execution-context-14 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 13:40:34,656 - [INFO] - from play in play-internal-execution-context-14 
-Application started (Dev)
-
-2025-06-18 14:22:18,729 - [INFO] - from play in play-internal-execution-context-18 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 14:22:19,018 - [INFO] - from play in play-internal-execution-context-18 
-Application started (Dev)
-
-2025-06-18 14:22:51,871 - [INFO] - from play in play-internal-execution-context-18 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 14:22:52,156 - [INFO] - from play in play-internal-execution-context-18 
-Application started (Dev)
-
-2025-06-18 14:23:47,529 - [INFO] - from play in play-internal-execution-context-18 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 14:23:47,882 - [INFO] - from play in play-internal-execution-context-18 
-Application started (Dev)
-
-2025-06-18 14:24:29,709 - [INFO] - from play in play-internal-execution-context-18 
-database [default] connected at jdbc:mysql://localhost:3306/erdd_dev7
-
-2025-06-18 14:24:30,225 - [INFO] - from play in play-internal-execution-context-18 
+2025-07-08 13:45:03,782 - [INFO] - from play in play-internal-execution-context-31 
 Application started (Dev)
 

@@ -2,7 +2,7 @@ import sbt.compiler.ComponentCompiler.javaVersion
 
 name := """erdd"""
 
-version := "1.2.9-SNAPSHOT"
+version := "1.2.10-SNAPSHOT"
 
 scalaVersion := "2.11.4"
 

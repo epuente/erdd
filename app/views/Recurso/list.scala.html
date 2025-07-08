@@ -41,6 +41,8 @@
     </th>
 }
 
+
+
 @main {
 	<div class="container-fluid">
 		<div class="row">
@@ -51,7 +53,19 @@
 				</ol>			
 			</div>
 		</div>
-   
+
+        @*
+        @for(x<- models.Estado.find.all()){
+            <a class="btn btn-color@x.id" role="button" href="/recursos/41">btn-color@x.id @x.descripcion</a>
+        }
+        *@
+
+
+        <br>
+
+
+
+
     	<div class="row">
 			<div class="col-lg-12">
     			<h3 id="homeTitle">@Messages("recursos.list.titulo", currentPage.getTotalRowCount)</h3>

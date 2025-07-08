@@ -97,9 +97,6 @@ public class AdminController extends ControladorSeguro {
 		// Prórrogas
 		int p = EvaluacionProrroga.find.where().eq("autorizado","0").findRowCount();
 		registros.put("solPro", p);
-		
-        System.out.println(		routes.AdminController.index().url()  );
-
 
         // info para la grafica Sankey
         List<Recurso> recursos = Recurso.find
@@ -124,7 +121,7 @@ public class AdminController extends ControladorSeguro {
         List<String> evaluadores = new ArrayList<>();
         for(Evaluador e : evs){
             evaluadores.add( e.personal.nombreCompleto() );
-            System.out.println(e.personal.nombreCompleto());
+            //System.out.println(e.personal.nombreCompleto());
         }
 
 
@@ -155,8 +152,8 @@ public class AdminController extends ControladorSeguro {
                 .findList();
 
 
-        System.out.println("\n\n\n\n\n");
-        System.out.println(sqrRs.size()+" regs ");
+        //System.out.println("\n\n\n\n\n");
+        //System.out.println(sqrRs.size()+" regs ");
         for ( SqlRow r : sqrRs ){
             triadaCadenas.add(new String[]{r.getString("titulo"), r.getString("aspecto"), r.getString("evaluador")});
         }
@@ -180,7 +177,7 @@ public class AdminController extends ControladorSeguro {
             triadaCadenas2.add(new String[]{r.getString("aspecto"), r.getString("evaluador"), r.getString("cantidad")});
         }
 
-
+        /*
         for (String[] tc : triadaCadenas){
             System.out.println("* "+tc[0]+"  -  "+tc[1]+"  -  "+tc[2]);
         }
@@ -188,11 +185,17 @@ public class AdminController extends ControladorSeguro {
         for (String[] tc : triadaCadenas2){
             System.out.println("+ "+tc[0]+"  -  "+tc[1]+"  -  "+tc[2]);
         }
-
+        */
 
 
         // cta de  email de salida
         Ctacorreo cta = Ctacorreo.find.where().eq("activo", true).findUnique();
+
+        // Administrador del sistema
+        Usuario admin = UsuarioRol.find.where().eq("rol.id", 1L).findUnique().usuario;
+
+        // Coordinador de erdd
+        Usuario coord = UsuarioRol.find.where().eq("rol.id", 3L).findUnique().usuario;
 
         // Director DEV
         Director directorDEV = Director.find.byId(1L);
@@ -209,12 +212,10 @@ public class AdminController extends ControladorSeguro {
         // Cantidad de evaluadores
         int cantidadEvaluadores = Evaluador.find.all().size();
 
-
-
-
-		
     	return ok(views.html.resumenAdministrador.render(registros, nodos, cols1, evaluadores,  triadaCadenas, triadaCadenas2,
                 cta,
+                admin,
+                coord,
                 directorDEV,
                 directorEMS,
                 directorES,

@@ -6,236 +6,753 @@
 	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/seantheme.css")"/>
 	<script src="@routes.Assets.at("javascripts/highcharts/highcharts.js")" ></script>		
 	<script src="@routes.Assets.at("javascripts/highcharts/highcharts-3d.js")" ></script>
-
 	<script src="@routes.Assets.at("javascripts/fullcalendar/moment.min.js")" ></script>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/timeline.css")"/>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/dashBoard.css")"/>
+
+<!--
+<script src="@routes.Assets.at("bootstrap5/bootstrap.min.js")" type="text/javascript" defer></script>
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("bootstrap5/bootstrap.min.css")">
+-->
+
+
+
 
 	<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-12">
 					<ol class="breadcrumb">
 					  <li>Inicio</li>
+                        <a href="#" data-nombre="btnTipo" data-tipo="nuevo" class="btnVisualiza activo" style="text-decoration: none;">
+                            <i class="fa fa-th pull-right" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" data-nombre="btnTipo" data-tipo="anterior" class="btnVisualiza inactivo" style="text-decoration: none;">
+                            <i class="fa fa-pie-chart pull-right" aria-hidden="true" style="padding-left: 4px"></i>
+                        </a>
+
+                        <a href="#" data-nombre="btnTipo" data-tipo="log" class="btnVisualiza inactivo" style="text-decoration: none;">
+                            <i class="fa fa-list pull-right" aria-hidden="true"></i>
+                        </a>
+
 					</ol>			
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-lg-12">
-	  	          <h3>Inicio</h3>
-		        </div>
-			</div>
-			
-@*			
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="widget widget-stats bg-blue-lighter" >
-					 	<small class="pull-right ml"></small>
-					 	<small name="dt">asasdfasd</small>
-			            <div class="stats-icon stats-icon-sm"><i class="fa fa fa-file-text-o fa-fw"></i></div>
-			            <p>Solicitudes de prórroga @registros.get("solPro")</p>
-						
-					</div>
-				</div>
-			</div>
-*@			
-			<div class="row">
-				<div class="col-lg-9">
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="panel panel-default">
-			                	<div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span>Estado de solicitudes de evaluación</div>
-			               		<div class="panel-body">
-			               		
-			               			<div class="row">
-			               				<div class="col-lg-4">
-											<table class="table table-striped table-bordered table-responsive" id="tablaResumen">
-												<tr>
-													<td><a href="/recursos">Todas las solicitudes</a></td><td><div class="center-block"> @registros.get("rs")</div> </td>
-												</tr>		
-												<tr>
-													<td colspan="1"><a href="/recursos/observarList">Solicitudes por revisar</a></td><td><div class="center-block"> @registros.get("rs1")</div> </td>
-												</tr>		
-												<tr>
-													<td><a href="/recursos/reObservarList">Solicitudes con observaciones</a></td><td> @(registros.get("rs2")+registros.get("rs105"))   </td>
-												</tr>
-												 <tr>
-													<td><a href="/recursos/completoList">Solicitudes aceptadas</a></td><td> @registros.get("rs3")  </td>
-												</tr>
-												 <tr>
-													<td><a href="/oficios">Solicitudes con oficio</a></td><td> @registros.get("rs4")</td>
-												</tr>		
-												 <tr>
-													<td><a href="/clasificacionList">Recursos clasificados</a></td><td> @registros.get("rs5")</td>
-												</tr>
-												 <tr>
-													<td><a href="/asignarEvaluadores">Evaluadores asignados</a></td><td> @registros.get("rs6")</td>
-												</tr>
-												 <tr>
-													<td><a href="/asignarEvaluadores">Evaluadores asignados (parcialmente)</a></td><td> @registros.get("rs6p")</td>
-												</tr>
+
+
+            @offCanvas()
+
+
+
+
+
 @*
-												
-												 <tr>
-													<td><a href="/mostrarEvaluacionesSinAtender/0">Evaluaciones sin atender</a></td><td> @registros.get("rs6")</td>
-												</tr>
-												
-												 <tr>
-													<td><a href="/mostrarEvaluacionesEnProceso/0">Evaluaciones en proceso</a></td><td> @registros.get("rs7")</td>
-												</tr>
-												<tr>
-													<td><a href="/mostrarEvaluacionesPorRevisar/0">Evaluaciones para revisión</a></td><td>@registros.get("rs8")</td>
-												 </tr>
-												 <tr>
-													<td><a href="/mostrarEvaluacionesConObservaciones/0">Evaluaciones con observaciones</a></td><td> @registros.get("rs9")</td>
-												</tr>
-*@												
-												 <tr>
-													<td><a href="/listarOficioValoracion">Recursos con oficio de valoración</a></td><td> @registros.get("rs110")</td>
-												</tr>
-
-												 <tr>
-													<td><a href="/conEncuestasAceptadas">Evaluaciones con encuestas aceptadas</a></td><td> @registros.get("rs12")</td>
-												</tr>
-												 <tr>
-													<td><a href="/solicitudCanceladoList">Solicitudes de cancelación</a></td><td> @registros.get("c0")</td>
-												</tr>
-												 <tr>
-													<td><a href="/canceladoList">Canceladas</a></td><td> @(registros.get("c1")+registros.get("c2"))</td>
-												</tr>												
-											</table>
-			               				</div>
-			               				<div class="col-lg-8">
-			               					<div>
-			               						<div id="container"></div>
-			               					</div>
-			               				</div>
-			               			</div>
-							
-								</div>
-							</div>
-						</div>
-					</div>
+<!-- Rdd gral -->
+<div class="row">
+    <div class="col-lg-4">
+        <div class="panel panel-default panelColorTodos miPanel" data-liga="@routes.RecursoController.list()">
+            <div class="panel-body">
+                <div><h3>Total RDDs @registros.get("rs")</h3></div>
+                <div class="row">
+                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Todas los registros, desde solicitudes hasta RDDs terminados.</div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs")</div>
+                </div>
+            </div>
+        </div>
 
 
 
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="panel panel-default">
-			                	<div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span>Detalle de evaluaciones (por cada uno de los aspectos)</div>
-			               		<div class="panel-body">
-			               			<div class="row" style="">
-					               		<div class="col-lg-4">
-					               			<div>
-					               			<div id="centrar" style="">
-											<table class="table table-striped table-bordered table-responsive">
-												 <tr>
-													<td><a href="/mostrarEvaluacionesSinAtender/1">Evaluaciones sin atender</a></td><td> @registros.get("ev1")</td>
-												</tr>								
-												 <tr>
-													<td><a href="/mostrarEvaluacionesEnProceso/1">Evaluaciones en proceso</a></td><td> @registros.get("ev2")</td>
-												</tr>
-												<tr>    	
-													<td><a href="/mostrarEvaluacionesPorRevisar/1">Evaluaciones para revisión</a></td><td>@registros.get("ev3")</td>
-												 </tr>
-												 <tr>
-													<td><a href="/mostrarEvaluacionesConObservaciones/1">Evaluaciones con observaciones</a></td><td> @registros.get("ev4")</td>
-												</tr>
-												 <tr>
-													<td><a href="/mostrarEvaluacionesConcluidas/1/lg">Evaluaciones concluidas (por cada uno de los aspectos)</a></td><td> @registros.get("ev5")</td>
-												</tr>
-												 <tr>
-													<td><a href="/mostrarEvaluacionesConcluidas/0/lg">Evaluaciones concluidas (los 4 aspectos)</a></td><td> @registros.get("rs10")</td>
-												</tr>
-												
-											</table>
-											</div>
-											</div>
-										</div>
-										<div class="col-lg-8">
-											<div id="containerEvaluaciones"></div>
-										</div>							
-								</div>
-							</div>
-							</div>
-						</div>
-					</div>     
-
-
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="panel panel-default">
-			                	<div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span>Detalle de cancelaciones</div>
-			               		<div class="panel-body">
-			               			<div class="row" style="">
-					               		<div class="col-lg-4">
-											<table class="table table-striped table-bordered table-responsive" >
-													<tr>
-														<td><a href="@routes.RecursoController.canceladosClasificacionList()">Canceladas en clasificación</a></td><td><div class="center-block"> @registros.get("c1")</div> </td>
-													<tr>
-														<td><a href="@routes.RecursoController.canceladosEvaluacionList()">Canceladas en evaluación</a></td><td> @registros.get("c2")</td>
-													</tr>
-													<tr>
-														<td><a href="/solicitudCanceladoList">Solicitudes de cancelación</a></td><td> @registros.get("c0")</td>
-													</tr>
-													
-											</table>  					               		
-					               		
-					               		</div>
-										<div class="col-lg-8">
-											<div id="container2"></div>
-										</div>						               		
-				               		</div>
-			               		</div>
-		               		</div> 
-	               		</div>
-               		</div>
-
-
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="panel panel-default">
-			                	<div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span>Comparativo Recursos cerrados vs encuestas</div>
-			               		<div class="panel-body">
-			               			<div class="row" style="">
-					               		<div class="col-lg-4">
-											<table class="table table-striped table-bordered table-responsive" >
-													<tr>
-														<td><a href="mostrarEvaluacionesConcluidas/0/lg">Evaluaciones concluidas</a></td><td><div class="center-block"> @registros.get("rs10")</div> </td>
-													<tr>
-														<td><a href="/encuestasPorRevisarAdmin">Encuestas por revisar</a></td><td> @registros.get("en1")</td>
-													</tr>
-													<tr>
-														<td><a href="/conObservacionesList">Encuestas con observaciones</a></td><td> @registros.get("en2")</td>
-													</tr>
-													<tr>
-														<td><a href="/terminadasList">Encuestas terminadas</a></td><td> @registros.get("en3")</td>
-													</tr>
-													
-											</table>  					               		
-					               		
-					               		</div>
-										<div class="col-lg-8">
-											<div id="container3"></div>
-										</div>						               		
-				               		</div>
-			               		</div>
-		               		</div>
-	               		</div>
-               		</div>
-
-					
-				</div>	
-				
-				
-				<aside class="col-lg-3">
-					<div class="panel panel-default">
-			         	<div class="panel-heading"><span class="fa fa-history"></span>Últimos 10 movimientos</div>
-
-							<div id="log"></div>
-
-			        	
-			        </div>				
-				</aside>
-			</div>
     </div>
+</div>
+<!-- Timeline, títulos -->
+<div class="row">
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <h5>Recepción - oficio solicitud</h5>
+        <div class="text-muted" style="font-size:12px;">Desde la recepción de la solicitud vía web hasta la recepción del oficio emitido por la Unidad Académica donde solicita la ETPRDD.</div>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <h5>Clasificación - asignación de evaluadores</h5>
+        <div class="text-muted" style="font-size:12px;">Desde la clasificación del RDD hasta asignación de evaluadores.</div>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <h5>Evaluación</h5>
+        <div class="text-muted" style="font-size:12px;">El proceso de la Evaluación Teórico-Práctica del Recurso Didáctico Digital (ETPRDD) por parte de los evaluadores.</div>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <h5>Valoración y encuestas</h5>
+        <div class="text-muted" style="font-size:12px;">La valoración es el resultado del proceso de la ETPRDD.</div>
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <h5>Otros</h5>
+        <div class="text-muted" style="font-size:12px;">Prórrogas y cancelaciones.</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <div class="panel panel-default panelColor1 miPanel" data-liga="@routes.RecursoController.porObservarList()">
+            <div class="panel-body">
+                <div class="titulo">Solicitudes por revisar</div>
+                <div class="row">
+                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Solicitudes que se han recibido y que están pendientes por revisar.</div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs1")</div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default panelColor1 miPanel" data-liga="@routes.RecursoController.porReObservarList()">
+            <div class="panel-body">
+                <div class="titulo">Solicitudes con observaciones</div>
+                <div class="row">
+                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Solicitudes que después de revisión han recibido observaciones</div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@(registros.get("rs2")+registros.get("rs105"))</div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="panel panel-default panelColor1 miPanel" data-liga="@routes.RecursoController.completoList()">
+            <div class="panel-body">
+                <div class="titulo">Solicitudes aceptadas</div>
+                <div class="row">
+                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Solicitudes que pasan a la etapa de evaluación</div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs3")</div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default panelColor1 miPanel" data-liga="@routes.OficioController.list()">
+            <div class="panel-body">
+                <div class="titulo">Solicitudes con oficio</div>
+                <div class="row">
+                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Recursos didácticos digitales a los que les ha asignado oficio.</div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs4")</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <div class="panel panel-default panelColor4 miPanel" data-liga="@routes.ClasificacionController.list()">
+            <div class="panel-body">
+                <div class="titulo">Recursos clasificados</div>
+                <div class="row">
+                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Recursos didácticos que se les asignó una clasificación.</div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs5")</div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default panelColor4 miPanel" data-liga="@routes.RecursoevaluadorController.asignarEvaluadoresList()">
+            <div class="panel-body">
+                <div class="titulo">Evaluadores asignados parcialmente</div>
+                <div class="row">
+                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Se le han asignado evaluadores al recurso didáctico digital, pero no en su totalidad.</div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs6p")</div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default panelColor4 miPanel" data-liga="@routes.RecursoevaluadorController.asignarEvaluadoresList()">
+            <div class="panel-body">
+                <div class="titulo">Evaluadores asignados</div>
+                <div class="row">
+                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Se le han asignado al recurso didáctico digital los evaluadores para los 4 aspectos.</div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs6")</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <div class="panel panel-default panelColor6 miPanel" data-liga="@routes.RecursoevaluadorController.mostrarEvaluacionesSinAtender(1)">
+            <div class="panel-body">
+                <div class="titulo">Evaluaciones sin atender</div>
+                <div class="row">
+                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Se han asignado evaluadores, pero no aún han iniciado la evaluación.</div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("ev1")</div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default panelColor6 miPanel" data-liga="@routes.RecursoevaluadorController.mostrarEvaluacionesEnProceso(1)">
+            <div class="panel-body">
+                <div class="titulo">Evaluaciones en proceso</div>
+                <div class="row">
+                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Evaluadores que han iniciado evaluación, pero aún no la han finalizado.</div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("ev2")</div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default panelColor6 miPanel" data-liga="@routes.RecursoevaluadorController.mostrarEvaluacionesPorRevisar(1)">
+            <div class="panel-body">
+                <div class="titulo">Evaluaciones para revisión</div>
+                <div class="row">
+                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Los evaluadores han terminado de evaluar y es necesario que el coordinador revise la evaluación.</div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("ev3")</div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default panelColor6 miPanel" data-liga="@routes.RecursoevaluadorController.mostrarEvaluacionesConObservaciones(1)">
+            <div class="panel-body">
+                <div class="titulo">Evaluaciones con observaciones</div>
+                <div class="row">
+                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Después de la revisión el coordinador ha agregado observaciones al recurso.</div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("ev4")</div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default panelColor6 miPanel" data-liga="@routes.RecursoevaluadorController.mostrarEvaluacionesConcluidas(1,"lg")">
+        <div class="panel-body">
+            <div class="titulo">Evaluaciones terminadas por aspecto</div>
+            <div class="row">
+                <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Evaluaciones revisadas y con visto bueno, pero aún no están los 4 aspectos.</div>
+                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("ev4")</div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default panelColor6 miPanel" data-liga="@routes.RecursoevaluadorController.mostrarEvaluacionesConcluidas(0,"lg")">
+    <div class="panel-body">
+        <div class="titulo">Evaluaciones terminadas por los 4 aspectos</div>
+        <div class="row">
+            <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Evaluaciones revisadas en sus 4 aspectos.</div>
+            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs10")</div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="col-sm-2 col-md-2 col-lg-2">
+    <div class="panel panel-default panelColor110 miPanel" data-liga="@routes.OficioValoracionController.list()">
+        <div class="panel-body">
+            <div class="titulo">Recursos DD con oficio de valoración</div>
+            <div class="row">
+                <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">RDDs a los que se les ha asignado el oficio de valoración como resultado de la evaluación.</div>
+                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs110")</div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default panelColor110 miPanel" data-liga="@routes.EncuestaController.encuestasPorRevisar()">
+        <div class="panel-body">
+            <div class="titulo">Encuestas por revisar</div>
+            <div class="row">
+                <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">El docente autor del RDD ha enviado la encuesta y se requiere su revisión.</div>
+                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("en1")</div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default panelColor110 miPanel" data-liga="@routes.EncuestaController.conObservacionesList()">
+        <div class="panel-body">
+            <div class="titulo">Encuestas con observaciones</div>
+            <div class="row">
+                <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Después de revisar las encuestas se marcaron observaciones.</div>
+                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("en2")</div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default panelColor110 miPanel" data-liga="@routes.EncuestaController.terminadasList()">
+        <div class="panel-body">
+            <div class="titulo">Encuestas aceptadas</div>
+            <div class="row">
+                <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Encuestas correctas. Ha terminado el proceso.</div>
+                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("en3")</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Prórrogas y cancelaciones -->
+<div class="col-sm-2 col-md-2 col-lg-2">
+    <div class="panel panel-default panelColorOtro miPanel" data-liga="@routes.ProrrogaController.list()">
+        <div class="panel-body">
+            <div class="titulo">Prórrogas de evaluación</div>
+            <div class="row">
+                <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Solicitudes de tiempo adicional para realizar la evaluación.</div>
+                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">   </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default panelColorOtro miPanel" data-liga="@routes.RecursoController.solicitudCanceladoList()" style="margin-top: 8rem;">
+        <div class="panel-body">
+            <div class="titulo">Solicitudes de cancelación</div>
+            <div class="row">
+                <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Solicitudes de cancelación de RDDs.</div>
+                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("c0")</div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default panelColorOtro miPanel" data-liga="@routes.RecursoController.canceladosClasificacionList()" style="">
+        <div class="panel-body">
+            <div class="titulo">Cancelaciones en clasificación</div>
+            <div class="row">
+                <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Solicitudes de cancelaciones de recursos didácticos digitales durante la clasificación.</div>
+                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("c1")</div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default panelColorOtro miPanel" data-liga="@routes.RecursoController.canceladosEvaluacionList()" style="">
+        <div class="panel-body">
+            <div class="titulo">Cancelaciones en evaluación</div>
+            <div class="row">
+                <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Solicitudes de cancelaciones de recursos didácticos digitales durante la evaluación.</div>
+                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("c2")</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- logs -->
+<aside class="col-sm-2 col-md-2 col-lg-2">
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="fa fa-history"></span>Últimos 10 movimientos</div>
+
+    </div>
+</aside>
+</div>
+*@
+
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div id="dashNuevo">
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <div class="panel panel-default panelColorTodos miPanel" data-liga="@routes.RecursoController.list()">
+                                    <div class="panel-body">
+                                        <h3 style="margin-top:0px; margin-bottom:0px;">Total RDDs @registros.get("rs")</h3>
+                                        <div class="row">
+                                            <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Todas los registros, desde solicitudes hasta RDDs terminados.</div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs")</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                <h5>Recepción - oficio solicitud</h5>
+                                <div class="text-muted" style="font-size:12px;">Desde la recepción de la solicitud vía web hasta la recepción del oficio emitido por la Unidad Académica donde solicita la ETPRDD.</div>
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                <h5>Clasificación - asignación de evaluadores</h5>
+                                <div class="text-muted" style="font-size:12px;">Desde la clasificación del RDD hasta asignación de evaluadores.</div>
+                            </div>
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <h5>Evaluación</h5>
+                                <div class="text-muted" style="font-size:12px;">El proceso de la Evaluación Teórico-Práctica del Recurso Didáctico Digital (ETPRDD) por parte de los evaluadores.</div>
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                <h5>Encuestas</h5>
+                                <div class="text-muted" style="font-size:12px;">Encuestas a los docentes autores de los RDDs.</div>
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                <h5>Otros</h5>
+                                <div class="text-muted" style="font-size:12px;">Prórrogas y cancelaciones.</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                <div class="panel panel-default panelColor1 miPanel" data-liga="@routes.RecursoController.porObservarList()">
+                                    <div class="panel-body">
+                                        <div class="titulo">Solicitudes por revisar</div>
+                                        <div class="row">
+                                            <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Solicitudes recibidas y pendientes por revisar.</div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs1")</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default panelColor1 miPanel" data-liga="@routes.RecursoController.porReObservarList()">
+                                    <div class="panel-body">
+                                        <div class="titulo">Solicitudes con observaciones</div>
+                                        <div class="row">
+                                            <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Solicitudes que después de revisión han recibido observaciones</div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@(registros.get("rs2")+registros.get("rs105"))</div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="panel panel-default panelColor1 miPanel" data-liga="@routes.RecursoController.completoList()">
+                                    <div class="panel-body">
+                                        <div class="titulo">Solicitudes aceptadas</div>
+                                        <div class="row">
+                                            <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Solicitudes sin observaciones.</div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs3")</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default panelColor1 miPanel" data-liga="@routes.OficioController.list()">
+                                    <div class="panel-body">
+                                        <div class="titulo">Solicitudes con oficio</div>
+                                        <div class="row">
+                                            <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">RDDs con oficio de solicitud.</div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs4")</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                <div class="panel panel-default panelColor4 miPanel" data-liga="@routes.ClasificacionController.list()">
+                                    <div class="panel-body">
+                                        <div class="titulo">Recursos clasificados</div>
+                                        <div class="row">
+                                            <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Recursos didácticos que se les asignó una clasificación.</div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs5")</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default panelColor4 miPanel" data-liga="@routes.RecursoevaluadorController.asignarEvaluadoresList()">
+                                    <div class="panel-body">
+                                        <div class="titulo">Evaluadores asignados parcialmente</div>
+                                        <div class="row">
+                                            <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Se le han asignado evaluadores al recurso didáctico digital, pero no en su totalidad.</div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs6p")</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default panelColor4 miPanel" data-liga="@routes.RecursoevaluadorController.asignarEvaluadoresList()">
+                                    <div class="panel-body">
+                                        <div class="titulo">Evaluadores asignados</div>
+                                        <div class="row">
+                                            <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Se le han asignado al recurso didáctico digital los evaluadores para los 4 aspectos.</div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs6")</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                <div class="panel panel-default panelColor6 miPanel" data-liga="@routes.RecursoevaluadorController.mostrarEvaluacionesSinAtender(1)">
+                                    <div class="panel-body">
+                                        <div class="titulo">Evaluaciones sin atender</div>
+                                        <div class="row">
+                                            <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Se han asignado evaluadores, pero no aún han iniciado la evaluación.</div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("ev1")</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default panelColor6 miPanel" data-liga="@routes.RecursoevaluadorController.mostrarEvaluacionesEnProceso(1)">
+                                    <div class="panel-body">
+                                        <div class="titulo">Evaluaciones en proceso</div>
+                                        <div class="row">
+                                            <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Evaluadores que han iniciado evaluación, pero aún no la han finalizado.</div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("ev2")</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default panelColor6 miPanel" data-liga="@routes.RecursoevaluadorController.mostrarEvaluacionesPorRevisar(1)">
+                                    <div class="panel-body">
+                                        <div class="titulo">Evaluaciones para revisión</div>
+                                        <div class="row">
+                                            <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Los evaluadores han terminado de evaluar y es necesario que el coordinador revise la evaluación.</div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("ev3")</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default panelColor6 miPanel" data-liga="@routes.RecursoevaluadorController.mostrarEvaluacionesConObservaciones(1)">
+                                    <div class="panel-body">
+                                        <div class="titulo">Evaluaciones con observaciones</div>
+                                        <div class="row">
+                                            <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Después de la revisión el coordinador ha agregado observaciones al recurso.</div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("ev4")</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                <div class="panel panel-default panelColor6 miPanel" data-liga="@routes.RecursoevaluadorController.mostrarEvaluacionesConcluidas(1,"lg")">
+                                <div class="panel-body">
+                                    <div class="titulo">Evaluaciones terminadas por aspecto</div>
+                                    <div class="row">
+                                        <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Evaluaciones revisadas y con visto bueno, pero aún no están los 4 aspectos.</div>
+                                        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("ev4")</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default panelColor6 miPanel" data-liga="@routes.RecursoevaluadorController.mostrarEvaluacionesConcluidas(0,"lg")">
+                            <div class="panel-body">
+                                <div class="titulo">Evaluaciones terminadas por los 4 aspectos</div>
+                                <div class="row">
+                                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Evaluaciones revisadas en sus 4 aspectos.</div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs10")</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default panelColor6 miPanel" data-liga="@routes.OficioValoracionController.list()">
+                            <div class="panel-body">
+                                <div class="titulo">Recursos DD con oficio de valoración</div>
+                                <div class="row">
+                                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">RDDs a los que se les ha asignado el oficio de valoración como resultado de la evaluación.</div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("rs110")</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+
+                        <div class="panel panel-default panelColor110 miPanel" data-liga="@routes.EncuestaController.encuestasPorRevisar()">
+                            <div class="panel-body">
+                                <div class="titulo">Encuestas por revisar</div>
+                                <div class="row">
+                                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">El docente autor del RDD ha enviado la encuesta y se requiere su revisión.</div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("en1")</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default panelColor110 miPanel" data-liga="@routes.EncuestaController.conObservacionesList()">
+                            <div class="panel-body">
+                                <div class="titulo">Encuestas con observaciones</div>
+                                <div class="row">
+                                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Después de revisar las encuestas se marcaron observaciones.</div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("en2")</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default panelColor110 miPanel" data-liga="@routes.EncuestaController.terminadasList()">
+                            <div class="panel-body">
+                                <div class="titulo">Encuestas aceptadas</div>
+                                <div class="row">
+                                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Encuestas correctas. Ha terminado el proceso.</div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("en3")</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Prórrogas y cancelaciones -->
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                        <div class="panel panel-default panelColorOtro miPanel" data-liga="@routes.ProrrogaController.list()">
+                            <div class="panel-body">
+                                <div class="titulo">Prórrogas de evaluación</div>
+                                <div class="row">
+                                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Solicitudes de tiempo adicional para realizar la evaluación.</div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">   </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default panelColorOtro miPanel" data-liga="@routes.RecursoController.solicitudCanceladoList()" style="margin-top: 8rem;">
+                            <div class="panel-body">
+                                <div class="titulo">Solicitudes de cancelación</div>
+                                <div class="row">
+                                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Solicitudes de cancelación de RDDs.</div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("c0")</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default panelColorOtro miPanel" data-liga="@routes.RecursoController.canceladosClasificacionList()" style="">
+                            <div class="panel-body">
+                                <div class="titulo">Cancelaciones en clasificación</div>
+                                <div class="row">
+                                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Solicitudes de cancelaciones de recursos didácticos digitales durante la clasificación.</div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("c1")</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default panelColorOtro miPanel" data-liga="@routes.RecursoController.canceladosEvaluacionList()" style="">
+                            <div class="panel-body">
+                                <div class="titulo">Cancelaciones en evaluación</div>
+                                <div class="row">
+                                    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Solicitudes de cancelaciones de recursos didácticos digitales durante la evaluación.</div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("c2")</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+                    <div id="dashAnterior" style="display:none">
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span>Estado de solicitudes de evaluación</div>
+                                            <div class="panel-body">
+
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <table class="table table-striped table-bordered table-responsive" id="tablaResumen">
+                                                            <tr>
+                                                                <td><a href="/recursos">Todas las solicitudes</a></td><td><div class="center-block"> @registros.get("rs")</div> </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="1"><a href="/recursos/observarList">Solicitudes por revisar</a></td><td><div class="center-block"> @registros.get("rs1")</div> </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="/recursos/reObservarList">Solicitudes con observaciones</a></td><td> @(registros.get("rs2")+registros.get("rs105"))   </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="/recursos/completoList">Solicitudes aceptadas</a></td><td> @registros.get("rs3")  </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="/oficios">Solicitudes con oficio</a></td><td> @registros.get("rs4")</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="/clasificacionList">Recursos clasificados</a></td><td> @registros.get("rs5")</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="/asignarEvaluadores">Evaluadores asignados</a></td><td> @registros.get("rs6")</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="/asignarEvaluadores">Evaluadores asignados (parcialmente)</a></td><td> @registros.get("rs6p")</td>
+                                                            </tr>
+                                                            @*
+
+                                                            <tr>
+                                                                <td><a href="/mostrarEvaluacionesSinAtender/0">Evaluaciones sin atender</a></td><td> @registros.get("rs6")</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><a href="/mostrarEvaluacionesEnProceso/0">Evaluaciones en proceso</a></td><td> @registros.get("rs7")</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="/mostrarEvaluacionesPorRevisar/0">Evaluaciones para revisión</a></td><td>@registros.get("rs8")</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="/mostrarEvaluacionesConObservaciones/0">Evaluaciones con observaciones</a></td><td> @registros.get("rs9")</td>
+                                                            </tr>
+                                                            *@
+                                                            <tr>
+                                                                <td><a href="/listarOficioValoracion">Recursos con oficio de valoración</a></td><td> @registros.get("rs110")</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><a href="/conEncuestasAceptadas">Evaluaciones con encuestas aceptadas</a></td><td> @registros.get("rs12")</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="/solicitudCanceladoList">Solicitudes de cancelación</a></td><td> @registros.get("c0")</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="/canceladoList">Canceladas</a></td><td> @(registros.get("c1")+registros.get("c2"))</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-lg-8">
+                                                        <div>
+                                                            <div id="container"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span>Detalle de evaluaciones (por cada uno de los aspectos)</div>
+                                            <div class="panel-body">
+                                                <div class="row" style="">
+                                                    <div class="col-lg-4">
+                                                        <div>
+                                                            <div id="centrar" style="">
+                                                                <table class="table table-striped table-bordered table-responsive">
+                                                                    <tr>
+                                                                        <td><a href="/mostrarEvaluacionesSinAtender/1">Evaluaciones sin atender</a></td><td> @registros.get("ev1")</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><a href="/mostrarEvaluacionesEnProceso/1">Evaluaciones en proceso</a></td><td> @registros.get("ev2")</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><a href="/mostrarEvaluacionesPorRevisar/1">Evaluaciones para revisión</a></td><td>@registros.get("ev3")</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><a href="/mostrarEvaluacionesConObservaciones/1">Evaluaciones con observaciones</a></td><td> @registros.get("ev4")</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><a href="/mostrarEvaluacionesConcluidas/1/lg">Evaluaciones concluidas (por cada uno de los aspectos)</a></td><td> @registros.get("ev5")</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><a href="/mostrarEvaluacionesConcluidas/0/lg">Evaluaciones concluidas (los 4 aspectos)</a></td><td> @registros.get("rs10")</td>
+                                                                    </tr>
+
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-8">
+                                                        <div id="containerEvaluaciones"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span>Detalle de cancelaciones</div>
+                                            <div class="panel-body">
+                                                <div class="row" style="">
+                                                    <div class="col-lg-4">
+                                                        <table class="table table-striped table-bordered table-responsive" >
+                                                            <tr>
+                                                                <td><a href="@routes.RecursoController.canceladosClasificacionList()">Canceladas en clasificación</a></td><td><div class="center-block"> @registros.get("c1")</div> </td>
+                                                            <tr>
+                                                                <td><a href="@routes.RecursoController.canceladosEvaluacionList()">Canceladas en evaluación</a></td><td> @registros.get("c2")</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="/solicitudCanceladoList">Solicitudes de cancelación</a></td><td> @registros.get("c0")</td>
+                                                            </tr>
+
+                                                        </table>
+
+                                                    </div>
+                                                    <div class="col-lg-8">
+                                                        <div id="container2"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading"><span class="glyphicon glyphicon-list-alt"></span>Comparativo Recursos cerrados vs encuestas</div>
+                                            <div class="panel-body">
+                                                <div class="row" style="">
+                                                    <div class="col-lg-4">
+                                                        <table class="table table-striped table-bordered table-responsive" >
+                                                            <tr>
+                                                                <td><a href="mostrarEvaluacionesConcluidas/0/lg">Evaluaciones concluidas</a></td><td><div class="center-block"> @registros.get("rs10")</div> </td>
+                                                            <tr>
+                                                                <td><a href="/encuestasPorRevisarAdmin">Encuestas por revisar</a></td><td> @registros.get("en1")</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="/conObservacionesList">Encuestas con observaciones</a></td><td> @registros.get("en2")</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><a href="/terminadasList">Encuestas terminadas</a></td><td> @registros.get("en3")</td>
+                                                            </tr>
+
+                                                        </table>
+
+                                                    </div>
+                                                    <div class="col-lg-8">
+                                                        <div id="container3"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+
+
+
 }
 
 
@@ -486,7 +1003,8 @@ $(function () {
 	
 	//Actualiza la info de 'movimientos recientes'
     actualiza();
-    setInterval(actualiza, 60000);    
+    setInterval(actualiza, 60000);
+
 });
 
 
@@ -513,12 +1031,19 @@ $(function () {
 		 );
 	}
 
+
+
 	
 	function LlamadaActualiza(){
+
+	     var cantidad = $("#cantidadLogs").val();
+	     if (cantidad=='')
+	        cantidad=0;
+	     console.log("cntidad logs: "+cantidad);
 		 var d = $.Deferred();
 	    	$.ajax({
 	            method: "GET",
-	            url: "/ajaxActualizaLog/10"
+	            url: "/ajaxActualizaLog/"+cantidad
 	      })
 	      .success(function( data ) {
 	    	  console.dir(JSON.parse(data))
@@ -526,7 +1051,10 @@ $(function () {
 	    	  for(s=0; s<JSON.parse(data).length; s++ ){
 	    		  var obj = JSON.parse(data)[s];
 	  	 		if(obj.tipo=="e"){
-		  	 		cadena +="<div class='widget widget-stats bg-blue-lighter' >";
+		  	 		//cadena +="<div class='widget widget-stats bg-blue-lighter' >";
+		  	 		cadena +="<div class='widget widget-stats'  style='background-color:#698f7e'>";
+
+
 		  	 		cadena +="<small id='dif"+obj.consecutivo+"' class='pull-right ml'></small>";
 		  	 		cadena +="<small id='dt"+obj.consecutivo+"' name='dt'>"+obj.auditinsert+"</small>";
 		  	 		cadena +="    <div class='stats-icon stats-icon-sm'><i class='fa fa fa-file-text-o fa-fw'></i></div>";
@@ -536,7 +1064,7 @@ $(function () {
 		  	 		cadena +="</div>";
 	  	 		}
 	  		 	if(obj.tipo=="ev"){
-					cadena+="<div class='widget widget-stats bg-aqua-lighter' style='color:#616161;'>";
+					cadena+="<div class='widget widget-stats' style='background-color:#4caaf4'>";
 					cadena+="<small id='dif"+obj.consecutivo+"' class='pull-right ml'></small>";
 					cadena+="<small id='dt"+obj.consecutivo+"' name='dt'>"+obj.auditinsert+"</small>";
 			        cadena+="<div class='stats-icon stats-icon-sm'><i class='fa fa-list-alt fa-fw'></i></div>";
@@ -569,5 +1097,18 @@ $(function () {
             $("body").fadeIn("slow");
     });
 
+
+
+
+
+
+
+
+    $("#cantidadLogs").keyup(function(e){
+        if ( $(this).val()>=0 )
+            LlamadaActualiza();
+    });
+
 </script>
 <script src="@routes.Assets.at("javascripts/utilerias.js")"></script>
+<script src="@routes.Assets.at("javascripts/dashBoard.js")"></script>
