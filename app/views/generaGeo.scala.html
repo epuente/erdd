@@ -1,0 +1,55 @@
+@(totalRegistro:Int, totalRegistroGeo:Int)
+
+@main {
+    Este método genera las ubicaciones geográficas para las ips de los accesos al sistema.<br><br>
+
+    La tabla RegistroAcceso tiene @totalRegistro registros y la tabla RegistroAccesoGeo tiene @totalRegistroGeo registros<br><br>
+    @if(totalRegistro!=totalRegistroGeo){
+        Basado en el número de registros no corresponde a la relación uno a uno de dichas tablas.<br>
+        <input type="button" id="btnGenerar" value="Obtener las ubicaciones geográficas">
+    }else{
+        Es el mismo número de registros en ambas tablas, ok.<br>
+    }
+
+    <div id="mensajes"></div>
+
+    <script>
+        $(function () {
+
+        });
+
+        $("#btnGenerar").click(function(e){
+            e.preventDefault();
+            console.log("click")
+            $.ajax({
+                type: "POST",
+                method: "post",
+                url: "@routes.CoordinadorController.generaGeoX"
+            });
+
+
+
+
+            let timer = false;
+            if (timer===false){
+                timer =  setInterval(  function(){
+                    var $conteo = LlamadaAjax("@routes.CoordinadorController.cuentaRegistrosGeo()"
+                                        , "POST"
+                                        , JSON.stringify({}));
+                    $.when( $conteo).done(function(data){
+                        $("#mensajes").html("Se han generado "+new Intl.NumberFormat('es-MX').format(data)+" registros");
+                    });
+                }
+                , 1000 );
+            }
+
+        });
+    </script>
+
+}
+<script src="@routes.Assets.at("javascripts/async.js")" type="text/javascript"></script>
+
+
+
+
+

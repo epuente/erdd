@@ -30,7 +30,7 @@ public class AdminEvaluacionController extends ControladorSeguroCoordinador {
         urlSitio = (application().isDev()?"http://":"https://") + urlSitio;
 	//	String puerto = Play.application().configuration().getString("http.port");
 		//String direccionPuerto = direccion+":"+puerto;
-        System.out.println("AdminEvaluacionController.saveObservaciones");
+        System.out.println("Desde AdminEvaluacionController.saveObservaciones");
 		DynamicForm df = DynamicForm.form().bindFromRequest();
 		Recurso r = Recurso.find.byId(id);
 
@@ -83,7 +83,7 @@ System.out.println(" aux2: "+aux2);
 			if(!df.get("observacionobservacionGral").isEmpty()){
 				if (eoog != null){
 					System.out.println("no nulo");
-					eoog.observacion = df.get("observacionobservacionGral");
+					eoog.observacion = df.get("observacionobservacionGral").replaceAll("\\r\\n", "[saltoDeLinea]");
 					System.out.println("0001");
 					eoog.update();
 					System.out.println("0002");
@@ -93,7 +93,7 @@ System.out.println(" aux2: "+aux2);
 					System.out.println("100");
 					eoog.evaluacionobservaciongral = aux2;
 					System.out.println("200");
-					eoog.observacion = df.get("observacionobservacionGral");
+					eoog.observacion = df.get("observacionobservacionGral").replaceAll("\\r\\n", "[saltoDeLinea]");
 					System.out.println("300");
 					eoog.save();			
 					System.out.println("400");

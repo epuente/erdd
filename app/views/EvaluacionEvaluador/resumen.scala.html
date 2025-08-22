@@ -3,6 +3,7 @@
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
 
 
+
 @main {
 	<script src="@routes.Assets.at("javascripts/highcharts/highcharts.js")" ></script>		
 	<script src="@routes.Assets.at("javascripts/highcharts/highcharts-3d.js")" ></script>
@@ -22,6 +23,8 @@
         </div>
     </div>
 
+
+<div id="map"></div>
 
     <div class="container-fluid" style="width:1500px;">
         <div id="dashNuevo">
@@ -234,7 +237,11 @@ $(function () {
     
     
     
-    
 });	
 </script>
 <script src="@routes.Assets.at("javascripts/dashBoard.js")"></script>
+<script src="@routes.Assets.at("leaflet/leaflet.js")"></script>
+
+
+
+

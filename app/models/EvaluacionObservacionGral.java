@@ -2,10 +2,7 @@ package models;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 import com.avaje.ebean.annotation.CreatedTimestamp;
@@ -45,6 +42,11 @@ public class EvaluacionObservacionGral extends Model {
     
     @OneToOne(mappedBy="evaluacionobservaciongral", cascade=CascadeType.ALL)
     public EvaluacionObservacionObservacionGral observacionobservaciongral;
+
+    @PrePersist
+    public void prePersist(){
+        observacion = observacion.replaceAll("\\r\\n", "[saltoDeLinea]");
+    }
 
 }
  

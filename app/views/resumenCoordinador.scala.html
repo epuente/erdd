@@ -308,7 +308,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div id="dashNuevo">
                         <div class="row">
-                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                                 <div class="panel panel-default panelColorTodos miPanel" data-liga="@routes.RecursoController.list()">
                                     <div class="panel-body">
                                         <h3 style="margin-top:0px; margin-bottom:0px;">Total RDDs @registros.get("rs")</h3>
@@ -320,7 +320,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <!-- títulos -->
+                        <div class="row hidden-xs hidden-sm">
                             <div class="col-sm-2 col-md-2 col-lg-2">
                                 <h5>Recepción - oficio solicitud</h5>
                                 <div class="text-muted" style="font-size:12px;">Desde la recepción de la solicitud vía web hasta la recepción del oficio emitido por la Unidad Académica donde solicita la ETPRDD.</div>
@@ -343,7 +344,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-2 col-md-2 col-lg-2">
+                            <div class="col-sm-12 col-md-2 col-lg-2">
                                 <div class="panel panel-default panelColor1 miPanel" data-liga="@routes.RecursoController.porObservarList()">
                                     <div class="panel-body">
                                         <div class="titulo">Solicitudes por revisar</div>
@@ -383,7 +384,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-2 col-md-2 col-lg-2">
+                            <div class="col-sm-12 col-md-2 col-lg-2">
                                 <div class="panel panel-default panelColor4 miPanel" data-liga="@routes.ClasificacionController.list()">
                                     <div class="panel-body">
                                         <div class="titulo">Recursos clasificados</div>
@@ -412,7 +413,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-2 col-md-2 col-lg-2">
+                            <div class="col-sm-12 col-md-2 col-lg-2">
                                 <div class="panel panel-default panelColor6 miPanel" data-liga="@routes.RecursoevaluadorController.mostrarEvaluacionesSinAtender(1)">
                                     <div class="panel-body">
                                         <div class="titulo">Evaluaciones sin atender</div>
@@ -450,15 +451,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-2 col-md-2 col-lg-2">
+                            <div class="col-sm-12 col-md-2 col-lg-2">
                                 <div class="panel panel-default panelColor6 miPanel" data-liga="@routes.RecursoevaluadorController.mostrarEvaluacionesConcluidas(1,"lg")">
-                                <div class="panel-body">
-                                    <div class="titulo">Evaluaciones terminadas por aspecto</div>
-                                    <div class="row">
-                                        <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Evaluaciones revisadas y con visto bueno, pero aún no están los 4 aspectos.</div>
-                                        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("ev4")</div>
+                                    <div class="panel-body">
+                                        <div class="titulo">Evaluaciones terminadas por aspecto</div>
+                                        <div class="row">
+                                            <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 cuerpo">Evaluaciones revisadas y con visto bueno, pero aún no están los 4 aspectos.</div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">@registros.get("ev4")</div>
+                                        </div>
                                     </div>
-                                </div>
+
                             </div>
                             <div class="panel panel-default panelColor6 miPanel" data-liga="@routes.RecursoevaluadorController.mostrarEvaluacionesConcluidas(0,"lg")">
                             <div class="panel-body">
@@ -479,7 +481,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-2 col-md-2 col-lg-2">
+                    <div class="col-sm-12 col-md-2 col-lg-2">
 
                         <div class="panel panel-default panelColor110 miPanel" data-liga="@routes.EncuestaController.encuestasPorRevisar()">
                             <div class="panel-body">
@@ -511,7 +513,7 @@
                     </div>
 
                     <!-- Prórrogas y cancelaciones -->
-                    <div class="col-sm-2 col-md-2 col-lg-2">
+                    <div class="col-sm-12 col-md-2 col-lg-2">
                         <div class="panel panel-default panelColorOtro miPanel" data-liga="@routes.ProrrogaController.list()">
                             <div class="panel-body">
                                 <div class="titulo">Prórrogas de evaluación</div>

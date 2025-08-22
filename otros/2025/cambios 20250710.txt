@@ -1,0 +1,16 @@
+create table registro_acceso_geo (
+id                        bigint auto_increment not null,
+registroacceso_id         bigint,
+propiedades               JSON,
+auditinsert               datetime not null,
+auditlastupdate           datetime not null,
+constraint pk_registro_acceso_geo primary key (id));
+
+alter table registro_acceso_geo add constraint fk_registro_acceso_geo_registroacceso foreign key (registroacceso_id) references registro_acceso (id) on delete restrict on update restrict;
+
+create index ix_registro_acceso_geo_registroacceso on registro_acceso_geo (registroacceso_id);
+
+
+
+update registro_acceso set ip = "148.204.111.41" where ip="127.0.0.1";
+update registro_acceso set ip = "148.204.111.41" where ip="0:0:0:0:0:0:0:1";

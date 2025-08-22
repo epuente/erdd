@@ -2,7 +2,7 @@ import sbt.compiler.ComponentCompiler.javaVersion
 
 name := """erdd"""
 
-version := "1.2.10-SNAPSHOT"
+version := "1.2.11-SNAPSHOT"
 
 scalaVersion := "2.11.4"
 
@@ -33,7 +33,9 @@ libraryDependencies ++= Seq(
   "org.webjars" % "bootstrap-notify" % "3.1.3",
 
   "org.webjars" % "datatables" % "1.10.16",
-  "org.webjars" % "datatables-buttons" % "1.5.1"
+  "org.webjars" % "datatables-buttons" % "1.5.1",
+
+  "org.webjars" % "leaflet" % "1.7.1"
 
 
 

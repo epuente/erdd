@@ -8,4 +8,11 @@ Java 8
 Mysql 8.0.41 / MariaDB 10.6.21
 
 iTextPdf version 5.5.8
+
+Geolocalización a partir de ips
+ipdata
+
+Mapas
+Leaflet  version 1.7.1
+
  

@@ -2,16 +2,16 @@
 function combinarCeldas(origen){
     //origen = $('#tabla');
 
-    for (r=$("#tabla tr").length-1; r>0 ;r--){
-      for (c=$("#tabla tr:nth-child("+r+") td").length; c>=0 ;c--){
+    for (r=$(origen).find("tr").length-1; r>0 ;r--){
+      for (c=$(origen).find("tr:nth-child("+r+") td").length; c>=0 ;c--){
               // Corte; se hace corte por la primer columna, forza a que se haga un corte cuando la primer columna es diferente, es decir, si las columnas 4 y 5  son iguales en todos los registros pero la columna 0 difiere; no se agrupan puesto que sus columnas primeras son diferentes.
             var corte=0;
 		//	alert(r+"   "+c);
 //			alert($("#tabla tr:nth-child("+r+") td:nth-child("+c+")").html()+"\n"  +$("#tabla tr:nth-child("+(r-1)+") td:nth-child("+c+")").html());
-            if ($("#tabla tr:nth-child("+r+") td:nth-child("+c+")").html() == $("#tabla tr:nth-child("+(r-1)+") td:nth-child("+c+")").html()){
-            	var altura = parseInt($("#tabla tr:nth-child("+(r-1)+") td:nth-child("+c+")").attr('rowspan')) + parseInt($("#tabla tr:nth-child("+r+") td:nth-child("+c+")").attr('rowspan'));
-            	$("#tabla tr:nth-child("+(r-1)+") td:nth-child("+c+")").attr('rowspan',altura);
-            	$("#tabla tr:nth-child("+r+") td:nth-child("+c+")").remove();
+            if ($(origen).find("tr:nth-child("+r+") td:nth-child("+c+")").html() == $(origen).find("tr:nth-child("+(r-1)+") td:nth-child("+c+")").html()){
+            	var altura = parseInt($(origen).find("tr:nth-child("+(r-1)+") td:nth-child("+c+")").attr('rowspan')) + parseInt($(origen).find("tr:nth-child("+r+") td:nth-child("+c+")").attr('rowspan'));
+            	$(origen).find("tr:nth-child("+(r-1)+") td:nth-child("+c+")").attr('rowspan',altura);
+            	$(origen).find("tr:nth-child("+r+") td:nth-child("+c+")").remove();
 			
           }
         }    

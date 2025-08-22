@@ -1,10 +1,5 @@
 @(recurso:Recurso, evt:List[EvaluacionTabla], evr:List[Evaluacion], eo:List[EvaluacionObservacion], evaluador:Long, eog:EvaluacionObservacionGral)
 @import helper._
-
-@System.out.println("renderrrrrrrrrrrrrrrrrrrrrrrrrrr")
-@System.out.println("evt "+evt.size())
-
-
 @main{
 	<div class="container-fluid">
 			<div class="row">
@@ -55,7 +50,7 @@
 										<label for="txtObservacionGral">Observación General</label>
 										<textarea id="txtObservacionGral" name="txtObservacionGral" style="min-width:100%" class="form-control" rows="2" disabled="disabled">
 											@if(eog!=null){
-												@eog.observacion
+												@eog.getObservacion()
 											}
 										</textarea>
 									</td>
@@ -88,7 +83,8 @@
 		$(".container-fluid").show();
 	});
 	
-	$( document ).on( "click", "input[name*='btnObservacion']", function() {	
+	$( document ).on( "click", "input[name*='btnObservacion']", function() {
+	console.log("aquii")
 		var id = this.name.substring(14);
 		if ( $("[name='observacion"+id+"']")  .css("display") == "none"  ){
 			$("[name='observacion"+id+"']").show();
@@ -122,7 +118,7 @@
 			 }
 		}
 		@for(observa <- eo){			
-			$("[name='observacion@observa.respuesta.evaluaciontabla.id']").val("@observa.Observacion");
+			$("[name='observacion@observa.respuesta.evaluaciontabla.id']").val("@observa.Observacion".replaceAll("[saltoDeLinea]", "\n"));
 			$("[name='observacion@observa.respuesta.evaluaciontabla.id']").show()
 			$("[name='btnObservacion@observa.respuesta.evaluaciontabla.id']").show()
 			$("[name='observacion@observa.respuesta.evaluaciontabla.id']").prop("title","@observa.respuesta.id");
@@ -137,7 +133,7 @@
 			
 			@if(eog.observacionobservaciongral != null){
 				@if(eog.observacionobservaciongral.observacion != null){
-					$("[name='observacionobservacionGral']").val("@eog.observacionobservaciongral.observacion");
+					$("[name='observacionobservacionGral']").val("@eog.observacionobservaciongral.observacion".replaceAll("[saltoDeLinea]", "\n")  );
 					$("[name='observacionobservacionGral']").show();
 					$("[name='btnObservacionobservacionGral']").val("Quitar observación");
 					$("[name='btnObservacionobservacionGral']").removeClass("btn-primary").addClass("btn-danger");			

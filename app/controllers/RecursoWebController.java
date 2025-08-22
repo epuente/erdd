@@ -278,6 +278,13 @@ public class RecursoWebController extends ControladorDefault {
 		Recurso r = recursoForm.get();
 		Documento.searchByRecurso(r.id);
 
+        RegistroAcceso ra = new RegistroAcceso();
+        ra.autor = Recurso.searchByNumControl(r.numcontrol).getResponsable();
+        ra.ruta = request().path();
+        ra.ip = request().remoteAddress();
+        ra.fecha = new Date();
+        ra.save();
+
 		switch ( r.estado.id.intValue()) {
 			case 2:
 				return ok(editMasterForm.render(id, recursoForm, r) );
@@ -318,6 +325,14 @@ public class RecursoWebController extends ControladorDefault {
 		mipdf.baos = baosPDF;
 		mipdf.generarSolicitudEvaluacion();
 		response().setContentType("application/pdf");
+
+        RegistroAcceso ra = new RegistroAcceso();
+        ra.autor = Recurso.searchByNumControl( Recurso.find.setId(session("idRecurso")).findUnique().numcontrol).getResponsable();
+        ra.ruta = request().path();
+        ra.ip = request().remoteAddress();
+        ra.fecha = new Date();
+        ra.save();
+
 		return ok (  mipdf.baos.toByteArray() );
 	}
 
@@ -329,6 +344,14 @@ public class RecursoWebController extends ControladorDefault {
         miword.baos = baos;
         miword.generarSolicitudEvaluacionWord();
         response().setContentType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+
+        RegistroAcceso ra = new RegistroAcceso();
+        ra.autor = Recurso.searchByNumControl( Recurso.find.setId(session("idRecurso")).findUnique().numcontrol ).getResponsable();
+        ra.ruta = request().path();
+        ra.ip = request().remoteAddress();
+        ra.fecha = new Date();
+        ra.save();
+
         return ok (  miword.baos.toByteArray() );
     }
 
@@ -495,6 +518,15 @@ public class RecursoWebController extends ControladorDefault {
 			}
 			k++;
 		}
+
+        // Registra el acceso
+        RegistroAcceso ra = new RegistroAcceso();
+        ra.autor = Recurso.searchByNumControl( Recurso.find.setId(session("idRecurso")).findUnique().numcontrol ).getResponsable();
+        ra.ruta = request().path();
+        ra.ip = request().remoteAddress();
+        ra.fecha = new Date();
+        ra.save();
+
 		return ok(actualizadoMaster.render(r));
 	}
 
@@ -699,6 +731,13 @@ public class RecursoWebController extends ControladorDefault {
 		}
 
 		response().setContentType("application/pdf");
+
+        RegistroAcceso ra = new RegistroAcceso();
+        ra.autor = Recurso.searchByNumControl( Recurso.find.setId(session("idRecurso")).findUnique().numcontrol).getResponsable();
+        ra.ruta = request().path();
+        ra.ip = request().remoteAddress();
+        ra.fecha = new Date();
+        ra.save();
 
 		return ok (  mipdf.baos.toByteArray() );
 	}

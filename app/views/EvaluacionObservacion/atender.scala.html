@@ -62,7 +62,7 @@
 											<textarea rows="" cols="" class="form-control" style="min-width: 100%" readonly="readonly" name="observacionGral">@if(eog!=null){@eog.observacion}</textarea>
 										</td>	
 					             		<td style="width: 30%"> 
-					             			<textarea name="observacionobservacionGral" rows="" cols="30%" style="display: none; min-width: 100%;  background-color: #FFFDDD" disabled="disabled" readonly="readonly" class="form-control"   >@if(eog!=null){@if(eog.observacionobservaciongral!=null){@eog.observacionobservaciongral.observacion}}</textarea>
+					             			<textarea name="observacionobservacionGral" rows="" cols="30%" style="display: none; min-width: 100%;  background-color: #FFFDDD" disabled="disabled" readonly="readonly" class="form-control"   >@if(eog!=null){@if(eog.observacionobservaciongral!=null){@eog.observacionobservaciongral.observacion.replaceAll("[saltoDeLinea]", "\n")}}</textarea>
 					             			<br>
 					             			<input type="button" name="btnObservacionGral" value="Atender observación" style="display: none; width: 70%"  class="btn btn-primary btn-block center-block">
 					             		</td>
@@ -113,7 +113,9 @@
 		 	$("input[name='califica@resp.evaluaciontabla.id'][value='@resp.respuesta']").prop("checked",true);
 		}
 		@for(observa <- eo){
-			$("[name='observacion@observa.respuesta.evaluaciontabla.id']").val('@observa.Observacion.filter(_ >= ' ') ');
+		    var a = "@observa.Observacion.filter(_ >= ' ')";
+		    var b = a.replaceAll("[saltoDeLinea]", "\n");
+			$("[name='observacion@observa.respuesta.evaluaciontabla.id']").val(b);
 			$("[name='observacion@observa.respuesta.evaluaciontabla.id']").show()
 			$("[name='btnObservacion@observa.respuesta.evaluaciontabla.id']").show()
 			$("[name='observacion@observa.respuesta.evaluaciontabla.id']").prop("title","@observa.respuesta.id")
@@ -121,7 +123,9 @@
 		
 		@if(eog!=null ){		
 			@if(eog.observacionobservaciongral!= null){
-			/////	$("[name='observacionobservacionGral']").val("@eog.observacionobservaciongral.observacion.filter(_ >= ' ')");
+			    var a = "@eog.observacionobservaciongral.observacion";
+			    var b = a.replaceAll("[saltoDeLinea]", "\n");
+                $("[name='observacionobservacionGral']").html(b);
 				$("[name='observacionobservacionGral']").show();
 				$("[name='btnObservacionGral']").show();
 			}

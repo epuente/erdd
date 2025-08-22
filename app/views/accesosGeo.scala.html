@@ -1,0 +1,153 @@
+@import helper._
+
+@main {
+
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/dashBoard.css")"/>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("leaflet/leaflet.css")"/>
+
+    <style>
+        #map { height: 380px; width:100% }
+        #tablaAccesos_filter {margin-right:0.2rem;}
+    </style>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li><a href="/coord">Inicio</a></li>
+                    <li class="active">Accesos al sistema</li>
+                </ol>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <table class="table table-bordered table-striped datatable" id="tablaAccesos" style="width: 100%">
+                <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>rol</th>
+                    <th>ip</th>
+                    <th>Ruta</th>
+                    <th>Fecha y hora</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-6">
+            <div id="map"></div>
+            <div class="row">
+                <div class="col-md-12">Las ubicaciones se basan en las ips, por tanto son aproximadas.</div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        var map;
+
+        $(function () {
+                <!--  Mapas-->
+                // Inicializar el mapa
+                //var map = L.map('map').setView([19.4326, -99.1332], 12); // Centro en México
+                map = L.map('map').setView([19.4326, -99.1332], 9);
+                // Añadir capa de tiles (OpenStreetMap)
+                const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                }).addTo(map);
+
+
+                // Cargar ubicaciones desde el servidor
+                $.getJSON("@routes.CoordinadorController.auxAccesosGeo()", function(data) {
+                        $.each(data, function(index, location) {
+                            var cadena =   "ip:"+location.ip+"<br><b>" + location.ciudad + "</b>"+
+                                                "<br>" + location.region + ", " +
+                                                location.pais;
+                            if (location.asn!=null){
+                                cadena += "<hr><b>"+location.asn.nombre+"</b>";
+                            }
+                            if (location.blocklists!=null){
+                            }
+                            L.marker([location.latitud, location.longitud])
+                                .addTo(map)
+                                .bindPopup( cadena +
+                                                "<br>C.P. "+location.cp +
+                                                "<hr>Lat: " + location.latitud +
+                                                "<br>Lon: " + location.longitud
+                                                );
+                        });
+                });
+
+                tablaDT =  $('#tablaAccesos').DataTable( {
+                    "stateSave": true,
+                    "pageLength": 10,
+                    "lengthMenu": [  [3, 5, 10, 25, 50, -1], [3, 5, 10, 25, 50, "Todos"]   ],
+                    "language": {
+                        "url": "@routes.Assets.at("Spanish.json")"
+                    },
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollCollapse": false,
+                    "scrollX": false,
+                    "mark": true,
+                    "fixedColumns": true,
+                    "ajax": {
+                        "url":  "@routes.CoordinadorController.accesos2()",
+                        "contentType": "application/json; charset=utf-8",
+                        "dataType": "json"
+                    },
+                    "columns": [
+                        {"data": "usuario"},
+                        {"data": "rol"},
+                        {"data": "ip"},
+                        {"data": "ruta"},
+                        {"data": "fecha"},
+                        {"data": "null",
+                            "render": function(data, type, row, meta){
+                                console.dir(row)
+                                return "<div class=\"row\"><div class=\"col-xs-12 col-sm-6 col-md-6 col-lg-6\"><a name='ligaMapa'  data-lat="+row.lat+" data-lon="+row.lon+" ><i class='fa fa-map-marker' aria-hidden='true'></i></a></div>    </div>";
+                            }
+                        }
+                    ],
+                    "initComplete": function(){
+                        console.log("ok");
+                        $("#tablaAccesos_filter").addClass("pull-right").css("right-margin","1rem");
+                    }
+                } );
+
+        });
+
+
+        $(window).load(function() {
+                $("body").fadeIn("slow");
+        });
+
+
+        $(document).on("click", "[name='ligaMapa']", function(e){
+            e.preventDefault();
+            console.log("oki");
+            console.log( $(this).data("lat")  );
+            console.log( $(this).data("lon")  );
+
+            var myIcon = L.icon({
+                iconUrl: "@routes.Assets.at("leaflet/images/marker-icon-alterno.png")",
+                shadowUrl: "@routes.Assets.at("leaflet/images/marker-shadow.png")"
+
+            });
+            L.marker([$(this).data("lat"), $(this).data("lon")], {icon: myIcon})
+                                .addTo(map)
+        });
+    </script>
+}
+<script src="@routes.Assets.at("lib/datatables/js/jquery.dataTables.min.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("lib/datatables/js/dataTables.bootstrap.min.js")" type="text/javascript"></script>
+
+<script src="@routes.Assets.at("mark.js/datatables.mark.min.js")"></script>
+<script src="@routes.Assets.at("mark.js/jquery.mark.min.js")"></script>
+<script src="@routes.Assets.at("leaflet/leaflet.js")"></script>

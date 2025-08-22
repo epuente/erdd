@@ -4,6 +4,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.validation.constraints.Size;
 
 import com.avaje.ebean.annotation.CreatedTimestamp;
@@ -32,5 +33,9 @@ public class EvaluacionObservacionObservacionGral extends Model {
     public Date auditlastupdate; 	
 
     public static Finder<Long,EvaluacionObservacionObservacionGral> find = new Finder<>(Long.class, EvaluacionObservacionObservacionGral.class);
+
+    public String saltoHTML(){
+        return observacion.replace("[saltoDeLinea]", "\\r\\n" );
+    }
 }
  

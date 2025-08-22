@@ -21,6 +21,16 @@
 						No hay registros
 					} else {
 						<table class="table table-striped table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <td>Nombre</td>
+                                    <td>Clave de control</td>
+                                    <td>Título</td>
+                                    <td>Estado</td>
+                                    <td>Tel/extensión</td>
+                                    <td>email</td>
+                                </tr>
+                            </thead>
 							@for(autor<-autores){
 								<tr>
 									<td>@(autor.paterno+" "+autor.materno+" "+autor.nombre)</td>

@@ -185,7 +185,7 @@ body {
   background-color: #000;
   color: #fff;
   text-align: center;
-  z-index:99;
+  z-index:105;
 }
 #content-wrap {
   padding-bottom: 3.5rem; /* altura del footer */

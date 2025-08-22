@@ -426,3 +426,16 @@ POST    /previewFormato2                            controllers.OficioValoracion
 POST    /upload                                     controllers.OficioValoracionFormatoController.upload()
 POST    /saveFormato                                controllers.OficioValoracionFormatoController.saveFormato()
 POST    /updateFormato                              controllers.OficioValoracionFormatoController.updateFormato()
+
+GET     /accesoEvaluador/:idEvaluador                   controllers.HistorialController.accesoEvaluador(idEvaluador:Long)
+GET     /hisEvaluador/:idEvaluador                   controllers.HistorialController.hisEvaluador(idEvaluador:Long)
+GET     /accesoAutor/:idAutor                           controllers.HistorialController.accesoAutor(idAutor:Long)
+
+GET     /locacionesEvaluador                        controllers.HistorialController.getLocaciones()
+GET     /accesosGeo                                 controllers.CoordinadorController.accesosGeo()
+GET     /auxAccesosGeo                              controllers.CoordinadorController.auxAccesosGeo()
+GET     /accesos                                     controllers.CoordinadorController.accesos()
+GET     /accesos2                                     controllers.CoordinadorController.accesos2()
+POST     /generaGeoX                                  controllers.CoordinadorController.generaGeoX()
+GET     /generaGeo                                  controllers.CoordinadorController.generaGeo()
+POST    /cuentaRegistrosGeo                         controllers.CoordinadorController.cuentaRegistrosGeo()
